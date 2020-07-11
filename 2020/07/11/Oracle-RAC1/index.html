@@ -6,25 +6,100 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Oracle-DG | Sevattal</title>
+  <title>Oracle-RAC1 | Sevattal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="DATA GUARD 简介ORACLE DataGuard 是一种数据库级别的HA方案，最主要功能是容灾、数据保护、故障恢复等在生产数据库的”事务一致性” 时，使用生产库的物理全备份（或物理COPY）创建备库，备库会通过生产库传输过来的归档日志（或重做条目）自动维护备用数据库。将重做数据应用到备库。本文介绍使用RMAN备份创建备库(dataguard)">
+  <meta name="description" content="Oracle RAC搭建步骤与流程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Oracle-DG">
-<meta property="og:url" content="http://yoursite.com/2020/04/04/Oracle-DG/index.html">
+<meta property="og:title" content="Oracle-RAC1">
+<meta property="og:url" content="http://yoursite.com/2020/07/11/Oracle-RAC1/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="DATA GUARD 简介ORACLE DataGuard 是一种数据库级别的HA方案，最主要功能是容灾、数据保护、故障恢复等在生产数据库的”事务一致性” 时，使用生产库的物理全备份（或物理COPY）创建备库，备库会通过生产库传输过来的归档日志（或重做条目）自动维护备用数据库。将重做数据应用到备库。本文介绍使用RMAN备份创建备库(dataguard)">
+<meta property="og:description" content="Oracle RAC搭建步骤与流程">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-DG/1.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-DG/2.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-DG/3.png">
-<meta property="article:published_time" content="2020-04-04T02:03:20.000Z">
-<meta property="article:modified_time" content="2020-04-04T02:07:48.267Z">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/8.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/9.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/10.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/11.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/12.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/13.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/14.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/15.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/16.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/17.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/18.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/19.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/20.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/21.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/22.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/23.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/24.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/25.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/26.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/27.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/28.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/29.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/30.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/31.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/32.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/33.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/34.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/35.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/36.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/37.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/38.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/39.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/40.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/41.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/42.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/43.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/44.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/45.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/46.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/47.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/48.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/49.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/50.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/51.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/52.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/53.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/54.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/55.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/56.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/57.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/58.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/59.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/60.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/61.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/62.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/63.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/64.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/65.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/66.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/67.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/68.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/69.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/70.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/71.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/72.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/73.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/74.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/75.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/76.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/77.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/78.png">
+<meta property="article:published_time" content="2020-07-11T08:25:44.000Z">
+<meta property="article:modified_time" content="2020-07-11T09:20:11.380Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Oracle">
-<meta property="article:tag" content="DG">
+<meta property="article:tag" content="Oracle RAC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/04/04/Oracle-DG/1.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/11/Oracle-RAC1/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Sevattal" type="application/atom+xml">
   
@@ -148,49 +223,148 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Oracle-DG" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Oracle-RAC1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Oracle-DG
+      Oracle-RAC1
     </h1>
   
 
         
-        <a href="/2020/04/04/Oracle-DG/" class="archive-article-date">
-  	<time datetime="2020-04-04T02:03:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
+        <a href="/2020/07/11/Oracle-RAC1/" class="archive-article-date">
+  	<time datetime="2020-07-11T08:25:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="DATA-GUARD-简介"><a href="#DATA-GUARD-简介" class="headerlink" title="DATA GUARD 简介"></a>DATA GUARD 简介</h1><p>ORACLE DataGuard 是一种数据库级别的HA方案，最主要功能是容灾、数据保护、故障恢复等<br>在生产数据库的”事务一致性” 时，使用生产库的物理全备份（或物理COPY）创建备库，备库会通过生产库传输过来的归档日志（或重做条目）自动维护备用数据库。将重做数据应用到备库。本文介绍使用RMAN备份创建备库(dataguard)</p>
-<a id="more"></a>
-<p>配置前检查<br>Dataguard设置为默认的MAXIMIZE PERFORMANCE模式<br>Ø 主节点必须运行在归档模式下：<br>以下命令检查数据库是否为归档日志(archive log)模式：<br>SQL&gt; archive log list<br>Ø 主库必须为force logging模式<br>Sql&gt;alter database force logging<br>Ø 主备库SID与UNIQUE_NAME配置<br>主库<br>        SID  orcl<br>UNIQUE_NAME  primary<br>备库<br>        SID  orcl<br>UNIQUE_NAME  standby01<br>Ø 主备库网络配置  注意这里需要配置静态监听,我这里配置了dns，也可以配置/etc/hosts文件<br>主库<br>IP:192.168.20.11 primary.example.com<br>监听   注意：我这里配置的实例名都是一样的，所以主库和备库的监听也是一样的<br><img src="/2020/04/04/Oracle-DG/1.png" alt></p>
-<p>tnsname配置  该配置也是主备都一样<br><img src="/2020/04/04/Oracle-DG/2.png" alt><br>备库<br>IP:192.168.20.12 standby01.example.com<br>监听   注意：我这里配置的实例名都是一样的，所以主库和备库的监听也是一样的<br><img src="/2020/04/04/Oracle-DG/3.png" alt></p>
-<p>Ø 备库配置orawp 密码文件，注：这里的文件一定要与主库的密码一样<br>方法一、可以从主库的 $ORACLE_HOME/dbs/orapworcl  文件复制过来<br>方法二、 创建密码文件<br>cd $ORACLE_HOME/dbs/<br>orapwd  file=orapwprimary password=oracle format=12 force=y<br>Ø 修改主库的pfile参数文件initorcl.ora<br>方法一、sqlplus进入 修改文件参数并创建pfile文件<br>alter system set db_unique_name=’primary’ scope=spfile;<br>alter system set log_archive_config=’DG_CONFIG=(primary,standby01)’ scope=spfile;<br>alter system set fal_server=’standby01’ scope=spfile;<br>alter system set fal_client=’primary’ scope=spfile;</p>
-<p>alter system set db_file_name_convert=’/u01/app/oracle/oradata/orcl’,’/u01/app/oracle/oradata/orcl’<br>alter system set log_file_name_convert=’/u01/app/oracle/oradata/orcl’,’/u01/app/oracle/oradata/orcl’</p>
-<p>alter system set db_file_name_convert=’/u01/app/oracle/oradata/syntong’,’/u01/app/oracle/oradata/syntong’;<br>alter system set log_file_name_convert=’/u01/app/oracle/oradata/syntong’,’/u01/app/oracle/oradata/syntong’;<br>注：<br>1、这一步非常关键如果不配置主库传到备库的文件目录，rman传递过去会失败<br>2、就算文件主库和备库的文件路径名一样也要配置</p>
-<p>alter system set log_archive_dest_1=’location=/u01/app/oracle/arch valid_for=(all_logfiles,all_roles)  db_unique_name=primary’ scope=spfile;<br>alter system set log_archive_dest_2=’service=standby01 lgwr async valid_for=(online_logfiles,primary_role) db_unique_name=standby01’ scope=spfile;<br>注意：<br>1、这一步：service=standby01    这里standby01为tnsname中配置的<br>1、如果不加入 lgwr async  不能使备库时时同步<br>alter system set log_archive_dest_state_1=enable scope=spfile;<br>alter system set log_archive_dest_state_2=enable scope=spfile;<br>注意：<br>该参数为使上面的archive 生效<br>alter system set log_archive_format=’%t_%s_%r.dbf’ scope=spfile;<br>alter system set log_archive_max_processes=30 scope=spfile;<br>alter system set remote_login_passwordfile=EXCLUSIVE scope=spfile;<br>alter system set standby_file_management=auto scope=spfile;</p>
-<p>配置完成重启主库、并创建参数文件<br>shutdown immediate;<br>startup nomount;<br>create pfile from spfile;<br>alter database  mount;<br>alter database archivelog;  如果归档日志没有打开使用该命令<br>alter database  open;<br>并查看配置文件pfile，在$ORACLE_HOME/dbs中</p>
-<p>方法二、手动更改pfile文件然后重启数据库，以更改的pfile文件来重启<br>更改的参数为以上以sqlplus更改的<br>startup nomount pfile=$ORACLE_HOME/dbs/initorcl.ora</p>
-<p>Ø 修改备库的pfile参数文件initorcl.ora  改的并不多只需要把主库的某参数颠倒一下即可。<br>1、先把主库的pfile 文件copye到备库中 $ORACLE_HOME/dbs/ 下<br>2、修改备库参数文件<br>DB_UNIQUE_NMAE=’standby01’<br>FAL_CLIENT=’standby01’<br>FAL_SERVER=’primary’<br>LOG_ARCHIVE_DEST_1=’location=/u01/app/oracle/arch VALID_FOR=(ALL_LOGFILES,ALL_ROLES)  DB_UNIQUE_NAME=standby01’<br>LOG_ARCHIVE_DEST_2=’SERVICE=primary  LGWR ASYNC VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE) DB_UNIQUE_NAME=primary’<br>3、创建相应的目录，只要pfile 中写到的目录没有的都要创建，如果不创建rman传递过来会失败<br>4、启动到nomount状态创建spfile文件<br>startup nomount pfile=$ORACLE_HOME/dbs/initorcl.ora<br>create spfile from pfile;</p>
-<p>Ø 主库创建standby control 文件并传递给备库，使备库启动到mount状态<br>  1、创建standby control并传递到备库<br>SQL&gt;alter database create standby controlfile as ‘/home/oracle/bak.ctl’;<br>scp -rp /home/oracle/bak.ctl oracle@standby01:/u01/app/oracle/oradata/orcl/control01.ctl<br>scp -rp /home/oracle/bak.ctl<br>oracle@standby01:/u01/app/oracle/oradata/orcl/control02.ctl<br>    2、启动备库到standby mount状态<br>alter database mount standby database;</p>
-<p>Ø 主库、备库创建standby logfile文件<br>注意：<br>1、先要查看主库的redolog文件、需要了解其数量及大小<br>select  * from v$log;<br>select * from v$logfile;<br>2、创建的standby logfile文件必须比redo 文件多一组，并且每组的数量相同。<br>3、standby logfile 文件的大小要与redo log 文件的大小一样<br>4、主库和备库创建standby logfile 的文件名最好一样<br>5、创建语句如下<br>alter database add standby logfile group 6 ‘/u01/app/oracle/oradata/orcl/std_redo06.log’ size 200m;</p>
-<p>6、删除语句如下<br>alter database drop standby logfile group 6;</p>
-<p>Ø 复制主库至备库<br>注意：<br>1、主库得启动到open或者mount<br>2、备库一定要启动到nomount状态下<br>3、静态监听与tnsname一定要配置好，能互相连接</p>
-<p>主库上操作<br>rman target sys/oracle auxiliary sys/oracle@standby01<br>rman&gt;duplicate target database for standby from active database nofilenamecheck;</p>
-<p>备库上操作<br>sql&gt;shutdown immediate;<br>sql&gt;startup nomount;<br>Sql&gt;alter database mount standby database;<br>Sql&gt;recover managed standby database disconnect from session;<br>Sql&gt;alter database recover managed standby database cancel;<br>Sql&gt;alter database open read only;<br>Sql&gt;alter database recover managed standby database using current logfile disconnect;</p>
-<p>Sql&gt; select open_mode from v$database;<br>  若显示如下，则备库运行正常<br>  OPEN_MODE</p>
-<hr>
-<p>READ ONLY WITH APPLY</p>
-<p>二． 失败切换<br>注：切换顺序不能颠倒,必须先把主库切换成备库，即同一时间不能有两个主库共存<br>2.1 主库切换成备库   切换库时最好切换下日志<br>Ø 查看主库可切换状态：<br>sql&gt;select switchover_status from v$database;<br>若显示SESSIONS ACTIVE或者TO STANDBY，则可以开始切换<br>Ø 主库切换<br>sql&gt;alter database commit to switchover to physical standby with session shutdown;<br>sql&gt;conn / as sysdba<br>sql&gt;startup nomount;<br>sql&gt;alter database mount standby database;<br>sql&gt;recover managed standby database disconnect from session;<br>Sql&gt;alter database recover managed standby database cancel;<br>Sql&gt;alter database open read only;<br>Sql&gt;alter database recover managed standby database using current logfile disconnect;<br>sql&gt;select open_mode from v$database;<br>OPEN_MODE</p>
-<hr>
-<p>READ ONLY WITH APPLY<br>2.2 备库切换为主库<br>Ø 查看备库可切换状态：<br>sql&gt;select switchover_status from v$database;<br>若显示SESSIONS ACTIVE或者TO PRIMARY，则可以开始切换<br>Ø 备库切换<br>sql&gt;select switchover_status from v$database;<br>sql&gt;alter database commit to switchover to primary with session shutdown;<br>sql&gt;shutdown immediate<br>sql&gt;startup;<br>2.3 主库不可用情况下的备库切换<br>sql&gt; recover managed standby database cancel;<br>sql&gt; alter database recover managed standby database finish;<br>sql&gt; alter database commit to switchover to primary;<br>sql&gt;shutdown immediate<br>sql&gt;startup</p>
+        <h1 id="Oracle-RAC搭建步骤与流程"><a href="#Oracle-RAC搭建步骤与流程" class="headerlink" title="Oracle RAC搭建步骤与流程"></a>Oracle RAC搭建步骤与流程</h1><a id="more"></a>
+
+<h1 id="一、环境配置"><a href="#一、环境配置" class="headerlink" title="一、环境配置"></a>一、环境配置</h1><h2 id="1、系统环境"><a href="#1、系统环境" class="headerlink" title="1、系统环境"></a>1、系统环境</h2><p>系统：Oracle Linux 6    2台，CentOS7  1台<br>ORACLE:12.1.0     DATABASE、GRID</p>
+<h2 id="2、IP地址分配"><a href="#2、IP地址分配" class="headerlink" title="2、IP地址分配"></a>2、IP地址分配</h2><p>Public IP<br>rac1.example.com  rac1      Public IP  192.168.10.31<br>rac2.example.com  rac2      Public IP  192.168.10.32<br>Virtual IP<br>rac1-vip.example.com rac1    Virtual IP    192.168.10.33<br>rac2-vip.example.com rac2    Virtual IP    192.168.10.34<br>Private IP<br>rac1-priv.example.com rac1-priv  Private IP 192.168.20.31<br>rac2-priv.example.com rac2-priv  Private IP 192.168.20.32<br>SCAN IP<br>scan-cluster-example.com scan-cluster  SCAN IP  192.168.10.30<br>DNS<br>dns.example.com    dns    192.168.10.36<br>注意：<br>    1、scanIP名不能有下划线，否则有可能在安装rac会报错<br>    2、scanIP要与 Public IP 在同一网段。</p>
+<h2 id="3、RAC共享磁盘的分配"><a href="#3、RAC共享磁盘的分配" class="headerlink" title="3、RAC共享磁盘的分配"></a>3、RAC共享磁盘的分配</h2><p>VOTE：     GRIDDG  asm磁盘组          50G     设备节点：SCSI 0:1<br>OCR：     GRIDDG  asm磁盘组        200G    设备节点：SCSI 0:2<br>FLASH：     FLASH      asm磁盘组        100G    设备节点：SCSI 0:3<br>DATA：     DATA      asm磁盘组        200G    设备节点：SCSI 0:4<br>注：实验环境均20G<br>关于如何在VMware配置共享磁盘查看 VMware RAC共享磁盘 笔记</p>
+<h2 id="4、oracle、grid环境变量配置"><a href="#4、oracle、grid环境变量配置" class="headerlink" title="4、oracle、grid环境变量配置"></a>4、oracle、grid环境变量配置</h2><p>RAC1节点：<br>oracle用户：ORACLE_SID=orcl1  ORACLE_UNQNAME=orcl<br>ORACLE_HOSTNAME=rac1.example.com<br>grid用户：ORACLE_SID=+ASM1<br>RAC2节点：<br>oracle用户：ORACLE_SID=orcl2  ORACLE_UNQNAME=orcl<br>ORACLE_HOSTNAME=rac2.example.com<br>grid用户：ORACLE_SID=+ASM2</p>
+<h2 id="5、oracle、grid等用户的创建"><a href="#5、oracle、grid等用户的创建" class="headerlink" title="5、oracle、grid等用户的创建"></a>5、oracle、grid等用户的创建</h2><p>groupadd oinstall<br>groupadd dba<br>groupadd asmadmin<br>groupadd asmdba<br>groupadd asmoper<br>useradd -g oinstall -G asmadmin,asmdba,asmoper,dba grid<br>useradd -g oinstall -G dba,asmdba oracle<br>passwd grid<br>passwd oracle</p>
+<p>以下为oracle脚本范例，请在各个节点下修改后并执行：注意：RAC双节点的ORACLE_UNQNAME是相同的<br>cat &gt;&gt; /home/oracle/.bash_profile &lt;&lt; “EOF”<br>export PS1=”$LOGNAME@<code>/bin/hostname -s</code>-&gt;”<br>export TMP=/tmp export TMPDIR=$TMP<br>export ORACLE_HOSTNAME=rac1.example.com<br>export ORACLE_SID=orcl1<br>export ORACLE_BASE=/u01/app/oracle<br>export ORACLE_HOME=$ORACLE_BASE/product/12.1.0/db_1<br>export ORACLE_UNQNAME=orcl<br>export TNS_ADMIN=$ORACLE_HOME/network/admin<br>export ORACLE_TERM=xterm export PATH=/usr/sbin:$PATH<br>export PATH=$ORACLE_HOME/bin:$PATH<br>export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib<br>export CLASSPATH=$ORACLE_HOME/JRE:$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib<br>export EDITOR=vi<br>export LANG=en_US<br>export NLS_LANG=american_america.AL32UTF8<br>export NLS_DATE_FORMAT=’yyyy-mm-dd hh24:mi:ss’<br>umask 022 EOF</p>
+<p>以下为grid脚本范例，请在各个节点下修改后并执行：<br>cat &gt;&gt; /home/grid/.bash_profile &lt;&lt; “EOF”<br>export PS1=”$LOGNAME@<code>/bin/hostname -s</code>-&gt;”<br>export TMP=/tmp export TMPDIR=$TMP<br>export ORACLE_SID=+ASM1<br>export ORACLE_BASE=/u01/app/grid<br>export ORACLE_HOME=/u01/app/12.1.0/grid<br>export ORACLE_TERM=xterm<br>export NLS_DATE_FORMAT=’yyyy/mm/dd hh24:mi:ss’<br>export TNS_ADMIN=$ORACLE_HOME/network/admin<br>export PATH=/usr/sbin:$PATH<br>export PATH=$ORACLE_HOME/bin:$PATH<br>export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib<br>export CLASSPATH=$ORACLE_HOME/JRE:$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib<br>export EDITOR=vi<br>export LANG=en_US<br>export NLS_LANG=american_america.AL32UTF8<br>umask 022 EOF</p>
+<p>rac1  oracle 环境变量<br><img src="/2020/07/11/Oracle-RAC1/1.png" alt></p>
+<p>rac1 grid环境变量<br><img src="/2020/07/11/Oracle-RAC1/2.png" alt></p>
+<p>rac2 oracle环境变量<br><img src="/2020/07/11/Oracle-RAC1/3.png" alt></p>
+<p>rac2 grid环境变量<br><img src="/2020/07/11/Oracle-RAC1/4.png" alt></p>
+<h2 id="6、创建对用目录"><a href="#6、创建对用目录" class="headerlink" title="6、创建对用目录"></a>6、创建对用目录</h2><p>mkdir -p /u01/app/grid<br>mkdir -p /u01/app/12.1.0/grid<br>mkdir -p /u01/app/oracle<br>chown -R oracle:oinstall /u01<br>chown -R grid:oinstall /u01/app/grid<br>chown -R grid:oinstall /u01/app/12.1.0<br>chmod -R 775 /u01</p>
+<h2 id="7、配置os级别的参数-etc-sysctl-conf-etc-security-limits-conf，这边不详细列出与其他版本安装类似。"><a href="#7、配置os级别的参数-etc-sysctl-conf-etc-security-limits-conf，这边不详细列出与其他版本安装类似。" class="headerlink" title="7、配置os级别的参数  /etc/sysctl.conf   /etc/security/limits.conf，这边不详细列出与其他版本安装类似。"></a>7、配置os级别的参数  /etc/sysctl.conf   /etc/security/limits.conf，这边不详细列出与其他版本安装类似。</h2><p>/etc/sysctl.conf 配置如下，由于是测试，我这边是4G内存所以在安装数据库时要将内存分配的少一些，否则数据库创建会失败.<br>cat&gt;&gt;/etc/sysctl.conf&lt;&lt; EOF<br>fs.aio-max-nr = 1048576<br>fs.file-max = 6815744<br>kernel.shmall = 419430<br>kernel.shmmax = 2147483648<br>kernel.shmmni = 4096<br>kernel.sem = 250 32000 100 128<br>net.ipv4.ip_local_port_range = 9000 65500<br>net.core.rmem_default = 262144<br>net.core.rmem_max = 4194304<br>net.core.wmem_default = 262144<br>net.core.wmem_max = 1048586<br>kernel.panic_on_oops = 1<br>EOF</p>
+<p><img src="/2020/07/11/Oracle-RAC1/5.png" alt></p>
+<p>/etc/security/limits.conf配置如下<br>cat&gt;&gt;/etc/security/limits.conf&lt;&lt; EOF<br>oracle         soft    nproc           2047<br>oracle         hard    nproc           16384<br>oracle         soft    nofile          1024<br>oracle         hard    nofile          65536<br>oracle         soft    memlock         3145728<br>oracle         hard    memlock         3145728<br>grid           soft    nproc           2047<br>grid           hard    nproc           16384<br>grid           soft    nofile          1024<br>grid           hard    nofile          65536<br>EOF</p>
+<p><img src="/2020/07/11/Oracle-RAC1/6.png" alt></p>
+<p>/etc/sysconfig/network配置添加如下参数<br>echo “NOZEROCONF=yes”  &gt;&gt; /etc/sysconfig/network<br><img src="/2020/07/11/Oracle-RAC1/7.png" alt></p>
+<h2 id="8、安装oracle节点依赖包"><a href="#8、安装oracle节点依赖包" class="headerlink" title="8、安装oracle节点依赖包"></a>8、安装oracle节点依赖包</h2><p>yum install -y binutils*<br>yum install -y compat-libstdc*<br>yum install -y elfutils-libelf*<br>yum install -y gcc*<br>yum install -y glibc*<br>yum install -y ksh*<br>yum install -y libaio*<br>yum install -y libgcc*<br>yum install -y libstdc*<br>yum install -y libXp*<br>yum install -y make*<br>yum install -y numactl-devel*<br>yum install -y sysstat*<br>yum install -y smartmontools* </p>
+<h1 id="二、HOST及DNS服务器配置"><a href="#二、HOST及DNS服务器配置" class="headerlink" title="二、HOST及DNS服务器配置"></a>二、HOST及DNS服务器配置</h1><h2 id="1、修改每个节点下的-etc-hosts文件"><a href="#1、修改每个节点下的-etc-hosts文件" class="headerlink" title="1、修改每个节点下的/etc/hosts文件"></a>1、修改每个节点下的/etc/hosts文件</h2><p><img src="/2020/07/11/Oracle-RAC1/8.png" alt></p>
+<h2 id="2、修改每个节点-etc-sysconfig-network-scripts-ifcfg-eth0文件，DNS1指向dns服务器，由于一些系统版本重启后resolv-conf文件内容会被清空"><a href="#2、修改每个节点-etc-sysconfig-network-scripts-ifcfg-eth0文件，DNS1指向dns服务器，由于一些系统版本重启后resolv-conf文件内容会被清空" class="headerlink" title="2、修改每个节点 /etc/sysconfig/network-scripts/ifcfg-eth0文件，DNS1指向dns服务器，由于一些系统版本重启后resolv.conf文件内容会被清空"></a>2、修改每个节点 /etc/sysconfig/network-scripts/ifcfg-eth0文件，DNS1指向dns服务器，由于一些系统版本重启后resolv.conf文件内容会被清空</h2><p><img src="/2020/07/11/Oracle-RAC1/9.png" alt></p>
+<h2 id="3、dns服务器安装及配置"><a href="#3、dns服务器安装及配置" class="headerlink" title="3、dns服务器安装及配置"></a>3、dns服务器安装及配置</h2><p>yum install bind* -y<br>修改/etc/named.conf文件，将一些值修改成any<br><img src="/2020/07/11/Oracle-RAC1/10.png" alt></p>
+<p>修改/etc/named.rfc1912.zones添加正反解析<br><img src="/2020/07/11/Oracle-RAC1/11.png" alt></p>
+<p>修改完成后使用命令检查配置文件是否写错，若没有错误信息表示更改没有语法错误<br><img src="/2020/07/11/Oracle-RAC1/12.png" alt></p>
+<p>在/var/named下创建正反解析文件，<br>注意：<br>1、属主属组为named<br>2、创建的解析文件要与file参数写的名字相同。<br>3、这边由于后期搭建了DG，为了方便添加了该信息，若只是搭建RAC,DG的dns不需要配置<br>正向解析文件example.com.zone如下：<br><img src="/2020/07/11/Oracle-RAC1/13.png" alt></p>
+<p>反向解析文件  10.168.192.in-addr.arpa<br><img src="/2020/07/11/Oracle-RAC1/14.png" alt></p>
+<p>反向解析文件 20.168.192.in-addr.arpa<br><img src="/2020/07/11/Oracle-RAC1/15.png" alt></p>
+<p>重启dns服务<br>systemctl  restart named  或者是 service named restart<br>使用nslookup在各个服务器上做测试，上述添加的dns配置是否正确，这边就列出scan-cluster是否能够解析。<br><img src="/2020/07/11/Oracle-RAC1/16.png" alt></p>
+<h1 id="三、配置ssh证书认证"><a href="#三、配置ssh证书认证" class="headerlink" title="三、配置ssh证书认证"></a>三、配置ssh证书认证</h1><p>配置RAC双节点的ssh对等性 使其不用输入密码就能互相访问 oracle、grid用户都需要<br>ssh-keygen -t rsa<br>ssh-keygen -t dsa<br>参考之前写的SSH文档配置即可</p>
+<h1 id="四、安装cvuqdisk-1-0-9-1-rpm，两个rac节点都需要安装。解压grid安装包后，在rpm目录下。"><a href="#四、安装cvuqdisk-1-0-9-1-rpm，两个rac节点都需要安装。解压grid安装包后，在rpm目录下。" class="headerlink" title="四、安装cvuqdisk-1.0.9-1.rpm，两个rac节点都需要安装。解压grid安装包后，在rpm目录下。"></a>四、安装cvuqdisk-1.0.9-1.rpm，两个rac节点都需要安装。解压grid安装包后，在rpm目录下。</h1><p><img src="/2020/07/11/Oracle-RAC1/17.png" alt></p>
+<p>五、ASM磁盘配置，使用以下脚本配置ASM磁盘（该脚本不支持CentOS7，主要是CentOS7没有scsi_id命令，需要将该段命令进行更改）</p>
+<p>echo “options=–whitelisted –replace-whitespace”  &gt;&gt; /etc/scsi_id.config<br>for i in b c d e  ;<br>do<br>echo “KERNEL==&quot;sd*&quot;, BUS==&quot;scsi&quot;, PROGRAM==&quot;/sbin/scsi_id –whitelisted –replace-whitespace –device=/dev/$name&quot;, RESULT==&quot;<code>/sbin/scsi_id --whitelisted --replace-whitespace --device=/dev/sd$i</code>&quot;, NAME=&quot;asm-disk$i&quot;, OWNER=&quot;grid&quot;, GROUP=&quot;asmadmin&quot;, MODE=&quot;0660&quot;“      &gt;&gt; /etc/udev/rules.d/99-oracle-asmdevices.rules<br>done</p>
+<p>注：由于是虚拟机环境，若/sbin/scsi_id –whitelisted –replace-whitespace –device=/dev/sda 若该命令没有输出结构，需要修改你的vmx文件添加如下参数才能实现共享磁盘以及获取UUID<br>disk.EnableUUID = “TRUE”<br>disk.locking = “FALSE”<br>diskLib.dataCacheMaxSize= “0”<br>scsi2.sharedBus =”virtual”<br>diskLib.dataCacheMaxReadAheadSize = “0”<br>diskLib.DataCacheMinReadAheadSize = “0”<br>diskLib.dataCachePageSize = “4096”<br>diskLib.maxUnsyncedWrites = “0”</p>
+<p>重启udev<br>/sbin/start_udev<br>ll /dev|grep sd   –除sda外，其他sd*磁盘信息不见了<br>ll /dev|grep asm  –出现了asm磁盘</p>
+<h1 id="六、rac双节点关闭ntp服务器"><a href="#六、rac双节点关闭ntp服务器" class="headerlink" title="六、rac双节点关闭ntp服务器"></a>六、rac双节点关闭ntp服务器</h1><p>service ntpd stop<br>chkconfig ntpd off<br>mv /etc/ntp .conf  /etc/ntp.conf.bak</p>
+<h1 id="七、su到grid用户，使用grid安装报下的检查脚本，检查安装前环境"><a href="#七、su到grid用户，使用grid安装报下的检查脚本，检查安装前环境" class="headerlink" title="七、su到grid用户，使用grid安装报下的检查脚本，检查安装前环境"></a>七、su到grid用户，使用grid安装报下的检查脚本，检查安装前环境</h1><p>./runcluvfy.sh stage -pre crsinst -n rac1,rac2 -fixup -verbose<br><img src="/2020/07/11/Oracle-RAC1/18.png" alt></p>
+<p> 当报错后oracle最后会生成一个脚本/tmp/CVU_12.1.0.2.0_grid/runfixup.sh，需要手工在每个节点下以root用户执行。</p>
+<h1 id="八、安装Grid"><a href="#八、安装Grid" class="headerlink" title="八、安装Grid"></a>八、安装Grid</h1><p>./runInstaller</p>
+<p><img src="/2020/07/11/Oracle-RAC1/19.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/20.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/21.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/22.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/23.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/24.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/25.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/26.png" alt></p>
+<p>确认网络接口，严格按照网络规划来<br><img src="/2020/07/11/Oracle-RAC1/27.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/28.png" alt></p>
+<p>若是找不到磁盘以/dev/asm*通配符来查找，由于前面的udev脚本设置的磁盘名称为asm-disk</p>
+<p><img src="/2020/07/11/Oracle-RAC1/29.png" alt></p>
+<p> 输入ASM磁盘组名，这里命名为GRIDDG，冗余策略选择External外部，AU 大小选择默认4M，ASM磁盘选择 ASM-DISKB，ASM-DISKC  (该磁盘名字是由udev配置，实际是vote这块磁盘和OCR磁盘)<br>注：ASM在分配空间时，以AU 为单位进行，AU 即Allocation units，是组成ASM disk的基本单元。在Oracle 10gR2 中，ASM AU的缺省单位大小是1M，相应的条带大小是128K，11g建议AU为4M。在ASM中，可以通过调整 _asm_ausize 隐含参数的大小来进行调整，_asm_stripesize控制相应的条带化参数</p>
+<p><img src="/2020/07/11/Oracle-RAC1/30.png" alt></p>
+<p>设置oracle sys等用户的账号密码</p>
+<p><img src="/2020/07/11/Oracle-RAC1/31.png" alt></p>
+<p>选择不使用IPMI，Next</p>
+<p><img src="/2020/07/11/Oracle-RAC1/32.png" alt></p>
+<p>EM生产环境不建议安装</p>
+<p><img src="/2020/07/11/Oracle-RAC1/33.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/34.png" alt></p>
+<p>选择GRID软件的安装路径，其中ORACLE_BASE,ORACLE_HOME均选择之前已经配置好的。这里需要注意GRID软件的ORACLE_HOME不能是ORACLE_BASE的子目录。 </p>
+<p><img src="/2020/07/11/Oracle-RAC1/35.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/36.png" alt></p>
+<p>配置了这个后，可以使软件自动跑安装过程中的脚本，不需要人工干预</p>
+<p><img src="/2020/07/11/Oracle-RAC1/37.png" alt></p>
+<p>由于我只给了4G内存一台机器会报出这个警告，可以跳过。</p>
+<p><img src="/2020/07/11/Oracle-RAC1/38.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/39.png" alt></p>
+<p>需要在两个节点上使用root用户执行该脚本，注意：第一个节点执行成功后才能够执行第二个节点，这个执行过程时间比较长需要耐心等待。</p>
+<p><img src="/2020/07/11/Oracle-RAC1/40.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/41.png" alt></p>
+<h1 id="九、安装Database软件"><a href="#九、安装Database软件" class="headerlink" title="九、安装Database软件"></a>九、安装Database软件</h1><p>./runInstaller</p>
+<p><img src="/2020/07/11/Oracle-RAC1/42.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/43.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/44.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/45.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/46.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/47.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/48.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/49.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/50.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/51.png" alt></p>
+<p>执行脚本</p>
+<p><img src="/2020/07/11/Oracle-RAC1/52.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/53.png" alt></p>
+<h1 id="十、ASMCA创建磁盘组"><a href="#十、ASMCA创建磁盘组" class="headerlink" title="十、ASMCA创建磁盘组"></a>十、ASMCA创建磁盘组</h1><p>asmca命令<br>进入ASMCA配置界面后，单击Create，创建新的磁盘组： </p>
+<p><img src="/2020/07/11/Oracle-RAC1/54.png" alt></p>
+<h2 id="1、配置DATA磁盘，前面的规划使-dev-asm-diske为DATA磁盘"><a href="#1、配置DATA磁盘，前面的规划使-dev-asm-diske为DATA磁盘" class="headerlink" title="1、配置DATA磁盘，前面的规划使/dev/asm-diske为DATA磁盘"></a>1、配置DATA磁盘，前面的规划使/dev/asm-diske为DATA磁盘</h2><p>输入磁盘组名 DATA，冗余策略选择External，磁盘选择/dev/asm-diske，单击OK</p>
+<p><img src="/2020/07/11/Oracle-RAC1/55.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/56.png" alt></p>
+<h2 id="2、配置FLASH磁盘，前面的规划使-dev-asm-disk为FLASH磁盘"><a href="#2、配置FLASH磁盘，前面的规划使-dev-asm-disk为FLASH磁盘" class="headerlink" title="2、配置FLASH磁盘，前面的规划使/dev/asm-disk为FLASH磁盘"></a>2、配置FLASH磁盘，前面的规划使/dev/asm-disk为FLASH磁盘</h2><p><img src="/2020/07/11/Oracle-RAC1/57.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/58.png" alt></p>
+<h1 id="十一、配置ORACLE-RAC-数据库"><a href="#十一、配置ORACLE-RAC-数据库" class="headerlink" title="十一、配置ORACLE RAC 数据库"></a>十一、配置ORACLE RAC 数据库</h1><p>dbca命令</p>
+<p><img src="/2020/07/11/Oracle-RAC1/59.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/60.png" alt></p>
+<p>Configuration type 选择 Admin-Managed</p>
+<p><img src="/2020/07/11/Oracle-RAC1/61.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/62.png" alt></p>
+<p>选择所有rac节点。</p>
+<p><img src="/2020/07/11/Oracle-RAC1/63.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/64.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/65.png" alt></p>
+<p>分别选择数据文件和闪回区存储位置。</p>
+<p><img src="/2020/07/11/Oracle-RAC1/66.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/67.png" alt></p>
+<p>oracle11g版本中自动化内存管理(Automatic Memory Management,AMM) . 如果 DBA 真的想偷懒的话，只需要设 定两个参数就可以把烦心的事情都交给 Oracle 折腾了(只要 DBA 足够心宽)。PGA 与 SGA 一起搞定。这两个参数分别是： ➢ MEMORY_TARGET–操作系统的角度上 Oracle 所能使用的最大内存值。动态参数 ➢ MEMORY_MAX_TARGET–MEMORY_TARGET所能设定的最大值。非动态可调</p>
+<p><img src="/2020/07/11/Oracle-RAC1/68.png" alt></p>
+<p>“Processes”默认值150修改为1000，点“Character Sets” 继续设定初始化参数 BTW：根据ORACLE官方文档提示Processes=普通后台进程+最大共享服务器的进程数(max_shared_servers) + 最 大Dispatcher进程数(max_dispatchers)。计算公式一般为SESSIONS = PROCESSES X 1.1 + 5 6</p>
+<p><img src="/2020/07/11/Oracle-RAC1/69.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/70.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/71.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/72.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/73.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/74.png" alt></p>
+<p><img src="/2020/07/11/Oracle-RAC1/75.png" alt></p>
+<p>至此，我们完成创建RAC数据库（注意：由于内存不足，最后只能启动一个节点。环境搭建建议单台虚拟机使用8G）</p>
+<h1 id="十二、tnsname客户端的配置。"><a href="#十二、tnsname客户端的配置。" class="headerlink" title="十二、tnsname客户端的配置。"></a>十二、tnsname客户端的配置。</h1><h2 id="1、查看服务端的local-listener和remote-listener参数"><a href="#1、查看服务端的local-listener和remote-listener参数" class="headerlink" title="1、查看服务端的local_listener和remote_listener参数"></a>1、查看服务端的local_listener和remote_listener参数</h2><p>节点1  Oracle用户登录 sqlplus / as sysdba</p>
+<p><img src="/2020/07/11/Oracle-RAC1/76.png" alt></p>
+<p>节点2 Oracle用户登录 sqlplus / as sysdba</p>
+<p><img src="/2020/07/11/Oracle-RAC1/77.png" alt></p>
+<h2 id="2、tnsname配置，创建三个tnsname客户端配置"><a href="#2、tnsname配置，创建三个tnsname客户端配置" class="headerlink" title="2、tnsname配置，创建三个tnsname客户端配置"></a>2、tnsname配置，创建三个tnsname客户端配置</h2><p>ORCL为scanip连接，ORCL1和ORCL2分别是节点1和节点2的固定连接。</p>
+<p><img src="/2020/07/11/Oracle-RAC1/78.png" alt></p>
 
       
 
@@ -239,7 +413,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DG</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Oracle RAC</a>
         		</li>
       		
 		</ul>
@@ -295,7 +469,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/04/Oracle-DG/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/11/Oracle-RAC1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -309,18 +483,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/04/04/VMware-ShareDisk/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/07/11/Oracle-RAC-CmdSimple/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          VMware-ShareDisk
+          Oracle-RAC-CmdSimple
         
       </div>
     </a>
   
   
-    <a href="/2020/04/04/Mariadb-Copy/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Mariadb-Copy</div>
+    <a href="/2020/07/11/Oracle-DG2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Oracle-DG</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -504,6 +678,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">OpenSSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Oracle RAC</a>
               </li>
             
             <div class="clearfix"></div>
