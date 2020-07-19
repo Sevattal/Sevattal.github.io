@@ -16,7 +16,7 @@
 <meta property="og:description" content="2020年7月 杭州晨科技术有限公司出给我的面试题">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-18T08:02:57.000Z">
-<meta property="article:modified_time" content="2020-07-18T08:13:58.616Z">
+<meta property="article:modified_time" content="2020-07-19T13:06:38.055Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Interview">
 <meta property="article:tag" content="SQL">
@@ -215,14 +215,14 @@ insert into sales_performance values(202007,2,3,0);
 insert into sales_performance values(202007,2,4,0);
 insert into sales_performance values(202007,2,5,0);</code></pre><h2 id="三、我个人答案版本，使用一个sql语句完成操作，代码结构复杂"><a href="#三、我个人答案版本，使用一个sql语句完成操作，代码结构复杂" class="headerlink" title="三、我个人答案版本，使用一个sql语句完成操作，代码结构复杂"></a>三、我个人答案版本，使用一个sql语句完成操作，代码结构复杂</h2><pre><code>insert into cost_accounting 
 select month_id,build_id,
-&lt;label style=&quot;color: red&quot;&gt;# 计算开工人员的成本,使用case将除数为0取出掉&lt;/label&gt;
+# 计算开工人员的成本,使用case将除数为0取出掉
 sum(case salesman_sum_sale when &apos;0&apos; then &apos;0&apos; else salary/salesman_sum_sale*build_sum_sale end)+
-&lt;label style=&quot;color: red&quot;&gt;# 计算没有开工的人员的成本&lt;/label&gt;
+# 计算没有开工的人员的成本
 (select sum(salary)/(select count(*) from building) from salary where month_id=date_format(now(),&apos;%Y%m&apos;) and salesman_id in (
  Select salesman_id from (select salesman_id,sum(sale) as sale from sales_performance 
 where month_id= date_format(now(),&apos;%Y%m&apos;) group by salesman_id) as s where s.sale=0)) 
 from  (
-&lt;label style=&quot;color: red&quot;&gt;# 该查询获得，当月的编号、人员编号、楼盘编号、人员对应某一楼盘的销售单数build_sum_sale、人员工资salary、某一员工的总单数 salesman_sum_sale&lt;/label&gt;
+# 该查询获得，当月的编号、人员编号、楼盘编号、人员对应某一楼盘的销售单数build_sum_sale、人员工资salary、某一员工的总单数 salesman_sum_sale
 (select month_id ,salesman_id,build_id,sum(sale) as build_sum_sale  from sales_performance 
 where month_id= date_format(now(),&apos;%Y%m&apos;) group by salesman_id,build_id)  as a  
 left join (select salesman_id,salary from salary where month_id= date_format(now(),&apos;%Y%m&apos;))  as b
