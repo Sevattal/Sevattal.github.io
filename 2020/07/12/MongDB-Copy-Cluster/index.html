@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>MongDB-Copy-Cluster | Sevattal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Mongodb副本集群搭建方式mongodb是最常用的nodql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。">
+  <meta name="description" content="Mongodb副本集群搭建方式mongodb是最常用的nosql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MongDB-Copy-Cluster">
 <meta property="og:url" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="Mongodb副本集群搭建方式mongodb是最常用的nodql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。">
+<meta property="og:description" content="Mongodb副本集群搭建方式mongodb是最常用的nosql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/2.png">
@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/6.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/7.png">
 <meta property="article:published_time" content="2020-07-12T07:03:35.000Z">
-<meta property="article:modified_time" content="2020-10-02T09:10:49.811Z">
+<meta property="article:modified_time" content="2020-10-02T09:15:54.571Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="MongDB">
 <meta name="twitter:card" content="summary">
@@ -171,7 +171,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Mongodb副本集群搭建方式"><a href="#Mongodb副本集群搭建方式" class="headerlink" title="Mongodb副本集群搭建方式"></a>Mongodb副本集群搭建方式</h1><p>mongodb是最常用的nodql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。</p>
+        <h1 id="Mongodb副本集群搭建方式"><a href="#Mongodb副本集群搭建方式" class="headerlink" title="Mongodb副本集群搭建方式"></a>Mongodb副本集群搭建方式</h1><p>mongodb是最常用的nosql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。</p>
 <a id="more"></a>
 <h1 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h1><p>在搭建集群之前，需要首先了解几个概念：路由，分片、副本集、配置服务器等。<br>1.mongos，数据库集群请求的入口，所有的请求都通过mongos进行协调，不需要在应用程序添加一个路由选择器，mongos自己就是一个请求分发中心，它负责把对应的数据请求请求转发到对应的shard服务器上。在生产环境通常有多mongos作为请求的入口，防止其中一个挂掉所有的mongodb请求都没有办法操作。<br>2.config server，顾名思义为配置服务器，存储所有数据库元信息（路由、分片）的配置。mongos本身没有物理存储分片服务器和数据路由信息，只是缓存在内存里，配置服务器则实际存储这些数据。mongos第一次启动或者关掉重启就会从 config server 加载配置信息，以后如果配置服务器信息变化会通知到所有的 mongos 更新自己的状态，这样 mongos 就能继续准确路由。在生产环境通常有多个 config server 配置服务器，因为它存储了分片路由的元数据，防止数据丢失！<br>3.shard，分片（sharding）是指将数据库拆分，将其分散在不同的机器上的过程。将数据分散到不同的机器上，不需要功能强大的服务器就可以存储更多的数据和处理更大的负载。基本思想就是将集合切成小块，这些块分散到若干片里，每个片只负责总数据的一部分，最后通过一个均衡器来对各个分片进行均衡（数据迁移）。<br>4.replica set，中文翻译副本集，其实就是shard的备份，防止shard挂掉之后数据丢失。复制提供了数据的冗余备份，并在多个服务器上存储数据副本，提高了数据的可用性， 并可以保证数据的安全性。<br>5.仲裁者（Arbiter），是复制集中的一个MongoDB实例，它并不保存数据。仲裁节点使用最小的资源并且不要求硬件设备，不能将Arbiter部署在同一个数据集节点中，可以部署在其他应用服务器或者监视服务器中，也可部署在单独的虚拟机中。为了确保复制集中有奇数的投票成员（包括primary），需要添加仲裁节点做为投票，否则primary不能运行时不会自动切换primary。<br>简单了解之后，我们可以这样总结一下，应用请求mongos来操作mongodb的增删改查，配置服务器存储数据库元信息，并且和mongos做同步，数据最终存入在shard（分片）上，为了防止数据丢失同步在副本集中存储了一份，仲裁在数据存储到分片的时候决定存储到哪个节点。</p>
 <h2 id="副本集的搭建"><a href="#副本集的搭建" class="headerlink" title="副本集的搭建"></a>副本集的搭建</h2><p><img src="/2020/07/12/MongDB-Copy-Cluster/1.png" alt></p>
