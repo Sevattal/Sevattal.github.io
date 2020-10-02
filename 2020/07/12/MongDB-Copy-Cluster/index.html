@@ -6,28 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>MongDB-Cluster | Sevattal</title>
+  <title>MongDB-Copy-Cluster | Sevattal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Mongodb集群搭建方式mongodb是最常用的nodql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。">
+  <meta name="description" content="Mongodb副本集群搭建方式mongodb是最常用的nodql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MongDB-Cluster">
-<meta property="og:url" content="http://yoursite.com/2020/07/12/MongDB-Cluster/index.html">
+<meta property="og:title" content="MongDB-Copy-Cluster">
+<meta property="og:url" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="Mongodb集群搭建方式mongodb是最常用的nodql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。">
+<meta property="og:description" content="Mongodb副本集群搭建方式mongodb是最常用的nodql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Cluster/1.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Cluster/2.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Cluster/3.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Cluster/4.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Cluster/5.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Cluster/6.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Cluster/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/7.png">
 <meta property="article:published_time" content="2020-07-12T07:03:35.000Z">
-<meta property="article:modified_time" content="2020-07-12T07:13:22.937Z">
+<meta property="article:modified_time" content="2020-10-02T09:10:49.811Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="MongDB">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/07/12/MongDB-Cluster/1.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Sevattal" type="application/atom+xml">
   
@@ -151,19 +151,19 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-MongDB-Cluster" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-MongDB-Copy-Cluster" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      MongDB-Cluster
+      MongDB-Copy-Cluster
     </h1>
   
 
         
-        <a href="/2020/07/12/MongDB-Cluster/" class="archive-article-date">
+        <a href="/2020/07/12/MongDB-Copy-Cluster/" class="archive-article-date">
   	<time datetime="2020-07-12T07:03:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
 </a>
         
@@ -171,10 +171,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Mongodb集群搭建方式"><a href="#Mongodb集群搭建方式" class="headerlink" title="Mongodb集群搭建方式"></a>Mongodb集群搭建方式</h1><p>mongodb是最常用的nodql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。</p>
+        <h1 id="Mongodb副本集群搭建方式"><a href="#Mongodb副本集群搭建方式" class="headerlink" title="Mongodb副本集群搭建方式"></a>Mongodb副本集群搭建方式</h1><p>mongodb是最常用的nodql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。</p>
 <a id="more"></a>
 <h1 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h1><p>在搭建集群之前，需要首先了解几个概念：路由，分片、副本集、配置服务器等。<br>1.mongos，数据库集群请求的入口，所有的请求都通过mongos进行协调，不需要在应用程序添加一个路由选择器，mongos自己就是一个请求分发中心，它负责把对应的数据请求请求转发到对应的shard服务器上。在生产环境通常有多mongos作为请求的入口，防止其中一个挂掉所有的mongodb请求都没有办法操作。<br>2.config server，顾名思义为配置服务器，存储所有数据库元信息（路由、分片）的配置。mongos本身没有物理存储分片服务器和数据路由信息，只是缓存在内存里，配置服务器则实际存储这些数据。mongos第一次启动或者关掉重启就会从 config server 加载配置信息，以后如果配置服务器信息变化会通知到所有的 mongos 更新自己的状态，这样 mongos 就能继续准确路由。在生产环境通常有多个 config server 配置服务器，因为它存储了分片路由的元数据，防止数据丢失！<br>3.shard，分片（sharding）是指将数据库拆分，将其分散在不同的机器上的过程。将数据分散到不同的机器上，不需要功能强大的服务器就可以存储更多的数据和处理更大的负载。基本思想就是将集合切成小块，这些块分散到若干片里，每个片只负责总数据的一部分，最后通过一个均衡器来对各个分片进行均衡（数据迁移）。<br>4.replica set，中文翻译副本集，其实就是shard的备份，防止shard挂掉之后数据丢失。复制提供了数据的冗余备份，并在多个服务器上存储数据副本，提高了数据的可用性， 并可以保证数据的安全性。<br>5.仲裁者（Arbiter），是复制集中的一个MongoDB实例，它并不保存数据。仲裁节点使用最小的资源并且不要求硬件设备，不能将Arbiter部署在同一个数据集节点中，可以部署在其他应用服务器或者监视服务器中，也可部署在单独的虚拟机中。为了确保复制集中有奇数的投票成员（包括primary），需要添加仲裁节点做为投票，否则primary不能运行时不会自动切换primary。<br>简单了解之后，我们可以这样总结一下，应用请求mongos来操作mongodb的增删改查，配置服务器存储数据库元信息，并且和mongos做同步，数据最终存入在shard（分片）上，为了防止数据丢失同步在副本集中存储了一份，仲裁在数据存储到分片的时候决定存储到哪个节点。</p>
-<h2 id="副本集的搭建"><a href="#副本集的搭建" class="headerlink" title="副本集的搭建"></a>副本集的搭建</h2><p><img src="/2020/07/12/MongDB-Cluster/1.png" alt></p>
+<h2 id="副本集的搭建"><a href="#副本集的搭建" class="headerlink" title="副本集的搭建"></a>副本集的搭建</h2><p><img src="/2020/07/12/MongDB-Copy-Cluster/1.png" alt></p>
 <h2 id="MongoDB复制原理"><a href="#MongoDB复制原理" class="headerlink" title="MongoDB复制原理"></a>MongoDB复制原理</h2><p>mongodb的复制至少需要两个节点。其中一个是主节点，负责处理客户端请求，其余的都是从节点，负责复制主节点上的数据。<br>mongodb各个节点常见的搭配方式为：一主一从， 一主多从。<br>主节点记录其上的所有操作oplog，从节点定期轮询主节点获取这些操作，然后对自己的数据副本执行这些操作。</p>
 <h2 id="副本集的特征"><a href="#副本集的特征" class="headerlink" title="副本集的特征"></a>副本集的特征</h2><p>1.N个节点的集群<br>2.任何节点可作为主节点<br>3.所有写操作都在主节点上<br>4.自动故障迁移<br>5.自动恢复</p>
 <h1 id="单机-使用单台服务器，使用不同的端口模拟多台MongDB服务器-搭建副本集群"><a href="#单机-使用单台服务器，使用不同的端口模拟多台MongDB服务器-搭建副本集群" class="headerlink" title="单机(使用单台服务器，使用不同的端口模拟多台MongDB服务器)搭建副本集群"></a>单机(使用单台服务器，使用不同的端口模拟多台MongDB服务器)搭建副本集群</h1><h2 id="1-建立data文件夹，存放数据"><a href="#1-建立data文件夹，存放数据" class="headerlink" title="1.建立data文件夹，存放数据"></a>1.建立data文件夹，存放数据</h2><p>在data文件夹中创建master（主节点），slaver（从节点），arbiter（仲裁节点）， 分别存放每个节点的数据</p>
@@ -192,21 +192,21 @@
 <blockquote>
 <p>rs.initiate(config) //初始化</p>
 </blockquote>
-<p><img src="/2020/07/12/MongDB-Cluster/2.png" alt></p>
+<p><img src="/2020/07/12/MongDB-Copy-Cluster/2.png" alt></p>
 <blockquote>
 <p>rs.status()   由于信息比较多，就列出了部分的信息</p>
 </blockquote>
-<p><img src="/2020/07/12/MongDB-Cluster/3.png" alt></p>
+<p><img src="/2020/07/12/MongDB-Copy-Cluster/3.png" alt></p>
 <p>现在基本上已完成了集群的搭建工作；</p>
 <h2 id="6-查看oplog的信息"><a href="#6-查看oplog的信息" class="headerlink" title="6.查看oplog的信息"></a>6.查看oplog的信息</h2><p>db.printReplicationInfo()</p>
-<p><img src="/2020/07/12/MongDB-Cluster/4.png" alt></p>
+<p><img src="/2020/07/12/MongDB-Copy-Cluster/4.png" alt></p>
 <p>db.getReplicationInfo()</p>
-<p><img src="/2020/07/12/MongDB-Cluster/5.png" alt></p>
+<p><img src="/2020/07/12/MongDB-Copy-Cluster/5.png" alt></p>
 <p>rs.printReplicationInfo()</p>
-<p><img src="/2020/07/12/MongDB-Cluster/6.png" alt></p>
+<p><img src="/2020/07/12/MongDB-Copy-Cluster/6.png" alt></p>
 <p>注释：信息对应的含义<br>configured oplog sizep oplog文件大小<br>log length start to end: oplog日志的启用时间段<br>oplog first event time:第一个事务日志的产生时间<br>oplog last event time:最后一个事务日志的产生条件<br>now: 现在的时间</p>
 <p>查看slave状态<br>db.printSlaveReplicationInfo()</p>
-<p><img src="/2020/07/12/MongDB-Cluster/7.png" alt></p>
+<p><img src="/2020/07/12/MongDB-Copy-Cluster/7.png" alt></p>
 <p>source —–从库的IP及端口<br>syncedTo —–当前的同步情况，延迟多久等信息</p>
 <h2 id="7-增加一个节点"><a href="#7-增加一个节点" class="headerlink" title="7.增加一个节点"></a>7.增加一个节点</h2><p>1.同上，建立一个文件包含bin、data、config、log等文件<br>2.启动mongodb<br>3.添加次新节点到现有的Replica sets<br>testrs:PRIMARY&gt; rs.add(“192.168.20.24:27020”)<br>{ “ok” : 1 }</p>
 <h2 id="8-删除一个节点"><a href="#8-删除一个节点" class="headerlink" title="8.删除一个节点"></a>8.删除一个节点</h2><p>进入主节点，执行<br>remove(“192.168.20.24:27020”)</p>
@@ -311,7 +311,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/12/MongDB-Cluster/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/12/MongDB-Copy-Cluster/" alt="微信分享二维码">
     </div>
 </div>
 
