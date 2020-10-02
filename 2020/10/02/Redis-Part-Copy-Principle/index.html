@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Redis-Part-Copy-Principle | Sevattal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="全量复制和部分复制搬运：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kismetv&#x2F;p&#x2F;9236731.html在Redis2.8以前，从节点向主节点发送sync命令请求同步数据，此时的同步方式是全量复制；在Redis2.8及以后，从节点可以发送psync命令请求同步数据，此时根据主从节点当前状态的不同，同步方式可能是全量复制或部分复制。后文介绍以Redis2.8及以后版本为例。全量复制：用于">
+  <meta name="description" content="Redis全量复制和部分复制搬运：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kismetv&#x2F;p&#x2F;9236731.html在Redis2.8以前，从节点向主节点发送sync命令请求同步数据，此时的同步方式是全量复制；在Redis2.8及以后，从节点可以发送psync命令请求同步数据，此时根据主从节点当前状态的不同，同步方式可能是全量复制或部分复制。后文介绍以Redis2.8及以后版本为例。全量">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis-Part-Copy-Principle">
 <meta property="og:url" content="http://yoursite.com/2020/10/02/Redis-Part-Copy-Principle/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="全量复制和部分复制搬运：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kismetv&#x2F;p&#x2F;9236731.html在Redis2.8以前，从节点向主节点发送sync命令请求同步数据，此时的同步方式是全量复制；在Redis2.8及以后，从节点可以发送psync命令请求同步数据，此时根据主从节点当前状态的不同，同步方式可能是全量复制或部分复制。后文介绍以Redis2.8及以后版本为例。全量复制：用于">
+<meta property="og:description" content="Redis全量复制和部分复制搬运：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kismetv&#x2F;p&#x2F;9236731.html在Redis2.8以前，从节点向主节点发送sync命令请求同步数据，此时的同步方式是全量复制；在Redis2.8及以后，从节点可以发送psync命令请求同步数据，此时根据主从节点当前状态的不同，同步方式可能是全量复制或部分复制。后文介绍以Redis2.8及以后版本为例。全量">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/10/02/Redis-Part-Copy-Principle/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/10/02/Redis-Part-Copy-Principle/2.png">
@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/10/02/Redis-Part-Copy-Principle/7.png">
 <meta property="og:image" content="http://yoursite.com/2020/10/02/Redis-Part-Copy-Principle/8.png">
 <meta property="article:published_time" content="2020-10-02T05:10:47.000Z">
-<meta property="article:modified_time" content="2020-10-02T05:16:49.247Z">
+<meta property="article:modified_time" content="2020-10-02T06:31:28.372Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Redis">
 <meta property="article:tag" content="Redis-Copy">
@@ -173,7 +173,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="全量复制和部分复制"><a href="#全量复制和部分复制" class="headerlink" title="全量复制和部分复制"></a>全量复制和部分复制</h1><p>搬运：<a href="https://www.cnblogs.com/kismetv/p/9236731.html" target="_blank" rel="noopener">https://www.cnblogs.com/kismetv/p/9236731.html</a><br>在Redis2.8以前，从节点向主节点发送sync命令请求同步数据，此时的同步方式是全量复制；在Redis2.8及以后，从节点可以发送psync命令请求同步数据，此时根据主从节点当前状态的不同，同步方式可能是全量复制或部分复制。后文介绍以Redis2.8及以后版本为例。<br>全量复制：用于初次复制或其他无法进行部分复制的情况，将主节点中的所有数据都发送给从节点，是一个非常重型的操作。<br>部分复制：用于网络中断等情况后的复制，只将中断期间主节点执行的写命令发送给从节点，与全量复制相比更加高效。需要注意的是，如果网络中断时间过长，导致主节点没有能够完整地保存中断期间执行的写命令，则无法进行部分复制，仍使用全量复制。</p>
+        <h1 id="Redis全量复制和部分复制"><a href="#Redis全量复制和部分复制" class="headerlink" title="Redis全量复制和部分复制"></a>Redis全量复制和部分复制</h1><p>搬运：<a href="https://www.cnblogs.com/kismetv/p/9236731.html" target="_blank" rel="noopener">https://www.cnblogs.com/kismetv/p/9236731.html</a><br>在Redis2.8以前，从节点向主节点发送sync命令请求同步数据，此时的同步方式是全量复制；在Redis2.8及以后，从节点可以发送psync命令请求同步数据，此时根据主从节点当前状态的不同，同步方式可能是全量复制或部分复制。后文介绍以Redis2.8及以后版本为例。<br>全量复制：用于初次复制或其他无法进行部分复制的情况，将主节点中的所有数据都发送给从节点，是一个非常重型的操作。<br>部分复制：用于网络中断等情况后的复制，只将中断期间主节点执行的写命令发送给从节点，与全量复制相比更加高效。需要注意的是，如果网络中断时间过长，导致主节点没有能够完整地保存中断期间执行的写命令，则无法进行部分复制，仍使用全量复制。</p>
 <a id="more"></a>
 <h2 id="1-全量复制"><a href="#1-全量复制" class="headerlink" title="1. 全量复制"></a>1. 全量复制</h2><p>Redis通过psync命令进行全量复制的过程如下：<br>（1）从节点判断无法进行部分复制，向主节点发送全量复制的请求；或从节点发送部分复制的请求，但主节点判断无法进行部分复制；具体判断过程需要在讲述了部分复制原理后再介绍。<br>（2）主节点收到全量复制的命令后，执行bgsave，在后台生成RDB文件，并使用一个缓冲区（称为复制缓冲区）记录从现在开始执行的所有写命令<br>（3）主节点的bgsave执行完成后，将RDB文件发送给从节点；从节点首先清除自己的旧数据，然后载入接收的RDB文件，将数据库状态更新至主节点执行bgsave时的数据库状态<br>（4）主节点将前述复制缓冲区中的所有写命令发送给从节点，从节点执行这些写命令，将数据库状态更新至主节点的最新状态<br>（5）如果从节点开启了AOF，则会触发bgrewriteaof的执行，从而保证AOF文件更新至主节点的最新状态<br>下面是执行全量复制时，主从节点打印的日志；可以看出日志内容与上述步骤是完全对应的。<br>主节点的打印日志如下：<br><img src="/2020/10/02/Redis-Part-Copy-Principle/1.png" alt></p>
 <p>从节点打印日志如下图所示：<br><img src="/2020/10/02/Redis-Part-Copy-Principle/2.png" alt></p>
@@ -584,6 +584,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Redis-Cluster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Oracle-Name</a>
               </li>
             
             <div class="clearfix"></div>
