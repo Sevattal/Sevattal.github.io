@@ -6,15 +6,33 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | Sevattal</title>
+  <title>MongoDB-Install | Sevattal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Sevattal">
-<meta property="og:url" content="http://yoursite.com/archives/2020/page/4/index.html">
+  <meta name="description" content="MongDB安装安装官网：https:&#x2F;&#x2F;www.mongodb.com&#x2F;中文官网：https:&#x2F;&#x2F;www.mongodb.org.cn&#x2F; 操作系统环境：CentOS7.6MongDB版本：MongDB-4.4.1MongDB安装目录：&#x2F;mongdb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB-Install">
+<meta property="og:url" content="http://yoursite.com/2020/10/04/MongoDB-Install/index.html">
 <meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="MongDB安装安装官网：https:&#x2F;&#x2F;www.mongodb.com&#x2F;中文官网：https:&#x2F;&#x2F;www.mongodb.org.cn&#x2F; 操作系统环境：CentOS7.6MongDB版本：MongDB-4.4.1MongDB安装目录：&#x2F;mongdb">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/8.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/9.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/10.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/11.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/12.png">
+<meta property="article:published_time" content="2020-10-04T04:58:48.000Z">
+<meta property="article:modified_time" content="2020-10-04T05:26:34.565Z">
 <meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="MongDB">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/10/04/MongoDB-Install/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Sevattal" type="application/atom+xml">
   
@@ -138,449 +156,249 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-MongoDB-Install" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MongoDB-Install
+    </h1>
+  
+
+        
+        <a href="/2020/10/04/MongoDB-Install/" class="archive-article-date">
+  	<time datetime="2020-10-04T04:58:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-04</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="MongDB安装安装"><a href="#MongDB安装安装" class="headerlink" title="MongDB安装安装"></a>MongDB安装安装</h1><p>官网：<a href="https://www.mongodb.com/" target="_blank" rel="noopener">https://www.mongodb.com/</a><br>中文官网：<a href="https://www.mongodb.org.cn/" target="_blank" rel="noopener">https://www.mongodb.org.cn/</a></p>
+<p>操作系统环境：CentOS7.6<br>MongDB版本：MongDB-4.4.1<br>MongDB安装目录：/mongdb</p>
+<a id="more"></a>
+
+<h2 id="1、安装编译安装所需依赖包"><a href="#1、安装编译安装所需依赖包" class="headerlink" title="1、安装编译安装所需依赖包"></a>1、安装编译安装所需依赖包</h2><pre><code>yum -y groupinstall &quot;Development tools&quot;
+yum -y install openssl openssl-devel</code></pre><h2 id="2、关闭大页内存"><a href="#2、关闭大页内存" class="headerlink" title="2、关闭大页内存"></a>2、关闭大页内存</h2><pre><code>mkdir /etc/tuned/virtual-guest-no-thp
+vim /etc/tuned/virtual-guest-no-thp/tuned.conf
+
+[main]
+include=virtual-guest
+[vm]
+transparent_hugepages=never</code></pre><p><label style="color: red"><strong>注：所有的noSQL产品都需要关闭大页内存来提高性能，也就是说像redis和memcache都需要关闭</strong></label><br>官方大页内存文档：<a href="https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/" target="_blank" rel="noopener">https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/</a></p>
+<h2 id="3、查看大页内存是否已经关闭"><a href="#3、查看大页内存是否已经关闭" class="headerlink" title="3、查看大页内存是否已经关闭"></a>3、查看大页内存是否已经关闭</h2><pre><code>cat /sys/kernel/mm/transparent_hugepage/enabled</code></pre><p><img src="/2020/10/04/MongoDB-Install/1.png" alt></p>
+<h2 id="4、设置内核参数，关闭NUMA"><a href="#4、设置内核参数，关闭NUMA" class="headerlink" title="4、设置内核参数，关闭NUMA"></a>4、设置内核参数，关闭NUMA</h2><pre><code>echo 0 &gt;/proc/sys/vm/zone_reclaim_mode 
+sysctl -w vm.zone_reclaim_mode=0</code></pre><p><img src="/2020/10/04/MongoDB-Install/2.png" alt><br><label style="color: red"><strong>注：当某个节点可用内存不足时系统会从其他节点分配内存</strong></label></p>
+<h2 id="5、解压安装包（该安装包，是解压后直接能用）"><a href="#5、解压安装包（该安装包，是解压后直接能用）" class="headerlink" title="5、解压安装包（该安装包，是解压后直接能用）"></a>5、解压安装包（该安装包，是解压后直接能用）</h2><pre><code>tar -vxf mongodb-linux-x86_64-rhel70-4.4.1.tgz</code></pre><h2 id="6、将压缩包放到指定目录"><a href="#6、将压缩包放到指定目录" class="headerlink" title="6、将压缩包放到指定目录"></a>6、将压缩包放到指定目录</h2><pre><code>mv mongodb-linux-x86_64-rhel70-4.4.1 /mongodb</code></pre><h2 id="7、创建mongodb用户"><a href="#7、创建mongodb用户" class="headerlink" title="7、创建mongodb用户"></a>7、创建mongodb用户</h2><pre><code>useradd mongodb</code></pre><h2 id="8、配置mongodb环境变量-bash-profile文件"><a href="#8、配置mongodb环境变量-bash-profile文件" class="headerlink" title="8、配置mongodb环境变量.bash_profile文件"></a>8、配置mongodb环境变量.bash_profile文件</h2><pre><code>MongoDB_Home=/mongodb
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:$MongoDB_Home:/bin
+export PATH</code></pre><h2 id="9、将mongodb用户授予权限"><a href="#9、将mongodb用户授予权限" class="headerlink" title="9、将mongodb用户授予权限"></a>9、将mongodb用户授予权限</h2><pre><code>chown -R  mongodb:mongodb /mongodb/</code></pre><h2 id="10、使用mongodb用户创建数据库配置文件目录、数据文件目录、日志文件目录"><a href="#10、使用mongodb用户创建数据库配置文件目录、数据文件目录、日志文件目录" class="headerlink" title="10、使用mongodb用户创建数据库配置文件目录、数据文件目录、日志文件目录"></a>10、使用mongodb用户创建数据库配置文件目录、数据文件目录、日志文件目录</h2><pre><code>mkdir -p /mongodb/conf
+mkdir  -p /mongodb/data/mongodb1 
+mkdir -p /mongodb/log/mongodb1
+touch /mongodb/log/mongodb1/mongodb1.log</code></pre><h2 id="11、修改-etc-security-limits-conf"><a href="#11、修改-etc-security-limits-conf" class="headerlink" title="11、修改/etc/security/limits.conf"></a>11、修改/etc/security/limits.conf</h2><pre><code>mongodb                hard       nofile          65535
+mongodb                soft       nofile          65535
+mongodb                soft       nproc           65535
+mongodb                hard       nproc           65535</code></pre><p><label style="color: red"><strong>注：当MongoDB处于频繁访问的状态，如果shell启动进程所占用的资源设置过低，将会产生错误导致无法连接MongoDB实例。需设置ulimit -n 和 ulimit -u的值大于20000</strong></label></p>
+<p><label style="color: red"><strong>以下皆以mongodb用户配置</strong></label></p>
+<h2 id="12、查看limits是否已经更改完成（使用mongodb用户）"><a href="#12、查看limits是否已经更改完成（使用mongodb用户）" class="headerlink" title="12、查看limits是否已经更改完成（使用mongodb用户）"></a>12、查看limits是否已经更改完成（使用mongodb用户）</h2><p><img src="/2020/10/04/MongoDB-Install/3.png" alt></p>
+<h2 id="13、创建MongDB配置文件，定义启动所需相关参数"><a href="#13、创建MongDB配置文件，定义启动所需相关参数" class="headerlink" title="13、创建MongDB配置文件，定义启动所需相关参数"></a>13、创建MongDB配置文件，定义启动所需相关参数</h2><p>官方配置文档参考：<a href="https://docs.mongodb.com/manual/administration/configuration/" target="_blank" rel="noopener">https://docs.mongodb.com/manual/administration/configuration/</a><br><img src="/2020/10/04/MongoDB-Install/4.png" alt></p>
+<p>以下是我的配置文档</p>
+<pre><code>processManagement:   
+    fork: true
+net:   
+    bindIp: 0.0.0.0   
+    port: 27017
+security:  
+    authorization: enabled
+storage:   
+    dbPath: /mongodb/data/mongodb1
+systemLog:   
+    destination: file   
+    path: &quot;/mongodb/log/mongodb1/mongodb1.log&quot;   
+    logAppend: true
+storage:   
+    journal:      
+    enabled: true</code></pre><p>配置文件说明</p>
+<pre><code>fork: true                        表示使用后台进程
+bindIp: 0.0.0.0                   表示所有IP地址都能访问，这个可以配置多个地址段使用英文逗号隔开
+dbPath:                           表示数据存储的路径</code></pre><h2 id="14、使用mongodb用户启动mongodb"><a href="#14、使用mongodb用户启动mongodb" class="headerlink" title="14、使用mongodb用户启动mongodb"></a>14、使用mongodb用户启动mongodb</h2><pre><code>mongod -f  /mongodb/conf/mongodb1.conf</code></pre><p><label style="color: red"><strong>注：若是之前不小心使用root用户启动mongodb那么在mongodb日志文件中会如下有报错，没有权限获取套接字文件</strong></label><br><img src="/2020/10/04/MongoDB-Install/5.png" alt><br>解决方法，删除/tmp目录下的套接字文件。</p>
+<h2 id="15、关闭mongodb"><a href="#15、关闭mongodb" class="headerlink" title="15、关闭mongodb"></a>15、关闭mongodb</h2><p>mongod -f  /mongodb/conf/mongodb1.conf  –shutdown</p>
+<h2 id="16、若要让别的服务器能够访问还得打开mongodb的防火墙"><a href="#16、若要让别的服务器能够访问还得打开mongodb的防火墙" class="headerlink" title="16、若要让别的服务器能够访问还得打开mongodb的防火墙"></a>16、若要让别的服务器能够访问还得打开mongodb的防火墙</h2><pre><code>firewall-cmd --zone=public --add-port=27017/tcp --permanent
+firewall-cmd --reload</code></pre><h2 id="17、使用mongo客户端-创建userAdminAnyDatabase权限用户（该权限为账号管理员角色）"><a href="#17、使用mongo客户端-创建userAdminAnyDatabase权限用户（该权限为账号管理员角色）" class="headerlink" title="17、使用mongo客户端,创建userAdminAnyDatabase权限用户（该权限为账号管理员角色）"></a>17、使用mongo客户端,创建userAdminAnyDatabase权限用户（该权限为账号管理员角色）</h2><pre><code>mongo --host 127.0.0.1 -port 27017
+
+use admin db.createUser(
+    {
+        user:&quot;admin&quot;,
+        pwd:&quot;admin&quot;,
+        roles:[{role:&quot;userAdminAnyDatabase&quot;,db:&quot;admin&quot;}]
+    }
+)</code></pre><p><img src="/2020/10/04/MongoDB-Install/6.png" alt><br><label style="color: red"><strong>注：创建userAdminAnyDatabase用户，在authorization: enabled只能够本地创建，所以登录的IP地址是本地回环地址。若不为本地回环地址会报以下错误信息</strong></label><br><img src="/2020/10/04/MongoDB-Install/7.png" alt></p>
+<p>以下数据库权限角色说明</p>
+<pre><code>Read：允许用户读取指定数据库
+readWrite：允许用户读写指定数据库
+dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile
+userAdmin：允许用户向system.users集合写入，可以找指定数据库里创建、删除和管理用户
+clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。
+readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限
+readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限
+userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限
+dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。
+root：只在admin数据库中可用。超级账号，超级权限</code></pre><h2 id="18、auth验证，查看数据库信息"><a href="#18、auth验证，查看数据库信息" class="headerlink" title="18、auth验证，查看数据库信息"></a>18、auth验证，查看数据库信息</h2><pre><code>db.auth(&quot;admin&quot;,&quot;admin&quot;)</code></pre><p><img src="/2020/10/04/MongoDB-Install/8.png" alt><br><label style="color: red"><strong>注：若不auth验证数据库信息无法查看到。</strong></label></p>
+<h2 id="19、授予admin用户test库权限"><a href="#19、授予admin用户test库权限" class="headerlink" title="19、授予admin用户test库权限"></a>19、授予admin用户test库权限</h2><pre><code>db.grantRolesToUser(&quot;admin&quot;,[{role:&quot;readWrite&quot;,db:&quot;test&quot;}])</code></pre><h2 id="20、创建一个test测试库，并创建collection"><a href="#20、创建一个test测试库，并创建collection" class="headerlink" title="20、创建一个test测试库，并创建collection"></a>20、创建一个test测试库，并创建collection</h2><p>use test<br><label style="color: red"><strong>注：但是你什么也不干就离开的话这个空数据库就会被删除</strong></label></p>
+<h2 id="21、创建collection，并插入数据，查询结果"><a href="#21、创建collection，并插入数据，查询结果" class="headerlink" title="21、创建collection，并插入数据，查询结果"></a>21、创建collection，并插入数据，查询结果</h2><p>db.createCollection(“user”)<br><img src="/2020/10/04/MongoDB-Install/9.png" alt></p>
+<p>db.user.insert({“name”:”mongodb”})<br><img src="/2020/10/04/MongoDB-Install/10.png" alt></p>
+<p>db.user.find();<br><img src="/2020/10/04/MongoDB-Install/11.png" alt></p>
+<h2 id="22、授予admin用户mongodb数据库超级管理员权限"><a href="#22、授予admin用户mongodb数据库超级管理员权限" class="headerlink" title="22、授予admin用户mongodb数据库超级管理员权限"></a>22、授予admin用户mongodb数据库超级管理员权限</h2><pre><code>db.grantRolesToUser(&quot;admin&quot;,[{role:&quot;root&quot;,db:&quot;admin&quot;}]);</code></pre><h2 id="23、拥有超级管理员的用户可以在mongo客户端关闭数据库"><a href="#23、拥有超级管理员的用户可以在mongo客户端关闭数据库" class="headerlink" title="23、拥有超级管理员的用户可以在mongo客户端关闭数据库"></a>23、拥有超级管理员的用户可以在mongo客户端关闭数据库</h2><pre><code>db.shutdownServer();</code></pre><p><img src="/2020/10/04/MongoDB-Install/12.png" alt></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wepay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/CRM-Parameter/" class="archive-article-date">
-  	<time datetime="2020-04-04T03:47:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CRM</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MongDB</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/10/04/MongoDB-Install/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/CentOS-Mail-Client/" class="archive-article-date">
-  	<time datetime="2020-04-04T03:37:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/02/Oracle-Name-Explain/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Oracle-Name-Explain</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Mail</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/CentOS-Mail-Address/" class="archive-article-date">
-  	<time datetime="2020-04-04T03:34:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Mail</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/Oracle-Backup-RMAN/" class="archive-article-date">
-  	<time datetime="2020-04-04T03:05:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Backup</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RMAN</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/Oracle-Backup-EXP/" class="archive-article-date">
-  	<time datetime="2020-04-04T02:58:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Backup</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">EXP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/Oracle-DG-Multiple-Nodes/" class="archive-article-date">
-  	<time datetime="2020-04-04T02:54:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DG</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/Zabbix-Install/" class="archive-article-date">
-  	<time datetime="2020-04-04T02:44:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Zabbix</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/Linux-NTP/" class="archive-article-date">
-  	<time datetime="2020-04-04T02:34:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/Linux-NTP/">Linux-NTP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NTP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/Oracle-Patrol-Other/" class="archive-article-date">
-  	<time datetime="2020-04-04T02:32:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Oracle-Inspection</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/Oracle-Patrol-Security/" class="archive-article-date">
-  	<time datetime="2020-04-04T02:32:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Oracle-Inspection</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2020/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/archives/2020/">1</a><a class="page-number" href="/archives/2020/page/2/">2</a><a class="page-number" href="/archives/2020/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/2020/page/5/">5</a><a class="page-number" href="/archives/2020/page/6/">6</a><a class="extend next" rel="next" href="/archives/2020/page/5/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -605,8 +423,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

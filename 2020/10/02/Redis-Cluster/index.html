@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/10/02/Redis-Cluster/15.png">
 <meta property="og:image" content="http://yoursite.com/2020/10/02/Redis-Cluster/16.png">
 <meta property="article:published_time" content="2020-10-02T05:43:01.000Z">
-<meta property="article:modified_time" content="2020-10-02T06:26:50.426Z">
+<meta property="article:modified_time" content="2020-10-04T04:10:24.601Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Redis">
 <meta property="article:tag" content="Redis-Cluster">
@@ -185,9 +185,56 @@
 <a id="more"></a>
 <h3 id="数据分区"><a href="#数据分区" class="headerlink" title="数据分区"></a>数据分区</h3><p>数据分区：数据分区(或称数据分片)是集群最核心的功能。<br>集群将数据分散到多个节点，一方面突破了Redis单机内存大小的限制，存储容量大大增加；另一方面每个主节点都可以对外提供读服务和写服务，大大提高了集群的响应能力。<br>Redis单机内存大小受限问题，在介绍持久化和主从复制时都有提及；例如，如果单机内存太大，bgsave和bgrewriteaof的fork操作可能导致主进程阻塞，主从环境下主机切换时可能导致从节点长时间无法提供服务，全量复制阶段主节点的复制缓冲区可能溢出……。</p>
 <h3 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h3><p>高可用：集群支持主从复制和主节点的自动故障转移（与哨兵类似）；当任一节点发生故障时，集群仍然可以对外提供服务。</p>
-<h1 id="Redis集群的搭建"><a href="#Redis集群的搭建" class="headerlink" title="Redis集群的搭建"></a>Redis集群的搭建</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>操作系统：CentOS8<br>Redis版本：6.0.8（Redis已经提前安装好了）<br>Redis安装路径：/redis<br>Redis配置文件名：redis-6379.conf<br>| IP | HOST | Redis-Port | ROLE |<br>| 192.168.10.11 | redis1 | 6379 | Master |<br>| 192.168.10.11 | redis1 | 6380 | Slave |<br>| 192.168.10.12 | redis2 | 6379 | Master |<br>| 192.168.10.12 | redis2 | 6380 | Slave |<br>| 192.168.10.13 | redis3 | 6379 | Master |<br>| 192.168.10.13 | redis3 | 6380 | Slave |<br><label style="color:red"><strong>注：每台机器上装了一台主从redis，正式生产环境每一组主从Redis Cluster必须是在不在同一台机器上（用于完成异地冗余）。</strong></label><br>集群的搭建有两种方式：<br>（1）手动执行Redis命令，一步步完成搭建；<br>（2）使用Ruby脚本搭建。二者搭建的原理是一样的，只是Ruby脚本将Redis命令进行了打包封装；在实际应用中推荐使用脚本方式，简单快捷不容易出错。下面分别介绍这两种方式。</p>
+<h1 id="Redis集群的搭建"><a href="#Redis集群的搭建" class="headerlink" title="Redis集群的搭建"></a>Redis集群的搭建</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>操作系统：CentOS8<br>Redis版本：6.0.8（Redis已经提前安装好了）<br>Redis安装路径：/redis<br>Redis配置文件名：redis-6379.conf</p>
+<table>
+<thead>
+<tr>
+<th align="left">IP</th>
+<th align="left">HOST</th>
+<th align="left">Redis-Port</th>
+<th align="left">ROLE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">192.168.10.11</td>
+<td align="left">redis1</td>
+<td align="left">6379</td>
+<td align="left">Master</td>
+</tr>
+<tr>
+<td align="left">192.168.10.11</td>
+<td align="left">redis1</td>
+<td align="left">6380</td>
+<td align="left">Slave</td>
+</tr>
+<tr>
+<td align="left">192.168.10.12</td>
+<td align="left">redis2</td>
+<td align="left">6379</td>
+<td align="left">Master</td>
+</tr>
+<tr>
+<td align="left">192.168.10.12</td>
+<td align="left">redis2</td>
+<td align="left">6380</td>
+<td align="left">Slave</td>
+</tr>
+<tr>
+<td align="left">192.168.10.13</td>
+<td align="left">redis3</td>
+<td align="left">6379</td>
+<td align="left">Master</td>
+</tr>
+<tr>
+<td align="left">192.168.10.13</td>
+<td align="left">redis3</td>
+<td align="left">6380</td>
+<td align="left">Slave</td>
+</tr>
+</tbody></table>
+<p><label style="color:red"><strong>注：每台机器上装了一台主从redis，正式生产环境每一组主从Redis Cluster必须是在不在同一台机器上（用于完成异地冗余）。</strong></label><br>集群的搭建有两种方式：<br>（1）手动执行Redis命令，一步步完成搭建；<br>（2）使用Ruby脚本搭建。二者搭建的原理是一样的，只是Ruby脚本将Redis命令进行了打包封装；在实际应用中推荐使用脚本方式，简单快捷不容易出错。下面分别介绍这两种方式。</p>
 <h3 id="执行Redis命令搭建集群"><a href="#执行Redis命令搭建集群" class="headerlink" title="执行Redis命令搭建集群"></a>执行Redis命令搭建集群</h3><p>集群的搭建可以分为四步：<br>（1）启动节点：将节点以集群模式启动，此时节点是独立的，并没有建立联系；<br>（2）节点握手：让独立的节点连成一个网络；<br>（3）分配槽：将16384个槽分配给主节点；<br>（4）指定主从关系：为从节点指定主节点。<br>实际上，前三步完成后集群便可以对外提供服务；但指定从节点后，集群才能够提供真正高可用的服务。</p>
-<p>####（1）启动节点<br>集群节点的启动仍然是使用redis-server命令，但需要使用集群模式启动。下面是redis1节点的配置文件（只列出了节点正常工作关键配置，其他配置(如开启AOF)可以参照单机节点进行）：</p>
+<h4 id="（1）启动节点"><a href="#（1）启动节点" class="headerlink" title="（1）启动节点"></a>（1）启动节点</h4><p>集群节点的启动仍然是使用redis-server命令，但需要使用集群模式启动。下面是redis1节点的配置文件（只列出了节点正常工作关键配置，其他配置(如开启AOF)可以参照单机节点进行）：</p>
 <pre><code>#redis-6379.conf
 port 6379
 cluster-enabled yes
