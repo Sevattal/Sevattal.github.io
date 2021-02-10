@@ -140,6 +140,181 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Linux-DRBD" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/04/Linux-DRBD/" class="archive-article-date">
+  	<time datetime="2020-04-04T00:49:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DRBD简介：DRBD-Distributed-Replicated-Block-Device"><a href="#DRBD简介：DRBD-Distributed-Replicated-Block-Device" class="headerlink" title="DRBD简介：DRBD(Distributed Replicated Block Device)"></a>DRBD简介：DRBD(Distributed Replicated Block Device)</h1><p>分布式块设备复制,DRBD是由内核模块和相关脚本而构成，用以构建高可用性的集群。其实现方式是通过网络来镜像整个设备。它允许用户在远程机器上建立一个本地块设备的实时镜像。与心跳连接结合使用，也可以把它看作是一种网络RAID。</p>
+<p>DRBD负责接收数据，把数据写到本地磁盘，然后发送给另一个主机。另一个主机再将数据存到自己的磁盘中。目前，DRBD每次只允许对一个节点进行读写访问，这对于通常的故障切换高可用性集群来讲已经足够用了。以后的版本将支持两个节点进行读写存取。<br>一个DRBD系统由两个以上节点构成，与HA集群类似，也有主用节点和备用节点之分，在带有主要设备的节点上，应用程序和操作系统可以运行和访问DRBD设备。<br>在主节点写入的数据通过drbd设备存储到主节点的磁盘设备中，同时，这个数据也会自动发送到备用节点相应的drbd设备，最终写入备用节点的磁盘设备中，在备用节点上，drbd只是将数据从drbd设备写入到备用节点的磁盘设备中。<br>大部分现行高可用性集群都会使用共享存储，而DRBD也可以作为一个共享存储设备，使用DRBD不需要任何硬件的投资。因为它在IP网络中运行，因此，利用DRBD作为共享存储设备，要节约很多成本，因为在价格上IP网络要比专用的存储网络经济的多。</p>
+        
+          <a class="article-more-a" href="/2020/04/04/Linux-DRBD/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DRBD</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/04/Linux-DRBD/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux-LVM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/04/Linux-LVM/">Linux_LVM</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/04/Linux-LVM/" class="archive-article-date">
+  	<time datetime="2020-04-04T00:41:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LVM简介：-Logical-Volume-Manager（逻辑卷管理"><a href="#LVM简介：-Logical-Volume-Manager（逻辑卷管理" class="headerlink" title="LVM简介： Logical Volume Manager（逻辑卷管理)"></a>LVM简介： Logical Volume Manager（逻辑卷管理)</h1><p>简单的讲,它是Linux环境下对磁盘分区进行管理的一种机制，LVM是建立在硬盘和分区之的一个逻辑层，来提高磁盘分区管理的灵活性。<br>我们为什么要使用LVM进行磁盘管理呢?<br>主要是因为其扩展和维护的灵活性，简单的说就是我们可以随时在现有的磁盘组中加一块磁盘，将其的容量及性能得到充分利用。</p>
+        
+          <a class="article-more-a" href="/2020/04/04/Linux-LVM/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LVM</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/04/Linux-LVM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MyFirstBlog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -527,6 +702,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Rancher</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NetworkCard</a>
               </li>
             
             <div class="clearfix"></div>

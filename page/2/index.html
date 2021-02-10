@@ -140,6 +140,173 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Linux-Elasticsearch-Instatll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/02/Linux-Elasticsearch-Instatll/">Linux-Elasticsearch-Instatll</a>
+    </h1>
+  
+
+        
+        <a href="/2021/01/02/Linux-Elasticsearch-Instatll/" class="archive-article-date">
+  	<time datetime="2021-01-02T03:00:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Elasticsearch-CentOS7下RPM安装"><a href="#Elasticsearch-CentOS7下RPM安装" class="headerlink" title="Elasticsearch CentOS7下RPM安装"></a>Elasticsearch CentOS7下RPM安装</h1><h2 id="一，安装环境查看"><a href="#一，安装环境查看" class="headerlink" title="一，安装环境查看"></a>一，安装环境查看</h2><p><img src="/2021/01/02/Linux-Elasticsearch-Instatll/1.png" alt></p>
+<h2 id="二，软件版本选用"><a href="#二，软件版本选用" class="headerlink" title="二，软件版本选用"></a>二，软件版本选用</h2><pre><code>jdk 1.8.0_242
+elasticsearch 7.6.2
+kibana 7.6.2
+logstash 7.6.2</code></pre>
+        
+          <a class="article-more-a" href="/2021/01/02/Linux-Elasticsearch-Instatll/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Elasticsearch</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/02/Linux-Elasticsearch-Instatll/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux-Python-File-Sync" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a>
+    </h1>
+  
+
+        
+        <a href="/2021/01/02/Linux-Python-File-Sync/" class="archive-article-date">
+  	<time datetime="2021-01-02T02:47:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="python文件自动同步备份"><a href="#python文件自动同步备份" class="headerlink" title="python文件自动同步备份"></a>python文件自动同步备份</h1><p>转载：<a href="https://www.52pojie.cn/thread-1337396-1-1.html" target="_blank" rel="noopener">https://www.52pojie.cn/thread-1337396-1-1.html</a></p>
+<p>需求：平台会把虚拟机备份的文件打包到服务器A，再同步备份到服务器B（只需要考虑A到B）。</p>
+<p>思路：<br>服务器A作为服务端，定时遍历自己的文件目录，把文件目录信息打包成一个校验文件。<br>服务器B作为客户端，下载校验文件，遍历自己的文件目录是否和服务器相同，并下载本地没有的文件。<br>通过http传输，使用python开启一个简单的http服务。</p>
+<p>生产环境：python3.7.9，两台CentOS7.9服务器。</p>
+        
+          <a class="article-more-a" href="/2021/01/02/Linux-Python-File-Sync/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/02/Linux-Python-File-Sync/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Window-Process" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -790,158 +957,6 @@ Rpm下载：http://rpmfind.net/linux/RPM/tinyproxy.html</code></pre>
 
 
   
-    <article id="post-Git-Server" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/22/Git-Server/">Git-Server</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/22/Git-Server/" class="archive-article-date">
-  	<time datetime="2020-11-22T09:37:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Git与Gitee或者GitHub的代码管理"><a href="#Git与Gitee或者GitHub的代码管理" class="headerlink" title="Git与Gitee或者GitHub的代码管理"></a>Git与Gitee或者GitHub的代码管理</h1><p>在代码的开发过程中，我们可以将我们的代码托管到第三方仓库中<br>国内的平台为：Gitee和Coding<br>国外的平台为：GitHub</p>
-        
-          <a class="article-more-a" href="/2020/11/22/Git-Server/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/22/Git-Server/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Git-Local" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/22/Git-Local/">Git-Local</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/22/Git-Local/" class="archive-article-date">
-  	<time datetime="2020-11-22T09:31:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Git-版本控制"><a href="#Git-版本控制" class="headerlink" title="Git 版本控制"></a>Git 版本控制</h1><p>搞python 的公司一般都用：Git  / Mencury 版本控制</p>
-        
-          <a class="article-more-a" href="/2020/11/22/Git-Local/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/22/Git-Local/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
@@ -1265,6 +1280,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Rancher</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NetworkCard</a>
               </li>
             
             <div class="clearfix"></div>
