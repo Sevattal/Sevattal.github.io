@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Docker-Dockerfile | Sevattal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Docker系列07—Dockerfile 详解转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10243761.html 1、认识Dockerfile1.1 镜像的生成途径 基于容器制作 dockerfile，docker build　　这篇主要讲解基于Dockerfile，使用docker build 命令制作镜像。 1.2 Dockerfile 介绍　　Docker">
+  <meta name="description" content="Dockerfile 详解转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10243761.html 1、认识Dockerfile1.1 镜像的生成途径 基于容器制作 dockerfile，docker build　　这篇主要讲解基于Dockerfile，使用docker build 命令制作镜像。 1.2 Dockerfile 介绍　　Docker中有个非常重要的概念叫">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker-Dockerfile">
 <meta property="og:url" content="http://yoursite.com/2021/02/11/Docker-Dockerfile/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="Docker系列07—Dockerfile 详解转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10243761.html 1、认识Dockerfile1.1 镜像的生成途径 基于容器制作 dockerfile，docker build　　这篇主要讲解基于Dockerfile，使用docker build 命令制作镜像。 1.2 Dockerfile 介绍　　Docker">
+<meta property="og:description" content="Dockerfile 详解转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10243761.html 1、认识Dockerfile1.1 镜像的生成途径 基于容器制作 dockerfile，docker build　　这篇主要讲解基于Dockerfile，使用docker build 命令制作镜像。 1.2 Dockerfile 介绍　　Docker中有个非常重要的概念叫">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-11T04:18:29.000Z">
-<meta property="article:modified_time" content="2021-02-11T04:41:49.795Z">
+<meta property="article:modified_time" content="2021-02-11T05:17:51.477Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -163,7 +163,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Docker系列07—Dockerfile-详解"><a href="#Docker系列07—Dockerfile-详解" class="headerlink" title="Docker系列07—Dockerfile 详解"></a>Docker系列07—Dockerfile 详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10243761.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10243761.html</a></p>
+        <h1 id="Dockerfile-详解"><a href="#Dockerfile-详解" class="headerlink" title="Dockerfile 详解"></a>Dockerfile 详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10243761.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10243761.html</a></p>
 <h2 id="1、认识Dockerfile"><a href="#1、认识Dockerfile" class="headerlink" title="1、认识Dockerfile"></a>1、认识Dockerfile</h2><h3 id="1-1-镜像的生成途径"><a href="#1-1-镜像的生成途径" class="headerlink" title="1.1 镜像的生成途径"></a>1.1 镜像的生成途径</h3><p> 基于容器制作<br> dockerfile，docker build<br>　　这篇主要讲解基于Dockerfile，使用docker build 命令制作镜像。</p>
 <h3 id="1-2-Dockerfile-介绍"><a href="#1-2-Dockerfile-介绍" class="headerlink" title="1.2 Dockerfile 介绍"></a>1.2 Dockerfile 介绍</h3><p>　　Docker中有个非常重要的概念叫做——镜像（Image）。Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。</p>
 <p>　　镜像的定制实际上就是定制每一层所添加的配置、文件。如果我们可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。</p>
@@ -799,7 +799,7 @@ Dockerfile可以包含一个或多个ARG指令</code></pre><h4 id="15-2-2-示例
 <pre><code>FROM busybox:latest
 ARG author=&quot;Along &lt;along@along.com&gt;&quot;
 MAINTAINER $ARG</code></pre><p>　　<br>（2）构建此时镜像时，修改此age</p>
-<p>docker build –build-arg author=”Tom <a href="mailto:&#x74;&#111;&#109;&#x40;&#116;&#x6f;&#109;&#46;&#99;&#x6f;&#109;">&#x74;&#111;&#109;&#x40;&#116;&#x6f;&#109;&#46;&#99;&#x6f;&#109;</a>“ -t test:v0.1 ./</p>
+<p>docker build –build-arg author=”Tom <a href="mailto:&#x74;&#111;&#109;&#x40;&#x74;&#111;&#x6d;&#x2e;&#x63;&#111;&#109;">&#x74;&#111;&#109;&#x40;&#x74;&#111;&#x6d;&#x2e;&#x63;&#111;&#109;</a>“ -t test:v0.1 ./</p>
 <h3 id="15-3-SHELL"><a href="#15-3-SHELL" class="headerlink" title="15.3 SHELL"></a>15.3 SHELL</h3><h4 id="15-3-1-介绍"><a href="#15-3-1-介绍" class="headerlink" title="15.3.1 介绍"></a>15.3.1 介绍</h4><pre><code>SHELL指令允许覆盖用于shell命令形式的默认shell。
 Linux上的默认shell是[“/ bin / sh”，“c”]，在Windows上是[“cmd”，“/ S”，“/ C”]
 SHELL指令必须以JSON格式写入Dockerfile。</code></pre><h4 id="15-3-2-语法"><a href="#15-3-2-语法" class="headerlink" title="15.3.2 语法"></a>15.3.2 语法</h4><pre><code>SHELL [&quot;executable&quot;, &quot;parameters&quot;]

@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Docker-Volume | Sevattal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Docker系列05—Docker 存储卷详解转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10237219.html 1、存储卷介绍1.1 背景（1）docker 的 AFUS 分层文件系统    docker镜像由多个只读层叠加面成，启动容器时，docker会加载只读镜像层并在镜像栈顶部加一个读写层；    如果运行中的容器修改了现有的一个已经存在的文件，那该文件将">
+  <meta name="description" content="Docker 存储卷详解转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10237219.html 1、存储卷介绍1.1 背景（1）docker 的 AFUS 分层文件系统    docker镜像由多个只读层叠加面成，启动容器时，docker会加载只读镜像层并在镜像栈顶部加一个读写层；    如果运行中的容器修改了现有的一个已经存在的文件，那该文件将会从读写层下面的只读层">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker-Volume">
 <meta property="og:url" content="http://yoursite.com/2021/02/11/Docker-Volume/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="Docker系列05—Docker 存储卷详解转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10237219.html 1、存储卷介绍1.1 背景（1）docker 的 AFUS 分层文件系统    docker镜像由多个只读层叠加面成，启动容器时，docker会加载只读镜像层并在镜像栈顶部加一个读写层；    如果运行中的容器修改了现有的一个已经存在的文件，那该文件将">
+<meta property="og:description" content="Docker 存储卷详解转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10237219.html 1、存储卷介绍1.1 背景（1）docker 的 AFUS 分层文件系统    docker镜像由多个只读层叠加面成，启动容器时，docker会加载只读镜像层并在镜像栈顶部加一个读写层；    如果运行中的容器修改了现有的一个已经存在的文件，那该文件将会从读写层下面的只读层">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Volume/1.png">
 <meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Volume/2.png">
 <meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Volume/3.png">
 <meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Volume/4.png">
 <meta property="article:published_time" content="2021-02-11T03:57:09.000Z">
-<meta property="article:modified_time" content="2021-02-11T04:04:49.577Z">
+<meta property="article:modified_time" content="2021-02-11T05:17:19.689Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -168,7 +168,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Docker系列05—Docker-存储卷详解"><a href="#Docker系列05—Docker-存储卷详解" class="headerlink" title="Docker系列05—Docker 存储卷详解"></a>Docker系列05—Docker 存储卷详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10237219.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10237219.html</a></p>
+        <h1 id="Docker-存储卷详解"><a href="#Docker-存储卷详解" class="headerlink" title="Docker 存储卷详解"></a>Docker 存储卷详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10237219.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10237219.html</a></p>
 <h2 id="1、存储卷介绍"><a href="#1、存储卷介绍" class="headerlink" title="1、存储卷介绍"></a>1、存储卷介绍</h2><h3 id="1-1-背景"><a href="#1-1-背景" class="headerlink" title="1.1 背景"></a>1.1 背景</h3><p>（1）docker 的 AFUS 分层文件系统<br>    docker镜像由多个只读层叠加面成，启动容器时，docker会加载只读镜像层并在镜像栈顶部加一个读写层；<br>    如果运行中的容器修改了现有的一个已经存在的文件，那该文件将会从读写层下面的只读层复制到读写层，该文件版本仍然存在，只是已经被读写层中该文件的副本所隐藏，此即“写时复制(COW)”机制。<br> <a id="more"></a><br>（2）示意图<br><img src="/2021/02/11/Docker-Volume/1.png" alt></p>
 <p>描述：如果一个文件在最底层是可见的，如果在layer1上标记为删除，最高的层是用户看到的Layer2的层，在layer0上的文件，在layer2上可以删除，但是只是标记删除，用户是不可见的，总之在到达最顶层之前，把它标记来删除，对于最上层的用户是不可见的，当标记一删除，只有用户在最上层建一个同名一样的文件，才是可见的。</p>
 <h3 id="1-2-为什么要使用存储卷"><a href="#1-2-为什么要使用存储卷" class="headerlink" title="1.2 为什么要使用存储卷"></a>1.2 为什么要使用存储卷</h3><p> 对于这类的操作，修改删除等，一般效率非常低，如果对一于I/O要求比较高的应用，如redis在实现持化存储时，是在底层存储时的性能要求比较高。<br> 假设底层运行一个存储库mysql,mysql本来对于I/O的要求就比较高，如果mysql又是运行在容器中自己的文件系统之上时，也就是容器在停止时，就意味着删除，其实现数据存取时效率比较低，要避免这个限制要使用存储卷来实现。<br> 存在的问题：<br> 存储于联合文件系统中，不易于宿主机访问；<br> 容器间数据共享不便<br> 删除容器其数据会丢失</p>

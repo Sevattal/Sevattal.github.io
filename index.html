@@ -237,7 +237,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Docker系列07—Dockerfile-详解"><a href="#Docker系列07—Dockerfile-详解" class="headerlink" title="Docker系列07—Dockerfile 详解"></a>Docker系列07—Dockerfile 详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10243761.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10243761.html</a></p>
+        <h1 id="Dockerfile-详解"><a href="#Dockerfile-详解" class="headerlink" title="Dockerfile 详解"></a>Dockerfile 详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10243761.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10243761.html</a></p>
 <h2 id="1、认识Dockerfile"><a href="#1、认识Dockerfile" class="headerlink" title="1、认识Dockerfile"></a>1、认识Dockerfile</h2><h3 id="1-1-镜像的生成途径"><a href="#1-1-镜像的生成途径" class="headerlink" title="1.1 镜像的生成途径"></a>1.1 镜像的生成途径</h3><p> 基于容器制作<br> dockerfile，docker build<br>　　这篇主要讲解基于Dockerfile，使用docker build 命令制作镜像。</p>
 <h3 id="1-2-Dockerfile-介绍"><a href="#1-2-Dockerfile-介绍" class="headerlink" title="1.2 Dockerfile 介绍"></a>1.2 Dockerfile 介绍</h3><p>　　Docker中有个非常重要的概念叫做——镜像（Image）。Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。</p>
 <p>　　镜像的定制实际上就是定制每一层所添加的配置、文件。如果我们可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。</p>
@@ -317,7 +317,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Docker系列04—Docker的网络模式详解"><a href="#Docker系列04—Docker的网络模式详解" class="headerlink" title="Docker系列04—Docker的网络模式详解"></a>Docker系列04—Docker的网络模式详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10233746.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10233746.html</a></p>
+        <h1 id="Docker-的网络模式详解"><a href="#Docker-的网络模式详解" class="headerlink" title="Docker 的网络模式详解"></a>Docker 的网络模式详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10233746.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10233746.html</a></p>
 <h2 id="1、Docker的四种网络模式"><a href="#1、Docker的四种网络模式" class="headerlink" title="1、Docker的四种网络模式"></a>1、Docker的四种网络模式</h2><p><img src="/2021/02/11/Docker-NetworkMode/1.png" alt><br>（1）docker四种网络模式如下：<br> Bridge contauner   桥接式网络模式<br> Host(open) container   开放式网络模式<br> Container(join) container   联合挂载式网络模式，是host网络模式的延伸<br> None(Close) container   封闭式网络模式<br></p>
         
           <a class="article-more-a" href="/2021/02/11/Docker-NetworkMode/#more">more >></a>
@@ -394,7 +394,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Docker系列05—Docker-存储卷详解"><a href="#Docker系列05—Docker-存储卷详解" class="headerlink" title="Docker系列05—Docker 存储卷详解"></a>Docker系列05—Docker 存储卷详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10237219.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10237219.html</a></p>
+        <h1 id="Docker-存储卷详解"><a href="#Docker-存储卷详解" class="headerlink" title="Docker 存储卷详解"></a>Docker 存储卷详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10237219.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10237219.html</a></p>
 <h2 id="1、存储卷介绍"><a href="#1、存储卷介绍" class="headerlink" title="1、存储卷介绍"></a>1、存储卷介绍</h2><h3 id="1-1-背景"><a href="#1-1-背景" class="headerlink" title="1.1 背景"></a>1.1 背景</h3><p>（1）docker 的 AFUS 分层文件系统<br>    docker镜像由多个只读层叠加面成，启动容器时，docker会加载只读镜像层并在镜像栈顶部加一个读写层；<br>    如果运行中的容器修改了现有的一个已经存在的文件，那该文件将会从读写层下面的只读层复制到读写层，该文件版本仍然存在，只是已经被读写层中该文件的副本所隐藏，此即“写时复制(COW)”机制。<br></p>
         
           <a class="article-more-a" href="/2021/02/11/Docker-Volume/#more">more >></a>
