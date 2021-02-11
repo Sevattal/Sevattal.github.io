@@ -16,9 +16,9 @@
 <meta property="og:description" content="Linux 网卡名称修改1、查看网卡信息nmcli con         查看网卡的UUID ifconfig        查看网卡的HWaddr">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2021/02/10/Linux-NetworkCard-Rename/1.png">
-<meta property="og:image" content="http://yoursite.com/2021/02/10/Linux-NetworkCard-Rename/4.png">
+<meta property="og:image" content="http://yoursite.com/2021/02/10/Linux-NetworkCard-Rename/2.png">
 <meta property="article:published_time" content="2021-02-10T03:48:51.000Z">
-<meta property="article:modified_time" content="2021-02-10T04:01:08.540Z">
+<meta property="article:modified_time" content="2021-02-10T12:59:20.339Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="NetworkCard">
@@ -173,7 +173,7 @@ ifconfig        查看网卡的HWaddr</code></pre><a id="more"></a>
 <h2 id="2、更改-etc-sysconfig-network-scripts-ifcfg-eth-文件名与DEVICE参数要一致"><a href="#2、更改-etc-sysconfig-network-scripts-ifcfg-eth-文件名与DEVICE参数要一致" class="headerlink" title="2、更改/etc/sysconfig/network-scripts/ifcfg-eth*, 文件名与DEVICE参数要一致!"></a>2、更改/etc/sysconfig/network-scripts/ifcfg-eth*, 文件名与DEVICE参数要一致!</h2><p><img src="/2021/02/10/Linux-NetworkCard-Rename/1.png" alt></p>
 <h2 id="3、重启network"><a href="#3、重启network" class="headerlink" title="3、重启network"></a>3、重启network</h2><p>service network restart</p>
 <h2 id="4、若重启网络后网卡信息没有改变-执行如下操作"><a href="#4、若重启网络后网卡信息没有改变-执行如下操作" class="headerlink" title="4、若重启网络后网卡信息没有改变,执行如下操作"></a>4、若重启网络后网卡信息没有改变,执行如下操作</h2><p>修改/etc/udev/rules.d/70-persistent-net.rules,将之前查询到的HWaddr信息填入进去，重启服务器。(Oracle Linux 就是这样更改ifcfg-eth*后网卡名还是没有改变)</p>
-<p><img src="/2021/02/10/Linux-NetworkCard-Rename/4.png" alt></p>
+<p><img src="/2021/02/10/Linux-NetworkCard-Rename/2.png" alt></p>
 
       
 
@@ -659,6 +659,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NetworkCard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Command</a>
               </li>
             
             <div class="clearfix"></div>
