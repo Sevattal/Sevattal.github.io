@@ -140,6 +140,89 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-K8S-Binary-Install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/18/K8S-Binary-Install/" class="archive-article-date">
+  	<time datetime="2021-02-18T06:32:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="K8S-二进制部署"><a href="#K8S-二进制部署" class="headerlink" title="K8S 二进制部署"></a>K8S 二进制部署</h1><p>参考：<a href="https://blog.csdn.net/fanjianhai/article/details/109444648" target="_blank" rel="noopener">https://blog.csdn.net/fanjianhai/article/details/109444648</a><br>参考：<a href="https://www.bilibili.com/video/BV1PJ411h7Sw?p=25" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1PJ411h7Sw?p=25</a></p>
+<h2 id="安装部署环境说明（本文实验环境为CentOS7）"><a href="#安装部署环境说明（本文实验环境为CentOS7）" class="headerlink" title="安装部署环境说明（本文实验环境为CentOS7）"></a>安装部署环境说明（本文实验环境为CentOS7）</h2><p>Linux 内核要求</p>
+<p><img src="/2021/02/18/K8S-Binary-Install/1.png" alt></p>
+<p>注：要在3.0以上（Docker 对于Linux的内核要求），只要是内核达到3.0及其以上的Linux版本都可以，可选择自己熟悉的Linux发行版。由于我比较熟悉CentOS和红帽，本文采用CentOS搭建。</p>
+        
+          <a class="article-more-a" href="/2021/02/18/K8S-Binary-Install/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Kubernetes</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/18/K8S-Binary-Install/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Oracle-Clean-Archivelog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -411,7 +494,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">-Yaml</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Yaml</a>
         		</li>
       		
 		</ul>
@@ -836,83 +919,6 @@
 
 
   
-    <article id="post-Docker-NetworkMode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/11/Docker-NetworkMode/" class="archive-article-date">
-  	<time datetime="2021-02-11T04:06:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Docker-的网络模式详解"><a href="#Docker-的网络模式详解" class="headerlink" title="Docker 的网络模式详解"></a>Docker 的网络模式详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10233746.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10233746.html</a></p>
-<h2 id="1、Docker的四种网络模式"><a href="#1、Docker的四种网络模式" class="headerlink" title="1、Docker的四种网络模式"></a>1、Docker的四种网络模式</h2><p><img src="/2021/02/11/Docker-NetworkMode/1.png" alt><br>（1）docker四种网络模式如下：<br> Bridge contauner   桥接式网络模式<br> Host(open) container   开放式网络模式<br> Container(join) container   联合挂载式网络模式，是host网络模式的延伸<br> None(Close) container   封闭式网络模式<br></p>
-        
-          <a class="article-more-a" href="/2021/02/11/Docker-NetworkMode/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/11/Docker-NetworkMode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1243,11 +1249,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">-Yaml</a>
+                <a href="javascript:void(0)" class="js-tag color5">Docker Compose</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Docker Compose</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yaml</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Kubernetes</a>
               </li>
             
             <div class="clearfix"></div>
