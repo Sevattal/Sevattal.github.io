@@ -140,6 +140,252 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Redis-Persistence" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/02/Redis-Persistence/" class="archive-article-date">
+  	<time datetime="2020-10-02T03:01:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redis持久化存储"><a href="#Redis持久化存储" class="headerlink" title="Redis持久化存储"></a>Redis持久化存储</h1><p>Redis是一种内存型数据库，一旦服务器进程退出，数据库的数据就会丢失，为了解决这个问题，Redis提供了RDB与AOF两种持久化的方案，将内存中的数据保存到磁盘中，避免数据的丢失。</p>
+<h2 id="RDB持久化存储"><a href="#RDB持久化存储" class="headerlink" title="RDB持久化存储"></a>RDB持久化存储</h2><p>Redis提供了RDB持久化的功能，这个功能可以将Redis在内存中的的状态保存到硬盘中，它可以手动执行。也可以在redis.conf中配置，定期执行。<br>RDB持久化产生的RDB文件是一个经过压缩的二进制文件，这个文件被保存在硬盘中，Redis可以通过这个文件还原数据库当时的状态。</p>
+<h2 id="RDB-持久化"><a href="#RDB-持久化" class="headerlink" title="RDB(持久化)"></a>RDB(持久化)</h2><p>内存数据保存到磁盘<br>在指定的时间间隔内生成数据集的时间点快照（point-in-time snapshot）<br>优点：速度快，适合做备份，主从复制就是基于RDB持久化功能实现<br>rdb通过再redis中使用save命令触发 rdb</p>
+        
+          <a class="article-more-a" href="/2020/10/02/Redis-Persistence/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Redis-RDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Redis-AOF</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/02/Redis-Persistence/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Redis-Install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/02/Redis-Install/">Redis-Install</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/02/Redis-Install/" class="archive-article-date">
+  	<time datetime="2020-10-02T02:47:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redis6安装"><a href="#Redis6安装" class="headerlink" title="Redis6安装"></a>Redis6安装</h1>
+        
+          <a class="article-more-a" href="/2020/10/02/Redis-Install/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/02/Redis-Install/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Postgres-PGPool-II" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/26/Postgres-PGPool-II/" class="archive-article-date">
+  	<time datetime="2020-09-26T06:43:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PGPool-ll-PG-流复制实现HA主备"><a href="#PGPool-ll-PG-流复制实现HA主备" class="headerlink" title="PGPool-ll + PG 流复制实现HA主备"></a>PGPool-ll + PG 流复制实现HA主备</h1><p>基于PG的流复制能实现热备切换，但是是要手动建立触发文件实现，对于一些HA场景来说，需要当主机down了后，备机自动切换，经查询资料知道pgpool-II可以实现这种功能。本文基于PG流复制基础上 ，以pgpool-II实现主备切换。在配置pgpool之前需分别在两台规划机上安装好pg数据库，且配置好了流复制环境，关于流复制配置参考前文：<a href="https://www.pgpool.net/docs/pgpool-II-4.0.6/en/html/example-basic.html" target="_blank" rel="noopener">https://www.pgpool.net/docs/pgpool-II-4.0.6/en/html/example-basic.html</a></p>
+        
+          <a class="article-more-a" href="/2020/09/26/Postgres-PGPool-II/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Postgres</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">PGPool-II</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Postgres+PGPool-II</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/26/Postgres-PGPool-II/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Postgres-Copy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -717,245 +963,9 @@
 
 
   
-    <article id="post-Window-USB-Disk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/12/Window-USB-Disk/" class="archive-article-date">
-  	<time datetime="2020-07-12T07:31:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Windows使用diskpart下清理磁盘，格式话"><a href="#Windows使用diskpart下清理磁盘，格式话" class="headerlink" title="Windows使用diskpart下清理磁盘，格式话"></a>Windows使用diskpart下清理磁盘，格式话</h1><p>使用一些工具格式化磁盘，可能不会很干净，使用Window自带的diskpart工具<label style="color: red">干净卫生</label>。</p>
-        
-          <a class="article-more-a" href="/2020/07/12/Window-USB-Disk/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Window</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">USB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/Window-USB-Disk/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Window-NTP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/Window-NTP/">Window-NTP</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/12/Window-NTP/" class="archive-article-date">
-  	<time datetime="2020-07-12T07:24:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Window打开ntp服务"><a href="#Window打开ntp服务" class="headerlink" title="Window打开ntp服务"></a>Window打开ntp服务</h1><p>在学习各种服务搭建过程中，会使用到NTP服务。由于学习环境为自己电脑下的虚拟机，那么在自己电脑上开启ntp服务有时候省心省力。</p>
-        
-          <a class="article-more-a" href="/2020/07/12/Window-NTP/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NTP</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Window</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/Window-NTP/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MongDB-Backup" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/12/MongDB-Backup/" class="archive-article-date">
-  	<time datetime="2020-07-12T07:15:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="MongDB导入、导出、备份"><a href="#MongDB导入、导出、备份" class="headerlink" title="MongDB导入、导出、备份"></a>MongDB导入、导出、备份</h1>
-        
-          <a class="article-more-a" href="/2020/07/12/MongDB-Backup/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MongDB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/MongDB-Backup/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/6/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/8/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/6/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1300,6 +1310,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Maven</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
               </li>
             
             <div class="clearfix"></div>

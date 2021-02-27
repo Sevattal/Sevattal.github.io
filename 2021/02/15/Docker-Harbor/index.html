@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/02/15/Docker-Harbor/8.png">
 <meta property="og:image" content="http://yoursite.com/2021/02/15/Docker-Harbor/9.png">
 <meta property="article:published_time" content="2021-02-15T12:07:42.000Z">
-<meta property="article:modified_time" content="2021-02-15T12:36:21.457Z">
+<meta property="article:modified_time" content="2021-02-27T13:46:27.510Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -234,7 +234,10 @@ proxy:
 <h3 id="18、pull一个nginx镜像"><a href="#18、pull一个nginx镜像" class="headerlink" title="18、pull一个nginx镜像"></a>18、pull一个nginx镜像</h3><pre><code>docker pull nginx</code></pre><h3 id="19、给这个镜像打标签"><a href="#19、给这个镜像打标签" class="headerlink" title="19、给这个镜像打标签"></a>19、给这个镜像打标签</h3><pre><code>docker tag f6d0b4767a6c harbor.example.com/public/nginx:latest</code></pre><h3 id="20、docker-login登录harbor私有仓库"><a href="#20、docker-login登录harbor私有仓库" class="headerlink" title="20、docker login登录harbor私有仓库"></a>20、docker login登录harbor私有仓库</h3><pre><code>docker login harbor.example.com</code></pre><p><img src="/2021/02/15/Docker-Harbor/7.png" alt></p>
 <h3 id="21、将之前打标签的镜像传到私有仓库上"><a href="#21、将之前打标签的镜像传到私有仓库上" class="headerlink" title="21、将之前打标签的镜像传到私有仓库上"></a>21、将之前打标签的镜像传到私有仓库上</h3><pre><code>docker push harbor.example.com/public/nginx</code></pre><p><img src="/2021/02/15/Docker-Harbor/8.png" alt></p>
 <h3 id="22、在web端查看，确认是否已经上传"><a href="#22、在web端查看，确认是否已经上传" class="headerlink" title="22、在web端查看，确认是否已经上传"></a>22、在web端查看，确认是否已经上传</h3><p><img src="/2021/02/15/Docker-Harbor/9.png" alt></p>
-
+<h3 id="23、重启服务时要注意细节"><a href="#23、重启服务时要注意细节" class="headerlink" title="23、重启服务时要注意细节"></a>23、重启服务时要注意细节</h3><pre><code>1、确认时间是否正确
+2、先启动docker服务
+3、等待docker将所有harbor所需的容器启动起来，若有没有启动成功的容器手动将其拉起来。harbor的各个容器之间是有依赖的，某些容器会依赖部分容器。
+4、当所有的容器都正常启动后，再启动nginx进行反向代理。</code></pre>
       
 
       
@@ -735,6 +738,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Maven</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
               </li>
             
             <div class="clearfix"></div>
