@@ -140,6 +140,166 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Corosync-Pacemaker-CRM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/04/Corosync-Pacemaker-CRM/" class="archive-article-date">
+  	<time datetime="2020-04-04T03:51:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Corosync-Pacemaker-Crm简介："><a href="#Corosync-Pacemaker-Crm简介：" class="headerlink" title="Corosync+Pacemaker+Crm简介："></a>Corosync+Pacemaker+Crm简介：</h1><p>资源管理层（pacemaker负责仲裁指定谁是活动节点、IP地址的转移、本地资源管理系统）、消息传递层负责心跳信息（heartbeat、corosync）、Resource Agent（理解为服务脚本）负责服务的启动、停止、查看状态。多个节点上允许多个不同服务，剩下的2个备节点称为故障转移域，主节点所在位置只是相对的，同样，第三方仲裁也是相对的。vote system:少数服从多数。当故障节点修复后，资源返回来称为failback，当故障节点修复后，资源仍在备用节点，称为failover。<br>CRM：cluster resource manager ===&gt;pacemaker心脏起搏器，每个节点都要一个crmd（5560/tcp）的守护进程，有命令行接口crmsh和pcs(在heartbeat v3，红帽提出的)编辑xml文件，让crmd识别并负责资源服务的处理。也就是说crmsh和pcs等价。<br>Resource Agent,OCF(open cluster framework)<br>primtive：主资源，在集群中只运行一个实例。clone：克隆资源，在集群中可运行多个实例。每个资源都有一定的优先级。<br>无穷大+负无穷大=负无穷大。主机名要和DNS解析的名称相同才行</p>
+        
+          <a class="article-more-a" href="/2020/04/04/Corosync-Pacemaker-CRM/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Corosync-Pacemaker-CRM</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/04/Corosync-Pacemaker-CRM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-CRM-Parameter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/04/CRM-Parameter/" class="archive-article-date">
+  	<time datetime="2020-04-04T03:47:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="CRM参数及命令"><a href="#CRM参数及命令" class="headerlink" title="CRM参数及命令"></a>CRM参数及命令</h1><p>注：原文来自于：<a href="http://www.111cn.net/sys/linux/73074.htm" target="_blank" rel="noopener">http://www.111cn.net/sys/linux/73074.htm</a></p>
+        
+          <a class="article-more-a" href="/2020/04/04/CRM-Parameter/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CRM</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/04/CRM-Parameter/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-CentOS-Mail-Client" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -755,166 +915,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/04/04/Oracle-Patrol-Other/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Oracle-Patrol-Security" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/04/Oracle-Patrol-Security/" class="archive-article-date">
-  	<time datetime="2020-04-04T02:32:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="检查数据库安全性"><a href="#检查数据库安全性" class="headerlink" title="检查数据库安全性"></a>检查数据库安全性</h1><p>在本节主要检查Oracle数据库的安全性，包含：检查系统安全信息，定期修改密码，总共两个部分。</p>
-        
-          <a class="article-more-a" href="/2020/04/04/Oracle-Patrol-Security/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Oracle-Inspection</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/04/Oracle-Patrol-Security/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Oracle-Patrol-CPU-IO-MEM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU_IO_MEM</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/" class="archive-article-date">
-  	<time datetime="2020-04-04T02:30:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="检查数据库cpu、I-O、内存性能"><a href="#检查数据库cpu、I-O、内存性能" class="headerlink" title="检查数据库cpu、I/O、内存性能"></a>检查数据库cpu、I/O、内存性能</h1><p>记录数据库的cpu使用、IO、内存等使用情况，使用vmstat,iostat,sar,top等命令进行信息收集并检查这些信息，判断资源使用情况。</p>
-        
-          <a class="article-more-a" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Oracle-Inspection</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">展开全文 >></a>
         </p>
       
 
