@@ -140,6 +140,88 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Mysql-Procedure2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/26/Mysql-Procedure2/" class="archive-article-date">
+  	<time datetime="2020-12-26T03:41:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Mysql存储过程案例2"><a href="#Mysql存储过程案例2" class="headerlink" title="Mysql存储过程案例2"></a>Mysql存储过程案例2</h1><h2 id="使用Mysql存储过程拼接HTML页面，并用到了JS代码库。"><a href="#使用Mysql存储过程拼接HTML页面，并用到了JS代码库。" class="headerlink" title="使用Mysql存储过程拼接HTML页面，并用到了JS代码库。"></a>使用Mysql存储过程拼接HTML页面，并用到了JS代码库。</h2><p>该存储过程用到了JS的barCode库生成条码，由于要将JS的代码库拼接到HTML中。<br>为了减少拼接的工作量，可以将部分固定的JS代码存到固定的一张表中，然后在拼接的时候获取。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>在碰到存储过程需要用到JS代码实现页面效果时，可以适当得考虑将固定得JS代码存到一张固定的表中，然后在拼接HTML的时候使用字符串拼接将JS代码放到整个HTML中。<br>使用这种方法的好处是：若JS代码太长导致了在拼接字符串的时候导致字符串转义问题，如果事先使用数据库连接工具将代码存到一张表之后，方便字符串的拼接，并且存储过程更加的简洁明了。</p>
+<p>以上思路是个人的思考，不过在数据传输过程中还是要尽量减少字符串的生成。若过多会使数据传输缓慢，并且极大的降低数据库的性能。<br>我个人是由于开发环境所导致的原因，不得不使用该方法。<br><lable style="color: red">注： 本人对于JS也只是一知半解, 若有更好的实现方式望告知, 在下在这里感谢！</lable></p>
+        
+          <a class="article-more-a" href="/2020/12/26/Mysql-Procedure2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Procedure</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/26/Mysql-Procedure2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Git-Server" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -818,83 +900,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/10/06/Mysql-Windows-Install/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MongoDB-Install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/04/MongoDB-Install/" class="archive-article-date">
-  	<time datetime="2020-10-04T04:58:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="MongDB安装安装"><a href="#MongDB安装安装" class="headerlink" title="MongDB安装安装"></a>MongDB安装安装</h1><p>官网：<a href="https://www.mongodb.com/" target="_blank" rel="noopener">https://www.mongodb.com/</a><br>中文官网：<a href="https://www.mongodb.org.cn/" target="_blank" rel="noopener">https://www.mongodb.org.cn/</a></p>
-<p>操作系统环境：CentOS7.6<br>MongDB版本：MongDB-4.4.1<br>MongDB安装目录：/mongdb</p>
-        
-          <a class="article-more-a" href="/2020/10/04/MongoDB-Install/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MongDB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/04/MongoDB-Install/">展开全文 >></a>
         </p>
       
 
