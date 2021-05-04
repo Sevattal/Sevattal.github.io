@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/02/27/K8S-Coredns/10.png">
 <meta property="og:image" content="http://yoursite.com/2021/02/27/K8S-Coredns/11.png">
 <meta property="article:published_time" content="2021-02-27T13:40:37.000Z">
-<meta property="article:modified_time" content="2021-03-06T11:03:58.065Z">
+<meta property="article:modified_time" content="2021-05-04T23:32:50.104Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Kubernetes">
@@ -180,7 +180,6 @@
 <p>2、更新发布频繁<br>版本迭代快，新旧POD的IP地址会不同</p>
 <p>3、支持自动伸缩<br>大促或流量高峰需要动态伸缩，IP地址会动态增减</p>
 <a id="more"></a>
-
 <h3 id="service资源解决POD服务发现："><a href="#service资源解决POD服务发现：" class="headerlink" title="service资源解决POD服务发现："></a>service资源解决POD服务发现：</h3><p>为了解决pod地址变化的问题，需要部署service资源，用service资源代理后端pod，通过暴露service资源的固定地址(集群IP)，来解决以上POD资源变化产生的IP变动问题</p>
 <h3 id="那service资源的服务发现呢？"><a href="#那service资源的服务发现呢？" class="headerlink" title="那service资源的服务发现呢？"></a>那service资源的服务发现呢？</h3><p>service资源提供了一个不变的集群IP供外部访问<br>    1、IP地址毕竟难以记忆<br>    2、service资源可能也会被销毁和创建<br>    3、能不能将service资源名称和service暴露的集群网络IP对于<br>    4、类似域名与IP关系，则只需记服务名就能自动匹配服务IP<br>    5、岂不就达到了service服务的自动发现</p>
 <p><strong>在k8s中，coredns就是为了解决以上问题。</strong></p>
