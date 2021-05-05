@@ -16,7 +16,7 @@
 <meta property="og:description" content="Dockerfile 详解转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10243761.html 1、认识Dockerfile1.1 镜像的生成途径 基于容器制作 dockerfile，docker build　　这篇主要讲解基于Dockerfile，使用docker build 命令制作镜像。 1.2 Dockerfile 介绍　　Docker中有个非常重要的概念叫">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-11T04:18:29.000Z">
-<meta property="article:modified_time" content="2021-02-11T07:33:24.738Z">
+<meta property="article:modified_time" content="2021-05-05T14:19:03.498Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -60,7 +60,9 @@
 			
 				<li><a href="/">HOME</a></li>
 	        
-				<li><a href="/tags/">ABOUT ME</a></li>
+				<li><a href="/categories">CATEGORY</a></li>
+	        
+				<li><a href="/about_me/">ABOUT ME</a></li>
 	        
 			</ul>
 		</nav>
@@ -108,6 +110,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -123,12 +127,14 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">HOME</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">HOME</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/">ABOUT ME</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories">CATEGORY</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/about_me/">ABOUT ME</a></li>
 		        
 				</ul>
 			</nav>
@@ -799,7 +805,7 @@ Dockerfile可以包含一个或多个ARG指令</code></pre><h4 id="15-2-2-示例
 <pre><code>FROM busybox:latest
 ARG author=&quot;Along &lt;along@along.com&gt;&quot;
 MAINTAINER $ARG</code></pre><p>　　<br>（2）构建此时镜像时，修改此age</p>
-<p>docker build –build-arg author=”Tom <a href="mailto:&#116;&#111;&#109;&#64;&#x74;&#x6f;&#109;&#46;&#x63;&#111;&#109;">&#116;&#111;&#109;&#64;&#x74;&#x6f;&#109;&#46;&#x63;&#111;&#109;</a>“ -t test:v0.1 ./</p>
+<p>docker build –build-arg author=”Tom <a href="mailto:&#116;&#111;&#x6d;&#x40;&#x74;&#x6f;&#109;&#x2e;&#99;&#x6f;&#109;">&#116;&#111;&#x6d;&#x40;&#x74;&#x6f;&#109;&#x2e;&#99;&#x6f;&#109;</a>“ -t test:v0.1 ./</p>
 <h3 id="15-3-SHELL"><a href="#15-3-SHELL" class="headerlink" title="15.3 SHELL"></a>15.3 SHELL</h3><h4 id="15-3-1-介绍"><a href="#15-3-1-介绍" class="headerlink" title="15.3.1 介绍"></a>15.3.1 介绍</h4><pre><code>SHELL指令允许覆盖用于shell命令形式的默认shell。
 Linux上的默认shell是[“/ bin / sh”，“c”]，在Windows上是[“cmd”，“/ S”，“/ C”]
 SHELL指令必须以JSON格式写入Dockerfile。</code></pre><h4 id="15-3-2-语法"><a href="#15-3-2-语法" class="headerlink" title="15.3.2 语法"></a>15.3.2 语法</h4><pre><code>SHELL [&quot;executable&quot;, &quot;parameters&quot;]
@@ -856,6 +862,17 @@ SHELL指令可以多次出现。
 	</div>
 
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Docker//" class="article-tag-list-link color2">Docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 

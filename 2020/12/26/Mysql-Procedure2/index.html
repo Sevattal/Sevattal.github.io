@@ -16,7 +16,7 @@
 <meta property="og:description" content="Mysql存储过程案例2使用Mysql存储过程拼接HTML页面，并用到了JS代码库。该存储过程用到了JS的barCode库生成条码，由于要将JS的代码库拼接到HTML中。为了减少拼接的工作量，可以将部分固定的JS代码存到固定的一张表中，然后在拼接的时候获取。 思路在碰到存储过程需要用到JS代码实现页面效果时，可以适当得考虑将固定得JS代码存到一张固定的表中，然后在拼接HTML的时候使用字符串拼接将">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-26T03:41:37.000Z">
-<meta property="article:modified_time" content="2020-12-26T03:57:53.524Z">
+<meta property="article:modified_time" content="2021-05-05T14:25:17.185Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Mysql">
 <meta property="article:tag" content="Procedure">
@@ -61,7 +61,9 @@
 			
 				<li><a href="/">HOME</a></li>
 	        
-				<li><a href="/tags/">ABOUT ME</a></li>
+				<li><a href="/categories">CATEGORY</a></li>
+	        
+				<li><a href="/about_me/">ABOUT ME</a></li>
 	        
 			</ul>
 		</nav>
@@ -109,6 +111,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -124,12 +128,14 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">HOME</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">HOME</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/">ABOUT ME</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories">CATEGORY</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/about_me/">ABOUT ME</a></li>
 		        
 				</ul>
 			</nav>
@@ -714,6 +720,17 @@ END;</code></pre><h2 id="以下为JS代码"><a href="#以下为JS代码" class="
 	</div>
 
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Database//" class="article-tag-list-link color4">Database</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
