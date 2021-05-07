@@ -146,6 +146,102 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SpringCloud-Hystrix-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/07/SpringCloud-Hystrix-1/" class="archive-article-date">
+  	<time datetime="2021-05-07T01:32:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="构建微服务架构-Hystrix-豪猪哥-篇"><a href="#构建微服务架构-Hystrix-豪猪哥-篇" class="headerlink" title="构建微服务架构(Hystrix 豪猪哥 篇)"></a>构建微服务架构(Hystrix 豪猪哥 篇)</h1><p>该篇文档，前置环境条件为：构建微服务架构(eureka篇)，需要单机版本eureka环境<br>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka_alone.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_hystrix.zip">下载</a></p>
+<p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub地址：<a href="https://github.com/Netflix/Hystrix/wiki/How-To-Use" target="_blank" rel="noopener">https://github.com/Netflix/Hystrix/wiki/How-To-Use</a></p>
+<h2 id="Hystrix是什么"><a href="#Hystrix是什么" class="headerlink" title="Hystrix是什么"></a>Hystrix是什么</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>分布式系统面临的问题</p>
+<p>复杂分布式体系结构中的应用程序有数十个依赖关系，每个依赖关系在某些时候将不可避免地失败。</p>
+<h3 id="服务雪崩"><a href="#服务雪崩" class="headerlink" title="服务雪崩"></a>服务雪崩</h3><p>多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其它的微服务，这就是所谓的“扇出”。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”.<br>对于高流量的应用来说，单一的后避依赖可能会导致所有服务器上的所有资源都在几秒钟内饱和。比失败更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，备份队列，线程和其他系统资源紧张，导致整个系统发生更多的级联故障。这些都表示需要对故障和延迟进行隔离和管理，以便单个依赖关系的失败，不能取消整个应用程序或系统。</p>
+<p>所以，通常当你发现一个模块下的某个实例失败后，这时候这个模块依然还会接收流量，然后这个有问题的模块还调用了其他的模块，这样就会发生级联故障，或者叫雪崩。</p>
+        
+          <a class="article-more-a" href="/2021/05/07/SpringCloud-Hystrix-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Hystrix</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/07/SpringCloud-Hystrix-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringCloud-OpenFeign-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1039,101 +1135,6 @@ Usage: ./zkServer.sh {start|start-foreground|stop|restart|status|upgrade|print-c
 
 
   
-    <article id="post-OpenFeign-And-Sentinel" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a>
-    </h1>
-  
-
-        
-        <a href="/2021/04/21/OpenFeign-And-Sentinel/" class="archive-article-date">
-  	<time datetime="2021-04-21T08:42:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="OpenFeign整合Sentinel实现熔断降级"><a href="#OpenFeign整合Sentinel实现熔断降级" class="headerlink" title="OpenFeign整合Sentinel实现熔断降级"></a>OpenFeign整合Sentinel实现熔断降级</h1><p>本篇先介绍如何将Sentinel与OpenFeign整合使用，并且熔断降级策略使用动态配置。<br>关于Sentinel的搭建比较简单这边只做简单介绍：<br>1、只需要配置java环境然后 java -jar sentinel就能启动一个Sentinel服务。<br>2、Sentinel 默认会开启8080端口，访问地址为：IP地址:8080 账号密码为：sentinel/sentinel</p>
-        
-          <a class="article-more-a" href="/2021/04/21/OpenFeign-And-Sentinel/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">OpenFeign</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Sentinel</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/04/21/OpenFeign-And-Sentinel/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1517,6 +1518,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Ribbon</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
               </li>
             
             <div class="clearfix"></div>
