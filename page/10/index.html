@@ -146,29 +146,29 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-SQL-Interview-Questions1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Redis-Cluster" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a>
+      <a class="article-title" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a>
     </h1>
   
 
         
-        <a href="/2020/07/18/SQL-Interview-Questions1/" class="archive-article-date">
-  	<time datetime="2020-07-18T08:02:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
+        <a href="/2020/10/02/Redis-Cluster/" class="archive-article-date">
+  	<time datetime="2020-10-02T05:43:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="2020年7月-杭州晨科技术有限公司出给我的面试题"><a href="#2020年7月-杭州晨科技术有限公司出给我的面试题" class="headerlink" title="2020年7月 杭州晨科技术有限公司出给我的面试题"></a>2020年7月 杭州晨科技术有限公司出给我的面试题</h1>
+        <h1 id="Redis-Cluster-集群"><a href="#Redis-Cluster-集群" class="headerlink" title="Redis Cluster 集群"></a>Redis Cluster 集群</h1><p>参考：<a href="https://www.cnblogs.com/kismetv/p/9853040.html" target="_blank" rel="noopener">https://www.cnblogs.com/kismetv/p/9853040.html</a><br>集群，即Redis Cluster，是Redis 3.0开始引入的分布式存储方案。<br>集群由多个节点(Node)组成，Redis的数据分布在这些节点中。集群中的节点分为主节点和从节点：只有主节点负责读写请求和集群信息的维护；从节点只进行主节点数据和状态信息的复制。<br>集群的作用，可以归纳为两点：</p>
         
-          <a class="article-more-a" href="/2020/07/18/SQL-Interview-Questions1/#more">more >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Cluster/#more">more >></a>
         
       
 
@@ -182,11 +182,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SQL</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Interview</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Redis-Cluster</a>
         		</li>
       		
 		</ul>
@@ -207,7 +207,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/18/SQL-Interview-Questions1/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Cluster/">展开全文 >></a>
         </p>
       
 
@@ -237,29 +237,61 @@
 
 
   
-    <article id="post-Linux-Update-GCC9-3-0" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Redis-Sentinel" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a>
+      <a class="article-title" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a>
     </h1>
   
 
         
-        <a href="/2020/07/18/Linux-Update-GCC9-3-0/" class="archive-article-date">
-  	<time datetime="2020-07-18T07:58:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
+        <a href="/2020/10/02/Redis-Sentinel/" class="archive-article-date">
+  	<time datetime="2020-10-02T05:42:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="CentOS-7下安装gcc-9-3-0"><a href="#CentOS-7下安装gcc-9-3-0" class="headerlink" title="CentOS 7下安装gcc 9.3.0"></a>CentOS 7下安装gcc 9.3.0</h1><p>本文主要介绍怎么在CentOS 7环境下安装GCC 9.3.0，适用于部分源码包需要高版本的gcc进行编译的场景，需要准备的环境有：<br>CentOS 7<br>gcc-9.3.0.tar.gz</p>
+        <h1 id="Redis-Sentinel-哨兵部署"><a href="#Redis-Sentinel-哨兵部署" class="headerlink" title="Redis Sentinel 哨兵部署"></a>Redis Sentinel 哨兵部署</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>操作系统：CentOS8<br>Redis版本：6.0.8（Redis已经提前安装好了）<br>Redis安装路径：/redis<br>Redis配置文件名：redis-6379.conf</p>
+<table>
+<thead>
+<tr>
+<th align="left">IP</th>
+<th align="left">HOST</th>
+<th align="left">Redis-Port</th>
+<th align="left">Sentinel-Port</th>
+<th align="left">ROLE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">192.168.10.11</td>
+<td align="left">redis1</td>
+<td align="left">6379</td>
+<td align="left">26379</td>
+<td align="left">Master</td>
+</tr>
+<tr>
+<td align="left">192.168.10.12</td>
+<td align="left">redis2</td>
+<td align="left">6379</td>
+<td align="left">26379</td>
+<td align="left">Slave1</td>
+</tr>
+<tr>
+<td align="left">192.168.10.13</td>
+<td align="left">redis3</td>
+<td align="left">6379</td>
+<td align="left">26379</td>
+<td align="left">Slave2</td>
+</tr>
+</tbody></table>
         
-          <a class="article-more-a" href="/2020/07/18/Linux-Update-GCC9-3-0/#more">more >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Sentinel/#more">more >></a>
         
       
 
@@ -273,102 +305,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">GCC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/18/Linux-Update-GCC9-3-0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Mysql-XtraBackup" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/18/Mysql-XtraBackup/" class="archive-article-date">
-  	<time datetime="2020-07-18T07:47:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="xtraBackup简介"><a href="#xtraBackup简介" class="headerlink" title="xtraBackup简介"></a>xtraBackup简介</h1><p>Xtrabackup是一个对InnoDB做数据备份的工具，支持在线热备份（备份时不影响数据读写），是商业备份工具InnoDB Hotbackup的一个很好的替代品。<br>Percona-xtrabackup是 Percona公司开发的一个用于MySQL数据库物理热备的备份工具，支持MySQL、Percona server和MariaDB，开源免费，是目前较为受欢迎的主流备份工具。<label style="color: red"><b>xtrabackup只能备份innoDB和xtraDB两种数据引擎的表，而不能备份MyISAM数据表。</b></label></p>
-        
-          <a class="article-more-a" href="/2020/07/18/Mysql-XtraBackup/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">XtraBackup</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Redis-Sentinel</a>
         		</li>
       		
 		</ul>
@@ -389,7 +330,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/18/Mysql-XtraBackup/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Sentinel/">展开全文 >></a>
         </p>
       
 
@@ -419,29 +360,29 @@
 
 
   
-    <article id="post-Mysql-MysqlDump" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Redis-Part-Copy-Principle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a>
+      <a class="article-title" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a>
     </h1>
   
 
         
-        <a href="/2020/07/18/Mysql-MysqlDump/" class="archive-article-date">
-  	<time datetime="2020-07-18T07:12:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
+        <a href="/2020/10/02/Redis-Part-Copy-Principle/" class="archive-article-date">
+  	<time datetime="2020-10-02T05:10:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="mysqldump备份还原详讲"><a href="#mysqldump备份还原详讲" class="headerlink" title="mysqldump备份还原详讲"></a>mysqldump备份还原详讲</h1>
+        <h1 id="Redis全量复制和部分复制"><a href="#Redis全量复制和部分复制" class="headerlink" title="Redis全量复制和部分复制"></a>Redis全量复制和部分复制</h1><p>搬运：<a href="https://www.cnblogs.com/kismetv/p/9236731.html" target="_blank" rel="noopener">https://www.cnblogs.com/kismetv/p/9236731.html</a><br>在Redis2.8以前，从节点向主节点发送sync命令请求同步数据，此时的同步方式是全量复制；在Redis2.8及以后，从节点可以发送psync命令请求同步数据，此时根据主从节点当前状态的不同，同步方式可能是全量复制或部分复制。后文介绍以Redis2.8及以后版本为例。<br>全量复制：用于初次复制或其他无法进行部分复制的情况，将主节点中的所有数据都发送给从节点，是一个非常重型的操作。<br>部分复制：用于网络中断等情况后的复制，只将中断期间主节点执行的写命令发送给从节点，与全量复制相比更加高效。需要注意的是，如果网络中断时间过长，导致主节点没有能够完整地保存中断期间执行的写命令，则无法进行部分复制，仍使用全量复制。</p>
         
-          <a class="article-more-a" href="/2020/07/18/Mysql-MysqlDump/#more">more >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Part-Copy-Principle/#more">more >></a>
         
       
 
@@ -455,11 +396,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MysqlDump</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis-Copy</a>
         		</li>
       		
 		</ul>
@@ -480,7 +421,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/18/Mysql-MysqlDump/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Part-Copy-Principle/">展开全文 >></a>
         </p>
       
 
@@ -510,29 +451,29 @@
 
 
   
-    <article id="post-Window-USB-Disk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Redis-Copy-Principle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a>
+      <a class="article-title" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a>
     </h1>
   
 
         
-        <a href="/2020/07/12/Window-USB-Disk/" class="archive-article-date">
-  	<time datetime="2020-07-12T07:31:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
+        <a href="/2020/10/02/Redis-Copy-Principle/" class="archive-article-date">
+  	<time datetime="2020-10-02T05:05:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Windows使用diskpart下清理磁盘，格式话"><a href="#Windows使用diskpart下清理磁盘，格式话" class="headerlink" title="Windows使用diskpart下清理磁盘，格式话"></a>Windows使用diskpart下清理磁盘，格式话</h1><p>使用一些工具格式化磁盘，可能不会很干净，使用Window自带的diskpart工具<label style="color: red">干净卫生</label>。</p>
+        <h1 id="Redis主从复制的实现原理"><a href="#Redis主从复制的实现原理" class="headerlink" title="Redis主从复制的实现原理"></a>Redis主从复制的实现原理</h1><p>搬运：<a href="https://www.cnblogs.com/kismetv/p/9236731.html" target="_blank" rel="noopener">https://www.cnblogs.com/kismetv/p/9236731.html</a><br>主从复制过程大体可以分为3个阶段：连接建立阶段（即准备阶段）、数据同步阶段、命令传播阶段；下面分别进行介绍。</p>
         
-          <a class="article-more-a" href="/2020/07/12/Window-USB-Disk/#more">more >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Copy-Principle/#more">more >></a>
         
       
 
@@ -546,189 +487,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Window</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">USB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Window//" class="article-tag-list-link color2">Window</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/Window-USB-Disk/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Window-NTP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/Window-NTP/">Window-NTP</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/12/Window-NTP/" class="archive-article-date">
-  	<time datetime="2020-07-12T07:24:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Window打开ntp服务"><a href="#Window打开ntp服务" class="headerlink" title="Window打开ntp服务"></a>Window打开ntp服务</h1><p>在学习各种服务搭建过程中，会使用到NTP服务。由于学习环境为自己电脑下的虚拟机，那么在自己电脑上开启ntp服务有时候省心省力。</p>
-        
-          <a class="article-more-a" href="/2020/07/12/Window-NTP/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NTP</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Window</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Window//" class="article-tag-list-link color2">Window</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/Window-NTP/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MongDB-Backup" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/12/MongDB-Backup/" class="archive-article-date">
-  	<time datetime="2020-07-12T07:15:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="MongDB导入、导出、备份"><a href="#MongDB导入、导出、备份" class="headerlink" title="MongDB导入、导出、备份"></a>MongDB导入、导出、备份</h1>
-        
-          <a class="article-more-a" href="/2020/07/12/MongDB-Backup/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MongDB</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis-Copy</a>
         		</li>
       		
 		</ul>
@@ -749,7 +512,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/MongDB-Backup/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Copy-Principle/">展开全文 >></a>
         </p>
       
 
@@ -779,29 +542,29 @@
 
 
   
-    <article id="post-MongDB-Copy-Cluster" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Redis-Copy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a>
+      <a class="article-title" href="/2020/10/02/Redis-Copy/">Redis-Copy</a>
     </h1>
   
 
         
-        <a href="/2020/07/12/MongDB-Copy-Cluster/" class="archive-article-date">
-  	<time datetime="2020-07-12T07:03:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
+        <a href="/2020/10/02/Redis-Copy/" class="archive-article-date">
+  	<time datetime="2020-10-02T04:56:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Mongodb副本集群搭建方式"><a href="#Mongodb副本集群搭建方式" class="headerlink" title="Mongodb副本集群搭建方式"></a>Mongodb副本集群搭建方式</h1><p>mongodb是最常用的nosql数据库，这篇文章介绍如何搭建高可用的mongodb副本集群。</p>
+        <h1 id="Redis主从复制"><a href="#Redis主从复制" class="headerlink" title="Redis主从复制"></a>Redis主从复制</h1><p>主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master)，后者称为从节点(slave)；数据的复制是单向的，只能由主节点到从节点。<br>默认情况下，每台Redis服务器都是主节点；且一个主节点可以有多个从节点(或没有从节点)，但一个从节点只能有一个主节点。</p>
         
-          <a class="article-more-a" href="/2020/07/12/MongDB-Copy-Cluster/#more">more >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Copy/#more">more >></a>
         
       
 
@@ -815,98 +578,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MongDB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Database//" class="article-tag-list-link color4">Database</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/MongDB-Copy-Cluster/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Oracle-RAC-CmdSimple" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/11/Oracle-RAC-CmdSimple/" class="archive-article-date">
-  	<time datetime="2020-07-11T09:22:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="RAC启动关闭命令（文档精简版）"><a href="#RAC启动关闭命令（文档精简版）" class="headerlink" title="RAC启动关闭命令（文档精简版）"></a>RAC启动关闭命令（文档精简版）</h1>
-        
-          <a class="article-more-a" href="/2020/07/11/Oracle-RAC-CmdSimple/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Oracle RAC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis-Copy</a>
         		</li>
       		
 		</ul>
@@ -927,7 +603,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/11/Oracle-RAC-CmdSimple/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Copy/">展开全文 >></a>
         </p>
       
 
@@ -957,29 +633,30 @@
 
 
   
-    <article id="post-Oracle-RAC1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Redis-Memory-Mode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a>
+      <a class="article-title" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a>
     </h1>
   
 
         
-        <a href="/2020/07/11/Oracle-RAC1/" class="archive-article-date">
-  	<time datetime="2020-07-11T08:25:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-11</time>
+        <a href="/2020/10/02/Redis-Memory-Mode/" class="archive-article-date">
+  	<time datetime="2020-10-02T04:33:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Oracle-RAC搭建步骤与流程"><a href="#Oracle-RAC搭建步骤与流程" class="headerlink" title="Oracle RAC搭建步骤与流程"></a>Oracle RAC搭建步骤与流程</h1>
+        <h1 id="Redis内存模型"><a href="#Redis内存模型" class="headerlink" title="Redis内存模型"></a>Redis内存模型</h1><p>搬运：<a href="https://www.cnblogs.com/kismetv/p/8654978.html" target="_blank" rel="noopener">https://www.cnblogs.com/kismetv/p/8654978.html</a></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Redis是目前最火爆的内存数据库之一，通过在内存中读写数据，大大提高了读写速度，可以说Redis是实现网站高并发不可或缺的一部分。<br>我们使用Redis时，会接触Redis的5种对象类型（字符串、哈希、列表、集合、有序集合），丰富的类型是Redis相对于Memcached等的一大优势。在了解Redis的5种对象类型的用法和特点的基础上，进一步了解Redis的内存模型，对Redis的使用有很大帮助，例如：</p>
         
-          <a class="article-more-a" href="/2020/07/11/Oracle-RAC1/#more">more >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Memory-Mode/#more">more >></a>
         
       
 
@@ -993,11 +670,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Oracle RAC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Redis-Memory</a>
         		</li>
       		
 		</ul>
@@ -1018,7 +695,381 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/11/Oracle-RAC1/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/10/02/Redis-Memory-Mode/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Redis-Persistence-Principle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/02/Redis-Persistence-Principle/" class="archive-article-date">
+  	<time datetime="2020-10-02T03:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redis-持久化存储搬运"><a href="#Redis-持久化存储搬运" class="headerlink" title="Redis 持久化存储搬运"></a>Redis 持久化存储搬运</h1><p>搬运：<a href="https://www.cnblogs.com/kismetv/p/9137897.html" target="_blank" rel="noopener">https://www.cnblogs.com/kismetv/p/9137897.html</a><br>前言<br>将依次介绍Redis高可用相关的知识——持久化、复制(及读写分离)、哨兵、以及集群。<br>本文将先说明上述几种技术分别解决了Redis高可用的什么问题；然后详细介绍Redis的持久化技术，主要是RDB和AOF两种持久化方案；在介绍RDB和AOF方案时，不仅介绍其作用及操作方法，同时介绍持久化实现的一些原理细节及需要注意的问题。最后，介绍在实际使用中，持久化方案的选择，以及经常遇到的问题等。</p>
+        
+          <a class="article-more-a" href="/2020/10/02/Redis-Persistence-Principle/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Redis-RDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Redis-AOF</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Database//" class="article-tag-list-link color4">Database</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/02/Redis-Persistence-Principle/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Redis-Persistence" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/02/Redis-Persistence/" class="archive-article-date">
+  	<time datetime="2020-10-02T03:01:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redis持久化存储"><a href="#Redis持久化存储" class="headerlink" title="Redis持久化存储"></a>Redis持久化存储</h1><p>Redis是一种内存型数据库，一旦服务器进程退出，数据库的数据就会丢失，为了解决这个问题，Redis提供了RDB与AOF两种持久化的方案，将内存中的数据保存到磁盘中，避免数据的丢失。</p>
+<h2 id="RDB持久化存储"><a href="#RDB持久化存储" class="headerlink" title="RDB持久化存储"></a>RDB持久化存储</h2><p>Redis提供了RDB持久化的功能，这个功能可以将Redis在内存中的的状态保存到硬盘中，它可以手动执行。也可以在redis.conf中配置，定期执行。<br>RDB持久化产生的RDB文件是一个经过压缩的二进制文件，这个文件被保存在硬盘中，Redis可以通过这个文件还原数据库当时的状态。</p>
+<h2 id="RDB-持久化"><a href="#RDB-持久化" class="headerlink" title="RDB(持久化)"></a>RDB(持久化)</h2><p>内存数据保存到磁盘<br>在指定的时间间隔内生成数据集的时间点快照（point-in-time snapshot）<br>优点：速度快，适合做备份，主从复制就是基于RDB持久化功能实现<br>rdb通过再redis中使用save命令触发 rdb</p>
+        
+          <a class="article-more-a" href="/2020/10/02/Redis-Persistence/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Redis-RDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Redis-AOF</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Database//" class="article-tag-list-link color4">Database</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/02/Redis-Persistence/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Redis-Install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/02/Redis-Install/">Redis-Install</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/02/Redis-Install/" class="archive-article-date">
+  	<time datetime="2020-10-02T02:47:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redis6安装"><a href="#Redis6安装" class="headerlink" title="Redis6安装"></a>Redis6安装</h1>
+        
+          <a class="article-more-a" href="/2020/10/02/Redis-Install/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Database//" class="article-tag-list-link color4">Database</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/02/Redis-Install/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Postgres-PGPool-II" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/26/Postgres-PGPool-II/" class="archive-article-date">
+  	<time datetime="2020-09-26T06:43:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PGPool-ll-PG-流复制实现HA主备"><a href="#PGPool-ll-PG-流复制实现HA主备" class="headerlink" title="PGPool-ll + PG 流复制实现HA主备"></a>PGPool-ll + PG 流复制实现HA主备</h1><p>基于PG的流复制能实现热备切换，但是是要手动建立触发文件实现，对于一些HA场景来说，需要当主机down了后，备机自动切换，经查询资料知道pgpool-II可以实现这种功能。本文基于PG流复制基础上 ，以pgpool-II实现主备切换。在配置pgpool之前需分别在两台规划机上安装好pg数据库，且配置好了流复制环境，关于流复制配置参考前文：<a href="https://www.pgpool.net/docs/pgpool-II-4.0.6/en/html/example-basic.html" target="_blank" rel="noopener">https://www.pgpool.net/docs/pgpool-II-4.0.6/en/html/example-basic.html</a></p>
+        
+          <a class="article-more-a" href="/2020/09/26/Postgres-PGPool-II/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Postgres</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">PGPool-II</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Postgres+PGPool-II</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Database//" class="article-tag-list-link color4">Database</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/26/Postgres-PGPool-II/">展开全文 >></a>
         </p>
       
 
@@ -1050,7 +1101,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/9/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/11/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/9/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/11/">Next &amp;raquo;</a>
     </nav>
   
 

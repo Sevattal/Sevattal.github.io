@@ -146,30 +146,29 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Docker-NetworkMode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-K8S-Kubectl-Command" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a>
+      <a class="article-title" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a>
     </h1>
   
 
         
-        <a href="/2021/02/11/Docker-NetworkMode/" class="archive-article-date">
-  	<time datetime="2021-02-11T04:06:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-11</time>
+        <a href="/2021/02/21/K8S-Kubectl-Command/" class="archive-article-date">
+  	<time datetime="2021-02-21T03:22:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Docker-的网络模式详解"><a href="#Docker-的网络模式详解" class="headerlink" title="Docker 的网络模式详解"></a>Docker 的网络模式详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10233746.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10233746.html</a></p>
-<h2 id="1、Docker的四种网络模式"><a href="#1、Docker的四种网络模式" class="headerlink" title="1、Docker的四种网络模式"></a>1、Docker的四种网络模式</h2><p><img src="/2021/02/11/Docker-NetworkMode/1.png" alt><br>（1）docker四种网络模式如下：<br> Bridge contauner   桥接式网络模式<br> Host(open) container   开放式网络模式<br> Container(join) container   联合挂载式网络模式，是host网络模式的延伸<br> None(Close) container   封闭式网络模式<br></p>
+        <h1 id="K8S-Kubectl-基本命令操作"><a href="#K8S-Kubectl-基本命令操作" class="headerlink" title="K8S Kubectl 基本命令操作"></a>K8S Kubectl 基本命令操作</h1><p>这里只列出初学时必须掌握的大多数命令。</p>
         
-          <a class="article-more-a" href="/2021/02/11/Docker-NetworkMode/#more">more >></a>
+          <a class="article-more-a" href="/2021/02/21/K8S-Kubectl-Command/#more">more >></a>
         
       
 
@@ -184,6 +183,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Kubernetes</a>
         		</li>
       		
 		</ul>
@@ -204,7 +207,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/11/Docker-NetworkMode/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/21/K8S-Kubectl-Command/">展开全文 >></a>
         </p>
       
 
@@ -234,30 +237,216 @@
 
 
   
-    <article id="post-Docker-Volume" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Java-Apache-Maven" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/11/Docker-Volume/">Docker-Volume</a>
+      <a class="article-title" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a>
     </h1>
   
 
         
-        <a href="/2021/02/11/Docker-Volume/" class="archive-article-date">
-  	<time datetime="2021-02-11T03:57:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-11</time>
+        <a href="/2021/02/21/Java-Apache-Maven/" class="archive-article-date">
+  	<time datetime="2021-02-21T03:20:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Docker-存储卷详解"><a href="#Docker-存储卷详解" class="headerlink" title="Docker 存储卷详解"></a>Docker 存储卷详解</h1><p>转发：<a href="https://www.cnblogs.com/along21/p/10237219.html" target="_blank" rel="noopener">https://www.cnblogs.com/along21/p/10237219.html</a></p>
-<h2 id="1、存储卷介绍"><a href="#1、存储卷介绍" class="headerlink" title="1、存储卷介绍"></a>1、存储卷介绍</h2><h3 id="1-1-背景"><a href="#1-1-背景" class="headerlink" title="1.1 背景"></a>1.1 背景</h3><p>（1）docker 的 AFUS 分层文件系统<br>    docker镜像由多个只读层叠加面成，启动容器时，docker会加载只读镜像层并在镜像栈顶部加一个读写层；<br>    如果运行中的容器修改了现有的一个已经存在的文件，那该文件将会从读写层下面的只读层复制到读写层，该文件版本仍然存在，只是已经被读写层中该文件的副本所隐藏，此即“写时复制(COW)”机制。<br></p>
+        <h1 id="IDEA-本地Maven环境配置"><a href="#IDEA-本地Maven环境配置" class="headerlink" title="IDEA 本地Maven环境配置"></a>IDEA 本地Maven环境配置</h1><p>在某些情况下，IDEA默认的Maven仓库不能拉取想要的jar包，那么配置本地Maven环境可以有效的解决这一问题。</p>
+<p>1.去apache官网下载最新maven程序<br>链接:<a href="http://maven.apache.org/download.cgi" target="_blank" rel="noopener">http://maven.apache.org/download.cgi</a></p>
+<p><img src="/2021/02/21/Java-Apache-Maven/1.png" alt></p>
         
-          <a class="article-more-a" href="/2021/02/11/Docker-Volume/#more">more >></a>
+          <a class="article-more-a" href="/2021/02/21/Java-Apache-Maven/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Maven</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/21/Java-Apache-Maven/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Java-SprintBoot-Error1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/21/Java-SprintBoot-Error1/" class="archive-article-date">
+  	<time datetime="2021-02-21T03:20:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SpringBoot启动报错1"><a href="#SpringBoot启动报错1" class="headerlink" title="SpringBoot启动报错1"></a>SpringBoot启动报错1</h1><p>Failed to introspect annotated methods on class org.springframework.boot.web.servlet.support.SpringBootServletInitializer</p>
+        
+          <a class="article-more-a" href="/2021/02/21/Java-SprintBoot-Error1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/21/Java-SprintBoot-Error1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-K8S-Binary-Install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/18/K8S-Binary-Install/" class="archive-article-date">
+  	<time datetime="2021-02-18T06:32:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="K8S-二进制部署"><a href="#K8S-二进制部署" class="headerlink" title="K8S 二进制部署"></a>K8S 二进制部署</h1><p>参考：<a href="https://blog.csdn.net/fanjianhai/article/details/109444648" target="_blank" rel="noopener">https://blog.csdn.net/fanjianhai/article/details/109444648</a><br>参考：<a href="https://www.bilibili.com/video/BV1PJ411h7Sw?p=25" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1PJ411h7Sw?p=25</a></p>
+<h2 id="安装部署环境说明（本文实验环境为CentOS7）"><a href="#安装部署环境说明（本文实验环境为CentOS7）" class="headerlink" title="安装部署环境说明（本文实验环境为CentOS7）"></a>安装部署环境说明（本文实验环境为CentOS7）</h2><p>Linux 内核要求</p>
+<p><img src="/2021/02/18/K8S-Binary-Install/1.png" alt></p>
+<p>注：要在3.0以上（Docker 对于Linux的内核要求），只要是内核达到3.0及其以上的Linux版本都可以，可选择自己熟悉的Linux发行版。由于我比较熟悉CentOS和红帽，本文采用CentOS搭建。</p>
+        
+          <a class="article-more-a" href="/2021/02/18/K8S-Binary-Install/#more">more >></a>
         
       
 
@@ -272,6 +461,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Kubernetes</a>
         		</li>
       		
 		</ul>
@@ -292,7 +485,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/11/Docker-Volume/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/18/K8S-Binary-Install/">展开全文 >></a>
         </p>
       
 
@@ -322,29 +515,29 @@
 
 
   
-    <article id="post-Docker-PortMapping" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Oracle-Clean-Archivelog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a>
+      <a class="article-title" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a>
     </h1>
   
 
         
-        <a href="/2021/02/11/Docker-PortMapping/" class="archive-article-date">
-  	<time datetime="2021-02-11T03:44:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-11</time>
+        <a href="/2021/02/15/Oracle-Clean-Archivelog/" class="archive-article-date">
+  	<time datetime="2021-02-15T12:49:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Docker-给一存在的容器添加端口映射"><a href="#Docker-给一存在的容器添加端口映射" class="headerlink" title="Docker 给一存在的容器添加端口映射"></a>Docker 给一存在的容器添加端口映射</h1><p>转发：<a href="https://blog.csdn.net/lypeng_/article/details/98176138" target="_blank" rel="noopener">https://blog.csdn.net/lypeng_/article/details/98176138</a><br>在docker运行容器时需要指定映射端口，那如果刚开始没有考虑的那么周全，后期遇到需要添加的端口时该怎么办呢。<br>网上常见的方法有两种：<br>1.配置防火墙转发端口。<br>2.把docker容器打包成镜像，然后以该镜像为基础新建一个容器。<br>3.更改docker容器的配置文件</p>
+        <h1 id="Oracle-定时清理DG-Archivelog"><a href="#Oracle-定时清理DG-Archivelog" class="headerlink" title="Oracle 定时清理DG Archivelog"></a>Oracle 定时清理DG Archivelog</h1><p>脚本部署路径为：/home/oracle/del_appl_arc/bin<br>脚本生成的日志路径：/home/oracle/del_appl_arc/log</p>
         
-          <a class="article-more-a" href="/2021/02/11/Docker-PortMapping/#more">more >></a>
+          <a class="article-more-a" href="/2021/02/15/Oracle-Clean-Archivelog/#more">more >></a>
         
       
 
@@ -358,555 +551,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Docker//" class="article-tag-list-link color2">Docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/11/Docker-PortMapping/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Docker-Command1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/11/Docker-Command1/">Docker-Command1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/11/Docker-Command1/" class="archive-article-date">
-  	<time datetime="2021-02-11T02:55:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Docker-基础操作命令大全"><a href="#Docker-基础操作命令大全" class="headerlink" title="Docker 基础操作命令大全"></a>Docker 基础操作命令大全</h1><p>该篇文章主要介绍Docker的基础命令，基本涵盖了docker所有常用的命令操作</p>
-        
-          <a class="article-more-a" href="/2021/02/11/Docker-Command1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Command</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Docker//" class="article-tag-list-link color2">Docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/11/Docker-Command1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Docker-Mirror-Acceleration" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/10/Docker-Mirror-Acceleration/" class="archive-article-date">
-  	<time datetime="2021-02-10T03:49:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Docker-镜像加速"><a href="#Docker-镜像加速" class="headerlink" title="Docker 镜像加速"></a>Docker 镜像加速</h1><p>转发：<a href="https://www.runoob.com/docker/docker-mirror-acceleration.html" target="_blank" rel="noopener">https://www.runoob.com/docker/docker-mirror-acceleration.html</a></p>
-<p>国内从 DockerHub 拉取镜像有时会遇到困难，此时可以配置镜像加速器。Docker 官方和国内很多云服务商都提供了国内加速器服务，例如：<br>科大镜像：<a href="https://docker.mirrors.ustc.edu.cn" target="_blank" rel="noopener">https://docker.mirrors.ustc.edu.cn</a><br>网易：<a href="http://hub-mirror.c.163.com" target="_blank" rel="noopener">http://hub-mirror.c.163.com</a><br>阿里云：https://&lt;你的ID&gt;.mirror.aliyuncs.com</p>
-        
-          <a class="article-more-a" href="/2021/02/10/Docker-Mirror-Acceleration/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Docker//" class="article-tag-list-link color2">Docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/10/Docker-Mirror-Acceleration/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Linux-NetworkCard-Rename" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/10/Linux-NetworkCard-Rename/" class="archive-article-date">
-  	<time datetime="2021-02-10T03:48:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Linux-网卡名称修改"><a href="#Linux-网卡名称修改" class="headerlink" title="Linux 网卡名称修改"></a>Linux 网卡名称修改</h1><h2 id="1、查看网卡信息"><a href="#1、查看网卡信息" class="headerlink" title="1、查看网卡信息"></a>1、查看网卡信息</h2><pre><code>nmcli con         查看网卡的UUID
-ifconfig        查看网卡的HWaddr</code></pre>
-        
-          <a class="article-more-a" href="/2021/02/10/Linux-NetworkCard-Rename/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">NetworkCard</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/10/Linux-NetworkCard-Rename/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Rancher-Install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/06/Rancher-Install/">Rancher-Install</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/06/Rancher-Install/" class="archive-article-date">
-  	<time datetime="2021-02-06T02:40:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="CentOS-Rancher-的安装部署"><a href="#CentOS-Rancher-的安装部署" class="headerlink" title="CentOS Rancher 的安装部署"></a>CentOS Rancher 的安装部署</h1>
-        
-          <a class="article-more-a" href="/2021/02/06/Rancher-Install/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Rancher</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Docker//" class="article-tag-list-link color2">Docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/06/Rancher-Install/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Hexo-Blog-Character-Escape" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/06/Hexo-Blog-Character-Escape/" class="archive-article-date">
-  	<time datetime="2021-02-06T02:37:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Hexo-特殊符号的转义问题"><a href="#Hexo-特殊符号的转义问题" class="headerlink" title="Hexo 特殊符号的转义问题"></a>Hexo 特殊符号的转义问题</h1>
-        
-          <a class="article-more-a" href="/2021/02/06/Hexo-Blog-Character-Escape/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Blog//" class="article-tag-list-link color5">Blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/06/Hexo-Blog-Character-Escape/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Mysql-Procedure-HTML" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/06/Mysql-Procedure-HTML/" class="archive-article-date">
-  	<time datetime="2021-02-06T02:26:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="拼接HTML-报告表格时需要知道的CSS样式以及HTML标签"><a href="#拼接HTML-报告表格时需要知道的CSS样式以及HTML标签" class="headerlink" title="拼接HTML 报告表格时需要知道的CSS样式以及HTML标签"></a>拼接HTML 报告表格时需要知道的CSS样式以及HTML标签</h1><p>不求面面俱到，只求够用即可。</p>
-        
-          <a class="article-more-a" href="/2021/02/06/Mysql-Procedure-HTML/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Procedure</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HTML</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Oracle</a>
         		</li>
       		
 		</ul>
@@ -927,7 +572,7 @@ ifconfig        查看网卡的HWaddr</code></pre>
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/06/Mysql-Procedure-HTML/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/15/Oracle-Clean-Archivelog/">展开全文 >></a>
         </p>
       
 
@@ -957,29 +602,29 @@ ifconfig        查看网卡的HWaddr</code></pre>
 
 
   
-    <article id="post-Mysql-Procedure-Leave" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Docker-Harbor" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a>
+      <a class="article-title" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a>
     </h1>
   
 
         
-        <a href="/2021/02/06/Mysql-Procedure-Leave/" class="archive-article-date">
-  	<time datetime="2021-02-06T02:22:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-06</time>
+        <a href="/2021/02/15/Docker-Harbor/" class="archive-article-date">
+  	<time datetime="2021-02-15T12:07:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Mysql-存储过程-Leave-关键字"><a href="#Mysql-存储过程-Leave-关键字" class="headerlink" title="Mysql 存储过程 Leave 关键字"></a>Mysql 存储过程 Leave 关键字</h1><p>Mysql 存储过程中不能直接使用Return，Exit，Quit等方法退出存储过程，只有函数有Return 方法。<br>使用LEAVE关键，并将BEGIN END 语句块添加对应的标签,来实现类似Return的方法。</p>
+        <h1 id="Harbor私有镜像仓库搭建"><a href="#Harbor私有镜像仓库搭建" class="headerlink" title="Harbor私有镜像仓库搭建"></a>Harbor私有镜像仓库搭建</h1><p>harbor官方github地址：<a href="https://github.com/goharbor/harbor" target="_blank" rel="noopener">https://github.com/goharbor/harbor</a><br>我这边已经下载离线包：harbor-offline-installer-v2.0.6.tgz</p>
         
-          <a class="article-more-a" href="/2021/02/06/Mysql-Procedure-Leave/#more">more >></a>
+          <a class="article-more-a" href="/2021/02/15/Docker-Harbor/#more">more >></a>
         
       
 
@@ -993,11 +638,7 @@ ifconfig        查看网卡的HWaddr</code></pre>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Procedure</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
         		</li>
       		
 		</ul>
@@ -1009,7 +650,7 @@ ifconfig        查看网卡的HWaddr</code></pre>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Database//" class="article-tag-list-link color4">Database</a>
+        			<a href="/categories/Docker//" class="article-tag-list-link color2">Docker</a>
         		</li>
       		
 		</ul>
@@ -1018,7 +659,362 @@ ifconfig        查看网卡的HWaddr</code></pre>
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/06/Mysql-Procedure-Leave/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/15/Docker-Harbor/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Docker-Compose" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/15/Docker-Compose/">Docker-Compose</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/15/Docker-Compose/" class="archive-article-date">
+  	<time datetime="2021-02-15T12:07:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h1><p>转发：<a href="https://www.runoob.com/docker/docker-compose.html" target="_blank" rel="noopener">https://www.runoob.com/docker/docker-compose.html</a><br>Compose 简介<br>Compose 是用于定义和运行多容器 Docker 应用程序的工具。通过 Compose，您可以使用 YML 文件来配置应用程序需要的所有服务。然后，使用一个命令，就可以从 YML 文件配置中创建并启动所有服务。<br>Compose 使用的三个步骤：</p>
+<pre><code>使用 Dockerfile 定义应用程序的环境。
+使用 docker-compose.yml 定义构成应用程序的服务，这样它们可以在隔离环境中一起运行。
+最后，执行 docker-compose up 命令来启动并运行整个应用程序。</code></pre>
+        
+          <a class="article-more-a" href="/2021/02/15/Docker-Compose/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Docker Compose</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Docker//" class="article-tag-list-link color2">Docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/15/Docker-Compose/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Yaml-Language" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/15/Yaml-Language/">Yaml_Language</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/15/Yaml-Language/" class="archive-article-date">
+  	<time datetime="2021-02-15T12:07:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="YAML-教程"><a href="#YAML-教程" class="headerlink" title="YAML 教程"></a>YAML 教程</h1><p>转发：<a href="https://www.runoob.com/w3cnote/yaml-intro.html" target="_blank" rel="noopener">https://www.runoob.com/w3cnote/yaml-intro.html</a><br>YAML 是 “YAML Ain’t a Markup Language”（YAML 不是一种标记语言）的递归缩写。在开发的这种语言时，YAML 的意思其实是：”Yet Another Markup Language”（仍是一种标记语言）。<br>YAML 的语法和其他高级语言类似，并且可以简单表达清单、散列表，标量等数据形态。它使用空白符号缩进和大量依赖外观的特色，特别适合用来表达或编辑数据结构、各种配置文件、倾印调试内容、文件大纲（例如：许多电子邮件标题格式和YAML非常接近）。<br>YAML 的配置文件后缀为 .yml，如：runoob.yml 。</p>
+        
+          <a class="article-more-a" href="/2021/02/15/Yaml-Language/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Yaml</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/15/Yaml-Language/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Docker-Network-Operation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/12/Docker-Network-Operation/" class="archive-article-date">
+  	<time datetime="2021-02-12T02:47:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Docker-自定义网络"><a href="#Docker-自定义网络" class="headerlink" title="Docker 自定义网络"></a>Docker 自定义网络</h1><h2 id="1、自定义网络的操作"><a href="#1、自定义网络的操作" class="headerlink" title="1、自定义网络的操作"></a>1、自定义网络的操作</h2><p>查看当前docker网络信息<br>docker network ls<br><img src="/2021/02/12/Docker-Network-Operation/1.png" alt></p>
+        
+          <a class="article-more-a" href="/2021/02/12/Docker-Network-Operation/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Docker//" class="article-tag-list-link color2">Docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/12/Docker-Network-Operation/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Docker-Add-New-Volume" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/11/Docker-Add-New-Volume/" class="archive-article-date">
+  	<time datetime="2021-02-11T07:33:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="在docker容器上添加新的映射卷"><a href="#在docker容器上添加新的映射卷" class="headerlink" title="在docker容器上添加新的映射卷"></a>在docker容器上添加新的映射卷</h1><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>方案1<br>    把容器保存为镜像，然后用-v参数添加新的卷。这个方式比较麻烦，建议不用<br>方案2<br>    停止容器，直接修改容器配置文件</p>
+        
+          <a class="article-more-a" href="/2021/02/11/Docker-Add-New-Volume/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Docker//" class="article-tag-list-link color2">Docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/11/Docker-Add-New-Volume/">展开全文 >></a>
         </p>
       
 
@@ -1050,7 +1046,7 @@ ifconfig        查看网卡的HWaddr</code></pre>
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/6/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/6/">Next &amp;raquo;</a>
     </nav>
   
 
