@@ -146,6 +146,659 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JAVA-SE-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/12/JAVA-SE-1/" class="archive-article-date">
+  	<time datetime="2021-05-12T06:28:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="多线程-amp-反射-amp-注解-amp-网络编程-amp-路径"><a href="#多线程-amp-反射-amp-注解-amp-网络编程-amp-路径" class="headerlink" title="多线程 &amp; 反射 &amp; 注解 &amp; 网络编程 &amp; 路径"></a>多线程 &amp; 反射 &amp; 注解 &amp; 网络编程 &amp; 路径</h1><h2 id="一、多线程"><a href="#一、多线程" class="headerlink" title="一、多线程"></a>一、多线程</h2><h3 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h3><h4 id="1-1-理解线程和进程"><a href="#1-1-理解线程和进程" class="headerlink" title="1.1 理解线程和进程"></a>1.1 理解线程和进程</h4><pre><code>• 进程时一个应用程序（软件）
+• 线程是一个进程的执行过程/执行场景
+• 一个进程可以启动多个线程</code></pre>
+        
+          <a class="article-more-a" href="/2021/05/12/JAVA-SE-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/12/JAVA-SE-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JAVA-Spring-AOP-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/12/JAVA-Spring-AOP-1/" class="archive-article-date">
+  	<time datetime="2021-05-12T06:27:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="AOP面向切面编程"><a href="#AOP面向切面编程" class="headerlink" title="AOP面向切面编程"></a>AOP面向切面编程</h1><h2 id="1-AOP"><a href="#1-AOP" class="headerlink" title="1. AOP"></a>1. AOP</h2><pre><code>• AOP (Aspect Orient Programming) 面向切面编程是从动态角度考虑程序的运行过程
+• AOP底层，就是采用动态代理模式实现的，采用了两种代理，JDK的动态代理和CGLib的动态代理
+• 实际上AOP就是动态代理的一种规范化，因为动态代理种类繁多，掌握较难，所以就规范了一套统一的方式，这就是AOP
+• AOP把动态代理的实现步骤，方式都定义好了，让开发人员用一种统一的方式，去用动态代理。</code></pre><h3 id="1-1-动态代理实现方式"><a href="#1-1-动态代理实现方式" class="headerlink" title="1.1 动态代理实现方式"></a>1.1 动态代理实现方式</h3><p><strong>JDK:</strong><br>    • jdk动态代理，要求jdk中有Proxy，Method，InvocationHandler创建代理对象<br>    • jdk代理要求目标类必须实现接口</p>
+<p><strong>CGLib：</strong><br>    • 第三方的工具库，创建代理对象，原理是继承，通过继承目标类创建子类，子类就是代理对象<br>    • CGLib要求目标类不能是final的 方法也不能是final的</p>
+        
+          <a class="article-more-a" href="/2021/05/12/JAVA-Spring-AOP-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/12/JAVA-Spring-AOP-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JAVA-Spring" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/12/JAVA-Spring/" class="archive-article-date">
+  	<time datetime="2021-05-12T06:27:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring框架"><a href="#Spring框架" class="headerlink" title="Spring框架"></a>Spring框架</h1><p><img src="/2021/05/12/JAVA-Spring/1.png" alt></p>
+<h2 id="1-了解Spring"><a href="#1-了解Spring" class="headerlink" title="1. 了解Spring"></a>1. 了解Spring</h2><h3 id="1-1-spring是什么？"><a href="#1-1-spring是什么？" class="headerlink" title="1.1 spring是什么？"></a>1.1 spring是什么？</h3><pre><code>• Spring官网：https://spring.io/
+• 容器框架
+• Spring 是分层的javaee/javase应用，轻量级开源框架，以IOC(控制反转)和AOP(面向切面编程)为内核</code></pre><h4 id="1-怎么使用spring"><a href="#1-怎么使用spring" class="headerlink" title="1. 怎么使用spring"></a>1. 怎么使用spring</h4><pre><code>• spring也是一个容器，里面存放java对象
+• 让容器完成对象的创建，对象之间关系的管理(属性赋值)
+• 我们在程序中从容器中获取要使用的对象</code></pre>
+        
+          <a class="article-more-a" href="/2021/05/12/JAVA-Spring/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/12/JAVA-Spring/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JAVA-SpringMVC-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/12/JAVA-SpringMVC-1/" class="archive-article-date">
+  	<time datetime="2021-05-12T06:27:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h1><h2 id="一、SpringMVC是什么"><a href="#一、SpringMVC是什么" class="headerlink" title="一、SpringMVC是什么"></a>一、SpringMVC是什么</h2><pre><code>• 是基于spring的一个框架，实际上就是spring的一个模块，专门做web开发的
+• 可以理解为Servlet的升级
+• web开发底层就是Servlet，框架是在Servlet基础上面添加一些功能，做web项目更方便
+• SpringMVC能够创建对象，放入到容器中（SpringMVC的容器） SpringMVC里面放的是控制器对象
+• 我们要做的是使用@Controller注解创建控制器对象，把对象放入到SpringMVC容器中，把创建的对象作为控制器使用
+• 这个控制器对象能接收用户的请求，显示处理结果，就当作是一个servlet使用【并不是servlet，就是普通对象】
+    • 使用@Controller创建的对象，其实就是个普通的对象，springMVC赋予了他控制器的能力
+• Springmvc底层访问依然是DispatcherServlet   他的两大作用：
+    • 创建WebApplicationContext对象，读取配置文件，进而控制控制器对象
+    • 本身就是一个Servlet，要接收请求，显示结果</code></pre>
+        
+          <a class="article-more-a" href="/2021/05/12/JAVA-SpringMVC-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/12/JAVA-SpringMVC-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JAVA-RabbitMQ-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/11/JAVA-RabbitMQ-1/" class="archive-article-date">
+  	<time datetime="2021-05-11T08:18:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><p>源码下载：<a href="/download/rabbitmq_project.zip">下载</a><br>原文：<a href="https://blog.csdn.net/unique_perfect/article/details/109380996" target="_blank" rel="noopener">https://blog.csdn.net/unique_perfect/article/details/109380996</a></p>
+<h2 id="MQ引言"><a href="#MQ引言" class="headerlink" title="MQ引言"></a>MQ引言</h2><h3 id="1-1-什么是MQ"><a href="#1-1-什么是MQ" class="headerlink" title="1.1 什么是MQ"></a>1.1 什么是MQ</h3><p>MQ(Message Quene) :  翻译为消息队列,通过典型的生产者和消费者模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间解耦。别名为 消息中间件通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。</p>
+<h3 id="1-2-MQ有哪些"><a href="#1-2-MQ有哪些" class="headerlink" title="1.2 MQ有哪些"></a>1.2 MQ有哪些</h3><p>当今市面上有很多主流的消息中间件，如老牌的ActiveMQ、RabbitMQ，炙手可热的Kafka，阿里巴巴自主开发<code>RocketMQ</code>等。</p>
+        
+          <a class="article-more-a" href="/2021/05/11/JAVA-RabbitMQ-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/11/JAVA-RabbitMQ-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SpringCloud-Snowflake-Algorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/11/SpringCloud-Snowflake-Algorithm/" class="archive-article-date">
+  	<time datetime="2021-05-11T06:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="雪花算法"><a href="#雪花算法" class="headerlink" title="雪花算法"></a>雪花算法</h1><p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
+<p><strong>为什么需要分布式全局唯一ID以及分布式ID的业务需求？集群高并发情况下如何保证分布式唯一全局Id生成？</strong></p>
+<p>在复杂分布式系统中，往往需婴对大量的数据和消息进行唯一标识，如在美团点评的金融、支付、餐饮、酒店，猫眼电影等产品的系统中数据日渐增长，对数据分库分表后需要有一个唯一ID来标识一条数据或消息。特别一点的如订单、骑手、优惠券也都雷要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。</p>
+<p><strong>ID生成规则部分硬性要求</strong></p>
+<pre><code>全局唯一：不能出现重复的ID号，既然是唯一-标识，这是最基本的要求
+
+趋势递增：在MySQL的InnoDB引擎中使用的是聚集索引，由于多数RDBMS使用Btree的数据结构来存储索引数据，在主键的选择上面我们应该尽量使用有序的主键保证写入性能。
+
+单调递增：保证下一个ID一定大于上一个ID，例如事务版本号、IM增量消息、排序等特殊需求
+
+信息安全：如果ID是连续的，恶意用户的扒取工作就非常容易做了，直接按照顺序下载指定URL即可。如果是订单号就更危险了，竞对可以直接知道我们一天的单量。所以在一些应用场景下，需要ID无规则不规则，让竞争对手否好猜。
+
+含时间戳：这样就能够在开发中快速了解这个分布式id的生成时间。</code></pre><p><strong>ID号生成系统的可用性要求</strong></p>
+<pre><code>高可用：发一个获取分布式ID的请求，服务器就要保证99.999%的情况下给我创建一个唯一分布式ID。
+
+低延迟：发一个获取分布式ID的请求，服务器就要快，极速。
+
+高QPS：假如并发一口气10万个创建分布式ID请求同时杀过来，服务器要顶的住且一下子成功创建10万个分布式ID。</code></pre>
+        
+          <a class="article-more-a" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SpringCloud-Alibaba-Seata-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/11/SpringCloud-Alibaba-Seata-1/" class="archive-article-date">
+  	<time datetime="2021-05-11T02:46:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="构建微服务架构-SpringCloud-Alibaba-Seata-篇"><a href="#构建微服务架构-SpringCloud-Alibaba-Seata-篇" class="headerlink" title="构建微服务架构(SpringCloud Alibaba Seata 篇)"></a>构建微服务架构(SpringCloud Alibaba Seata 篇)</h1><p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
+<h2 id="分布式事务问题由来"><a href="#分布式事务问题由来" class="headerlink" title="分布式事务问题由来"></a>分布式事务问题由来</h2><p><strong>分布式前</strong></p>
+<pre><code>单机单库没这个问题
+从1:1 -&gt; 1:N -&gt; N:N</code></pre><p>单体应用被拆分成微服务应用，原来的三个模块被拆分成三个独立的应用,分别使用三个独立的数据源，业务操作需要调用三三 个服务来完成。此时每个服务内部的数据一致性由本地事务来保证， 但是全局的数据一致性问题没法保证。</p>
+<p><img src="/2021/05/11/SpringCloud-Alibaba-Seata-1/1.png" alt></p>
+<p>一句话：一次业务操作需要跨多个数据源或需要跨多个系统进行远程调用，就会产生分布式事务问题。</p>
+        
+          <a class="article-more-a" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringCloud-Alibaba-Sentinel-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -467,646 +1120,9 @@
 
 
   
-    <article id="post-SpringCloud-Sleuth-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/08/SpringCloud-Sleuth-1/" class="archive-article-date">
-  	<time datetime="2021-05-08T05:38:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="构建微服务架构-Sleuth-篇"><a href="#构建微服务架构-Sleuth-篇" class="headerlink" title="构建微服务架构(Sleuth 篇)"></a>构建微服务架构(Sleuth 篇)</h1><p>该篇文档，参考代码：<a href="/download/springcloud_project_stream.zip">下载</a></p>
-<p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
-<h2 id="Sleuth是什么"><a href="#Sleuth是什么" class="headerlink" title="Sleuth是什么"></a>Sleuth是什么</h2><p><strong>为什么会出现这个技术？要解决哪些问题？</strong></p>
-<p>在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的的服务节点调用来协同产生最后的请求结果，每一个前段请求都会形成一条复杂的分布式服务调用链路，链路中的任何一环出现高延时或错误都会引起整个请求最后的失败。</p>
-        
-          <a class="article-more-a" href="/2021/05/08/SpringCloud-Sleuth-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/08/SpringCloud-Sleuth-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringCloud-Stream-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/08/SpringCloud-Stream-1/" class="archive-article-date">
-  	<time datetime="2021-05-08T05:37:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="构建微服务架构-Stream-消息驱动-篇"><a href="#构建微服务架构-Stream-消息驱动-篇" class="headerlink" title="构建微服务架构(Stream 消息驱动 篇)"></a>构建微服务架构(Stream 消息驱动 篇)</h1><p>该篇文档，前置代码下载：<a href="/download/springcloud_project_bus.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_stream.zip">下载</a></p>
-<p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
-<h2 id="Stream为什么被引入"><a href="#Stream为什么被引入" class="headerlink" title="Stream为什么被引入"></a>Stream为什么被引入</h2><p><strong>常见MQ(消息中间件)：</strong></p>
-<pre><code>ActiveMQ
-RabbitMQ
-RocketMQ
-Kafka</code></pre><p>有没有一种新的技术诞生，让我们不再关注具体MQ的细节，我们只需要用一种适配绑定的方式，自动的给我们在各种MQ内切换。（类似于Hibernate）</p>
-<p><strong>Cloud Stream是什么？</strong></p>
-<p>屏蔽底层消息中间件的差异，降低切换成本，统一消息的编程模型。</p>
-        
-          <a class="article-more-a" href="/2021/05/08/SpringCloud-Stream-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/08/SpringCloud-Stream-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringCloud-Bus-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/08/SpringCloud-Bus-1/" class="archive-article-date">
-  	<time datetime="2021-05-08T05:37:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="构建微服务架构-Bus-消息总线-篇"><a href="#构建微服务架构-Bus-消息总线-篇" class="headerlink" title="构建微服务架构(Bus 消息总线 篇)"></a>构建微服务架构(Bus 消息总线 篇)</h1><p>该篇文档，前置代码下载：<a href="/download/springcloud_project_config.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_bus.zip">下载</a></p>
-<p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
-<h2 id="Bus消息总线是什么"><a href="#Bus消息总线是什么" class="headerlink" title="Bus消息总线是什么"></a>Bus消息总线是什么</h2><h3 id="一言以蔽之，分布式自动刷新配置功能。"><a href="#一言以蔽之，分布式自动刷新配置功能。" class="headerlink" title="一言以蔽之，分布式自动刷新配置功能。"></a>一言以蔽之，分布式自动刷新配置功能。</h3><p>Spring Cloud Bus配合Spring Cloud Config使用可以实现配置的动态刷新。</p>
-<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Spring Cloud Bus 配合Spring Cloud Config 使用可以实现配置的动态刷新。</p>
-<p><img src="/2021/05/08/SpringCloud-Bus-1/1.png" alt></p>
-        
-          <a class="article-more-a" href="/2021/05/08/SpringCloud-Bus-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/08/SpringCloud-Bus-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringCloud-Config-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/08/SpringCloud-Config-1/" class="archive-article-date">
-  	<time datetime="2021-05-08T05:37:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="构建微服务架构-Config-篇"><a href="#构建微服务架构-Config-篇" class="headerlink" title="构建微服务架构(Config 篇)"></a>构建微服务架构(Config 篇)</h1><p>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka_alone.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_config.zip">下载</a></p>
-<p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a><br>SpringCloud: <a href="https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.2.1.RELEASE/reference/html/" target="_blank" rel="noopener">https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.2.1.RELEASE/reference/html/</a></p>
-<h2 id="Config分布式配置中心介绍"><a href="#Config分布式配置中心介绍" class="headerlink" title="Config分布式配置中心介绍"></a>Config分布式配置中心介绍</h2><h3 id="分布式系统面临的配置问题"><a href="#分布式系统面临的配置问题" class="headerlink" title="分布式系统面临的配置问题"></a>分布式系统面临的配置问题</h3><p>微服务意味着要将单体应用中的业务拆分成一个个子服务，每个服务的粒度相对较小，因此系统中会出现大量的服务。由于每个服务都需要必要的配置信息才能运行，所以一套集中式的、动态的配置管理设施是必不可少的。</p>
-<p>SpringCloud提供了ConfigServer来解决这个问题，我们每一个微服务自己带着一个application.yml，上百个配置文件的管理.……</p>
-        
-          <a class="article-more-a" href="/2021/05/08/SpringCloud-Config-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Config</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/08/SpringCloud-Config-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringCloud-GateWay-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/07/SpringCloud-GateWay-1/" class="archive-article-date">
-  	<time datetime="2021-05-07T08:22:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="构建微服务架构-GateWay-篇"><a href="#构建微服务架构-GateWay-篇" class="headerlink" title="构建微服务架构(GateWay 篇)"></a>构建微服务架构(GateWay 篇)</h1><p>该篇文档，前置环境条件为：构建微服务架构(eureka篇)，需要单机版本eureka环境<br>该篇文档，前置代码下载：<a href="/download/springcloud_project_gateway_front.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_gateway.zip">下载</a></p>
-<p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub地址：<a href="https://github.com/Netflix/Hystrix/wiki/How-To-Use" target="_blank" rel="noopener">https://github.com/Netflix/Hystrix/wiki/How-To-Use</a><br>SpringCloud: <a href="https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.1.RELEASE/reference/html/" target="_blank" rel="noopener">https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.1.RELEASE/reference/html/</a></p>
-<p><strong>概述</strong></p>
-<p>Cloud全家桶中有个很重要的组件就是网关，在1.x版本中都是采用的Zuul网关;</p>
-<p>但在2.x版本中，zuul的升级一直跳票，SpringCloud最后自己研发了一个网关替代Zuul，那就是SpringCloud Gateway—句话：gateway是原zuul1.x版的替代<br>Gateway是在Spring生态系统之上构建的API网关服务，基于Spring 5，Spring Boot 2和Project Reactor等技术。</p>
-<p>Gateway旨在提供一种简单而有效的方式来对API进行路由，以及提供一些强大的过滤器功能，例如:熔断、限流、重试等。</p>
-<p>SpringCloud Gateway是Spring Cloud的一个全新项目，基于Spring 5.0+Spring Boot 2.0和Project Reactor等技术开发的网关，它旨在为微服务架构提供—种简单有效的统一的API路由管理方式。</p>
-<p>SpringCloud Gateway作为Spring Cloud 生态系统中的网关，目标是替代Zuul，在Spring Cloud 2.0以上版本中，没有对新版本的Zul 2.0以上最新高性能版本进行集成，仍然还是使用的Zuul 1.x非Reactor模式的老版本。而为了提升网关的性能，SpringCloud Gateway是基于WebFlux框架实现的，而WebFlux框架底层则使用了高性能的Reactor模式通信框架Netty。</p>
-<p>Spring Cloud Gateway的目标提供统一的路由方式且基于 Filter链的方式提供了网关基本的功能，例如:安全，监控/指标，和限流。</p>
-<p><img src="/2021/05/07/SpringCloud-GateWay-1/1.png" alt></p>
-        
-          <a class="article-more-a" href="/2021/05/07/SpringCloud-GateWay-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">GateWay</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/07/SpringCloud-GateWay-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringCloud-Hystrix-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/07/SpringCloud-Hystrix-1/" class="archive-article-date">
-  	<time datetime="2021-05-07T01:32:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="构建微服务架构-Hystrix-豪猪哥-篇"><a href="#构建微服务架构-Hystrix-豪猪哥-篇" class="headerlink" title="构建微服务架构(Hystrix 豪猪哥 篇)"></a>构建微服务架构(Hystrix 豪猪哥 篇)</h1><p>该篇文档，前置环境条件为：构建微服务架构(eureka篇)，需要单机版本eureka环境<br>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka_alone.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_hystrix.zip">下载</a></p>
-<p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub地址：<a href="https://github.com/Netflix/Hystrix/wiki/How-To-Use" target="_blank" rel="noopener">https://github.com/Netflix/Hystrix/wiki/How-To-Use</a></p>
-<h2 id="Hystrix是什么"><a href="#Hystrix是什么" class="headerlink" title="Hystrix是什么"></a>Hystrix是什么</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>分布式系统面临的问题</p>
-<p>复杂分布式体系结构中的应用程序有数十个依赖关系，每个依赖关系在某些时候将不可避免地失败。</p>
-<h3 id="服务雪崩"><a href="#服务雪崩" class="headerlink" title="服务雪崩"></a>服务雪崩</h3><p>多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其它的微服务，这就是所谓的“扇出”。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”.<br>对于高流量的应用来说，单一的后避依赖可能会导致所有服务器上的所有资源都在几秒钟内饱和。比失败更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，备份队列，线程和其他系统资源紧张，导致整个系统发生更多的级联故障。这些都表示需要对故障和延迟进行隔离和管理，以便单个依赖关系的失败，不能取消整个应用程序或系统。</p>
-<p>所以，通常当你发现一个模块下的某个实例失败后，这时候这个模块依然还会接收流量，然后这个有问题的模块还调用了其他的模块，这样就会发生级联故障，或者叫雪崩。</p>
-        
-          <a class="article-more-a" href="/2021/05/07/SpringCloud-Hystrix-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Hystrix</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/07/SpringCloud-Hystrix-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringCloud-OpenFeign-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/06/SpringCloud-OpenFeign-1/" class="archive-article-date">
-  	<time datetime="2021-05-06T06:01:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="构建微服务架构-OpenFeign篇"><a href="#构建微服务架构-OpenFeign篇" class="headerlink" title="构建微服务架构(OpenFeign篇)"></a>构建微服务架构(OpenFeign篇)</h1><p>该篇文档，前置环境条件为：构建微服务架构(eureka篇)<br>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_openfeign.zip">下载</a></p>
-<p>原文链接：<a href="https://blog.csdn.net/u011863024/article/details/114298270" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub地址：<a href="https://github.com/spring-cloud/spring-cloud-openfeign" target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-openfeign</a><br>SpringCloud地址：<a href="https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/#spring-cloud-openfeign" target="_blank" rel="noopener">https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/#spring-cloud-openfeign</a></p>
-<h2 id="OpenFeign是什么"><a href="#OpenFeign是什么" class="headerlink" title="OpenFeign是什么"></a>OpenFeign是什么</h2><p>Feign是一个声明式WebService客户端。使用Feign能让编写Web Service客户端更加简单。它的使用方法是定义一个服务接口然后在上面添加注解。Feign也支持可拔插式的编码器和解码器。Spring Cloud对Feign进行了封装，使其支持了Spring MVC标准注解和HttpMessageConverters。Feign可以与Eureka和Ribbon组合使用以支持负载均衡。</p>
-        
-          <a class="article-more-a" href="/2021/05/06/SpringCloud-OpenFeign-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">OpenFeign</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/06/SpringCloud-OpenFeign-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1499,6 +1515,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Config</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
             
             <div class="clearfix"></div>
