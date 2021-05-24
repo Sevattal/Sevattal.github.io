@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Spring-BASE-4 | Sevattal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Spring 框架基础4一、什么是AOP？1、AOPAOP（Aspect Oriented Programming），即面向切面编程，是OOP的补充，它也提供了模块化。在面向对象编程中，关键的单元是对象，AOP的关键单元是切面，或者说关注点（可以简单地理解为你程序中的独立模块）。一些切面可能有集中的代码，但是有些可能被分散或者混杂在一起，例如日志或者事务。这些分散的切面被称为横切关注点。一个横切关">
+  <meta name="description" content="Spring 框架基础4转载：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_35843514&#x2F;article&#x2F;details&#x2F;114287046?spm&#x3D;1001.2014.3001.5501 一、什么是AOP？1、AOPAOP（Aspect Oriented Programming），即面向切面编程，是OOP的补充，它也提供了模块化。在面向对象编程中，关键的单元是对象，AOP的关键单元是切面">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring-BASE-4">
 <meta property="og:url" content="http://yoursite.com/2021/05/16/Spring-BASE-4/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="Spring 框架基础4一、什么是AOP？1、AOPAOP（Aspect Oriented Programming），即面向切面编程，是OOP的补充，它也提供了模块化。在面向对象编程中，关键的单元是对象，AOP的关键单元是切面，或者说关注点（可以简单地理解为你程序中的独立模块）。一些切面可能有集中的代码，但是有些可能被分散或者混杂在一起，例如日志或者事务。这些分散的切面被称为横切关注点。一个横切关">
+<meta property="og:description" content="Spring 框架基础4转载：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_35843514&#x2F;article&#x2F;details&#x2F;114287046?spm&#x3D;1001.2014.3001.5501 一、什么是AOP？1、AOPAOP（Aspect Oriented Programming），即面向切面编程，是OOP的补充，它也提供了模块化。在面向对象编程中，关键的单元是对象，AOP的关键单元是切面">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-4/1.png">
 <meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-4/2.png">
@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-4/7.png">
 <meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-4/8.png">
 <meta property="article:published_time" content="2021-05-16T05:47:37.000Z">
-<meta property="article:modified_time" content="2021-05-18T11:06:10.603Z">
+<meta property="article:modified_time" content="2021-05-20T11:55:20.780Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="Spring">
@@ -179,7 +179,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Spring-框架基础4"><a href="#Spring-框架基础4" class="headerlink" title="Spring 框架基础4"></a>Spring 框架基础4</h1><h2 id="一、什么是AOP？"><a href="#一、什么是AOP？" class="headerlink" title="一、什么是AOP？"></a>一、什么是AOP？</h2><h3 id="1、AOP"><a href="#1、AOP" class="headerlink" title="1、AOP"></a>1、AOP</h3><p>AOP（Aspect Oriented Programming），即面向切面编程，是OOP的补充，它也提供了模块化。在面向对象编程中，关键的单元是对象，AOP的关键单元是切面，或者说关注点（可以简单地理解为你程序中的独立模块）。一些切面可能有集中的代码，但是有些可能被分散或者混杂在一起，例如日志或者事务。这些分散的切面被称为横切关注点。一个横切关注点是一个可以影响到整个应用的关注点，而且应该被尽量地集中到代码的一个地方，例如事务管理、权限、日志、安全等。</p>
+        <h1 id="Spring-框架基础4"><a href="#Spring-框架基础4" class="headerlink" title="Spring 框架基础4"></a>Spring 框架基础4</h1><p>转载：<a href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501" target="_blank" rel="noopener">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
+<h2 id="一、什么是AOP？"><a href="#一、什么是AOP？" class="headerlink" title="一、什么是AOP？"></a>一、什么是AOP？</h2><h3 id="1、AOP"><a href="#1、AOP" class="headerlink" title="1、AOP"></a>1、AOP</h3><p>AOP（Aspect Oriented Programming），即面向切面编程，是OOP的补充，它也提供了模块化。在面向对象编程中，关键的单元是对象，AOP的关键单元是切面，或者说关注点（可以简单地理解为你程序中的独立模块）。一些切面可能有集中的代码，但是有些可能被分散或者混杂在一起，例如日志或者事务。这些分散的切面被称为横切关注点。一个横切关注点是一个可以影响到整个应用的关注点，而且应该被尽量地集中到代码的一个地方，例如事务管理、权限、日志、安全等。</p>
 <p>AOP让你可以使用简单可插拔的配置，在实际逻辑执行之前、之后或周围动态添加横切关注点。这让代码在当下和将来都变得易于维护。如果你是使用XML来使用切面的话，要添加或删除关注点，你不用重新编译完整的源代码，而仅仅需要修改配置文件就可以了。</p>
 <p><img src="/2021/05/16/Spring-BASE-4/1.png" alt></p>
 <p>总而言之，AOP就是使用不修改源代码的方式，在主干功能里添加新的功能。</p>
