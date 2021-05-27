@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/05/07/SpringCloud-GateWay-1/3.png">
 <meta property="og:image" content="http://yoursite.com/2021/05/07/SpringCloud-GateWay-1/4.png">
 <meta property="article:published_time" content="2021-05-07T08:22:57.000Z">
-<meta property="article:modified_time" content="2021-05-08T05:35:13.788Z">
+<meta property="article:modified_time" content="2021-05-27T14:17:12.860Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="GateWay">
@@ -190,46 +190,23 @@
 <p><strong>作用</strong></p>
 <p>方向代理<br>鉴权<br>流量控制<br>熔断<br>日志监控<br>…</p>
 <h2 id="GateWay非阻塞异步模型"><a href="#GateWay非阻塞异步模型" class="headerlink" title="GateWay非阻塞异步模型"></a>GateWay非阻塞异步模型</h2><p>有Zuull了怎么又出来Gateway？我们为什么选择Gateway?</p>
-<h3 id="1-netflix不太靠谱，zuul2-0一直跳票，迟迟不发布。"><a href="#1-netflix不太靠谱，zuul2-0一直跳票，迟迟不发布。" class="headerlink" title="1. netflix不太靠谱，zuul2.0一直跳票，迟迟不发布。"></a>1. netflix不太靠谱，zuul2.0一直跳票，迟迟不发布。</h3><ol>
-<li><p>一方面因为Zuul1.0已经进入了维护阶段，而且Gateway是SpringCloud团队研发的，是亲儿子产品，值得信赖。而且很多功能Zuul都没有用起来也非常的简单便捷。</p>
-</li>
-<li><p>Gateway是基于异步非阻塞模型上进行开发的，性能方面不需要担心。虽然Netflix早就发布了最新的Zuul 2.x，但Spring Cloud貌似没有整合计划。而且Netflix相关组件都宣布进入维护期；不知前景如何?</p>
-</li>
-<li><p>多方面综合考虑Gateway是很理想的网关选择。</p>
-</li>
-</ol>
-<h3 id="2-SpringCloud-Gateway具有如下特性"><a href="#2-SpringCloud-Gateway具有如下特性" class="headerlink" title="2. SpringCloud Gateway具有如下特性"></a>2. SpringCloud Gateway具有如下特性</h3><ol>
-<li><p>基于Spring Framework 5，Project Reactor和Spring Boot 2.0进行构建；</p>
-</li>
-<li><p>动态路由：能够匹配任何请求属性；</p>
-</li>
-<li><p>可以对路由指定Predicate (断言)和Filter(过滤器)；</p>
-</li>
-<li><p>集成Hystrix的断路器功能；</p>
-</li>
-<li><p>集成Spring Cloud 服务发现功能；</p>
-</li>
-<li><p>易于编写的Predicate (断言)和Filter (过滤器)；</p>
-</li>
-<li><p>请求限流功能；</p>
-</li>
-<li><p>支持路径重写。</p>
-</li>
-</ol>
-<h3 id="3-SpringCloud-Gateway与Zuul的区别"><a href="#3-SpringCloud-Gateway与Zuul的区别" class="headerlink" title="3. SpringCloud Gateway与Zuul的区别"></a>3. SpringCloud Gateway与Zuul的区别</h3><ol>
-<li><p>在SpringCloud Finchley正式版之前，Spring Cloud推荐的网关是Netflix提供的Zuul。</p>
-</li>
-<li><p>Zuul 1.x，是一个基于阻塞I/O的API Gateway。</p>
-</li>
-<li><p>Zuul 1.x基于Servlet 2.5使用阻塞架构它不支持任何长连接(如WebSocket)Zuul的设计模式和Nginx较像，每次I/О操作都是从工作线程中选择一个执行，请求线程被阻塞到工作线程完成，但是差别是Nginx用C++实现，Zuul用Java实现，而JVM本身会有第-次加载较慢的情况，使得Zuul的性能相对较差。</p>
-</li>
-<li><p>Zuul 2.x理念更先进，想基于Netty非阻塞和支持长连接，但SpringCloud目前还没有整合。Zuul .x的性能较Zuul 1.x有较大提升。在性能方面，根据官方提供的基准测试,Spring Cloud Gateway的RPS(每秒请求数)是Zuul的1.6倍。</p>
-</li>
-<li><p>Spring Cloud Gateway建立在Spring Framework 5、Project Reactor和Spring Boot2之上，使用非阻塞API。</p>
-</li>
-<li><p>Spring Cloud Gateway还支持WebSocket，并且与Spring紧密集成拥有更好的开发体验</p>
-</li>
-</ol>
+<h3 id="1-netflix不太靠谱，zuul2-0一直跳票，迟迟不发布。"><a href="#1-netflix不太靠谱，zuul2-0一直跳票，迟迟不发布。" class="headerlink" title="1. netflix不太靠谱，zuul2.0一直跳票，迟迟不发布。"></a>1. netflix不太靠谱，zuul2.0一直跳票，迟迟不发布。</h3><p>1.一方面因为Zuul1.0已经进入了维护阶段，而且Gateway是SpringCloud团队研发的，是亲儿子产品，值得信赖。而且很多功能Zuul都没有用起来也非常的简单便捷。</p>
+<p>2.Gateway是基于异步非阻塞模型上进行开发的，性能方面不需要担心。虽然Netflix早就发布了最新的Zuul 2.x，但Spring Cloud貌似没有整合计划。而且Netflix相关组件都宣布进入维护期；不知前景如何?</p>
+<p>3.多方面综合考虑Gateway是很理想的网关选择。</p>
+<h3 id="2-SpringCloud-Gateway具有如下特性"><a href="#2-SpringCloud-Gateway具有如下特性" class="headerlink" title="2. SpringCloud Gateway具有如下特性"></a>2. SpringCloud Gateway具有如下特性</h3><p>1.基于Spring Framework 5，Project Reactor和Spring Boot 2.0进行构建；</p>
+<p>2.动态路由：能够匹配任何请求属性；</p>
+<p>3.可以对路由指定Predicate (断言)和Filter(过滤器)；</p>
+<p>4.集成Hystrix的断路器功能；</p>
+<p>5.集成Spring Cloud 服务发现功能；</p>
+<p>6.易于编写的Predicate (断言)和Filter (过滤器)；</p>
+<p>7.请求限流功能；</p>
+<p>8.支持路径重写。</p>
+<h3 id="3-SpringCloud-Gateway与Zuul的区别"><a href="#3-SpringCloud-Gateway与Zuul的区别" class="headerlink" title="3. SpringCloud Gateway与Zuul的区别"></a>3. SpringCloud Gateway与Zuul的区别</h3><p>1.在SpringCloud Finchley正式版之前，Spring Cloud推荐的网关是Netflix提供的Zuul。</p>
+<p>2.Zuul 1.x，是一个基于阻塞I/O的API Gateway。</p>
+<p>3.Zuul 1.x基于Servlet 2.5使用阻塞架构它不支持任何长连接(如WebSocket)Zuul的设计模式和Nginx较像，每次I/О操作都是从工作线程中选择一个执行，请求线程被阻塞到工作线程完成，但是差别是Nginx用C++实现，Zuul用Java实现，而JVM本身会有第-次加载较慢的情况，使得Zuul的性能相对较差。</p>
+<p>4.Zuul 2.x理念更先进，想基于Netty非阻塞和支持长连接，但SpringCloud目前还没有整合。Zuul .x的性能较Zuul 1.x有较大提升。在性能方面，根据官方提供的基准测试,Spring Cloud Gateway的RPS(每秒请求数)是Zuul的1.6倍。</p>
+<p>5.Spring Cloud Gateway建立在Spring Framework 5、Project Reactor和Spring Boot2之上，使用非阻塞API。</p>
+<p>6.Spring Cloud Gateway还支持WebSocket，并且与Spring紧密集成拥有更好的开发体验</p>
 <h2 id="Zuul1-x模型"><a href="#Zuul1-x模型" class="headerlink" title="Zuul1.x模型"></a>Zuul1.x模型</h2><p>Springcloud中所集成的Zuul版本，采用的是Tomcat容器，使用的是传统的Serviet IO处理模型。</p>
 <p>Servlet的生命周期？servlet由servlet container进行生命周期管理。</p>
 <pre><code>container启动时构造servlet对象并调用servlet init()进行初始化；
@@ -489,11 +466,9 @@ curl http://localhost:9527/payment/lb -H &quot;X-Request-Id:123&quot;</code></pr
 <h2 id="GateWay的Filter"><a href="#GateWay的Filter" class="headerlink" title="GateWay的Filter"></a>GateWay的Filter</h2><p>官方文档: <a href="https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.1.RELEASE/reference/html/#gatewayfilter-factories" target="_blank" rel="noopener">https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.1.RELEASE/reference/html/#gatewayfilter-factories</a></p>
 <p>Route filters allow the modification of the incoming HTTP request or outgoing HTTP response in some manner. Route filters are scoped to a particular route. Spring Cloud Gateway includes many built-in GatewayFilter Factories.</p>
 <p>路由过滤器可用于修改进入的HTTP请求和返回的HTTP响应，路由过滤器只能指定路由进行使用。Spring Cloud Gateway内置了多种路由过滤器，他们都由GatewayFilter的工厂类来产生。</p>
-<p>###Spring Cloud Gateway的Filter:</p>
-<h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><pre><code>pre
+<h3 id="Spring-Cloud-Gateway的Filter"><a href="#Spring-Cloud-Gateway的Filter" class="headerlink" title="Spring Cloud Gateway的Filter:"></a>Spring Cloud Gateway的Filter:</h3><h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><pre><code>pre
 post</code></pre><h4 id="种类（具体看官方文档）："><a href="#种类（具体看官方文档）：" class="headerlink" title="种类（具体看官方文档）："></a>种类（具体看官方文档）：</h4><pre><code>GatewayFilter - 有31种
-GlobalFilter - 有10种</code></pre><p>###常用的GatewayFilter：AddRequestParameter GatewayFilter</p>
-<p>自定义全局GlobalFilter：</p>
+GlobalFilter - 有10种</code></pre><h3 id="常用的GatewayFilter：AddRequestParameter-GatewayFilter"><a href="#常用的GatewayFilter：AddRequestParameter-GatewayFilter" class="headerlink" title="常用的GatewayFilter：AddRequestParameter GatewayFilter"></a>常用的GatewayFilter：AddRequestParameter GatewayFilter</h3><p>自定义全局GlobalFilter：</p>
 <h4 id="两个主要接口介绍："><a href="#两个主要接口介绍：" class="headerlink" title="两个主要接口介绍："></a>两个主要接口介绍：</h4><pre><code>GlobalFilter
 Ordered</code></pre><h4 id="能干什么："><a href="#能干什么：" class="headerlink" title="能干什么："></a>能干什么：</h4><pre><code>全局日志记录
 统一网关鉴权
