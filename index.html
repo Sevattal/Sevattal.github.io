@@ -146,6 +146,273 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Spring-Security-BASE-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/27/Spring-Security-BASE-3/" class="archive-article-date">
+  	<time datetime="2021-05-27T10:39:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring-Security-基础-3"><a href="#Spring-Security-基础-3" class="headerlink" title="Spring Security 基础 3"></a>Spring Security 基础 3</h1><p>转载：<a href="https://blog.csdn.net/REX1129/article/details/114589484" target="_blank" rel="noopener">https://blog.csdn.net/REX1129/article/details/114589484</a></p>
+<p>源码下载: <a href="/download/spring-security-master.zip">下载</a></p>
+<h2 id="SpringSecurity-微服务权限方案"><a href="#SpringSecurity-微服务权限方案" class="headerlink" title="SpringSecurity 微服务权限方案"></a>SpringSecurity 微服务权限方案</h2><h3 id="1-什么是微服务"><a href="#1-什么是微服务" class="headerlink" title="1. 什么是微服务"></a>1. 什么是微服务</h3><h4 id="1、微服务由来"><a href="#1、微服务由来" class="headerlink" title="1、微服务由来"></a>1、微服务由来</h4><p>微服务最早由 Martin Fowler 与 James Lewis 于 2014 年共同提出，微服务架构风格是一种使用一套小服务来开发单个应用的方式途径，每个服务运行在自己的进程中，并使用轻量级机制通信，通常是 HTTPAPI，这些服务基于业务能力构建，并能够通过自动化部署机制来独立部署，这些服务使用不同的编程语言实现，以及不同数据存储技术，并保持最低限度的集中式管理。</p>
+        
+          <a class="article-more-a" href="/2021/05/27/Spring-Security-BASE-3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring-Security//" class="article-tag-list-link color1">Spring Security</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/27/Spring-Security-BASE-3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Spring-Security-BASE-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/27/Spring-Security-BASE-2/" class="archive-article-date">
+  	<time datetime="2021-05-27T08:45:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring-Security-基础-2"><a href="#Spring-Security-基础-2" class="headerlink" title="Spring Security 基础 2"></a>Spring Security 基础 2</h1><h2 id="1-基于数据库的自动登录"><a href="#1-基于数据库的自动登录" class="headerlink" title="1. 基于数据库的自动登录"></a>1. 基于数据库的自动登录</h2><p><strong>实现原理：</strong>首先用户登入成功后，会生成一个 token(加密串），这个 token，一边相应给浏览器，放到 cookie中，一边使用 token 和用户信息 存储到数据库中，而以后再次访问时，浏览器获取 cookie信息，拿着cookie信息到数据库进行比对，如果查询到对应信息，则认证成功，实现自动登录</p>
+<p><img src="/2021/05/27/Spring-Security-BASE-2/1.png" alt></p>
+        
+          <a class="article-more-a" href="/2021/05/27/Spring-Security-BASE-2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring-Security//" class="article-tag-list-link color1">Spring Security</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/27/Spring-Security-BASE-2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Spring-Security-BASE-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/24/Spring-Security-BASE-1/" class="archive-article-date">
+  	<time datetime="2021-05-24T10:51:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring-Security-基础-1"><a href="#Spring-Security-基础-1" class="headerlink" title="Spring Security 基础 1"></a>Spring Security 基础 1</h1><h2 id="SpringSecurity-框架简介"><a href="#SpringSecurity-框架简介" class="headerlink" title="SpringSecurity 框架简介"></a>SpringSecurity 框架简介</h2><h3 id="1-1-概要"><a href="#1-1-概要" class="headerlink" title="1.1 概要"></a>1.1 概要</h3><p>Spring 是非常流行和成功的 Java 应用开发框架，Spring Security 正是 Spring 家族中的成员。Spring Security 基于 Spring 框架，提供了一套 Web 应用安全性的完整解决方案。</p>
+<p>正如你可能知道的关于安全方面的两个主要区域是“认证”和“授权”（或者访问控制），一般来说，Web 应用的安全性包括用户认证（Authentication）和用户授权（Authorization）两个部分，这两点也是 Spring Security 重要核心功能。</p>
+<p>（1）用户认证指的是：验证某个用户是否为系统中的合法主体，也就是说用户能否访问该系统。用户认证一般要求用户提供用户名和密码。系统通过校验用户名和密码来完成认证过程。通俗点说就是系统认为用户是否能登录</p>
+<p>（2）用户授权指的是验证某个用户是否有权限执行某个操作。在一个系统中，不同用户<br>所具有的权限是不同的。比如对一个文件来说，有的用户只能进行读取，而有的用户可以<br>进行修改。一般来说，系统会为不同的用户分配不同的角色，而每个角色则对应一系列的<br>权限。通俗点讲就是系统判断用户是否有权限去做某些事情。</p>
+        
+          <a class="article-more-a" href="/2021/05/24/Spring-Security-BASE-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring-Security//" class="article-tag-list-link color1">Spring Security</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/24/Spring-Security-BASE-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Netty-BASE-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -788,301 +1055,9 @@
 
 
   
-    <article id="post-SpringBoot2-BASE-4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/20/SpringBoot2-BASE-4/" class="archive-article-date">
-  	<time datetime="2021-05-20T08:21:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SpringBoot2-基础篇-4"><a href="#SpringBoot2-基础篇-4" class="headerlink" title="SpringBoot2 基础篇 4"></a>SpringBoot2 基础篇 4</h1><p>转载：<a href="https://blog.csdn.net/u011863024/article/details/113667634" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/113667634</a></p>
-<h2 id="1-错误处理-SpringBoot默认错误处理机制"><a href="#1-错误处理-SpringBoot默认错误处理机制" class="headerlink" title="1. 错误处理-SpringBoot默认错误处理机制"></a>1. 错误处理-SpringBoot默认错误处理机制</h2><p>官方文档：<a href="https://docs.spring.io/spring-boot/docs/2.4.2/reference/htmlsingle/#boot-features-error-handling" target="_blank" rel="noopener">https://docs.spring.io/spring-boot/docs/2.4.2/reference/htmlsingle/#boot-features-error-handling</a></p>
-<p><strong>默认规则：</strong></p>
-<pre><code>1. 默认情况下，Spring Boot提供/error处理所有错误的映射
-2. 机器客户端，它将生成JSON响应，其中包含错误，HTTP状态和异常消息的详细信息。对于浏览器客户端，响应一个“ whitelabel”错误视图，以HTML格式呈现相同的数据
-
-{
-  &quot;timestamp&quot;: &quot;2020-11-22T05:53:28.416+00:00&quot;,
-  &quot;status&quot;: 404,
-  &quot;error&quot;: &quot;Not Found&quot;,
-  &quot;message&quot;: &quot;No message available&quot;,
-  &quot;path&quot;: &quot;/asadada&quot;
-}
-
-3. 要对其进行自定义，添加View解析为error
-4. 要完全替换默认行为，可以实现 ErrorController并注册该类型的Bean定义，或添加ErrorAttributes类型的组件以使用现有机制但替换其内容。
-5. /templates/error/下的4xx，5xx页面会被自动解析</code></pre>
-        
-          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-4/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringBoot//" class="article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-4/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringBoot2-BASE-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/20/SpringBoot2-BASE-3/" class="archive-article-date">
-  	<time datetime="2021-05-20T07:29:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SpringBoot2-基础篇-3"><a href="#SpringBoot2-基础篇-3" class="headerlink" title="SpringBoot2 基础篇 3"></a>SpringBoot2 基础篇 3</h1><p>转载：<a href="https://blog.csdn.net/u011863024/article/details/113667634" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/113667634</a></p>
-<h2 id="1-视图解析-Thymeleaf初体验"><a href="#1-视图解析-Thymeleaf初体验" class="headerlink" title="1. 视图解析-Thymeleaf初体验"></a>1. 视图解析-Thymeleaf初体验</h2><p>Thymeleaf is a modern server-side Java template engine for both web and standalone environments.</p>
-<p>Thymeleaf’s main goal is to bring elegant natural templates to your development workflow — HTML that can be correctly displayed in browsers and also work as static prototypes, allowing for stronger collaboration in development teams.</p>
-<p>With modules for Spring Framework, a host of integrations with your favourite tools, and the ability to plug in your own functionality, Thymeleaf is ideal for modern-day HTML5 JVM web development — although there is much more it can do.</p>
-<p>Thymeleaf官方文档：<a href="https://www.thymeleaf.org/documentation.html" target="_blank" rel="noopener">https://www.thymeleaf.org/documentation.html</a></p>
-        
-          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringBoot//" class="article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringBoot2-BASE-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/19/SpringBoot2-BASE-2/" class="archive-article-date">
-  	<time datetime="2021-05-19T06:17:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SpringBoot2-基础篇-2"><a href="#SpringBoot2-基础篇-2" class="headerlink" title="SpringBoot2 基础篇 2"></a>SpringBoot2 基础篇 2</h1><p>转载：<a href="https://blog.csdn.net/u011863024/article/details/113667634" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/113667634</a></p>
-<h2 id="1-配置文件-yaml的用法"><a href="#1-配置文件-yaml的用法" class="headerlink" title="1. 配置文件-yaml的用法"></a>1. 配置文件-yaml的用法</h2><p>同以前的properties用法</p>
-<p>YAML 是 “YAML Ain’t Markup Language”（YAML 不是一种标记语言）的递归缩写。在开发的这种语言时，YAML 的意思其实是：“Yet Another Markup Language”（仍是一种标记语言）。</p>
-<p><strong>非常适合用来做以数据为中心的配置文件。</strong></p>
-<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><pre><code>key: value；kv之间有空格
-大小写敏感
-使用缩进表示层级关系
-缩进不允许使用tab，只允许空格
-缩进的空格数不重要，只要相同层级的元素左对齐即可
-&apos;#&apos;表示注释
-字符串无需加引号，如果要加，单引号’’、双引号&quot;&quot;表示字符串内容会被 转义、不转义</code></pre><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p><strong>字面量：单个的、不可再分的值。date、boolean、string、number、null</strong></p>
-<pre><code>k: v</code></pre>
-        
-          <a class="article-more-a" href="/2021/05/19/SpringBoot2-BASE-2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringBoot//" class="article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/19/SpringBoot2-BASE-2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
