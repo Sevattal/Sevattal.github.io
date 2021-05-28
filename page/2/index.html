@@ -146,6 +146,468 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Netty-BASE-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/20/Netty-BASE-1/" class="archive-article-date">
+  	<time datetime="2021-05-20T11:25:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Netty-基础-1"><a href="#Netty-基础-1" class="headerlink" title="Netty 基础 1"></a>Netty 基础 1</h1><p>转载：<a href="https://youthlql.gitee.io/" target="_blank" rel="noopener">https://youthlql.gitee.io/</a></p>
+<h2 id="Netty简介"><a href="#Netty简介" class="headerlink" title="Netty简介"></a>Netty简介</h2><h3 id="Netty-的介绍"><a href="#Netty-的介绍" class="headerlink" title="Netty 的介绍"></a>Netty 的介绍</h3><ol>
+<li>Netty 是由 JBOSS 提供的一个 Java 开源框架，现为 Github 上的独立项目。</li>
+<li>Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。</li>
+<li>Netty 主要针对在 TCP 协议下，面向 Client 端的高并发应用，或者 Peer-to-Peer 场景下的大量数据持续传输的应用。</li>
+<li>Netty 本质是一个 NIO 框架，适用于服务器通讯相关的多种应用场景。</li>
+<li>要透彻理解 Netty，需要先学习 NIO，这样我们才能阅读 Netty 的源码。</li>
+</ol>
+<p>相对简单的一个体系图</p>
+<p><img src="/2021/05/20/Netty-BASE-1/1.png" alt></p>
+        
+          <a class="article-more-a" href="/2021/05/20/Netty-BASE-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Netty//" class="article-tag-list-link color1">Netty</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/20/Netty-BASE-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SpringBoot2-BASE-8" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/20/SpringBoot2-BASE-8/" class="archive-article-date">
+  	<time datetime="2021-05-20T09:31:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SpringBoot2-基础篇-8"><a href="#SpringBoot2-基础篇-8" class="headerlink" title="SpringBoot2 基础篇 8"></a>SpringBoot2 基础篇 8</h1><p>转载：<a href="https://blog.csdn.net/u011863024/article/details/113667634" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/113667634</a></p>
+<h2 id="1-高级特性-Profile环境切换"><a href="#1-高级特性-Profile环境切换" class="headerlink" title="1. 高级特性-Profile环境切换"></a>1. 高级特性-Profile环境切换</h2><p>为了方便多环境适配，Spring Boot简化了profile功能。</p>
+<pre><code>默认配置文件application.yaml任何时候都会加载。
+指定环境配置文件application-{env}.yaml，env通常替代为test，
+激活指定环境
+    配置文件激活：spring.profiles.active=prod
+    命令行激活：java -jar xxx.jar --spring.profiles.active=prod --person.name=haha（修改配置文件的任意值，命令行优先）
+默认配置与环境配置同时生效
+同名配置项，profile配置优先</code></pre>
+        
+          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-8/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SpringBoot//" class="article-tag-list-link color1">SpringBoot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SpringBoot2-BASE-7" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/20/SpringBoot2-BASE-7/" class="archive-article-date">
+  	<time datetime="2021-05-20T09:12:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SpringBoot2-基础篇-7"><a href="#SpringBoot2-基础篇-7" class="headerlink" title="SpringBoot2 基础篇 7"></a>SpringBoot2 基础篇 7</h1><p>转载：<a href="https://blog.csdn.net/u011863024/article/details/113667634" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/113667634</a></p>
+<h2 id="1-指标监控-SpringBoot-Actuator与Endpoint"><a href="#1-指标监控-SpringBoot-Actuator与Endpoint" class="headerlink" title="1. 指标监控-SpringBoot Actuator与Endpoint"></a>1. 指标监控-SpringBoot Actuator与Endpoint</h2><p>未来每一个微服务在云上部署以后，我们都需要对其进行监控、追踪、审计、控制等。SpringBoot就抽取了Actuator场景，使得我们每个微服务快速引用即可获得生产级别的应用监控、审计等功能。</p>
+<p>官方文档 - Spring Boot Actuator: Production-ready Features:<a href="https://docs.spring.io/spring-boot/docs/2.4.2/reference/htmlsingle/#production-ready" target="_blank" rel="noopener">https://docs.spring.io/spring-boot/docs/2.4.2/reference/htmlsingle/#production-ready</a></p>
+        
+          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-7/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SpringBoot//" class="article-tag-list-link color1">SpringBoot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-7/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SpringBoot2-BASE-6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/20/SpringBoot2-BASE-6/" class="archive-article-date">
+  	<time datetime="2021-05-20T08:56:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SpringBoot2-基础篇-6"><a href="#SpringBoot2-基础篇-6" class="headerlink" title="SpringBoot2 基础篇 6"></a>SpringBoot2 基础篇 6</h1><p>转载：<a href="https://blog.csdn.net/u011863024/article/details/113667634" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/113667634</a></p>
+<h2 id="1-单元测试-JUnit5简介"><a href="#1-单元测试-JUnit5简介" class="headerlink" title="1. 单元测试-JUnit5简介"></a>1. 单元测试-JUnit5简介</h2><p>Spring Boot 2.2.0 版本开始引入 JUnit 5 作为单元测试默认库</p>
+<p>JUnit 5官方文档:<a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations" target="_blank" rel="noopener">https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations</a></p>
+<p>作为最新版本的JUnit框架，JUnit5与之前版本的JUnit框架有很大的不同。由三个不同子项目的几个不同模块组成。</p>
+        
+          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-6/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SpringBoot//" class="article-tag-list-link color1">SpringBoot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SpringBoot2-BASE-5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/20/SpringBoot2-BASE-5/" class="archive-article-date">
+  	<time datetime="2021-05-20T08:31:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SpringBoot2-基础篇-5"><a href="#SpringBoot2-基础篇-5" class="headerlink" title="SpringBoot2 基础篇 5"></a>SpringBoot2 基础篇 5</h1><p>转载：<a href="https://blog.csdn.net/u011863024/article/details/113667634" target="_blank" rel="noopener">https://blog.csdn.net/u011863024/article/details/113667634</a></p>
+<h2 id="1-数据访问-数据库场景的自动配置分析与整合测试"><a href="#1-数据访问-数据库场景的自动配置分析与整合测试" class="headerlink" title="1. 数据访问-数据库场景的自动配置分析与整合测试"></a>1. 数据访问-数据库场景的自动配置分析与整合测试</h2><h3 id="导入JDBC场景"><a href="#导入JDBC场景" class="headerlink" title="导入JDBC场景"></a>导入JDBC场景</h3><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-jdbc&lt;/artifactId&gt;
+&lt;/dependency&gt;
+1</code></pre>
+        
+          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-5/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SpringBoot//" class="article-tag-list-link color1">SpringBoot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/20/SpringBoot2-BASE-5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringBoot2-BASE-4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -609,536 +1071,6 @@ Jigsaw的Java模块化
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/05/16/Spring-BASE-7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring-BASE-6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/16/Spring-BASE-6/" class="archive-article-date">
-  	<time datetime="2021-05-16T05:47:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Spring-框架基础6"><a href="#Spring-框架基础6" class="headerlink" title="Spring 框架基础6"></a>Spring 框架基础6</h1><p>转载：<a href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501" target="_blank" rel="noopener">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
-<h2 id="一、什么是事务？"><a href="#一、什么是事务？" class="headerlink" title="一、什么是事务？"></a>一、什么是事务？</h2><h3 id="1、事务的定义"><a href="#1、事务的定义" class="headerlink" title="1、事务的定义"></a>1、事务的定义</h3><p>（1）事务是数据库操作最基本单元，逻辑上一组操作，要么都成功，如果有一个失败所有操作都失败。<br>（2）案例分析</p>
-<p><img src="/2021/05/16/Spring-BASE-6/1.png" alt></p>
-<p>如上述例子，Micah给Maruko转账，只有在转账成功的情况下，Micah的账户余额才会减少，Maruko的账户余额增加，不存在Micah账户的余额减少了，而Maruko的账户余额却不变。要么转账成功，2边余额都改变；要么转账失败，2边余额都保持不变。</p>
-<h3 id="2、事务的四大特性"><a href="#2、事务的四大特性" class="headerlink" title="2、事务的四大特性"></a>2、事务的四大特性</h3><p><strong>原子性（Atomicity）：</strong>事务是一个原子操作，由一系列动作组成。事务的原子性确保动作要么全部完成，要么完全不起作用。<br><strong>一致性（Consistency）：</strong>一旦事务完成（不管成功还是失败），系统必须确保它所建模的业务处于一致的状态，而不会是部分完成部分失败。在现实中的数据不应该被破坏。<br><strong>隔离性（Isolation）：</strong>可能有许多事务会同时处理相同的数据，因此每个事务都应该与其他事务隔离开来，防止数据损坏。<br><strong>持久性（Durability）：</strong>一旦事务完成，无论发生什么系统错误，它的结果都不应该受到影响，这样就能从任何系统崩溃中恢复过来。通常情况下，事务的结果被写到持久化存储器中。</p>
-        
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-6/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-6/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring-BASE-5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/16/Spring-BASE-5/" class="archive-article-date">
-  	<time datetime="2021-05-16T05:47:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Spring-框架基础5"><a href="#Spring-框架基础5" class="headerlink" title="Spring 框架基础5"></a>Spring 框架基础5</h1><p>转载：<a href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501" target="_blank" rel="noopener">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
-<h2 id="一、Spring-JDBC概述"><a href="#一、Spring-JDBC概述" class="headerlink" title="一、Spring JDBC概述"></a>一、Spring JDBC概述</h2><h3 id="1、什么是JDBC-Template？"><a href="#1、什么是JDBC-Template？" class="headerlink" title="1、什么是JDBC Template？"></a>1、什么是JDBC Template？</h3><p>之前我们采用的是手动封装JdbcTemplate，其好处是通过(sql语句+参数)模板化了编程。而真正的JdbcTemplate类，是Spring框架为我们写好的。它是 Spring 框架中提供的一个对象，是对原始 Jdbc API 对象的简单封装。除了JdbcTemplate，Spring 框架还为我们提供了很多的操作模板类。</p>
-<p>操作关系型数据的：JdbcTemplate和HibernateTemplate。<br>操作 nosql 数据库的：RedisTemplate。<br>操作消息队列的：JmsTemplate。</p>
-<h3 id="2、Spring-JDBC-能做什么？"><a href="#2、Spring-JDBC-能做什么？" class="headerlink" title="2、Spring JDBC 能做什么？"></a>2、Spring JDBC 能做什么？</h3><table>
-<thead>
-<tr>
-<th align="left">操作项目</th>
-<th align="left">Spring帮你做的</th>
-<th align="left">你需要做的</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">定义连接参数</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">打开连接</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">指定SQL语句</td>
-<td align="left"></td>
-<td align="left">✔</td>
-</tr>
-<tr>
-<td align="left">声明参数并提供参数值</td>
-<td align="left"></td>
-<td align="left">✔</td>
-</tr>
-<tr>
-<td align="left">准备并运行该语句</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">设置循环以遍历结果（如果有）</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">进行每次迭代的工作</td>
-<td align="left"></td>
-<td align="left">✔</td>
-</tr>
-<tr>
-<td align="left">处理任何异常</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">处理交易</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">关闭连接，语句和结果集</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-</tbody></table>
-        
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-5/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring-BASE-4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/16/Spring-BASE-4/" class="archive-article-date">
-  	<time datetime="2021-05-16T05:47:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Spring-框架基础4"><a href="#Spring-框架基础4" class="headerlink" title="Spring 框架基础4"></a>Spring 框架基础4</h1><p>转载：<a href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501" target="_blank" rel="noopener">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
-<h2 id="一、什么是AOP？"><a href="#一、什么是AOP？" class="headerlink" title="一、什么是AOP？"></a>一、什么是AOP？</h2><h3 id="1、AOP"><a href="#1、AOP" class="headerlink" title="1、AOP"></a>1、AOP</h3><p>AOP（Aspect Oriented Programming），即面向切面编程，是OOP的补充，它也提供了模块化。在面向对象编程中，关键的单元是对象，AOP的关键单元是切面，或者说关注点（可以简单地理解为你程序中的独立模块）。一些切面可能有集中的代码，但是有些可能被分散或者混杂在一起，例如日志或者事务。这些分散的切面被称为横切关注点。一个横切关注点是一个可以影响到整个应用的关注点，而且应该被尽量地集中到代码的一个地方，例如事务管理、权限、日志、安全等。</p>
-<p>AOP让你可以使用简单可插拔的配置，在实际逻辑执行之前、之后或周围动态添加横切关注点。这让代码在当下和将来都变得易于维护。如果你是使用XML来使用切面的话，要添加或删除关注点，你不用重新编译完整的源代码，而仅仅需要修改配置文件就可以了。</p>
-<p><img src="/2021/05/16/Spring-BASE-4/1.png" alt></p>
-<p>总而言之，AOP就是使用不修改源代码的方式，在主干功能里添加新的功能。</p>
-        
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-4/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-4/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring-BASE-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/16/Spring-BASE-3/" class="archive-article-date">
-  	<time datetime="2021-05-16T05:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Spring-框架基础3"><a href="#Spring-框架基础3" class="headerlink" title="Spring 框架基础3"></a>Spring 框架基础3</h1><p>转载：<a href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501" target="_blank" rel="noopener">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
-<h2 id="一、概念与定义"><a href="#一、概念与定义" class="headerlink" title="一、概念与定义"></a>一、概念与定义</h2><h3 id="1、什么是Spring-beans"><a href="#1、什么是Spring-beans" class="headerlink" title="1、什么是Spring beans?"></a>1、什么是Spring beans?</h3><p>Bean: 在Spring中，构成应用程序主干并由Spring IoC容器管理的对象称为bean。Bean是由Spring IoC容器实例化，组装和以其他方式管理的对象。否则，bean仅仅是应用程序中许多对象之一。Bean及其之间的依赖关系反映在容器使用的配置元数据中。</p>
-<p>Spring Beans是构成Spring应用核心的Java对象。这些对象由Spring IoC容器实例化、组装、管理。这些对象通过容器中配置的元数据创建，例如，使用XML文件中定义的创建。<br>在Spring中创建的beans都是单例的beans。在bean标签中有一个属性为”singleton”, 如果设为true，该bean是单例的，如果设为false，该bean是原型bean。Singleton属性默认设置为true。因此，spring框架中所有的bean都默认为单例bean。</p>
-<p><img src="/2021/05/16/Spring-BASE-3/1.png" alt></p>
-        
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring-BASE-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/16/Spring-BASE-2/" class="archive-article-date">
-  	<time datetime="2021-05-16T05:46:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Spring-框架基础2"><a href="#Spring-框架基础2" class="headerlink" title="Spring 框架基础2"></a>Spring 框架基础2</h1><p>转载：<a href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501" target="_blank" rel="noopener">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
-<h2 id="一、IoC概念和原理"><a href="#一、IoC概念和原理" class="headerlink" title="一、IoC概念和原理"></a>一、IoC概念和原理</h2><h3 id="1、-什么是IOC（面试）"><a href="#1、-什么是IOC（面试）" class="headerlink" title="1、 什么是IOC（面试）"></a>1、 什么是IOC（面试）</h3><p>Spring IOC 负责创建对象，管理对象（通过依赖注入（DI），装配对象，配置对象，并且管理这些对象的整个生命周期。</p>
-<p><img src="/2021/05/16/Spring-BASE-2/1.png" alt></p>
-<p>​使用IOC目的：为了降低耦合度</p>
-        
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/16/Spring-BASE-2/">展开全文 >></a>
         </p>
       
 
