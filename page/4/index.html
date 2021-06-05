@@ -146,6 +146,101 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Spring-BASE-6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/16/Spring-BASE-6/" class="archive-article-date">
+  	<time datetime="2021-05-16T05:47:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring-框架基础6"><a href="#Spring-框架基础6" class="headerlink" title="Spring 框架基础6"></a>Spring 框架基础6</h1><p>转载：<a href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501" target="_blank" rel="noopener">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
+<h2 id="一、什么是事务？"><a href="#一、什么是事务？" class="headerlink" title="一、什么是事务？"></a>一、什么是事务？</h2><h3 id="1、事务的定义"><a href="#1、事务的定义" class="headerlink" title="1、事务的定义"></a>1、事务的定义</h3><p>（1）事务是数据库操作最基本单元，逻辑上一组操作，要么都成功，如果有一个失败所有操作都失败。<br>（2）案例分析</p>
+<p><img src="/2021/05/16/Spring-BASE-6/1.png" alt></p>
+<p>如上述例子，Micah给Maruko转账，只有在转账成功的情况下，Micah的账户余额才会减少，Maruko的账户余额增加，不存在Micah账户的余额减少了，而Maruko的账户余额却不变。要么转账成功，2边余额都改变；要么转账失败，2边余额都保持不变。</p>
+<h3 id="2、事务的四大特性"><a href="#2、事务的四大特性" class="headerlink" title="2、事务的四大特性"></a>2、事务的四大特性</h3><p><strong>原子性（Atomicity）：</strong>事务是一个原子操作，由一系列动作组成。事务的原子性确保动作要么全部完成，要么完全不起作用。<br><strong>一致性（Consistency）：</strong>一旦事务完成（不管成功还是失败），系统必须确保它所建模的业务处于一致的状态，而不会是部分完成部分失败。在现实中的数据不应该被破坏。<br><strong>隔离性（Isolation）：</strong>可能有许多事务会同时处理相同的数据，因此每个事务都应该与其他事务隔离开来，防止数据损坏。<br><strong>持久性（Durability）：</strong>一旦事务完成，无论发生什么系统错误，它的结果都不应该受到影响，这样就能从任何系统崩溃中恢复过来。通常情况下，事务的结果被写到持久化存储器中。</p>
+        
+          <a class="article-more-a" href="/2021/05/16/Spring-BASE-6/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/16/Spring-BASE-6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Spring-BASE-5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1014,97 +1109,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/05/12/JAVA-SE-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JAVA-Spring-AOP-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/12/JAVA-Spring-AOP-1/" class="archive-article-date">
-  	<time datetime="2021-05-12T06:27:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="AOP面向切面编程"><a href="#AOP面向切面编程" class="headerlink" title="AOP面向切面编程"></a>AOP面向切面编程</h1><h2 id="1-AOP"><a href="#1-AOP" class="headerlink" title="1. AOP"></a>1. AOP</h2><pre><code>• AOP (Aspect Orient Programming) 面向切面编程是从动态角度考虑程序的运行过程
-• AOP底层，就是采用动态代理模式实现的，采用了两种代理，JDK的动态代理和CGLib的动态代理
-• 实际上AOP就是动态代理的一种规范化，因为动态代理种类繁多，掌握较难，所以就规范了一套统一的方式，这就是AOP
-• AOP把动态代理的实现步骤，方式都定义好了，让开发人员用一种统一的方式，去用动态代理。</code></pre><h3 id="1-1-动态代理实现方式"><a href="#1-1-动态代理实现方式" class="headerlink" title="1.1 动态代理实现方式"></a>1.1 动态代理实现方式</h3><p><strong>JDK:</strong><br>    • jdk动态代理，要求jdk中有Proxy，Method，InvocationHandler创建代理对象<br>    • jdk代理要求目标类必须实现接口</p>
-<p><strong>CGLib：</strong><br>    • 第三方的工具库，创建代理对象，原理是继承，通过继承目标类创建子类，子类就是代理对象<br>    • CGLib要求目标类不能是final的 方法也不能是final的</p>
-        
-          <a class="article-more-a" href="/2021/05/12/JAVA-Spring-AOP-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA//" class="article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/12/JAVA-Spring-AOP-1/">展开全文 >></a>
         </p>
       
 
