@@ -1084,7 +1084,7 @@ ARG author=&quot;Along &lt;along@along.com&gt;&quot;
 MAINTAINER $ARG
 </code></pre>
 <p>　　<br>（2）构建此时镜像时，修改此age</p>
-<p>docker build –build-arg author&#x3D;”Tom <a href="mailto:&#116;&#x6f;&#109;&#64;&#116;&#111;&#x6d;&#x2e;&#99;&#x6f;&#109;">&#116;&#x6f;&#109;&#64;&#116;&#111;&#x6d;&#x2e;&#99;&#x6f;&#109;</a>“ -t test:v0.1 .&#x2F;</p>
+<p>docker build –build-arg author&#x3D;”Tom <a href="mailto:&#116;&#111;&#109;&#x40;&#116;&#x6f;&#109;&#x2e;&#x63;&#111;&#109;">&#116;&#111;&#109;&#x40;&#116;&#x6f;&#109;&#x2e;&#x63;&#111;&#109;</a>“ -t test:v0.1 .&#x2F;</p>
 <h3 id="15-3-SHELL"><a href="#15-3-SHELL" class="headerlink" title="15.3 SHELL"></a>15.3 SHELL</h3><h4 id="15-3-1-介绍"><a href="#15-3-1-介绍" class="headerlink" title="15.3.1 介绍"></a>15.3.1 介绍</h4><pre><code>SHELL指令允许覆盖用于shell命令形式的默认shell。
 Linux上的默认shell是[“/ bin / sh”，“c”]，在Windows上是[“cmd”，“/ S”，“/ C”]
 SHELL指令必须以JSON格式写入Dockerfile。
