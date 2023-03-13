@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="Docker 搭建使用私有docker registry转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10249001.html 1、了解Docker Registry1.1 介绍registry 用于保存docker 镜像，包括镜像的层次结构和元数据。启动容器时，docker daemon会试图从本地获取相关的镜像；本地镜像不存在时，其将从registry中下载该镜像">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker-Registry">
+<meta property="og:url" content="http://yoursite.com/2021/02/11/Docker-Registry/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="Docker 搭建使用私有docker registry转发：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;along21&#x2F;p&#x2F;10249001.html 1、了解Docker Registry1.1 介绍registry 用于保存docker 镜像，包括镜像的层次结构和元数据。启动容器时，docker daemon会试图从本地获取相关的镜像；本地镜像不存在时，其将从registry中下载该镜像">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Registry/1.png">
+<meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Registry/2.png">
+<meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Registry/3.png">
+<meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Registry/4.png">
+<meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Registry/5.png">
+<meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Registry/6.png">
+<meta property="og:image" content="http://yoursite.com/2021/02/11/Docker-Registry/7.png">
+<meta property="article:published_time" content="2021-02-11T04:45:05.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:41.863Z">
+<meta property="article:author" content="Sevattal">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/02/11/Docker-Registry/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Docker-Registry | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Docker-Registry" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/02/11/Docker-Registry/" class="article-date">
+      <time datetime="2021-02-11T04:45:05.000Z" itemprop="datePublished">2021-02-11</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker-Registry
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Docker-搭建使用私有docker-registry"><a href="#Docker-搭建使用私有docker-registry" class="headerlink" title="Docker 搭建使用私有docker registry"></a>Docker 搭建使用私有docker registry</h1><p>转发：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/along21/p/10249001.html">https://www.cnblogs.com/along21/p/10249001.html</a></p>
+<h2 id="1、了解Docker-Registry"><a href="#1、了解Docker-Registry" class="headerlink" title="1、了解Docker Registry"></a>1、了解Docker Registry</h2><h3 id="1-1-介绍"><a href="#1-1-介绍" class="headerlink" title="1.1 介绍"></a>1.1 介绍</h3><p>registry 用于保存docker 镜像，包括镜像的层次结构和元数据。<br>启动容器时，docker daemon会试图从本地获取相关的镜像；本地镜像不存在时，其将从registry中下载该镜像并保存到本地；<br>拉取镜像时，如果不知道registry仓库地址，默认从Docker Hub搜索拉取镜像</p>
+<span id="more"></span>
+
+<h3 id="1-2-分类"><a href="#1-2-分类" class="headerlink" title="1.2 分类"></a>1.2 分类</h3><p>Sponsor Registry：第三方的registry，供客户和docker社区使用；<br>mirror Registry：第三方的registry，只让客户使用；如docker cn和阿里云的镜像加速器；<br>vendor Registry：服务商的registry，由发布docker镜像的供应商提供的registry；如红帽提供的专有的，收费提供；<br>private Registry：通过设有防火墙和额外的安全层的私有实体提供的registry；自建的registry，在本地搭建registry，节省带宽</p>
+<h3 id="1-3-registry组成（repository和index）"><a href="#1-3-registry组成（repository和index）" class="headerlink" title="1.3 registry组成（repository和index）"></a>1.3 registry组成（repository和index）</h3><p>（1）Repository<br>由特定的docker镜像的所有迭代版本组成的镜像仓库；<br>一个registry中可以存在多个repository：<br> repository可分为“顶层仓库”和“用户仓库”<br> 用户仓库名称格式为“用户名&#x2F;仓库名”<br>每个仓库可以包含多个Tag（标签），每个标签对应一个镜像</p>
+<p>（2）Index<br>维护用户账户、镜像的校验以及公共命名空间的信息<br>相当于为registry提供了一个完成用户认证等功能的检索接口</p>
+<p>1.4 拉取上传仓库镜像<br>（1）拉取镜像</p>
+<pre><code>docker pull &lt;registry&gt;[:&lt;port&gt;]/[&lt;namespace&gt;/]&lt;name&gt;:&lt;tag&gt;
+
+registry：仓库服务器地址：不指定默认是docker hub
+port：端口；默认是443，因为是https协议
+namespace：名称空间，指是哪个用户的仓库，如果是顶层仓库，可省
+name：仓库名
+tag：标签名；默认是latest版本
+</code></pre>
+<p>（2）上传镜像</p>
+<pre><code>docker push [OPTIONS] NAME[:TAG]
+</code></pre>
+<h3 id="1-5-知名docker仓库"><a href="#1-5-知名docker仓库" class="headerlink" title="1.5 知名docker仓库"></a>1.5 知名docker仓库</h3><p><a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a><br><a target="_blank" rel="noopener" href="https://quay.io/">https://quay.io/</a><br>　　　　例：docker pull quay.io&#x2F;coreos&#x2F;flannel:v0.10.0-amd64</p>
+<p><a target="_blank" rel="noopener" href="https://promotion.aliyun.com/ntms/act/kubernetes.html">https://promotion.aliyun.com/ntms/act/kubernetes.html</a></p>
+<h2 id="2、搭建私有仓库-distribution"><a href="#2、搭建私有仓库-distribution" class="headerlink" title="2、搭建私有仓库 distribution"></a>2、搭建私有仓库 distribution</h2><h3 id="2-1-distribution-介绍"><a href="#2-1-distribution-介绍" class="headerlink" title="2.1 distribution 介绍"></a>2.1 distribution 介绍</h3><p>docker提供的开源Registry，但是很简单，只能作为存储镜像的仓库，没有额外的功能；如管理页面等</p>
+<h3 id="2-2-安装启动-distribution"><a href="#2-2-安装启动-distribution" class="headerlink" title="2.2 安装启动 distribution"></a>2.2 安装启动 distribution</h3><p>两种方案安装，我采用的是方案2</p>
+<h4 id="2-2-1-方案1：使用yum安装（直接从extras-源中下载安装）"><a href="#2-2-1-方案1：使用yum安装（直接从extras-源中下载安装）" class="headerlink" title="2.2.1 方案1：使用yum安装（直接从extras 源中下载安装）"></a>2.2.1 方案1：使用yum安装（直接从extras 源中下载安装）</h4><pre><code>[root@docker2 ~]# yum info docker-distribution
+已加载插件：fastestmirror
+Loading mirror speeds from cached hostfile
+可安装的软件包
+名称    ：docker-distribution
+架构    ：x86_64
+版本    ：2.6.2
+发布    ：2.git48294d9.el7
+大小    ：3.5 M
+源    ：extras/7/x86_64
+简介    ： Docker toolset to pack, ship, store, and deliver content
+网址    ：https://github.com/docker/distribution
+协议    ： ASL 2.0
+描述    ： Docker toolset to pack, ship, store, and deliver content
+[root@docker2 ~]# yum -y install docker-distribution
+</code></pre>
+<h4 id="2-2-2-方案2：拉取镜像，作为容器安装"><a href="#2-2-2-方案2：拉取镜像，作为容器安装" class="headerlink" title="2.2.2 方案2：拉取镜像，作为容器安装"></a>2.2.2 方案2：拉取镜像，作为容器安装</h4><p>（1）拉取镜像</p>
+<pre><code>[root@docker2 ~]# docker pull registry:2.6.2
+2.6.2: Pulling from library/registry
+d6a5679aa3cf: Pull complete
+ad0eac849f8f: Pull complete
+2261ba058a15: Pull complete
+f296fda86f10: Pull complete
+bcd4a541795b: Pull complete
+Digest: sha256:5a156ff125e5a12ac7fdec2b90b7e2ae5120fa249cf62248337b6d04abc574c8
+Status: Downloaded newer image for registry:2.6.2
+</code></pre>
+<p>（2）启动registry 容</p>
+<pre><code>[root@docker2 ~]# docker run --name registry -p 5000:5000 -v /data/registry:/var/lib/registry -d registry:2.6.2
+a43f802e737eba89879a4dc02562b38e0042db981f9bdb91782b453f0bac4119
+[root@docker2 ~]# docker port registry
+5000/tcp -&gt; 0.0.0.0:5000
+[root@docker2 ~]# ss -nutlp |grep 5000
+tcp    LISTEN     0      128      :::5000                 :::*                   users:((&quot;docker-proxy&quot;,pid=4901,fd=4))
+[root@docker2 ~]# docker inspect -f &#123;&#123;."Mounts"&#125;&#125; registry
+[&#123;bind  /data/registry /var/lib/registry   true rprivate&#125;]
+</code></pre>
+<p>注：</p>
+<pre><code>-p 5000:5000：将容器中的5000端口，暴露在宿主机的5000端口
+-v /data/registry:/var/lib/registry：指定宿主机存储的位置为 /data/registry
+-d：后台运行容器
+</code></pre>
+<h3 id="2-3-从私有仓库上传下载镜像"><a href="#2-3-从私有仓库上传下载镜像" class="headerlink" title="2.3 从私有仓库上传下载镜像"></a>2.3 从私有仓库上传下载镜像</h3><h4 id="2-3-1-将本地的镜像上传到私有仓库"><a href="#2-3-1-将本地的镜像上传到私有仓库" class="headerlink" title="2.3.1 将本地的镜像上传到私有仓库"></a>2.3.1 将本地的镜像上传到私有仓库</h4><p>（1）先将本地仓库打上合适的标签</p>
+<pre><code>[root@docker1 ~]# docker tag busybox:latest 192.168.10.102:5000/busybox:v0.1
+[root@docker1 ~]# docker image ls
+REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+192.168.10.102:5000/busybox   v0.1                758ec7f3a1ee        13 days ago         1.15 MB
+busybox                       latest              758ec7f3a1ee        13 days ago         1.15 MB
+</code></pre>
+<p>　　<br>（2）尝试删除镜像</p>
+<pre><code>[root@docker1 ~]# docker push 192.168.10.102:5000/busybox:v0.1
+The push refers to a repository [192.168.10.102:5000/busybox]
+Get https://192.168.10.102:5000/v1/_ping: http: server gave HTTP response to HTTPS client
+</code></pre>
+<p>上传镜像失败；原因：docker 上传下载默认只支持https协议，搭建的私有仓库是http协议。</p>
+<p>（3）修改重启docker服务</p>
+<pre><code>[root@docker1 ~]# vim /etc/docker/daemon.json
+&#123;
+  &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;],
+  &quot;insecure-registries&quot;: [&quot;192.168.10.102:5000&quot;]
+&#125;
+[root@docker1 ~]# systemctl restart docker
+</code></pre>
+<p>注：就是将私有仓库认证为安全仓库：”insecure-registries”: [“”]</p>
+<p>（4）再次上传镜像，成功</p>
+<pre><code>[root@docker1 ~]# docker push 192.168.10.102:5000/busybox:v0.1
+The push refers to a repository [192.168.10.102:5000/busybox]
+23bc2b70b201: Pushed
+v0.1: digest: sha256:cbcde3595079b1f7a6b046e96e7547fe786d5c2c8eba678bc260161bc01b8dbe size: 527
+</code></pre>
+<p>　　<br>（5）在私有仓库的服务器上验证</p>
+<pre><code>[root@docker2 ~]# ls /data/registry/docker/registry/v2/
+blobs  repositories
+</code></pre>
+<p>　　<br>（6）从私有仓库拉取镜像，先删除再拉取</p>
+<pre><code>[root@docker1 ~]# docker rmi 192.168.10.102:5000/busybox:v0.1
+Untagged: 192.168.10.102:5000/busybox:v0.1
+Untagged: 192.168.10.102:5000/busybox@sha256:cbcde3595079b1f7a6b046e96e7547fe786d5c2c8eba678bc260161bc01b8dbe
+[root@docker1 ~]# docker image ls
+REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
+busybox                  latest              758ec7f3a1ee        2 weeks ago         1.15 MB
+[root@docker1 ~]# docker pull 192.168.10.102:5000/busybox:v0.1
+v0.1: Pulling from busybox
+Digest: sha256:cbcde3595079b1f7a6b046e96e7547fe786d5c2c8eba678bc260161bc01b8dbe
+Status: Downloaded newer image for 192.168.10.102:5000/busybox:v0.1
+[root@docker1 ~]# docker image ls
+REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+192.168.10.102:5000/busybox   v0.1                758ec7f3a1ee        2 weeks ago         1.15 MB
+</code></pre>
+<p>　　</p>
+<h2 id="3、安装搭建私有仓库-Harbor"><a href="#3、安装搭建私有仓库-Harbor" class="headerlink" title="3、安装搭建私有仓库 Harbor"></a>3、安装搭建私有仓库 Harbor</h2><h3 id="3-1-认识-Harbor"><a href="#3-1-认识-Harbor" class="headerlink" title="3.1 认识 Harbor"></a>3.1 认识 Harbor</h3><h4 id="3-1-1-Harbor-介绍"><a href="#3-1-1-Harbor-介绍" class="headerlink" title="3.1.1 Harbor 介绍"></a>3.1.1 Harbor 介绍</h4><p>Harbor gitlab项目地址：<a target="_blank" rel="noopener" href="https://github.com/goharbor/harbor">https://github.com/goharbor/harbor</a><br>Harbor是一个开源的可信云本机注册表项目，用于存储，签名和扫描内容。Harbor通过添加用户通常需要的功能（如安全性，身份和管理）来扩展开源Docker Distribution。使注册表更接近构建和运行环境可以提高图像传输效率。Harbor支持在注册表之间复制映像，还提供高级安全功能，如用户管理，访问控制和活动审计。<br>Harbour由Cloud Native Computing Foundation（CNCF）托管。如果您是一个希望帮助塑造云原生技术发展的组织，请考虑加入CNCF。有关谁参与以及Harbour如何扮演角色的详细信息，请阅读CNCF 公告。</p>
+<h4 id="3-1-2-Harbor-特征"><a href="#3-1-2-Harbor-特征" class="headerlink" title="3.1.2 Harbor 特征"></a>3.1.2 Harbor 特征</h4><p>云本机注册表：Harbour 支持容器映像和Helm图表，可用作云本机环境（如容器运行时和业务流程平台）的注册表。<br>基于角色的访问控制：用户和存储库通过“项目”进行组织，用户可以对项目下的图像拥有不同的权限。<br>基于策略的映像复制：可以基于具有多个过滤器（存储库，标记和标签）的策略在多个注册表实例之间复制（同步）映像。如果遇到任何错误，Harbor将自动重试进行复制。非常适合负载平衡，高可用性，多数据中心，混合和多云场景。<br>漏洞扫描：Harbor定期扫描图像并警告用户漏洞。<br>LDAP &#x2F; AD支持：Harbor与现有企业LDAP &#x2F; AD集成以进行用户身份验证和管理，并支持将LDAP组导入Harbor并为其分配适当的项目角色。<br>图像删除和垃圾收集：可以删除图像，并可以回收它们的空间。<br>公证：可以确保图像的真实性。<br>图形用户门户：用户可以轻松浏览，搜索存储库和管理项目。<br>审计：跟踪存储库的所有操作。<br>RESTful API：适用于大多数管理操作的RESTful API，易于与外部系统集成。<br>易于部署：提供在线和离线安装程序。</p>
+<h4 id="3-1-3-harbor-配置参数"><a href="#3-1-3-harbor-配置参数" class="headerlink" title="3.1.3 harbor 配置参数"></a>3.1.3 harbor 配置参数</h4><p>（1）参数介绍</p>
+<p>配置参数位于文件harbor.cfg中。</p>
+<p>在harbor.cfg中有两类参数，必需参数和可选参数。</p>
+<pre><code> required参数：需要在配置文件中设置这些参数。如果用户更新它们harbor.cfg并运行install.sh脚本以重新安装Harbor，它们将生效。
+ 可选参数：这些参数对于更新是可选的，即用户可以将它们保留为默认值，并在启动Harbour后在Web Portal上更新它们。如果它们已经启用harbor.cfg，它们只会在首次启动Harbour时生效。harbor.cfg将忽略对这些参数的后续更新。
+</code></pre>
+<p>注意：如果您选择通过Portal设置这些参数，请务必在Harbour启动后立即执行此操作。特别是，您必须在Harbour中注册或创建任何新用户之前设置所需的auth_mode。当系统中有用户时（除默认管理员用户外）， 无法更改auth_mode。</p>
+<p>请注意，至少需要更改hostname属性。</p>
+<p>（2）必需参数</p>
+<pre><code> hostname：目标主机的主机名，用于访问Portal和注册表服务。它应该是目标计算机的IP地址或完全限定的域名（FQDN），例如，192.168.1.10或reg.yourdomain.com。不要使用localhost或127.0.0.1作为主机名 - 外部客户端需要访问注册表服务！
+ ui_url_protocol :( http或https。默认为http）用于访问Portal和令牌/通知服务的协议。如果启用了公证，则此参数必须为https。默认情况下，这是http。要设置https协议，请参阅使用HTTPS访问配置Harbor。
+ db_password：用于db_auth的PostgreSQL数据库的root密码。更改此密码以用于任何生产用途！
+ max_job_workers :(默认值为10）作业服务中的最大复制工作者数。对于每个映像复制作业，工作程序将存储库的所有标记同步到远程目标。增加此数量可以在系统中实现更多并发复制作业。但是，由于每个工作者都消耗一定量的网络/ CPU / IO资源，请根据主机的硬件资源仔细选择该属性的值。
+ customize_crt：（on or off. Default is on），如果此属性on，在准备脚本创建注册表的令牌生成/验证私钥和根证书。当外部源提供密钥和根证书时，将此属性设置为off。有关详细信息，请参阅自定义密钥和港口令牌服务证书。
+ ssl_cert：SSL证书的路径，仅在协议设置为https时应用。
+ ssl_cert_key：SSL密钥的路径，仅在协议设置为https时应用。
+ secretkey_path：用于加密或解密复制策略中远程注册表密码的密钥路径。
+ log_rotate_count：日志文件在被删除之前会被轮换log_rotate_count次。如果count为0，则删除旧版本而不是旋转。
+ log_rotate_size：仅当日志文件大于log_rotate_size字节时才会轮换日志文件。如果大小后跟k，则假定大小以千字节为单位。如果使用M，则大小以兆字节为单位，如果使用G，则大小为千兆字节。尺寸100，尺寸100k，尺寸100M和尺寸100G都是有效的。
+ http_proxy：为Clair配置http代理，例如http://my.proxy.com:3128。
+ https_proxy：为Clair配置https代理，例如http://my.proxy.com:3128。
+ no_proxy：为Clair配置无代理，例如127.0.0.1,localhost,core,registry。
+</code></pre>
+<p>（3）可选参数</p>
+<pre><code>电子邮件设置：Harbor需要这些参数才能向用户发送“密码重置”电子邮件，并且仅在需要该功能时才需要。另外，请注意，在默认情况下SSL连接时没有启用-如果你的SMTP服务器需要SSL，但不支持STARTTLS，那么你应该通过设置启用SSL email_ssl = TRUE。如果电子邮件服务器使用自签名证书或不受信任证书，则设置email_insecure = true
+     email_server = smtp.mydomain.com
+     email_server_port = 25
+     email_identity =
+     email_username = sample_admin@mydomain.com
+     email_password = abc
+     email_from = admin sample_admin@mydomain.com
+     email_ssl = false
+     email_insecure = false
+ harbor_admin_password：管理员的初始密码。此密码仅在Harbor首次启动时生效。之后，将忽略此设置，并且应在Portal中设置管理员密码。请注意，默认用户名/密码为admin / Harbor12345
+ auth_mode：使用的身份验证类型。默认情况下，它是db_auth，即凭据存储在数据库中。对于LDAP身份验证，请将其设置为ldap_auth。重要信息：从现有Harbor实例升级时，必须确保在启动新版本的Harbor之前auth_mode相同harbor.cfg。否则，用户可能无法在升级后登录。
+ ldap_url：LDAP端点URL（例如ldaps://ldap.mydomain.com）。 仅在auth_mode设置为ldap_auth时使用。
+ ldap_searchdn：具有搜索LDAP / AD服务器权限的用户的DN（例如uid=admin,ou=people,dc=mydomain,dc=com）。
+ ldap_search_pwd：ldap_searchdn指定的用户密码。
+ ldap_basedn：查找用户的基本DN，例如ou=people,dc=mydomain,dc=com。 仅在auth_mode设置为ldap_auth时使用。
+ ldap_filter：用于查找用户的搜索过滤器，例如(objectClass=person)。
+ ldap_uid：用于在LDAP搜索期间匹配用户的属性，它可以是uid，cn，email或其他属性。
+ ldap_scope：搜索用户的范围，0-LDAP_SCOPE_BASE，1-LDAP_SCOPE_ONELEVEL，2-LDAP_SCOPE_SUBTREE。默认值为2。
+ ldap_timeout：连接LDAP服务器时超时（以秒为单位）。默认值为5。
+ ldap_verify_cert：验证来自LDAP服务器的证书。默认为true。
+ ldap_group_basedn：在LDAP / AD中查找组的基本dn，例如ou=group,dc=mydomain,dc=com。
+ ldap_group_filter：搜索LDAP / AD组的过滤器，例如objectclass=group。
+ ldap_group_gid：用于命名LDAP / AD组的属性，它可以是cn，name。
+ ldap_group_scope：搜索ldap组的范围。0-LDAP_SCOPE_BASE，1-LDAP_SCOPE_ONELEVEL，2-LDAP_SCOPE_SUBTREE。默认值为2。
+ self_registration :( 打开或关闭。默认打开）启用/禁用用户注册他/她自己的能力。禁用时，新用户只能由管理员用户创建，只有管理员用户可以在Harbor中创建新用户。 注意：当auth_mode设置为ldap_auth时，始终禁用自注册功能，并忽略此标志。
+ token_expiration：令牌服务创建的令牌的到期时间（以分钟为单位），默认为30分钟。
+ project_creation_restriction：用于控制用户有权创建项目的标志。默认情况下，每个人都可以创建一个项目，设置为“adminonly”，这样只有管理员才能创建项目。
+</code></pre>
+<p>（4）配置存储后端（可选）</p>
+<p>　　默认情况下，Harbor将图像存储在本地文件系统中。在生产环境中，您可以考虑使用其他存储后端而不是本地文件系统，如S3，OpenStack Swift，Ceph等。这些参数是注册表的配置。</p>
+<pre><code> registry_storage_provider_name：注册表的存储提供程序名称，可以是filesystem，s3，gcs，azure等。默认为filesystem。
+ registry_storage_provider_config：存储提供程序配置的逗号分隔“key：value”对，例如“key1：value，key2：value2”。默认为空字符串。
+ registry_custom_ca_bundle：自定义根ca证书的路径，它将注入到注册表和图表存储库容器的信任库中。当用户使用自签名证书托管内部存储时，通常需要这样做。
+</code></pre>
+<p>例如，如果使用Openstack Swift作为存储后端，则参数可能如下所示：</p>
+<pre><code>registry_storage_provider_name = swift
+registry_storage_provider_config = “ username：admin，password：ADMIN_PASS，authurl：http：// keystone_addr：35357 / v3 / aut
+</code></pre>
+<p>注意：有关注册表存储后端的详细信息，请参阅“ 注册表配置参考”。</p>
+<h3 id="3-2-安装主机的先决条件"><a href="#3-2-安装主机的先决条件" class="headerlink" title="3.2 安装主机的先决条件"></a>3.2 安装主机的先决条件</h3><h4 id="3-2-1-硬件"><a href="#3-2-1-硬件" class="headerlink" title="3.2.1 硬件"></a>3.2.1 硬件</h4><table>
+<thead>
+<tr>
+<th align="left">资源</th>
+<th align="left">容量</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">CPU</td>
+<td align="left">最小2 CPU</td>
+<td align="left">4 CPU是首选</td>
+</tr>
+<tr>
+<td align="left">内存</td>
+<td align="left">最小4GB</td>
+<td align="left">8GB是首选</td>
+</tr>
+<tr>
+<td align="left">磁盘</td>
+<td align="left">最小40GB</td>
+<td align="left">160GB是首选</td>
+</tr>
+</tbody></table>
+<h4 id="3-2-2-软件"><a href="#3-2-2-软件" class="headerlink" title="3.2.2 软件"></a>3.2.2 软件</h4><table>
+<thead>
+<tr>
+<th align="left">软件</th>
+<th align="left">版本</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Python</td>
+<td align="left">2.7或更高版本</td>
+<td align="left">请注意，您可能必须在Linux发行版（Gentoo，Arch）上安装Python，默认情况下不安装Python解释器</td>
+</tr>
+<tr>
+<td align="left">Docker engine</td>
+<td align="left">版本1.10或更高版本</td>
+<td align="left">有关安装说明，请参阅：https：&#x2F;&#x2F;docs.docker.com&#x2F;engine&#x2F;installation&#x2F;</td>
+</tr>
+<tr>
+<td align="left">Docker Compose</td>
+<td align="left">版本1.6.0或更高版本</td>
+<td align="left">有关安装说明，请参阅：https：&#x2F;&#x2F;docs.docker.com&#x2F;compose&#x2F;install&#x2F;</td>
+</tr>
+<tr>
+<td align="left">Openssl</td>
+<td align="left">最新的是首选</td>
+<td align="left">为Harbor生成证书和密钥</td>
+</tr>
+</tbody></table>
+<h4 id="3-2-3-网络端口"><a href="#3-2-3-网络端口" class="headerlink" title="3.2.3 网络端口"></a>3.2.3 网络端口</h4><table>
+<thead>
+<tr>
+<th align="left">端口</th>
+<th align="left">协议</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">443</td>
+<td align="left">HTTPS</td>
+<td align="left">Harbor门户和核心API将接受此端口上的https协议请求</td>
+</tr>
+<tr>
+<td align="left">4443</td>
+<td align="left">HTTPS</td>
+<td align="left">只有在启用“公证”时才需要连接到Dock的Docker Content Trust服务</td>
+</tr>
+<tr>
+<td align="left">80</td>
+<td align="left">HTTP</td>
+<td align="left">Harbor端口和核心API将接受此端口上的http协议请求</td>
+</tr>
+</tbody></table>
+<h4 id="3-2-4-添加一块50G-新硬盘（如果磁盘足够，可忽略）"><a href="#3-2-4-添加一块50G-新硬盘（如果磁盘足够，可忽略）" class="headerlink" title="3.2.4 添加一块50G 新硬盘（如果磁盘足够，可忽略）"></a>3.2.4 添加一块50G 新硬盘（如果磁盘足够，可忽略）</h4><p>（1）查询添加的磁盘的名字</p>
+<pre><code>$ fdisk -l
+Disk /dev/sdb: 53.7 GB, 53687091200 bytes, 104857600 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+</code></pre>
+<p>（2）对磁盘进行分区</p>
+<pre><code>$ fdisk /dev/sdb
+Command (m for help): m
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Using default response p
+Partition number (1-4, default 1):
+First sector (2048-104857599, default 2048):
+Using default value 2048
+Last sector, +sectors or +size&#123;K,M,G&#125; (2048-104857599, default 104857599):
+Using default value 104857599
+Partition 1 of type Linux and of size 50 GiB is set
+Command (m for help): w
+The partition table has been altered!
+ 
+Calling ioctl() to re-read partition table.
+Syncing disks.
+</code></pre>
+<p>（3）磁盘文件格式化</p>
+<pre><code>$ [root@centos7-1 ~]# mkfs.ext3 /dev/sdb1
+</code></pre>
+<p>　　<br>（4）挂载磁盘</p>
+<pre><code>$ vim /etc/fstab    设为开机自动挂载
+/dev/sdb1           /data                   ext3    defaults        0 0
+$ mount -a   挂载磁盘
+</code></pre>
+<p>　　<br>（5）验证</p>
+<pre><code>[root@centos7-1 ~]# df -h /data
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdb1        50G   52M   47G   1% /data
+</code></pre>
+<p>　　</p>
+<h4 id="3-2-5-安装docker编排工具-Docker-Compose"><a href="#3-2-5-安装docker编排工具-Docker-Compose" class="headerlink" title="3.2.5 安装docker编排工具 Docker Compose"></a>3.2.5 安装docker编排工具 Docker Compose</h4><p>方案1：直接yum安装</p>
+<pre><code>[root@docker2 ~]# yum -y install docker-compose
+</code></pre>
+<p>　　<br>方案2：在GitHub上选择自己需要的版本下载安装<a target="_blank" rel="noopener" href="https://github.com/docker/compose/releases">https://github.com/docker/compose/releases</a></p>
+<pre><code>$ curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-Linux-x86_64 -o /usr/local/bin/docker-compose
+$ chmod +x /usr/local/bin/docker-compose
+$ docker-compose version
+docker-compose version 1.23.2, build 1110ad01
+docker-py version: 3.6.0
+CPython version: 3.6.7
+OpenSSL version: OpenSSL 1.1.0f  25 May 2017
+</code></pre>
+<p>　　</p>
+<h3 id="3-4-安装搭建Harbor"><a href="#3-4-安装搭建Harbor" class="headerlink" title="3.4 安装搭建Harbor"></a>3.4 安装搭建Harbor</h3><h4 id="3-4-1-下载Harbor-安装包（该资源下载较慢）"><a href="#3-4-1-下载Harbor-安装包（该资源下载较慢）" class="headerlink" title="3.4.1 下载Harbor 安装包（该资源下载较慢）"></a>3.4.1 下载Harbor 安装包（该资源下载较慢）</h4><pre><code>[root@docker2 ~]# wget https://storage.googleapis.com/harbor-releases/release-1.7.0/harbor-offline-installer-v1.7.1.tgz
+[root@docker2 ~]# tar -C /data/ -xvf harbor-offline-installer-v1.7.1.tgz
+</code></pre>
+<p>　　</p>
+<h4 id="3-4-2-配置Harbor-服务"><a href="#3-4-2-配置Harbor-服务" class="headerlink" title="3.4.2 配置Harbor 服务"></a>3.4.2 配置Harbor 服务</h4><p>（1）修改harbor.cfg 配置文件</p>
+<pre><code>[root@docker2 ~]# cd /data/harbor/
+[root@docker2 harbor]# grep &quot;^[^#]&quot; harbor.cfg
+_version = 1.7.0
+hostname = docker2
+ui_url_protocol = http
+max_job_workers = 2
+customize_crt = on
+ssl_cert = /data/cert/server.crt
+ssl_cert_key = /data/cert/server.key
+secretkey_path = /data
+admiral_url = NA
+log_rotate_count = 50
+log_rotate_size = 200M
+http_proxy =
+https_proxy =
+no_proxy = 127.0.0.1,localhost,core,registry
+email_identity =
+email_server = smtp.mydomain.com
+email_server_port = 25
+email_username = sample_admin@mydomain.com
+email_password = abc
+email_from = admin &lt;sample_admin@mydomain.com&gt;
+email_ssl = false
+email_insecure = false
+harbor_admin_password = Harbor12345
+auth_mode = db_auth
+ldap_url = ldaps://ldap.mydomain.com
+ldap_basedn = ou=people,dc=mydomain,dc=com
+ldap_uid = uid
+ldap_scope = 2
+ldap_timeout = 5
+ldap_verify_cert = true
+ldap_group_basedn = ou=group,dc=mydomain,dc=com
+ldap_group_filter = objectclass=group
+ldap_group_gid = cn
+ldap_group_scope = 2
+self_registration = on
+token_expiration = 30
+project_creation_restriction = everyone
+db_host = postgresql
+db_password = along
+db_port = 5432
+db_user = postgres
+redis_host = redis
+redis_port = 6379
+redis_password = along
+redis_db_index = 1,2,3
+clair_db_host = postgresql
+clair_db_password = along
+clair_db_port = 5432
+clair_db_username = postgres
+clair_db = postgres
+clair_updaters_interval = 12
+uaa_endpoint = uaa.mydomain.org
+uaa_clientid = id
+uaa_clientsecret = secret
+uaa_verify_cert = true
+uaa_ca_cert = /path/to/ca.pem
+registry_storage_provider_name = filesystem
+registry_storage_provider_config =
+registry_custom_ca_bundle =
+</code></pre>
+<p>主要修改了：<br>　　hostname：主机名<br>　　max_job_workers：最大cpu数，小于等于自己服务器的硬件</p>
+<p>（2）定义docker-compose.yml 文件（可省略）</p>
+<p>docker-compose.yml 文件是docker 编排时对容器的一些操作：</p>
+<p>端口</p>
+<pre><code>ports:
+      - 80:80
+      - 443:443
+      - 4443:4443
+</code></pre>
+<p>众多存储器路径</p>
+<pre><code>如：volumes:
+      - /data/registry:/storage:z
+</code></pre>
+<p>在生产环境中，尽量将容器的存储卷定义在空间较为充足的磁盘；<br>自己根据实际情况进行修改；</p>
+<h4 id="3-4-3-安装启动harbor"><a href="#3-4-3-安装启动harbor" class="headerlink" title="3.4.3 安装启动harbor"></a>3.4.3 安装启动harbor</h4><pre><code>[root@docker2 harbor]# ./install.sh
+ 
+[Step 0]: checking installation environment ...
+ 
+Note: docker version: 18.03.1
+ 
+Note: docker-compose version: 1.23.2
+ 
+[Step 1]: loading Harbor images ...
+Loaded image: goharbor/registry-photon:v2.6.2-v1.7.1
+Loaded image: goharbor/harbor-migrator:v1.7.1
+Loaded image: goharbor/harbor-adminserver:v1.7.1
+Loaded image: goharbor/harbor-core:v1.7.1
+Loaded image: goharbor/harbor-log:v1.7.1
+Loaded image: goharbor/harbor-jobservice:v1.7.1
+Loaded image: goharbor/notary-server-photon:v0.6.1-v1.7.1
+Loaded image: goharbor/clair-photon:v2.0.7-v1.7.1
+Loaded image: goharbor/harbor-portal:v1.7.1
+Loaded image: goharbor/harbor-db:v1.7.1
+Loaded image: goharbor/redis-photon:v1.7.1
+Loaded image: goharbor/nginx-photon:v1.7.1
+Loaded image: goharbor/harbor-registryctl:v1.7.1
+Loaded image: goharbor/notary-signer-photon:v0.6.1-v1.7.1
+Loaded image: goharbor/chartmuseum-photon:v0.7.1-v1.7.1
+ 
+[Step 2]: preparing environment ...
+Generated and saved secret to file: /data/secretkey
+Generated configuration file: ./common/config/nginx/nginx.conf
+Generated configuration file: ./common/config/adminserver/env
+Generated configuration file: ./common/config/core/env
+Generated configuration file: ./common/config/registry/config.yml
+Generated configuration file: ./common/config/db/env
+Generated configuration file: ./common/config/jobservice/env
+Generated configuration file: ./common/config/jobservice/config.yml
+Generated configuration file: ./common/config/log/logrotate.conf
+Generated configuration file: ./common/config/registryctl/env
+Generated configuration file: ./common/config/core/app.conf
+Generated certificate, key file: ./common/config/core/private_key.pem, cert file: ./common/config/registry/root.crt
+The configuration files are ready, please use docker-compose to start the service.
+ 
+ 
+[Step 3]: checking existing instance of Harbor ...
+ 
+ 
+[Step 4]: starting Harbor ...
+Creating network &quot;harbor_harbor&quot; with the default driver
+Creating harbor-log ... done
+Creating registry           ... done
+Creating harbor-db          ... done
+Creating registryctl        ... done
+Creating harbor-adminserver ... done
+Creating redis              ... done
+Creating harbor-core        ... done
+Creating harbor-portal      ... done
+Creating harbor-jobservice  ... done
+Creating nginx              ... done
+ 
+✔ ----Harbor has been installed and started successfully.----
+ 
+Now you should be able to visit the admin portal at http://docker2.
+For more details, please visit https://github.com/goharbor/harbor .
+</code></pre>
+<p>　　</p>
+<h4 id="3-4-3-安装后验证"><a href="#3-4-3-安装后验证" class="headerlink" title="3.4.3 安装后验证"></a>3.4.3 安装后验证</h4><p>（1）打开了一些端口</p>
+<pre><code>[root@docker2 harbor]# ss -nutlp |grep docker
+tcp    LISTEN     0      128    127.0.0.1:1514            *:*              		 users:((&quot;docker-proxy&quot;,pid=1440,fd=4))
+tcp    LISTEN     0      128      :::80                   :::*                   users:((&quot;docker-proxy&quot;,pid=2204,fd=4))
+tcp    LISTEN     0      128      :::443                  :::*                   users:((&quot;docker-proxy&quot;,pid=2192,fd=4))
+tcp    LISTEN     0      128      :::4443                 :::*                   users:((&quot;docker-proxy&quot;,pid=2181,fd=4))
+</code></pre>
+<p>　　</p>
+<p>（2）harbor实际就是启动了一些docker服务</p>
+<pre><code>[root@docker2 ~]# docker ps
+CONTAINER ID        IMAGE                                    COMMAND                  CREATED             STATUS                 PORTS                                                              NAMES
+def22a8eeb9a        goharbor/nginx-photon:v1.7.1             &quot;nginx -g &#39;daemon of…&quot;   2 hours ago         Up 2 hours (healthy)   0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp, 0.0.0.0:4443-&gt;4443/tcp   nginx
+a410a38479fa        goharbor/harbor-portal:v1.7.1            &quot;nginx -g &#39;daemon of…&quot;   2 hours ago         Up 2 hours (healthy)   80/tcp                                                             harbor-portal
+e25f87eb80db        goharbor/harbor-jobservice:v1.7.1        &quot;/harbor/start.sh&quot;       2 hours ago         Up 2 hours                                                                                harbor-jobservice
+2be7211535a2        goharbor/harbor-core:v1.7.1              &quot;/harbor/start.sh&quot;       2 hours ago         Up 2 hours (healthy)                                                                      harbor-core
+26681dde1dec        goharbor/harbor-db:v1.7.1                &quot;/entrypoint.sh post…&quot;   2 hours ago         Up 2 hours (healthy)   5432/tcp                                                           harbor-db
+80f592176896        goharbor/harbor-registryctl:v1.7.1       &quot;/harbor/start.sh&quot;       2 hours ago         Up 2 hours (healthy)                                                                      registryctl
+def7f9892e46        goharbor/redis-photon:v1.7.1             &quot;docker-entrypoint.s…&quot;   2 hours ago         Up 2 hours             6379/tcp                                                           redis
+9af874368813        goharbor/registry-photon:v2.6.2-v1.7.1   &quot;/entrypoint.sh /etc…&quot;   2 hours ago         Up 2 hours (healthy)   5000/tcp                                                           registry
+0f7156ac62f7        goharbor/harbor-adminserver:v1.7.1       &quot;/harbor/start.sh&quot;       2 hours ago         Up 2 hours (healthy)                                                                      harbor-adminserver
+3e45524ef1f0        goharbor/harbor-log:v1.7.1               &quot;/bin/sh -c /usr/loc…&quot;   2 hours ago         Up 2 hours (healthy)   127.0.0.1:1514-&gt;10514/tcp                                          harbor-log
+</code></pre>
+<h2 id="4、使用-Harbor"><a href="#4、使用-Harbor" class="headerlink" title="4、使用 Harbor"></a>4、使用 Harbor</h2><h3 id="4-1-Harbor-页面基础操作"><a href="#4-1-Harbor-页面基础操作" class="headerlink" title="4.1 Harbor 页面基础操作"></a>4.1 Harbor 页面基础操作</h3><p>（1）网页登录<a target="_blank" rel="noopener" href="http://192.168.130.102/">http://192.168.130.102</a><br><img src="/2021/02/11/Docker-Registry/1.png"></p>
+<p>（2）登录harbor 后一些简单的操作<br><img src="/2021/02/11/Docker-Registry/2.png"></p>
+<p>（3）用户管理<br><img src="/2021/02/11/Docker-Registry/3.png"><br>注：密码要有一定的复杂度</p>
+<p>（4）邮件配置<br><img src="/2021/02/11/Docker-Registry/4.png"></p>
+<p>（5）新建一个项目<br><img src="/2021/02/11/Docker-Registry/5.png"></p>
+<h3 id="4-2-上传下载镜像到-Harbor-仓库"><a href="#4-2-上传下载镜像到-Harbor-仓库" class="headerlink" title="4.2 上传下载镜像到 Harbor 仓库"></a>4.2 上传下载镜像到 Harbor 仓库</h3><p>（1）修改docker配置，添加harbor仓库为新人地址</p>
+<pre><code>[root@docker1 ~]# cat /etc/docker/daemon.json
+&#123;
+  &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;],
+  &quot;insecure-registries&quot;: [&quot;192.168.10.102:5000&quot;],
+  &quot;insecure-registries&quot;: [&quot;docker2:80&quot;]
+&#125;
+[root@docker1 ~]# systemctl restart docker
+</code></pre>
+<p>　　<br>（2）把要上传的镜像打上合适的标签</p>
+<pre><code>[root@docker1 ~]# docker tag busybox:latest docker2:80/demo/busybox:v0.1
+[root@docker1 ~]# docker tag nginx:1.14-alpine docker2:80/demo/nginx:v0.1
+[root@docker1 ~]# docker tag nginx:1.14 docker2:80/demo/nginx:v0.2
+[root@docker1 ~]# docker image ls
+REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+docker2:80/demo/nginx         v0.2                3f55d5bb33f3        11 days ago         109 MB
+docker2:80/demo/busybox       v0.1                758ec7f3a1ee        2 weeks ago         1.15 MB
+docker2:80/demo/nginx         v0.1                c5b6f731fbc0        2 weeks ago         17.7 MB
+</code></pre>
+<p>　　<br>（3）登录harbor仓库</p>
+<pre><code>[root@docker1 ~]# docker login docker2:80
+Username: admin
+Password:
+Login Succeeded
+</code></pre>
+<p>　　<br>（4）上传镜像</p>
+<pre><code>[root@docker1 ~]# docker push docker2:80/demo/busybox:v0.1
+The push refers to a repository [docker2:80/demo/busybox]
+23bc2b70b201: Pushed
+v0.1: digest: sha256:cbcde3595079b1f7a6b046e96e7547fe786d5c2c8eba678bc260161bc01b8dbe size: 527
+[root@docker1 ~]# docker push docker2:80/demo/nginx  #如果不知道tag，会把这个镜像的所有tag都上传
+The push refers to a repository [docker2:80/demo/nginx]
+59b059d445c1: Layer already exists
+0246bb21855f: Layer already exists
+42acf078bf60: Layer already exists
+7bff100f35cb: Layer already exists
+v0.1: digest: sha256:438d8080098025e9983f253af806c1d1aa6b48be2ef1913991dab506bb3d4f72 size: 1153
+6959f2c2a244: Pushed
+06eb7a5682d6: Pushed
+7b4e562e58dc: Pushed
+v0.2: digest: sha256:1313a52e3fd1718b1c36822cefa0e51950654004dcf12b08affb3067e02c6d9c size: 948
+</code></pre>
+<p>　　<br>（5）在harbor 上验证上传成功<br><img src="/2021/02/11/Docker-Registry/6.png"></p>
+<p>（6）拉取harbor 中的镜像</p>
+<pre><code>[root@docker1 ~]# docker rmi docker2:80/demo/busybox:v0.1
+Untagged: docker2:80/demo/busybox:v0.1
+Untagged: docker2:80/demo/busybox@sha256:cbcde3595079b1f7a6b046e96e7547fe786d5c2c8eba678bc260161bc01b8dbe
+[root@docker1 ~]# docker image ls docker2:80/demo/busybox:v0.1
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+[root@docker1 ~]# docker pull docker2:80/demo/busybox:v0.1
+v0.1: Pulling from demo/busybox
+Digest: sha256:cbcde3595079b1f7a6b046e96e7547fe786d5c2c8eba678bc260161bc01b8dbe
+Status: Downloaded newer image for docker2:80/demo/busybox:v0.1
+[root@docker1 ~]# docker image ls docker2:80/demo/busybox:v0.1
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+docker2:80/demo/busybox   v0.1                758ec7f3a1ee        2 weeks ago         1.15 MB
+</code></pre>
+<p>　　<br>（7）在harbor web页面可以进行很多实用的操作<br><img src="/2021/02/11/Docker-Registry/7.png"><br>如：给镜像打标、复制镜像、删除镜像等</p>
+<h3 id="4-3-控制harbor-服务"><a href="#4-3-控制harbor-服务" class="headerlink" title="4.3 控制harbor 服务"></a>4.3 控制harbor 服务</h3><p>在harbor 安装路径下，使用docker-compose 命令对harbor 进行控制</p>
+<p>（1）暂停harbor服务</p>
+<pre><code>[root@docker2 harbor]# docker-compose pause
+Pausing harbor-log         ... done
+Pausing harbor-adminserver ... done
+Pausing registry           ... done
+Pausing redis              ... done
+Pausing registryctl        ... done
+Pausing harbor-db          ... done
+Pausing harbor-core        ... done
+Pausing harbor-jobservice  ... done
+Pausing harbor-portal      ... done
+Pausing nginx              ... done
+</code></pre>
+<p>　　<br>（2）关闭harbor服务</p>
+<pre><code>[root@docker2 harbor]# docker-compose stop
+Stopping nginx              ... done
+Stopping harbor-portal      ... done
+Stopping harbor-jobservice  ... done
+Stopping harbor-core        ... done
+Stopping harbor-db          ... done
+Stopping registryctl        ... done
+Stopping redis              ... done
+Stopping registry           ... done
+Stopping harbor-adminserver ... done
+Stopping harbor-log         ... done
+[root@docker2 harbor]# ss -nutl
+Netid State      Recv-Q Send-Q     Local Address:Port                    Peer Address:Port             
+tcp   LISTEN     0      128                    *:22                                 *:*
+</code></pre>
+<p>　　<br>（3）开启harbor服务</p>
+<pre><code>[root@docker2 harbor]# docker-compose start
+Starting log         ... done
+Starting registry    ... done
+Starting registryctl ... done
+Starting postgresql  ... done
+Starting adminserver ... done
+Starting core        ... done
+Starting portal      ... done
+Starting redis       ... done
+Starting jobservice  ... done
+Starting proxy       ... done
+</code></pre>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2021/02/11/Docker-Registry/">Docker-Registry</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2021-02-11, 12:45:05</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:41</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2021/02/11/Docker-Registry/" title="Docker-Registry">http://yoursite.com/2021/02/11/Docker-Registry/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/02/11/Docker-Registry/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/02/11/Docker-Auto-Start/">
+                    Docker-Auto-Start
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/02/11/Docker-Dockerfile/">
+                    Docker-Dockerfile
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-%E6%90%AD%E5%BB%BA%E4%BD%BF%E7%94%A8%E7%A7%81%E6%9C%89docker-registry"><span class="toc-number">1.</span> <span class="toc-text">Docker 搭建使用私有docker registry</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BA%86%E8%A7%A3Docker-Registry"><span class="toc-number">1.1.</span> <span class="toc-text">1、了解Docker Registry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-registry%E7%BB%84%E6%88%90%EF%BC%88repository%E5%92%8Cindex%EF%BC%89"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 registry组成（repository和index）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E7%9F%A5%E5%90%8Ddocker%E4%BB%93%E5%BA%93"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.5 知名docker仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93-distribution"><span class="toc-number">1.2.</span> <span class="toc-text">2、搭建私有仓库 distribution</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-distribution-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 distribution 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8-distribution"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 安装启动 distribution</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E6%96%B9%E6%A1%881%EF%BC%9A%E4%BD%BF%E7%94%A8yum%E5%AE%89%E8%A3%85%EF%BC%88%E7%9B%B4%E6%8E%A5%E4%BB%8Eextras-%E6%BA%90%E4%B8%AD%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%EF%BC%89"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">2.2.1 方案1：使用yum安装（直接从extras 源中下载安装）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E6%96%B9%E6%A1%882%EF%BC%9A%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F%EF%BC%8C%E4%BD%9C%E4%B8%BA%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">2.2.2 方案2：拉取镜像，作为容器安装</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BB%8E%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 从私有仓库上传下载镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E5%B0%86%E6%9C%AC%E5%9C%B0%E7%9A%84%E9%95%9C%E5%83%8F%E4%B8%8A%E4%BC%A0%E5%88%B0%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">2.3.1 将本地的镜像上传到私有仓库</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%AE%89%E8%A3%85%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93-Harbor"><span class="toc-number">1.3.</span> <span class="toc-text">3、安装搭建私有仓库 Harbor</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%AE%A4%E8%AF%86-Harbor"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 认识 Harbor</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-Harbor-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">3.1.1 Harbor 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-Harbor-%E7%89%B9%E5%BE%81"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">3.1.2 Harbor 特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3-harbor-%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">3.1.3 harbor 配置参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%AE%89%E8%A3%85%E4%B8%BB%E6%9C%BA%E7%9A%84%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 安装主机的先决条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-%E7%A1%AC%E4%BB%B6"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">3.2.1 硬件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">3.2.2 软件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-%E7%BD%91%E7%BB%9C%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">3.2.3 网络端口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-%E6%B7%BB%E5%8A%A0%E4%B8%80%E5%9D%9750G-%E6%96%B0%E7%A1%AC%E7%9B%98%EF%BC%88%E5%A6%82%E6%9E%9C%E7%A3%81%E7%9B%98%E8%B6%B3%E5%A4%9F%EF%BC%8C%E5%8F%AF%E5%BF%BD%E7%95%A5%EF%BC%89"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">3.2.4 添加一块50G 新硬盘（如果磁盘足够，可忽略）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-5-%E5%AE%89%E8%A3%85docker%E7%BC%96%E6%8E%92%E5%B7%A5%E5%85%B7-Docker-Compose"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">3.2.5 安装docker编排工具 Docker Compose</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%AE%89%E8%A3%85%E6%90%AD%E5%BB%BAHarbor"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.4 安装搭建Harbor</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-1-%E4%B8%8B%E8%BD%BDHarbor-%E5%AE%89%E8%A3%85%E5%8C%85%EF%BC%88%E8%AF%A5%E8%B5%84%E6%BA%90%E4%B8%8B%E8%BD%BD%E8%BE%83%E6%85%A2%EF%BC%89"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">3.4.1 下载Harbor 安装包（该资源下载较慢）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-%E9%85%8D%E7%BD%AEHarbor-%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">3.4.2 配置Harbor 服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-3-%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8harbor"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">3.4.3 安装启动harbor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-3-%E5%AE%89%E8%A3%85%E5%90%8E%E9%AA%8C%E8%AF%81"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">3.4.3 安装后验证</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E4%BD%BF%E7%94%A8-Harbor"><span class="toc-number">1.4.</span> <span class="toc-text">4、使用 Harbor</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Harbor-%E9%A1%B5%E9%9D%A2%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 Harbor 页面基础操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F%E5%88%B0-Harbor-%E4%BB%93%E5%BA%93"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 上传下载镜像到 Harbor 仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E6%8E%A7%E5%88%B6harbor-%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 控制harbor 服务</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Docker-Registry　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/02/11/Docker-Auto-Start/" title="Pre: Docker-Auto-Start">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/02/11/Docker-Dockerfile/" title="Next: Docker-Dockerfile">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

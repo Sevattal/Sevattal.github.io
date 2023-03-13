@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="Spring 框架基础3转载：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_35843514&#x2F;article&#x2F;details&#x2F;114287046?spm&#x3D;1001.2014.3001.5501 一、概念与定义1、什么是Spring beans?Bean: 在Spring中，构成应用程序主干并由Spring IoC容器管理的对象称为bean。Bean是由Spring IoC容器实例化，组装和以其">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring-BASE-3">
+<meta property="og:url" content="http://yoursite.com/2021/05/16/Spring-BASE-3/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="Spring 框架基础3转载：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_35843514&#x2F;article&#x2F;details&#x2F;114287046?spm&#x3D;1001.2014.3001.5501 一、概念与定义1、什么是Spring beans?Bean: 在Spring中，构成应用程序主干并由Spring IoC容器管理的对象称为bean。Bean是由Spring IoC容器实例化，组装和以其">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/1.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/2.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/3.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/4.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/5.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/6.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/7.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/8.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/9.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/10.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/11.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/12.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/13.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/14.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/15.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/16.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/17.png">
+<meta property="article:published_time" content="2021-05-16T05:47:28.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:43.820Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/05/16/Spring-BASE-3/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Spring-BASE-3 | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Spring-BASE-3" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/16/Spring-BASE-3/" class="article-date">
+      <time datetime="2021-05-16T05:47:28.000Z" itemprop="datePublished">2021-05-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring-BASE-3
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Spring-框架基础3"><a href="#Spring-框架基础3" class="headerlink" title="Spring 框架基础3"></a>Spring 框架基础3</h1><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
+<h2 id="一、概念与定义"><a href="#一、概念与定义" class="headerlink" title="一、概念与定义"></a>一、概念与定义</h2><h3 id="1、什么是Spring-beans"><a href="#1、什么是Spring-beans" class="headerlink" title="1、什么是Spring beans?"></a>1、什么是Spring beans?</h3><p>Bean: 在Spring中，构成应用程序主干并由Spring IoC容器管理的对象称为bean。Bean是由Spring IoC容器实例化，组装和以其他方式管理的对象。否则，bean仅仅是应用程序中许多对象之一。Bean及其之间的依赖关系反映在容器使用的配置元数据中。</p>
+<p>Spring Beans是构成Spring应用核心的Java对象。这些对象由Spring IoC容器实例化、组装、管理。这些对象通过容器中配置的元数据创建，例如，使用XML文件中定义的创建。<br>在Spring中创建的beans都是单例的beans。在bean标签中有一个属性为”singleton”, 如果设为true，该bean是单例的，如果设为false，该bean是原型bean。Singleton属性默认设置为true。因此，spring框架中所有的bean都默认为单例bean。</p>
+<p><img src="/2021/05/16/Spring-BASE-3/1.png"></p>
+<span id="more"></span>
+
+<h3 id="2、-一个-Spring-Bean-定义包含什么？"><a href="#2、-一个-Spring-Bean-定义包含什么？" class="headerlink" title="2、 一个 Spring Bean 定义包含什么？"></a>2、 一个 Spring Bean 定义包含什么？</h3><p>一个Spring Bean 的定义包含容器必知的所有配置元数据，包括如何创建一个bean，它的生命周期详情及它的依赖。</p>
+<h3 id="3、如何给Spring-容器提供配置元数据"><a href="#3、如何给Spring-容器提供配置元数据" class="headerlink" title="3、如何给Spring 容器提供配置元数据?"></a>3、如何给Spring 容器提供配置元数据?</h3><p>这里有三种重要的方法给Spring 容器提供配置元数据。</p>
+<p>（1）XML配置文件。<br>（2）基于注解的配置。<br>（3）基于Java的配置</p>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/5.0.6.RELEASE/spring-framework-reference/core.html#beans-java">https://docs.spring.io/spring-framework/docs/5.0.6.RELEASE/spring-framework-reference/core.html#beans-java</a></p>
+<h2 id="二、Spring-Beans注入属性（XML）"><a href="#二、Spring-Beans注入属性（XML）" class="headerlink" title="二、Spring Beans注入属性（XML）"></a>二、Spring Beans注入属性（XML）</h2><h3 id="1、使用xml配置注入属性，set方式注入属性，有参构造方法注入，下面演示2种方式注入属性"><a href="#1、使用xml配置注入属性，set方式注入属性，有参构造方法注入，下面演示2种方式注入属性" class="headerlink" title="1、使用xml配置注入属性，set方式注入属性，有参构造方法注入，下面演示2种方式注入属性"></a>1、使用xml配置注入属性，set方式注入属性，有参构造方法注入，下面演示2种方式注入属性</h3><h4 id="Step-1-创建Book-java，Orders-java类"><a href="#Step-1-创建Book-java，Orders-java类" class="headerlink" title="Step 1: 创建Book.java，Orders.java类"></a>Step 1: 创建Book.java，Orders.java类</h4><p><strong>Book.java</strong></p>
+<pre><code>public class Book &#123;
+    /**
+     * 创建属性
+     */
+    private String bname;
+    private String bauthor;
+    /**
+     * 创建对应的set方法
+     */
+    public void setBname(String bname) &#123;
+        this.bname = bname;
+    &#125;
+    public void setBauthor(String bauthor) &#123;
+        this.bauthor = bauthor;
+    &#125;
+    public void testDemo()&#123;
+        System.out.println(bname + &quot;::&quot; + bauthor );
+    &#125;
+&#125;
+</code></pre>
+<p><strong>Orders.java</strong></p>
+<pre><code>public class Orders &#123;
+    private String oname;
+    private String address;
+    public Orders(String oname, String address) &#123;
+        this.oname = oname;
+        this.address = address;
+    &#125;
+    public void orderTest()&#123;
+        System.out.println(oname + &quot;::&quot; + address);
+    &#125;
+&#125;
+</code></pre>
+<h4 id="Step-2-配置Book，Order对象创建（创建对象时候，默认也是执行无参数构造方法完成对象创建）"><a href="#Step-2-配置Book，Order对象创建（创建对象时候，默认也是执行无参数构造方法完成对象创建）" class="headerlink" title="Step 2: 配置Book，Order对象创建（创建对象时候，默认也是执行无参数构造方法完成对象创建）"></a>Step 2: 配置Book，Order对象创建（创建对象时候，默认也是执行无参数构造方法完成对象创建）</h4><pre><code>&lt;!--配置Book对象创建,并注入属性
+    id属性：唯一标识
+    class属性：类全路径（包类路径） 
+    set方法注入属性--&gt;
+&lt;bean id=&quot;book&quot; class=&quot;com.sevattal.spring.Book&quot;&gt;
+    &lt;!--使用Property来进行属性注入--&gt;
+    &lt;property name=&quot;bname&quot; value=&quot;Sevattal Blog&quot;/&gt;
+    &lt;property name=&quot;bauthor&quot; value=&quot;Sevattal&quot;/&gt;
+&lt;/bean&gt;
+&lt;!--有参构造方法注入属性--&gt;
+&lt;bean id=&quot;orders&quot; class=&quot;com.sevattal.spring.Orders&quot;&gt;
+    &lt;constructor-arg index=&quot;0&quot; value=&quot;haha&quot;/&gt;
+    &lt;constructor-arg index=&quot;1&quot; value=&quot;hahhahahahha&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+<h4 id="Step-3-测试类中添加测试方法："><a href="#Step-3-测试类中添加测试方法：" class="headerlink" title="Step 3: 测试类中添加测试方法："></a>Step 3: 测试类中添加测试方法：</h4><pre><code>@Test
+public void testBookInsert()&#123;
+    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    Book book = context.getBean(&quot;book&quot;, Book.class);
+    book.testDemo();
+    System.out.println(book);
+&#125;
+@Test
+public void testOrderInsert()&#123;
+    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    Orders orders = context.getBean(&quot;orders&quot;, Orders.class);
+    orders.orderTest();
+    System.out.println(orders);
+&#125;
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/2.png"></p>
+<p><img src="/2021/05/16/Spring-BASE-3/3.png"></p>
+<h3 id="2、使用P名称空间注入（了解）"><a href="#2、使用P名称空间注入（了解）" class="headerlink" title="2、使用P名称空间注入（了解）"></a>2、使用P名称空间注入（了解）</h3><p>使用 p 名称空间注入，可以简化基于 xml 配置方式第一步 添加 p 名称空间在配置文件中</p>
+<h4 id="第一步：引入P名称空间"><a href="#第一步：引入P名称空间" class="headerlink" title="第一步：引入P名称空间"></a>第一步：引入P名称空间</h4><pre><code>&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+</code></pre>
+<h4 id="第二步-进行属性注入，在-bean-标签里面进行操作"><a href="#第二步-进行属性注入，在-bean-标签里面进行操作" class="headerlink" title="第二步 进行属性注入，在 bean 标签里面进行操作"></a>第二步 进行属性注入，在 bean 标签里面进行操作</h4><pre><code>&lt;!--2 set 方法注入属性--&gt;
+&lt;bean id=&quot;book&quot; class=&quot;com.sevattal.spring.Book&quot; p:bname=&quot;九阳神功&quot; p:bauthor=&quot;无名氏&quot;&gt;
+&lt;/bean&gt;
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/4.png"></p>
+<h3 id="3、注入一些特殊类型的属性"><a href="#3、注入一些特殊类型的属性" class="headerlink" title="3、注入一些特殊类型的属性"></a>3、注入一些特殊类型的属性</h3><p>注意：<br>    1、property 标签在bean标签内部<br>    2、若对类中的属性使用property注入，需要get和set方法</p>
+<p>####（1）字面量</p>
+<pre><code>&lt;!--null 值--&gt;
+&lt;property name=&quot;address&quot;&gt;
+    &lt;null/&gt;
+&lt;/property&gt;
+</code></pre>
+<p>####（2）属性值包含特殊符号</p>
+<pre><code>&lt;!--属性值包含特殊符号 
+        1 把&lt;&gt;进行转义 &amp;lt; &amp;gt; 
+        2 把带特殊符号内容写到CDATA 
+        --&gt;
+&lt;property name=&quot;address&quot;&gt;
+    &lt;value&gt;&lt;![CDATA[&lt;&lt;南京&gt;&gt;]]&gt;&lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+<h3 id="4、注入外部Bean"><a href="#4、注入外部Bean" class="headerlink" title="4、注入外部Bean"></a>4、注入外部Bean</h3><p><strong>a. 创建两个类 service类 和 dao类</strong><br><strong>b. 在 service 调用 dao 里面的方法</strong></p>
+<pre><code>public class UserService &#123;
+    // 创建UserDao的对象，并设置set()方法
+    private UserDao userDao;
+    public void setUserDao(UserDao userDao) &#123;
+        this.userDao = userDao;
+    &#125;
+    public void add()&#123;
+        System.out.println(&quot;service add...&quot;);
+        // 1、原始方式：创建UserDao对象
+        /*UserDao userDao = new UserDaoImpl();
+        userDao.update(); */
+    &#125;
+&#125;
+
+
+public interface UserDao &#123;
+    public void update();
+&#125;
+
+public class UserDaoImpl implements UserDao &#123;
+    @Override
+    public void update() &#123;
+    &#125;
+&#125;
+</code></pre>
+<p><strong>c. 在 spring配置文件中进行配置</strong></p>
+<pre><code>&lt;!--1 service和dao的创建--&gt;
+&lt;bean id=&quot;userService&quot; class=&quot;com.sevattal.spring.service.UserService&quot;&gt;
+    &lt;!--注入UserDao的对象
+        name:属性值，类里面属性名称
+        ref:属性值，创建UserDao对象bean标签ID值
+    --&gt;
+    &lt;property name=&quot;userDao&quot; ref=&quot;userDaoImpl&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+&lt;bean id=&quot;userDaoImpl&quot; class=&quot;com.sevattal.spring.dao.UserDaoImpl&quot;/&gt;
+</code></pre>
+<p><strong>d. 测试</strong></p>
+<pre><code>@Test
+public void testBean()&#123;
+    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    UserService userService = context.getBean(&quot;userService&quot;,UserService.class);
+    userService.add();
+&#125;
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/5.png"></p>
+<h3 id="5、注入内部Bean属性"><a href="#5、注入内部Bean属性" class="headerlink" title="5、注入内部Bean属性"></a>5、注入内部Bean属性</h3><p>####（1）一对多关系：部门和员工<br>一个部门有多个员工，一个员工属于一个部门部门是一，员工是多</p>
+<p>####（2）在实体类之间表示一对多关系，员工表示所属部门，使用对象类型属性进行表示</p>
+<pre><code>public class Department &#123;
+    private String dname;
+    public void setDname(String dname) &#123;
+        this.dname = dname;
+    &#125;
+    public String getDname() &#123;
+        return dname;
+    &#125;
+    @Override
+    public String toString() &#123;
+        return &quot;Department&#123;&quot; +
+                &quot;dname=&#39;&quot; + dname + &#39;\&#39;&#39; +
+                &#39;&#125;&#39;;
+    &#125;
+&#125;
+
+public class Employee &#123;
+    private String eName;
+    private String gender;
+    // 员工属于一个部门
+    private Department department;
+    public void setDepartment(Department department) &#123;
+        this.department = department;
+    &#125;
+    // 第二种写法新增
+    public Department getDepartment() &#123;
+        return department;
+    &#125;
+    public void seteName(String eName) &#123;
+        this.eName = eName;
+    &#125;
+    public void setGender(String gender) &#123;
+        this.gender = gender;
+    &#125;
+    public void show()&#123;
+        System.out.println(&quot;eName:&quot; + eName + &quot;,department:&quot; + department + &quot;,gender&quot; + gender);
+    &#125;
+&#125;
+</code></pre>
+<p>####（3）在 spring配置文件中进行配置</p>
+<p><strong>第一种写法：</strong></p>
+<pre><code>&lt;bean id=&quot;employee&quot; class=&quot;com.sevattal.spring.bean.Employee&quot;&gt;
+    &lt;!--普通属性--&gt;
+    &lt;property name=&quot;eName&quot; value=&quot;Sevattal&quot;/&gt;
+    &lt;property name=&quot;gender&quot; value=&quot;男&quot;/&gt;
+    &lt;!--设置对象属性--&gt;
+    &lt;property name=&quot;department&quot;&gt;
+        &lt;bean id=&quot;department&quot; class=&quot;com.sevattal.spring.bean.Department&quot;&gt;
+            &lt;property name=&quot;dname&quot; value=&quot;安保部门&quot;/&gt;
+        &lt;/bean&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+</code></pre>
+<p><strong>第二种写法：</strong></p>
+<pre><code>&lt;!--级联赋值--&gt;
+&lt;bean id=&quot;employee&quot; class=&quot;com.sevattal.spring.bean.Employee&quot;&gt;
+    &lt;!--普通属性--&gt;
+    &lt;property name=&quot;eName&quot; value=&quot;Sevattal&quot;/&gt;
+    &lt;property name=&quot;gender&quot; value=&quot;男&quot;/&gt;
+    &lt;!--级联赋值--&gt;
+    &lt;property name=&quot;department&quot; ref=&quot;department&quot;/&gt;
+    &lt;property name=&quot;department.dname&quot; value=&quot;技术部&quot;/&gt;
+&lt;/bean&gt;
+&lt;bean id=&quot;department&quot; class=&quot;com.sevattal.spring.bean.Department&quot;&gt;
+    &lt;property name=&quot;dname&quot; value=&quot;财务部&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+<h4 id="（3）测试"><a href="#（3）测试" class="headerlink" title="（3）测试"></a>（3）测试</h4><pre><code>@Test
+public void testBeanEmp()&#123;
+    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    Employee employee = context.getBean(&quot;employee&quot;, Employee.class);
+    employee.show();
+&#125;
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/6.png"></p>
+<h3 id="6、注入集合属性"><a href="#6、注入集合属性" class="headerlink" title="6、注入集合属性"></a>6、注入集合属性</h3><h4 id="（1）、注入数组类型属性"><a href="#（1）、注入数组类型属性" class="headerlink" title="（1）、注入数组类型属性"></a>（1）、注入数组类型属性</h4><h4 id="（2）、注入-List-集合类型属性"><a href="#（2）、注入-List-集合类型属性" class="headerlink" title="（2）、注入 List 集合类型属性"></a>（2）、注入 List 集合类型属性</h4><h4 id="（3）、注入-Map-集合类型属性"><a href="#（3）、注入-Map-集合类型属性" class="headerlink" title="（3）、注入 Map 集合类型属性"></a>（3）、注入 Map 集合类型属性</h4><pre><code>public class Student &#123;
+    private String[] courses;
+    private List&lt;String&gt; list;
+    private Map&lt;String,String&gt; map;
+    private Set&lt;String&gt; set;
+    private List&lt;Course&gt; courseList;
+    public void setCourseList(List&lt;Course&gt; courseList) &#123;
+        this.courseList = courseList;
+    &#125;
+    public void setSet(Set&lt;String&gt; set) &#123;
+        this.set = set;
+    &#125;
+    public void setCourses(String[] courses) &#123;
+        this.courses = courses;
+    &#125;
+    public void setList(List&lt;String&gt; list) &#123;
+        this.list = list;
+    &#125;
+    public void setMap(Map&lt;String, String&gt; map) &#123;
+        this.map = map;
+    &#125;
+    public void show()&#123;
+        System.out.println(Arrays.toString(courses) + list.toString() + map.toString() + set.toString() +courseList.toString());
+    &#125;
+&#125;
+
+public class Course &#123;
+    private String cname; //课程名称
+    public String getCname() &#123;
+        return cname;
+    &#125;
+    public void setCname(String cname) &#123;
+        this.cname = cname;
+    &#125;
+&#125;
+
+
+&lt;!--集合类型的数据注入--&gt;
+&lt;bean id=&quot;student&quot; class=&quot;com.sevattal.spring.collection.Student&quot;&gt;
+    &lt;!--数据类型属性的注入--&gt;
+    &lt;property name=&quot;courses&quot;&gt;
+        &lt;array&gt;
+            &lt;value&gt;Java&lt;/value&gt;
+            &lt;value&gt;DataBase&lt;/value&gt;
+            &lt;value&gt;SoftWare Theory&lt;/value&gt;
+        &lt;/array&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;list&quot;&gt;
+        &lt;list&gt;
+            &lt;value&gt;Micah&lt;/value&gt;
+            &lt;value&gt;Maruko&lt;/value&gt;
+            &lt;value&gt;Mapper&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;map&quot;&gt;
+        &lt;map&gt;
+            &lt;entry key=&quot;JAVA&quot; value=&quot;java&quot;&gt;&lt;/entry&gt;
+            &lt;entry key=&quot;DATABASE&quot; value=&quot;database&quot;&gt;&lt;/entry&gt;
+            &lt;entry key=&quot;SOFTWARE THEORY&quot; value=&quot;software theory&quot;&gt;&lt;/entry&gt;
+        &lt;/map&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;set&quot;&gt;
+        &lt;set&gt;
+            &lt;value&gt;1&lt;/value&gt;
+            &lt;value&gt;2&lt;/value&gt;
+            &lt;value&gt;3&lt;/value&gt;
+        &lt;/set&gt;
+    &lt;/property&gt;
+    &lt;!--注入list集合类型，但list元素是对象的属性--&gt;
+    &lt;property name=&quot;courseList&quot;&gt;
+        &lt;list&gt;
+            &lt;ref bean=&quot;course1&quot;/&gt;
+            &lt;ref bean=&quot;course2&quot;/&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+&lt;bean id=&quot;course1&quot; class=&quot;com.sevattal.spring.collection.Course&quot;&gt;
+    &lt;property name=&quot;cname&quot; value=&quot;Java&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+&lt;bean id=&quot;course2&quot; class=&quot;com.sevattal.spring.collection.Course&quot;&gt;
+    &lt;property name=&quot;cname&quot; value=&quot;C++&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+
+@Test
+public void testBean()&#123;
+    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    Student student = context.getBean(&quot;student&quot;, Student.class);
+    System.out.println(student);
+    student.show();
+&#125;
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/7.png"></p>
+<h4 id="（4）、在集合里面设置对象类型值"><a href="#（4）、在集合里面设置对象类型值" class="headerlink" title="（4）、在集合里面设置对象类型值"></a>（4）、在集合里面设置对象类型值</h4><pre><code>&lt;!--创建多个 course对象--&gt;
+&lt;bean id=&quot;course1&quot; class=&quot;com.sevattal.spring.collection.Course&quot;&gt;
+    &lt;property name=&quot;cname&quot; value=&quot;Java&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+&lt;bean id=&quot;course2&quot; class=&quot;com.sevattal.spring.collection.Course&quot;&gt;
+    &lt;property name=&quot;cname&quot; value=&quot;C++&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+&lt;!--注入 list 集合类型，值是对象--&gt;
+&lt;property name=&quot;courseList&quot;&gt;
+    &lt;list&gt;
+        &lt;refbean=&quot;course1&quot;&gt;&lt;/ref&gt;
+        &lt;refbean=&quot;course2&quot;&gt;&lt;/ref&gt;
+    &lt;/list&gt;
+&lt;/property&gt;
+</code></pre>
+<h4 id="（5）把集合注入部分提取出来"><a href="#（5）把集合注入部分提取出来" class="headerlink" title="（5）把集合注入部分提取出来"></a>（5）把集合注入部分提取出来</h4><p><strong>a. 在 spring配置文件中引入名称空间 util</strong></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:util=&quot;http://www.springframework.org/schema/util&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd&quot;&gt;
+</code></pre>
+<p><strong>b. 使用 util标签完成 list集合注入提取</strong></p>
+<pre><code>    &lt;!--1、提取list集合类型属性的注入--&gt;
+    &lt;util:list id=&quot;booklist&quot;&gt;
+        &lt;value&gt;Spring&lt;/value&gt;
+        &lt;value&gt;Java&lt;/value&gt;
+        &lt;value&gt;JVM Machine&lt;/value&gt;
+    &lt;/util:list&gt;
+    &lt;!--2、提取list集合类型属性的注入使用
+    scope:(1)&quot;prototype&quot;多实例
+        （2）&quot;singleton&quot;单实例
+    --&gt;
+    &lt;bean id=&quot;book&quot; class=&quot;com.sevattal.spring.collection.Book&quot; scope=&quot;prototype&quot;&gt;
+        &lt;property name=&quot;list&quot; ref=&quot;booklist&quot;/&gt;
+    &lt;/bean&gt;
+</code></pre>
+<p><strong>c. 测试</strong></p>
+<pre><code>@Test
+public void testBean()&#123;
+    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    Book book = context.getBean(&quot;book&quot;, Book.class);
+    System.out.println(book.getList());
+&#125;
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/8.png"></p>
+<h2 id="三、FactoryBean"><a href="#三、FactoryBean" class="headerlink" title="三、FactoryBean"></a>三、FactoryBean</h2><h3 id="1、Spring-有两种类型-bean，一种普通-bean，另外一种工厂-bean（FactoryBean）"><a href="#1、Spring-有两种类型-bean，一种普通-bean，另外一种工厂-bean（FactoryBean）" class="headerlink" title="1、Spring 有两种类型 bean，一种普通 bean，另外一种工厂 bean（FactoryBean）"></a>1、Spring 有两种类型 bean，一种普通 bean，另外一种工厂 bean（FactoryBean）</h3><p>普通 bean：在配置文件中定义 bean 类型就是返回类型<br>工厂 bean：在配置文件定义 bean 类型可以和返回类型不一样</p>
+<h3 id="2、-案例演示"><a href="#2、-案例演示" class="headerlink" title="2、 案例演示"></a>2、 案例演示</h3><h4 id="第一步-创建类，让这个类作为工厂-bean，实现接口-FactoryBean"><a href="#第一步-创建类，让这个类作为工厂-bean，实现接口-FactoryBean" class="headerlink" title="第一步 创建类，让这个类作为工厂 bean，实现接口 FactoryBean"></a>第一步 创建类，让这个类作为工厂 bean，实现接口 FactoryBean</h4><h4 id="第二步-实现接口里面的方法，在实现的方法中定义返回的-bean-类型"><a href="#第二步-实现接口里面的方法，在实现的方法中定义返回的-bean-类型" class="headerlink" title="第二步 实现接口里面的方法，在实现的方法中定义返回的 bean 类型"></a>第二步 实现接口里面的方法，在实现的方法中定义返回的 bean 类型</h4><pre><code>public class MyBean implements FactoryBean&lt;Course&gt; &#123;
+    /**
+     * 定义返回bean
+     */
+    @Override
+    public Course getObject() throws Exception &#123;
+        Course course = new Course();
+        course.setcName(&quot;abc&quot;);
+        return course;
+    &#125;
+    @Override
+    public Class&lt;?&gt; getObjectType() &#123;
+        return null;
+    &#125;
+    @Override
+    public boolean isSingleton() &#123;
+        return false;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="四、Spring-Bean作用域"><a href="#四、Spring-Bean作用域" class="headerlink" title="四、Spring Bean作用域"></a>四、Spring Bean作用域</h2><h3 id="1、在-Spring-里面，你怎样定义类的作用域"><a href="#1、在-Spring-里面，你怎样定义类的作用域" class="headerlink" title="1、在 Spring 里面，你怎样定义类的作用域?"></a>1、在 Spring 里面，你怎样定义类的作用域?</h3><p>当定义一个 在Spring里，我们还能给这个bean声明一个作用域。它可以通过bean 定义中的scope属性来定义。如，当Spring要在需要的时候每次生产一个新的bean实例，bean的scope属性被指定为prototype。另一方面，一个bean每次使用的时候必须返回同一个实例，这个bean的scope 属性 必须设为 singleton。</p>
+<h3 id="2、singleton-和-prototype-区别"><a href="#2、singleton-和-prototype-区别" class="headerlink" title="2、singleton 和 prototype 区别"></a>2、singleton 和 prototype 区别</h3><p>第一 singleton 单实例，prototype 多实例<br>第二 设置 scope 值是 singleton 时候，加载 spring 配置文件时候就会创建单实例对象，设置 scope 值是 prototype 时候，不是在加载 spring 配置文件时候创建对象，而是在调用 getBean 方法时创建多实例对象。</p>
+<h3 id="3、解释Spring支持的几种bean的作用域。"><a href="#3、解释Spring支持的几种bean的作用域。" class="headerlink" title="3、解释Spring支持的几种bean的作用域。"></a>3、解释Spring支持的几种bean的作用域。</h3><p>Spring框架支持以下五种bean的作用域：</p>
+<p>**singleton :**bean在每个Spring ioc 容器中只有一个实例。</p>
+<p><strong>prototype：</strong>一个bean的定义可以有多个实例。</p>
+<p><strong>request ：</strong>将单个bean定义的范围限定为单个HTTP请求的生命周期； 也就是说，每个HTTP请求都有一个自己的bean实例，它是在单个bean定义的后面创建的。 仅在基于Web的Spring ApplicationContext上下文中有效。</p>
+<p><strong>session ：</strong>将单个bean定义的作用域限定为HTTP会话的生命周期。 仅在web的Spring ApplicationContext上下文中有效。</p>
+<p>**application :**将单个bean定义的作用域限定为ServletContext的生命周期。 仅在基于web的Spring ApplicationContext上下文中有效。</p>
+<p>**websocket:**将单个bean定义的作用域限定为WebSocket的生命周期。 仅在基于web的Spring ApplicationContext上下文中有效。 </p>
+<p><img src="/2021/05/16/Spring-BASE-3/9.png"></p>
+<h3 id="4、-Spring框架中的单例bean是线程安全的吗"><a href="#4、-Spring框架中的单例bean是线程安全的吗" class="headerlink" title="4、 Spring框架中的单例bean是线程安全的吗?"></a>4、 Spring框架中的单例bean是线程安全的吗?</h3><p>不，Spring 框架中的单例 bean 不是线程安全的。</p>
+<h2 id="五、Spring-Bean生命周期"><a href="#五、Spring-Bean生命周期" class="headerlink" title="五、Spring Bean生命周期"></a>五、Spring Bean生命周期</h2><h3 id="1、Spring框架中bean的生命周期。"><a href="#1、Spring框架中bean的生命周期。" class="headerlink" title="1、Spring框架中bean的生命周期。"></a>1、Spring框架中bean的生命周期。</h3><p><strong>简介</strong><br>Spring Bean 的生命周期在整个 Spring 中占有很重要的位置，从BeanFactory或ApplicationContext取得的实例为Singleton，也就是预设为每一个Bean的别名只能维持一个实例，而不是每次都产生一个新的对象使用Singleton模式产生单一实例，在spring中，singleton属性默认是true，只有设定为false，则每次指定别名取得的Bean时都会产生一个新的实例，Spring只帮我们管理单例模式Bean的完整生命周期，对于prototype的bean，Spring在创建好交给使用者之后则不会再管理后续的生命周期。</p>
+<p><strong>图例</strong><br>生命周期图如下：</p>
+<p><img src="/2021/05/16/Spring-BASE-3/10.png"></p>
+<p>也可以概括为：</p>
+<p><img src="/2021/05/16/Spring-BASE-3/11.png"></p>
+<p><strong>图例说明</strong></p>
+<pre><code>1、实例化一个Bean
+2、按照Spring上下文对实例化的Bean进行配置，也就是IOC注入
+3、如果这个Bean已经实现了BeanNameAware接口，会调用它实现的setBeanName(String)方法，传递的参数就是Spring配置文件中Bean的id值
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/12.png"></p>
+<pre><code>4、如果这个Bean已经实现了BeanFactoryAware接口，会调用它实现的setBeanFactory(BeanFactory)，传递的是Spring工厂自身
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/13.png"></p>
+<pre><code>5、如果这个Bean已经实现了ApplicationContextAware接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/14.png"></p>
+<pre><code>6、如果这个Bean关联了BeanPostProcessor接口，将会调用postProcessBeforeInitialization(Object obj, String s)方法，
+BeanPostProcessor经常被用作是Bean内容的更改，并且由于这个是在Bean初始化结束时调用那个的方法，也可以被应用于内存或缓存技术；
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/15.png"></p>
+<pre><code>7、如果Bean在Spring配置文件中配置了init-method属性会自动调用其配置的初始化方法。
+8、如果这个Bean关联了BeanPostProcessor接口，将会调用postProcessAfterInitialization(Object obj, String s)方法
+9、当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean这个接口，会调用那个其实现的destroy()方法；
+</code></pre>
+<p><img src="/2021/05/16/Spring-BASE-3/16.png"></p>
+<pre><code>10、最后，如果这个Bean的Spring配置中配置了destroy-method属性，会自动调用其配置的销毁方法。
+</code></pre>
+<p><strong>Bean的生命周期</strong></p>
+<pre><code>Spring 容器从 XML 文件中读取bean的定义，并实例化bean。
+Spring 根据 bean 的定义填充所有的属性。
+如果bean实现了 BeanNameAware 接口，Spring 传递 bean 的ID 到 setBeanName 方法。
+如果Bean实现了 BeanFactoryAware 接口， Spring 传递 beanfactory 给 setBeanFactory 方法。
+如果有任何与bean相关联的 BeanPostProcessors，Spring 会在 postProcesserBeforeInitialization() 方法内调用它们。
+如果 bean 实现 IntializingBean 了，调用它的 afterPropertySet 方法，如果bean声明了初始化方法，调用此初始化方法。
+如果有 BeanPostProcessors 和 bean 关联，这些 bean的postProcessAfterInitialization() 方法将被调用。
+如果 bean 实现了 DisposableBean，它将调用 destroy() 方法。
+</code></pre>
+<h3 id="2、哪些是重要的bean生命周期方法？-你能重载它们吗？"><a href="#2、哪些是重要的bean生命周期方法？-你能重载它们吗？" class="headerlink" title="2、哪些是重要的bean生命周期方法？ 你能重载它们吗？"></a>2、哪些是重要的bean生命周期方法？ 你能重载它们吗？</h3><p>有两个重要的bean 生命周期方法，第一个是setup ， 它是在容器加载bean的时候被调用。第二个方法是 teardown 它是在容器卸载类的时候被调用。</p>
+<p>The bean 标签有两个重要的属性（init-method和destroy-method）。用它们你可以自己定制初始化和注销方法。它们也有相应的注解（@PostConstruct和@PreDestroy）。</p>
+<h2 id="六、Spring-Bean自动装配"><a href="#六、Spring-Bean自动装配" class="headerlink" title="六、Spring Bean自动装配"></a>六、Spring Bean自动装配</h2><h3 id="1、什么是bean装配"><a href="#1、什么是bean装配" class="headerlink" title="1、什么是bean装配?"></a>1、什么是bean装配?</h3><p>装配，或 bean 装配是指在 Spring 容器中把 bean 组装到一起，前提是容器需要知道bean的依赖关系，如何通过依赖注入来把它们装配到一起。</p>
+<h3 id="2、什么是bean的自动装配？"><a href="#2、什么是bean的自动装配？" class="headerlink" title="2、什么是bean的自动装配？"></a>2、什么是bean的自动装配？</h3><p>Spring 容器能够自动装配相互合作的 bean ，这意味着容器不需要和配置，能通过 Bean 工厂自动处理 bean 之间的协作。</p>
+<h3 id="3、解释不同方式的自动装配-。"><a href="#3、解释不同方式的自动装配-。" class="headerlink" title="3、解释不同方式的自动装配 。"></a>3、解释不同方式的自动装配 。</h3><p>有五种自动装配的方式，可以用来指导Spring容器用自动装配方式来进行依赖注入。</p>
+<pre><code>no：默认的方式是不进行自动装配，通过显式设置ref 属性来进行装配。
+byName：通过参数名自动装配，Spring容器在配置文件中发现bean的autowire属性被设置成byname，之后容器试图匹配、装配和该bean的属性具有相同名字的bean。
+byType:：通过参数类型自动装配，Spring容器在配置文件中发现bean的autowire属性被设置成byType，之后容器试图匹配、装配和该bean的属性具有相同类型的bean。如果有多个bean符合条件，则抛出错误。
+constructor：这个方式类似于byType， 但是要提供给构造器参数，如果没有确定的带参数的构造器参数类型，将会抛出异常。
+autodetect：首先尝试使用constructor来自动装配，如果无法工作，则使用byType方式。
+</code></pre>
+<h3 id="4、自动装配有哪些局限性"><a href="#4、自动装配有哪些局限性" class="headerlink" title="4、自动装配有哪些局限性 ?"></a>4、自动装配有哪些局限性 ?</h3><p>自动装配的局限性是：</p>
+<p><strong>重写：</strong> 你仍需用 和 配置来定义依赖，意味着总要重写自动装配。<br><strong>基本数据类型：</strong>你不能自动装配简单的属性，如基本数据类型，String字符串，和类。<br><strong>模糊特性：</strong>自动装配不如显式装配精确，如果有可能，建议使用显式装配。</p>
+<h3 id="5、你可以在Spring中注入一个-null-和-一个空字符串吗？"><a href="#5、你可以在Spring中注入一个-null-和-一个空字符串吗？" class="headerlink" title="5、你可以在Spring中注入一个 null 和 一个空字符串吗？"></a>5、你可以在Spring中注入一个 null 和 一个空字符串吗？</h3><p>可以。</p>
+<h2 id="七、Spring注解"><a href="#七、Spring注解" class="headerlink" title="七、Spring注解"></a>七、Spring注解</h2><h3 id="1、什么是基于Java的Spring注解配置-给一些注解的例子"><a href="#1、什么是基于Java的Spring注解配置-给一些注解的例子" class="headerlink" title="1、什么是基于Java的Spring注解配置? 给一些注解的例子."></a>1、什么是基于Java的Spring注解配置? 给一些注解的例子.</h3><p>基于Java的配置，允许你在少量的Java注解的帮助下，进行你的大部分Spring配置而非通过XML文件。</p>
+<p>以 @Configuration 注解为例，它用来标记类可以当做一个bean的定义，被Spring IOC容器使用。另一个例子是@Bean注解，它表示此方法将要返回一个对象，作为一个bean注册进Spring应用上下文。</p>
+<h3 id="2、Spring-针对-Bean-管理中创建对象提供注解"><a href="#2、Spring-针对-Bean-管理中创建对象提供注解" class="headerlink" title="2、Spring 针对 Bean 管理中创建对象提供注解"></a>2、Spring 针对 Bean 管理中创建对象提供注解</h3><pre><code>（1） @Component
+（2） @Service
+（3） @Controller
+（4） @Repository
+</code></pre>
+<p>上面四个注解功能是一样的，都可以用来创建 bean 实例</p>
+<h3 id="3、什么是基于注解的容器配置"><a href="#3、什么是基于注解的容器配置" class="headerlink" title="3、什么是基于注解的容器配置?"></a>3、什么是基于注解的容器配置?</h3><p>相对于XML文件，注解型的配置依赖于通过字节码元数据装配组件，而非尖括号的声明。</p>
+<p>开发者通过在相应的类，方法或属性上使用注解的方式，直接组件类中进行配置，而不是使用xml表述bean的装配关系。</p>
+<h3 id="4、怎样开启注解装配？"><a href="#4、怎样开启注解装配？" class="headerlink" title="4、怎样开启注解装配？"></a>4、怎样开启注解装配？</h3><p>注解装配在默认情况下是不开启的，为了使用注解装配，我们必须在Spring配置文件中配置 context:annotation-config&#x2F;元素。</p>
+<h3 id="5、-Required-注解"><a href="#5、-Required-注解" class="headerlink" title="5、@Required 注解"></a>5、@Required 注解</h3><p>这个注解表明bean的属性必须在配置的时候设置，通过一个bean定义的显式的属性值或通过自动装配，若@Required注解的bean属性未被设置，容器将抛出BeanInitializationException。</p>
+<h3 id="6、-Autowired-注解"><a href="#6、-Autowired-注解" class="headerlink" title="6、@Autowired 注解"></a>6、@Autowired 注解</h3><p>@Autowired 注解提供了更细粒度的控制，包括在何处以及如何完成自动装配。它的用法和@Required一样，修饰setter方法、构造器、属性或者具有任意名称和&#x2F;或多个参数的PN方法。</p>
+<h3 id="7、-Qualifier-注解"><a href="#7、-Qualifier-注解" class="headerlink" title="7、@Qualifier 注解"></a>7、@Qualifier 注解</h3><p>当有多个相同类型的 bean 却只有一个需要自动装配时，将@Qualifier 注解和@Autowire 注解结合使用以消除这种混淆，指定需要装配的确切的bean。</p>
+<h3 id="8、-Resource-注解"><a href="#8、-Resource-注解" class="headerlink" title="8、@Resource 注解"></a>8、@Resource 注解</h3><p>可以根据类型注入，可以根据名称注入</p>
+<h3 id="10、-Value-注解"><a href="#10、-Value-注解" class="headerlink" title="10、@Value 注解"></a>10、@Value 注解</h3><p>注入普通类型属性</p>
+<h3 id="11、案例演示"><a href="#11、案例演示" class="headerlink" title="11、案例演示"></a>11、案例演示</h3><h4 id="Step-1-引入依赖-spring-aop-5-3-7-jar"><a href="#Step-1-引入依赖-spring-aop-5-3-7-jar" class="headerlink" title="Step 1: 引入依赖 spring-aop-5.3.7.jar"></a>Step 1: 引入依赖 spring-aop-5.3.7.jar</h4><h4 id="Step-2-开启组件扫描-beans-中要添加-context命名空间"><a href="#Step-2-开启组件扫描-beans-中要添加-context命名空间" class="headerlink" title="Step 2: 开启组件扫描( beans 中要添加 context命名空间 )"></a>Step 2: 开启组件扫描( beans 中要添加 context命名空间 )</h4><pre><code>&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+
+&lt;!--开启组件扫描
+        1、如果扫描多个包，就用逗号隔开
+        2、dao 和 service，扫描包上层目录
+    --&gt;
+&lt;context:component-scan base-package=&quot;com.sevattal&quot;/&gt;
+</code></pre>
+<h4 id="Step-3-创建类，在类上面添加创建对象注解"><a href="#Step-3-创建类，在类上面添加创建对象注解" class="headerlink" title="Step 3: 创建类，在类上面添加创建对象注解"></a>Step 3: 创建类，在类上面添加创建对象注解</h4><pre><code>// value可以不写，默认是首字母小写的类名
+@Service(value = &quot;userService&quot;) //&lt;bean id=&quot;userService&quot; class=&quot;&quot;/&gt;
+public class UserService &#123;
+    // 注入普通属性
+    @Value(value = &quot;Sevattal&quot;)
+    private String name;
+    /**
+     * 定义dao类型属性，不需要添加set方法，添加注入属性注解
+     * @Autowired : 根据类型注入
+     * @Qualifier(value = &quot;userDaoImplOne&quot;) : 和上面@Autowired一起配合使用
+     */
+    @Autowired
+    @Qualifier(value = &quot;userDaoImplOne&quot;)
+    // @Resource 根据类型注入
+    // @Resource(name = &quot;userDaoImplOne&quot;) 根据名称注入
+    private UserDao userDao;
+    public void add()&#123;
+        System.out.println(&quot;add...&quot; + name);
+        userDao.add();
+    &#125;
+&#125;
+
+@Repository(value = &quot;userDaoImplOne&quot;)
+public class UserDaoImpl implements UserDao&#123;
+    @Override
+    public void add() &#123;
+        System.out.println(&quot;dao add ... &quot;);
+    &#125;
+&#125;
+
+public interface UserDao &#123;
+    public void add();
+&#125;
+</code></pre>
+<h4 id="Step-4-新建配置类，替代xml文件"><a href="#Step-4-新建配置类，替代xml文件" class="headerlink" title="Step 4: 新建配置类，替代xml文件"></a>Step 4: 新建配置类，替代xml文件</h4><pre><code>@Configuration // 作为配置类，替代xml文件
+@ComponentScan(basePackages =  &#123;&quot;com.sevattal&quot;&#125;)
+public class SpringConfig &#123;
+&#125;
+</code></pre>
+<h4 id="Step-5-测试"><a href="#Step-5-测试" class="headerlink" title="Step 5: 测试"></a>Step 5: 测试</h4><pre><code>// 添加SpringConfig之前
+@Test
+public void testService()&#123;
+    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);
+    UserService userService = context.getBean(&quot;userService&quot;, UserService.class);
+    System.out.println(userService);
+    userService.add();
+&#125;
+
+// 添加SpringConfig之后
+@Test
+public void testService2()&#123;
+    ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+    UserService userService = context.getBean(&quot;userService&quot;, UserService.class);
+    System.out.println(userService);
+    userService.add();
+&#125;
+</code></pre>
+<p>结果：</p>
+<p><img src="/2021/05/16/Spring-BASE-3/17.png"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2021-05-16, 13:47:28</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2021/05/16/Spring-BASE-3/" title="Spring-BASE-3">http://yoursite.com/2021/05/16/Spring-BASE-3/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/05/16/Spring-BASE-3/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/05/16/Spring-BASE-4/">
+                    Spring-BASE-4
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/05/16/Spring-BASE-2/">
+                    Spring-BASE-2
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-%E6%A1%86%E6%9E%B6%E5%9F%BA%E7%A1%803"><span class="toc-number">1.</span> <span class="toc-text">Spring 框架基础3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">一、概念与定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFSpring-beans"><span class="toc-number">1.1.1.</span> <span class="toc-text">1、什么是Spring beans?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81-%E4%B8%80%E4%B8%AA-Spring-Bean-%E5%AE%9A%E4%B9%89%E5%8C%85%E5%90%AB%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.1.2.</span> <span class="toc-text">2、 一个 Spring Bean 定义包含什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%A6%82%E4%BD%95%E7%BB%99Spring-%E5%AE%B9%E5%99%A8%E6%8F%90%E4%BE%9B%E9%85%8D%E7%BD%AE%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.3.</span> <span class="toc-text">3、如何给Spring 容器提供配置元数据?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Spring-Beans%E6%B3%A8%E5%85%A5%E5%B1%9E%E6%80%A7%EF%BC%88XML%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">二、Spring Beans注入属性（XML）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E4%BD%BF%E7%94%A8xml%E9%85%8D%E7%BD%AE%E6%B3%A8%E5%85%A5%E5%B1%9E%E6%80%A7%EF%BC%8Cset%E6%96%B9%E5%BC%8F%E6%B3%A8%E5%85%A5%E5%B1%9E%E6%80%A7%EF%BC%8C%E6%9C%89%E5%8F%82%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5%EF%BC%8C%E4%B8%8B%E9%9D%A2%E6%BC%94%E7%A4%BA2%E7%A7%8D%E6%96%B9%E5%BC%8F%E6%B3%A8%E5%85%A5%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.1.</span> <span class="toc-text">1、使用xml配置注入属性，set方式注入属性，有参构造方法注入，下面演示2种方式注入属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-1-%E5%88%9B%E5%BB%BABook-java%EF%BC%8COrders-java%E7%B1%BB"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Step 1: 创建Book.java，Orders.java类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-2-%E9%85%8D%E7%BD%AEBook%EF%BC%8COrder%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%EF%BC%88%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E6%97%B6%E5%80%99%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B9%9F%E6%98%AF%E6%89%A7%E8%A1%8C%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%AE%8C%E6%88%90%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%EF%BC%89"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Step 2: 配置Book，Order对象创建（创建对象时候，默认也是执行无参数构造方法完成对象创建）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-3-%E6%B5%8B%E8%AF%95%E7%B1%BB%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">Step 3: 测试类中添加测试方法：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E4%BD%BF%E7%94%A8P%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4%E6%B3%A8%E5%85%A5%EF%BC%88%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">2、使用P名称空间注入（了解）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%BC%95%E5%85%A5P%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">第一步：引入P名称空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E8%BF%9B%E8%A1%8C%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5%EF%BC%8C%E5%9C%A8-bean-%E6%A0%87%E7%AD%BE%E9%87%8C%E9%9D%A2%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">第二步 进行属性注入，在 bean 标签里面进行操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E6%B3%A8%E5%85%A5%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.3.</span> <span class="toc-text">3、注入一些特殊类型的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%B3%A8%E5%85%A5%E5%A4%96%E9%83%A8Bean"><span class="toc-number">1.2.4.</span> <span class="toc-text">4、注入外部Bean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E6%B3%A8%E5%85%A5%E5%86%85%E9%83%A8Bean%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.5.</span> <span class="toc-text">5、注入内部Bean属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">（3）测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E6%B3%A8%E5%85%A5%E9%9B%86%E5%90%88%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.6.</span> <span class="toc-text">6、注入集合属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E3%80%81%E6%B3%A8%E5%85%A5%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.6.1.</span> <span class="toc-text">（1）、注入数组类型属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E3%80%81%E6%B3%A8%E5%85%A5-List-%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.6.2.</span> <span class="toc-text">（2）、注入 List 集合类型属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E3%80%81%E6%B3%A8%E5%85%A5-Map-%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.6.3.</span> <span class="toc-text">（3）、注入 Map 集合类型属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E3%80%81%E5%9C%A8%E9%9B%86%E5%90%88%E9%87%8C%E9%9D%A2%E8%AE%BE%E7%BD%AE%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B%E5%80%BC"><span class="toc-number">1.2.6.4.</span> <span class="toc-text">（4）、在集合里面设置对象类型值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E6%8A%8A%E9%9B%86%E5%90%88%E6%B3%A8%E5%85%A5%E9%83%A8%E5%88%86%E6%8F%90%E5%8F%96%E5%87%BA%E6%9D%A5"><span class="toc-number">1.2.6.5.</span> <span class="toc-text">（5）把集合注入部分提取出来</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81FactoryBean"><span class="toc-number">1.3.</span> <span class="toc-text">三、FactoryBean</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Spring-%E6%9C%89%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B-bean%EF%BC%8C%E4%B8%80%E7%A7%8D%E6%99%AE%E9%80%9A-bean%EF%BC%8C%E5%8F%A6%E5%A4%96%E4%B8%80%E7%A7%8D%E5%B7%A5%E5%8E%82-bean%EF%BC%88FactoryBean%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">1、Spring 有两种类型 bean，一种普通 bean，另外一种工厂 bean（FactoryBean）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81-%E6%A1%88%E4%BE%8B%E6%BC%94%E7%A4%BA"><span class="toc-number">1.3.2.</span> <span class="toc-text">2、 案例演示</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%88%9B%E5%BB%BA%E7%B1%BB%EF%BC%8C%E8%AE%A9%E8%BF%99%E4%B8%AA%E7%B1%BB%E4%BD%9C%E4%B8%BA%E5%B7%A5%E5%8E%82-bean%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3-FactoryBean"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">第一步 创建类，让这个类作为工厂 bean，实现接口 FactoryBean</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E9%87%8C%E9%9D%A2%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%8C%E5%9C%A8%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%AD%E5%AE%9A%E4%B9%89%E8%BF%94%E5%9B%9E%E7%9A%84-bean-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">第二步 实现接口里面的方法，在实现的方法中定义返回的 bean 类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Spring-Bean%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">1.4.</span> <span class="toc-text">四、Spring Bean作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%9C%A8-Spring-%E9%87%8C%E9%9D%A2%EF%BC%8C%E4%BD%A0%E6%80%8E%E6%A0%B7%E5%AE%9A%E4%B9%89%E7%B1%BB%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">1.4.1.</span> <span class="toc-text">1、在 Spring 里面，你怎样定义类的作用域?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81singleton-%E5%92%8C-prototype-%E5%8C%BA%E5%88%AB"><span class="toc-number">1.4.2.</span> <span class="toc-text">2、singleton 和 prototype 区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E8%A7%A3%E9%87%8ASpring%E6%94%AF%E6%8C%81%E7%9A%84%E5%87%A0%E7%A7%8Dbean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E3%80%82"><span class="toc-number">1.4.3.</span> <span class="toc-text">3、解释Spring支持的几种bean的作用域。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81-Spring%E6%A1%86%E6%9E%B6%E4%B8%AD%E7%9A%84%E5%8D%95%E4%BE%8Bbean%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97"><span class="toc-number">1.4.4.</span> <span class="toc-text">4、 Spring框架中的单例bean是线程安全的吗?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Spring-Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.5.</span> <span class="toc-text">五、Spring Bean生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Spring%E6%A1%86%E6%9E%B6%E4%B8%ADbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E3%80%82"><span class="toc-number">1.5.1.</span> <span class="toc-text">1、Spring框架中bean的生命周期。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%93%AA%E4%BA%9B%E6%98%AF%E9%87%8D%E8%A6%81%E7%9A%84bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95%EF%BC%9F-%E4%BD%A0%E8%83%BD%E9%87%8D%E8%BD%BD%E5%AE%83%E4%BB%AC%E5%90%97%EF%BC%9F"><span class="toc-number">1.5.2.</span> <span class="toc-text">2、哪些是重要的bean生命周期方法？ 你能重载它们吗？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Spring-Bean%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D"><span class="toc-number">1.6.</span> <span class="toc-text">六、Spring Bean自动装配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFbean%E8%A3%85%E9%85%8D"><span class="toc-number">1.6.1.</span> <span class="toc-text">1、什么是bean装配?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFbean%E7%9A%84%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%EF%BC%9F"><span class="toc-number">1.6.2.</span> <span class="toc-text">2、什么是bean的自动装配？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E8%A7%A3%E9%87%8A%E4%B8%8D%E5%90%8C%E6%96%B9%E5%BC%8F%E7%9A%84%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D-%E3%80%82"><span class="toc-number">1.6.3.</span> <span class="toc-text">3、解释不同方式的自动装配 。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">1.6.4.</span> <span class="toc-text">4、自动装配有哪些局限性 ?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%9C%A8Spring%E4%B8%AD%E6%B3%A8%E5%85%A5%E4%B8%80%E4%B8%AA-null-%E5%92%8C-%E4%B8%80%E4%B8%AA%E7%A9%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%90%97%EF%BC%9F"><span class="toc-number">1.6.5.</span> <span class="toc-text">5、你可以在Spring中注入一个 null 和 一个空字符串吗？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81Spring%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.7.</span> <span class="toc-text">七、Spring注解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%9F%BA%E4%BA%8EJava%E7%9A%84Spring%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AE-%E7%BB%99%E4%B8%80%E4%BA%9B%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.7.1.</span> <span class="toc-text">1、什么是基于Java的Spring注解配置? 给一些注解的例子.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Spring-%E9%92%88%E5%AF%B9-Bean-%E7%AE%A1%E7%90%86%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E6%8F%90%E4%BE%9B%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.7.2.</span> <span class="toc-text">2、Spring 针对 Bean 管理中创建对象提供注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">1.7.3.</span> <span class="toc-text">3、什么是基于注解的容器配置?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%80%8E%E6%A0%B7%E5%BC%80%E5%90%AF%E6%B3%A8%E8%A7%A3%E8%A3%85%E9%85%8D%EF%BC%9F"><span class="toc-number">1.7.4.</span> <span class="toc-text">4、怎样开启注解装配？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81-Required-%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.7.5.</span> <span class="toc-text">5、@Required 注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81-Autowired-%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.7.6.</span> <span class="toc-text">6、@Autowired 注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81-Qualifier-%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.7.7.</span> <span class="toc-text">7、@Qualifier 注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%E3%80%81-Resource-%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.7.8.</span> <span class="toc-text">8、@Resource 注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%E3%80%81-Value-%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.7.9.</span> <span class="toc-text">10、@Value 注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11%E3%80%81%E6%A1%88%E4%BE%8B%E6%BC%94%E7%A4%BA"><span class="toc-number">1.7.10.</span> <span class="toc-text">11、案例演示</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-1-%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96-spring-aop-5-3-7-jar"><span class="toc-number">1.7.10.1.</span> <span class="toc-text">Step 1: 引入依赖 spring-aop-5.3.7.jar</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-2-%E5%BC%80%E5%90%AF%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F-beans-%E4%B8%AD%E8%A6%81%E6%B7%BB%E5%8A%A0-context%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">1.7.10.2.</span> <span class="toc-text">Step 2: 开启组件扫描( beans 中要添加 context命名空间 )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-3-%E5%88%9B%E5%BB%BA%E7%B1%BB%EF%BC%8C%E5%9C%A8%E7%B1%BB%E4%B8%8A%E9%9D%A2%E6%B7%BB%E5%8A%A0%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.7.10.3.</span> <span class="toc-text">Step 3: 创建类，在类上面添加创建对象注解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-4-%E6%96%B0%E5%BB%BA%E9%85%8D%E7%BD%AE%E7%B1%BB%EF%BC%8C%E6%9B%BF%E4%BB%A3xml%E6%96%87%E4%BB%B6"><span class="toc-number">1.7.10.4.</span> <span class="toc-text">Step 4: 新建配置类，替代xml文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-5-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.7.10.5.</span> <span class="toc-text">Step 5: 测试</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Spring-BASE-3　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/05/16/Spring-BASE-4/" title="Pre: Spring-BASE-4">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/05/16/Spring-BASE-2/" title="Next: Spring-BASE-2">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

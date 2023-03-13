@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="Spring Security 基础 1SpringSecurity 框架简介1.1 概要Spring 是非常流行和成功的 Java 应用开发框架，Spring Security 正是 Spring 家族中的成员。Spring Security 基于 Spring 框架，提供了一套 Web 应用安全性的完整解决方案。 正如你可能知道的关于安全方面的两个主要区域是“认证”和“授权”（或者访问控制），">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring-Security-BASE-1">
+<meta property="og:url" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="Spring Security 基础 1SpringSecurity 框架简介1.1 概要Spring 是非常流行和成功的 Java 应用开发框架，Spring Security 正是 Spring 家族中的成员。Spring Security 基于 Spring 框架，提供了一套 Web 应用安全性的完整解决方案。 正如你可能知道的关于安全方面的两个主要区域是“认证”和“授权”（或者访问控制），">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/1.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/2.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/3.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/4.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/5.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/6.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/7.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/8.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/9.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/10.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/11.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/12.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/13.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/14.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/15.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/16.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/17.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/18.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/19.PNG">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/20.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/21.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/22.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/23.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/24.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/25.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/26.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/27.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/28.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/29.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/30.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/31.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/32.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/33.png">
+<meta property="article:published_time" content="2021-05-24T10:51:25.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:44.008Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="Spring Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/05/24/Spring-Security-BASE-1/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Spring-Security-BASE-1 | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Spring-Security-BASE-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/24/Spring-Security-BASE-1/" class="article-date">
+      <time datetime="2021-05-24T10:51:25.000Z" itemprop="datePublished">2021-05-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring-Security-BASE-1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Spring-Security-基础-1"><a href="#Spring-Security-基础-1" class="headerlink" title="Spring Security 基础 1"></a>Spring Security 基础 1</h1><h2 id="SpringSecurity-框架简介"><a href="#SpringSecurity-框架简介" class="headerlink" title="SpringSecurity 框架简介"></a>SpringSecurity 框架简介</h2><h3 id="1-1-概要"><a href="#1-1-概要" class="headerlink" title="1.1 概要"></a>1.1 概要</h3><p>Spring 是非常流行和成功的 Java 应用开发框架，Spring Security 正是 Spring 家族中的成员。Spring Security 基于 Spring 框架，提供了一套 Web 应用安全性的完整解决方案。</p>
+<p>正如你可能知道的关于安全方面的两个主要区域是“认证”和“授权”（或者访问控制），一般来说，Web 应用的安全性包括用户认证（Authentication）和用户授权（Authorization）两个部分，这两点也是 Spring Security 重要核心功能。</p>
+<p>（1）用户认证指的是：验证某个用户是否为系统中的合法主体，也就是说用户能否访问该系统。用户认证一般要求用户提供用户名和密码。系统通过校验用户名和密码来完成认证过程。通俗点说就是系统认为用户是否能登录</p>
+<p>（2）用户授权指的是验证某个用户是否有权限执行某个操作。在一个系统中，不同用户<br>所具有的权限是不同的。比如对一个文件来说，有的用户只能进行读取，而有的用户可以<br>进行修改。一般来说，系统会为不同的用户分配不同的角色，而每个角色则对应一系列的<br>权限。通俗点讲就是系统判断用户是否有权限去做某些事情。</p>
+<span id="more"></span>
+
+<h3 id="1-2-历史"><a href="#1-2-历史" class="headerlink" title="1.2 历史"></a>1.2 历史</h3><p>“Spring Security 开始于 2003 年年底,““spring 的 acegi 安全系统”。 起因是 Spring 开发者邮件列表中的一个问题,有人提问是否考虑提供一个基于 spring 的安全实现。</p>
+<p>Spring Security 以“The Acegi Secutity System for Spring” 的名字始于 2013 年晚些时候。一个问题提交到 Spring 开发者的邮件列表，询问是否已经有考虑一个机遇 Spring的安全性社区实现。那时候 Spring 的社区相对较小（相对现在）。实际上 Spring 自己在2013 年只是一个存在于 ScourseForge 的项目，这个问题的回答是一个值得研究的领域，虽然目前时间的缺乏组织了我们对它的探索。</p>
+<p>考虑到这一点，一个简单的安全实现建成但是并没有发布。几周后，Spring 社区的其他成员询问了安全性，这次这个代码被发送给他们。其他几个请求也跟随而来。到 2014 年一月大约有 20 万人使用了这个代码。这些创业者的人提出一个 SourceForge 项目加入是为了，这是在 2004 三月正式成立。</p>
+<p>在早些时候，这个项目没有任何自己的验证模块，身份验证过程依赖于容器管理的安全性和 Acegi 安全性。而不是专注于授权。开始的时候这很适合，但是越来越多的用户请求额外的容器支持。容器特定的认证领域接口的基本限制变得清晰。还有一个相关的问题增加新的容器的路径，这是最终用户的困惑和错误配置的常见问题。</p>
+<p>Acegi 安全特定的认证服务介绍。大约一年后，Acegi 安全正式成为了 Spring 框架的子项目。1.0.0 最终版本是出版于 2006 -在超过两年半的大量生产的软件项目和数以百计的改进和积极利用社区的贡献。Acegi 安全 2007 年底正式成为了 Spring 组合项目，更名为”Spring Security”。</p>
+<h3 id="1-3-同款产品对比"><a href="#1-3-同款产品对比" class="headerlink" title="1.3 同款产品对比"></a>1.3 同款产品对比</h3><h4 id="1-3-1-Spring-Security"><a href="#1-3-1-Spring-Security" class="headerlink" title="1.3.1 Spring Security"></a>1.3.1 Spring Security</h4><p>Spring 技术栈的组成部分。</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/1.png"></p>
+<p>通过提供完整可扩展的认证和授权支持保护你的应用程序。<br><a target="_blank" rel="noopener" href="https://spring.io/projects/spring-security">https://spring.io/projects/spring-security</a></p>
+<p><strong>SpringSecurity 特点：</strong></p>
+<pre><code>和 Spring 无缝整合。
+全面的权限控制。
+专门为 Web 开发而设计。
+    旧版本不能脱离 Web 环境使用。
+    新版本对整个框架进行了分层抽取，分成了核心模块和 Web 模块。单独引入核心模块就可以脱离 Web 环境。
+重量级。
+</code></pre>
+<h4 id="1-3-2-Shiro"><a href="#1-3-2-Shiro" class="headerlink" title="1.3.2 Shiro"></a>1.3.2 Shiro</h4><p>Apache 旗下的轻量级权限控制框架。<br>中文官网：<a target="_blank" rel="noopener" href="http://greycode.github.io/shiro/">http://greycode.github.io/shiro/</a></p>
+<p><strong>特点：</strong></p>
+<pre><code>轻量级。Shiro 主张的理念是把复杂的事情变简单。针对对性能有更高要求的互联网应用有更好表现。
+通用性。
+    好处：不局限于 Web 环境，可以脱离 Web 环境使用。
+    缺陷：在 Web 环境下一些特定的需求需要手动编写代码定制。
+</code></pre>
+<p>Spring Security 是 Spring 家族中的一个安全管理框架，实际上，在 Spring Boot 出现之前，Spring Security就已经发展了多年了，但是使用的并不多，安全管理这个领域，一直是 Shiro 的天下。</p>
+<p>相对于 Shiro，在 SSM 中整合 Spring Security 都是比较麻烦的操作，所以，SpringSecurity 虽然功能比 Shiro 强大，但是使用反而没有 Shiro 多（Shiro 虽然功能没有Spring Security 多，但是对于大部分项目而言，Shiro 也够用了）。自从有了 Spring Boot 之后，Spring Boot 对于 Spring Security 提供了自动化配置方案，可以使用更少的配置来使用 Spring Security。</p>
+<p>因此，一般来说，常见的安全管理技术栈的组合是这样的：</p>
+<pre><code>• SSM + Shiro
+• Spring Boot/Spring Cloud + Spring Security
+</code></pre>
+<p><strong>以上只是一个推荐的组合而已，如果单纯从技术上来说，无论怎么组合，都是可以运行的。</strong></p>
+<h3 id="1-4-模块划分"><a href="#1-4-模块划分" class="headerlink" title="1.4 模块划分"></a>1.4 模块划分</h3><p><img src="/2021/05/24/Spring-Security-BASE-1/2.png"></p>
+<h2 id="2-SpringSecurity-入门案例-hello-world"><a href="#2-SpringSecurity-入门案例-hello-world" class="headerlink" title="2. SpringSecurity 入门案例 hello world"></a>2. SpringSecurity 入门案例 hello world</h2><h3 id="2-1-创建-SpringBoot-项目"><a href="#2-1-创建-SpringBoot-项目" class="headerlink" title="2.1 创建 SpringBoot 项目"></a>2.1 创建 SpringBoot 项目</h3><p><img src="/2021/05/24/Spring-Security-BASE-1/3.png"></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/4.png"></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/5.png"></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/6.png"></p>
+<p><strong>pom.xml 文件如下</strong></p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-security-test&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="2-2-创建配置类"><a href="#2-2-创建配置类" class="headerlink" title="2.2 创建配置类"></a>2.2 创建配置类</h3><pre><code>package com.sevattal.config;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter &#123;
+    @Override
+    protected void configure(HttpSecurity http) throws Exception &#123;
+        http.formLogin() // 表单登录
+                .and()
+                .authorizeRequests() // 认证配置
+                .anyRequest() // 任何请求
+                .authenticated(); // 都需要身份验证
+    &#125;
+&#125;
+</code></pre>
+<h3 id="2-3-运行这个项目"><a href="#2-3-运行这个项目" class="headerlink" title="2.3 运行这个项目"></a>2.3 运行这个项目</h3><p>访问 localhost:8080</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/7.png"></p>
+<p>默认的用户名：user<br>密码在项目启动时候会在控制台打印，注意每次启动密码都会发生变化！</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/8.png"></p>
+<p>输入用户名，密码，这样表示可以访问了，404 表示我们没有这个控制器，但是我们可以访问了。</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/9.png"></p>
+<h3 id="2-4-权限管理中的相关概念"><a href="#2-4-权限管理中的相关概念" class="headerlink" title="2.4 权限管理中的相关概念"></a>2.4 权限管理中的相关概念</h3><h4 id="2-4-1-主体（principal）"><a href="#2-4-1-主体（principal）" class="headerlink" title="2.4.1 主体（principal）"></a>2.4.1 主体（principal）</h4><p>使用系统的用户或设备或从其他系统远程登录的用户等等。简单说就是谁使用系统谁就是主体。</p>
+<h4 id="2-4-2-认证（authentication）"><a href="#2-4-2-认证（authentication）" class="headerlink" title="2.4.2 认证（authentication）"></a>2.4.2 认证（authentication）</h4><p>权限管理系统确认一个主体的身份，允许主体进入系统。简单说就是“主体”证明自己是谁。<br>笼统的认为就是以前所做的登录操作。</p>
+<h4 id="授权（authorization）"><a href="#授权（authorization）" class="headerlink" title="授权（authorization）"></a>授权（authorization）</h4><p>将操作系统的“权力”“授予”“主体”，这样主体就具备了操作系统中特定功能的能力。<br>所以简单来说，授权就是给用户分配权限。</p>
+<h3 id="2-5-添加一个控制器进行访问"><a href="#2-5-添加一个控制器进行访问" class="headerlink" title="2.5 添加一个控制器进行访问"></a>2.5 添加一个控制器进行访问</h3><pre><code>package com.sevattal.controller;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+@Controller
+public class IndexController &#123;
+    @GetMapping(&quot;index&quot;)
+    @ResponseBody
+    public String index()&#123;
+        return &quot;success&quot;;
+    &#125;
+&#125;
+</code></pre>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/10.png"></p>
+<h3 id="2-6-SpringSecurity-基本原理"><a href="#2-6-SpringSecurity-基本原理" class="headerlink" title="2.6 SpringSecurity 基本原理"></a>2.6 SpringSecurity 基本原理</h3><p>SpringSecurity 本质是一个过滤器链：<br>从启动是可以获取到过滤链：</p>
+<pre><code>org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter
+org.springframework.security.web.context.SecurityContextPersistenceFilter
+org.springframework.security.web.header.HeaderWriterFilter
+org.springframework.security.web.csrf.CsrfFilter
+org.springframework.security.web.authentication.logout.LogoutFilter
+org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter
+org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter
+org.springframework.security.web.savedrequest.RequestCacheAwareFilter
+org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter
+org.springframework.security.web.authentication.AnonymousAuthenticationFilter
+org.springframework.security.web.session.SessionManagementFilter
+org.springframework.security.web.access.ExceptionTranslationFilter
+org.springframework.security.web.access.intercept.FilterSecurityInterceptor
+</code></pre>
+<p>代码底层流程：重点看三个过滤器：</p>
+<p><strong>FilterSecurityInterceptor：</strong>是一个方法级的权限过滤器, 基本位于过滤链的最底部。</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/11.png"></p>
+<p>super.beforeInvocation(filterInvocation); 表示查看之前的 filter 是否通过。<br>filterInvocation.getChain().doFilter(filterInvocation.getRequest(), filterInvocation.getResponse()); 表示真正的调用后台的服务</p>
+<p><strong>ExceptionTranslationFilter：</strong>是个异常过滤器，用来处理在认证授权过程中抛出的异常</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/12.png"></p>
+<p>**UsernamePasswordAuthenticationFilter:**对&#x2F;login 的 POST 请求做拦截，校验表单中用户名，密码。</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/13.png"></p>
+<h3 id="2-7-UserDetailsService-接口讲解"><a href="#2-7-UserDetailsService-接口讲解" class="headerlink" title="2.7 UserDetailsService 接口讲解"></a>2.7 UserDetailsService 接口讲解</h3><p>当什么也没有配置的时候，账号和密码是由 Spring Security 定义生成的。而在实际项目中账号和密码都是从数据库中查询出来的。 所以我们要通过自定义逻辑控制认证逻辑。</p>
+<p>如果需要自定义逻辑时，只需要实现 UserDetailsService 接口即可。接口定义如下：</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/14.png"></p>
+<p><strong>返回值 UserDetails</strong></p>
+<p>这个类是系统默认的用户 “主体”</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/15.png"></p>
+<pre><code>// 表示获取登录用户所有权限
+Collection&lt;? extends GrantedAuthority&gt; getAuthorities();
+// 表示获取密码
+String getPassword();
+// 表示获取用户名
+String getUsername();
+// 表示判断账户是否过期
+boolean isAccountNonExpired();
+// 表示判断账户是否被锁定
+boolean isAccountNonLocked();
+// 表示凭证&#123;密码&#125;是否过期
+boolean isCredentialsNonExpired();
+// 表示当前用户是否可用
+boolean isEnabled();
+</code></pre>
+<p>以下是 UserDetails 实现类</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/16.png"></p>
+<p>以后我们只需要使用 User 这个实体类即可！</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/17.png"></p>
+<p><strong>方法参数 username</strong></p>
+<p>表示用户名。此值是客户端表单传递过来的数据。默认情况下必须叫 username，否则无法接收。</p>
+<h3 id="2-8-PasswordEncoder-接口讲解"><a href="#2-8-PasswordEncoder-接口讲解" class="headerlink" title="2.8 PasswordEncoder 接口讲解"></a>2.8 PasswordEncoder 接口讲解</h3><p><img src="/2021/05/24/Spring-Security-BASE-1/18.png"></p>
+<pre><code>// 表示把参数按照特定的解析规则进行解析
+String encode(CharSequence rawPassword);
+// 表示验证从存储中获取的编码密码与编码后提交的原始密码是否匹配。如果密码匹
+配，则返回 true；如果不匹配，则返回 false。第一个参数表示需要被解析的密码。第二个
+参数表示存储的密码。
+boolean matches(CharSequence rawPassword, String encodedPassword);
+// 表示如果解析的密码能够再次进行解析且达到更安全的结果则返回 true，否则返回
+false。默认返回 false。
+default boolean upgradeEncoding(String encodedPassword) &#123;
+    return false;
+&#125;
+</code></pre>
+<p>接口实现类</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/19.PNG"></p>
+<p>BCryptPasswordEncoder 是 Spring Security 官方推荐的密码解析器，平时多使用这个解析器。<br>BCryptPasswordEncoder 是对 bcrypt 强散列方法的具体实现。是基于 Hash 算法实现的单向加密。可以通过 strength 控制加密强度，默认 10</p>
+<p>查用方法演示</p>
+<pre><code>@Test
+public void test01()&#123;
+    // 创建密码解析器
+    BCryptPasswordEncoder bCryptPasswordEncoder = new
+            BCryptPasswordEncoder();
+    // 对密码进行加密
+    String sevattal = bCryptPasswordEncoder.encode(&quot;sevattal&quot;);
+    // 打印加密之后的数据
+    System.out.println(&quot;加密之后数据：\t&quot;+sevattal);
+    //判断原字符加密后和加密之前是否匹配
+    boolean result = bCryptPasswordEncoder.matches(&quot;sevattal&quot;, sevattal);
+    // 打印比较结果
+    System.out.println(&quot;比较结果：\t&quot;+result);
+&#125;
+</code></pre>
+<h3 id="2-9-SpringBoot-对-Security-的自动配置"><a href="#2-9-SpringBoot-对-Security-的自动配置" class="headerlink" title="2.9 SpringBoot 对 Security 的自动配置"></a>2.9 SpringBoot 对 Security 的自动配置</h3><p>Spring官方：<a target="_blank" rel="noopener" href="https://docs.spring.io/springsecurity/site/docs/5.3.4.RELEASE/reference/html5/#servlet-hello">https://docs.spring.io/springsecurity/site/docs/5.3.4.RELEASE/reference/html5/#servlet-hello</a></p>
+<h2 id="3-SpringSecurity-Web-权限方案"><a href="#3-SpringSecurity-Web-权限方案" class="headerlink" title="3. SpringSecurity Web 权限方案"></a>3. SpringSecurity Web 权限方案</h2><h3 id="3-1-设置登录系统的账号、密码"><a href="#3-1-设置登录系统的账号、密码" class="headerlink" title="3.1 设置登录系统的账号、密码"></a>3.1 设置登录系统的账号、密码</h3><p><strong>方式一：在application.properties</strong></p>
+<pre><code>spring.security.user.name=sevattal
+spring.security.user.password=sevattal
+</code></pre>
+<p><strong>方式二：编写配置类实现</strong></p>
+<pre><code>package com.sevattal.config;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+@Configuration
+public class SecurityConfig &#123;
+    // 注入 PasswordEncoder 类到 spring 容器中
+    @Bean
+    public PasswordEncoder passwordEncoder()&#123;
+        return new BCryptPasswordEncoder();
+    &#125;
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception &#123;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = passwordEncoder.encode(&quot;sevattal&quot;);
+        auth.inMemoryAuthentication().withUser(&quot;sevattal&quot;).password(password).roles(&quot;admin&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p><strong>方式三：自定义登录，编写实现类实现（实际工作中使用）</strong></p>
+<p>第一步： 创建配置类，设置使用哪个userDetailsService实现类<br>第二部：编写实现类，返回User对象，User对象有用户名密码和操作权限</p>
+<pre><code>package com.sevattal.config;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+@Configuration
+public class SecurityConfigTest extends WebSecurityConfigurerAdapter &#123;
+    // 注入 UserDetailService
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception &#123;
+        auth.userDetailsService(userDetailsService).passwordEncoder( password());
+    &#125;
+    // 注入 PasswordEncoder 类到 spring 容器中
+    @Bean
+    public PasswordEncoder password()&#123;
+        return new BCryptPasswordEncoder();
+    &#125;
+&#125;
+
+package com.sevattal.service;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import java.util.List;
+@Service(&quot;userDetailsService&quot;)
+public class MyUserDetailsService implements UserDetailsService &#123;
+    @Override
+    public UserDetails loadUserByUsername(String s) throws  UsernameNotFoundException &#123;
+        List&lt;GrantedAuthority&gt; auths = AuthorityUtils.commaSeparatedStringToAuthorityList(&quot;role&quot;);
+        return new User(&quot;sevattal&quot;,new BCryptPasswordEncoder().encode(&quot;sevattal&quot;),auths);
+    &#125;
+&#125;
+</code></pre>
+<h3 id="3-2-实现数据库认证来完成用户登录"><a href="#3-2-实现数据库认证来完成用户登录" class="headerlink" title="3.2 实现数据库认证来完成用户登录"></a>3.2 实现数据库认证来完成用户登录</h3><p>完成自定义登录</p>
+<h4 id="3-2-1-准备-sql"><a href="#3-2-1-准备-sql" class="headerlink" title="3.2.1 准备 sql"></a>3.2.1 准备 sql</h4><pre><code>create table users(
+    id bigint primary key auto_increment,
+    username varchar(20) unique not null,
+    password varchar(100)
+);
+-- 密码 sevattal
+insert into users values(1,&#39;sevattal&#39;,&#39;sevattal&#39;);
+-- 密码 sevattal
+insert into users values(2,&#39;test&#39;,&#39;sevattal&#39;);
+create table role(
+    id bigint primary key auto_increment,
+    name varchar(20)
+);
+insert into role values(1,&#39;管理员&#39;);
+insert into role values(2,&#39;普通用户&#39;);
+create table role_user(
+    uid bigint,
+    rid bigint
+);
+insert into role_user values(1,1);
+insert into role_user values(2,2);
+create table menu(
+    id bigint primary key auto_increment,
+    name varchar(20),
+    url varchar(100),
+    parentid bigint,
+    permission varchar(20)
+);
+insert into menu values(1,&#39;系统管理&#39;,&#39;&#39;,0,&#39;menu:system&#39;);
+insert into menu values(2,&#39;用户管理&#39;,&#39;&#39;,0,&#39;menu:user&#39;);
+create table role_menu(
+    mid bigint,
+    rid bigint
+);
+insert into role_menu values(1,1);
+insert into role_menu values(2,1);
+insert into role_menu values(2,2);
+</code></pre>
+<h4 id="3-2-2-添加依赖"><a href="#3-2-2-添加依赖" class="headerlink" title="3.2.2 添加依赖"></a>3.2.2 添加依赖</h4><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-security-test&lt;/artifactId&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;!--mybatis-plus--&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
+        &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;
+        &lt;version&gt;3.4.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!--mysql--&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;!--lombok 用来简化实体类--&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+        &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h4 id="3-2-3-制作实体类"><a href="#3-2-3-制作实体类" class="headerlink" title="3.2.3 制作实体类"></a>3.2.3 制作实体类</h4><pre><code>package com.sevattal.entity;
+import lombok.Data;
+@Data
+public class Users &#123;
+    private Integer id;
+    private String username;
+    private String password;
+&#125;
+</code></pre>
+<h4 id="3-2-4-整合-MybtisPlus-制作-mapper"><a href="#3-2-4-整合-MybtisPlus-制作-mapper" class="headerlink" title="3.2.4 整合 MybtisPlus 制作 mapper"></a>3.2.4 整合 MybtisPlus 制作 mapper</h4><p><strong>application.properties 配置文件添加数据库配置</strong></p>
+<pre><code>#mysql 数据库连接
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://192.168.10.30:3306/SpringSecurity?serverTimezone=GMT%2B8
+spring.datasource.username=sevattal
+spring.datasource.password=123456
+</code></pre>
+<p><strong>UsersMapper</strong></p>
+<pre><code>package com.sevattal.mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sevattal.entity.Users;
+import org.apache.ibatis.annotations.Mapper;
+@Mapper
+public interface UsersMapper extends BaseMapper&lt;Users&gt; &#123;
+&#125;
+</code></pre>
+<h4 id="3-2-5-制作登录业务类"><a href="#3-2-5-制作登录业务类" class="headerlink" title="3.2.5 制作登录业务类"></a>3.2.5 制作登录业务类</h4><pre><code>package com.sevattal.service;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sevattal.entity.Users;
+import com.sevattal.mapper.UsersMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import java.util.List;
+@Service(&quot;userDetailsService&quot;)
+public class MyUserDetailsService implements UserDetailsService &#123;
+    @Autowired
+    private UsersMapper usersMapper;
+    @Override
+    public UserDetails loadUserByUsername(String s) throws
+            UsernameNotFoundException &#123;
+        QueryWrapper&lt;Users&gt; wrapper = new QueryWrapper();
+        wrapper.eq(&quot;username&quot;,s);
+        Users users = usersMapper.selectOne(wrapper);
+        if(users == null) &#123;
+            throw new UsernameNotFoundException(&quot;用户名不存在！&quot;);
+        &#125;
+        System.out.println(users);
+        List&lt;GrantedAuthority&gt; auths =
+                AuthorityUtils.commaSeparatedStringToAuthorityList(&quot;role&quot;);
+        return new User(users.getUsername(),
+                new BCryptPasswordEncoder().encode(users.getPassword()),auths);
+    &#125;
+&#125;
+</code></pre>
+<h4 id="3-2-6-测试访问"><a href="#3-2-6-测试访问" class="headerlink" title="3.2.6 测试访问"></a>3.2.6 测试访问</h4><p><img src="/2021/05/24/Spring-Security-BASE-1/20.png"></p>
+<p>输入用户名，密码</p>
+<h3 id="3-3-未认证请求跳转到登录页"><a href="#3-3-未认证请求跳转到登录页" class="headerlink" title="3.3 未认证请求跳转到登录页"></a>3.3 未认证请求跳转到登录页</h3><h4 id="3-3-1-引入前端模板依赖"><a href="#3-3-1-引入前端模板依赖" class="headerlink" title="3.3.1 引入前端模板依赖"></a>3.3.1 引入前端模板依赖</h4><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="3-3-2-引入登录页面"><a href="#3-3-2-引入登录页面" class="headerlink" title="3.3.2 引入登录页面"></a>3.3.2 引入登录页面</h4><pre><code>&lt;!DOCTYPE html&gt;
+&lt;!-- 需要添加
+&lt;html  xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+这样在后面的th标签就不会报错
+ --&gt;
+&lt;html  xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head lang=&quot;en&quot;&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;/&gt;
+    &lt;title&gt;xx&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;表单提交&lt;/h1&gt;
+&lt;!-- 表单提交用户信息,注意字段的设置,直接是*&#123;&#125; --&gt;
+&lt;form action=&quot;/user/login&quot;  method=&quot;post&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;$&#123;_csrf.parameterName&#125;&quot; value=&quot;$&#123;_csrf.token&#125;&quot; /&gt;
+    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
+    &lt;input type=&quot;text&quot; name=&quot;password&quot; /&gt;
+    &lt;input type=&quot;submit&quot; /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>注意：</strong>页面提交方式必须为 post 请求，所以上面的页面不能使用，用户名，密码必须为username,password<br><strong>原因：</strong>在执行登录的时候会走一个过滤器 UsernamePasswordAuthenticationFilter<br><strong>修改方法：</strong>可在配置文件中配置 usernameParameter、passowrdParameter 参数，以达到修改参数名。</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/21.png"></p>
+<h4 id="3-3-3-编写控制器"><a href="#3-3-3-编写控制器" class="headerlink" title="3.3.3 编写控制器"></a>3.3.3 编写控制器</h4><pre><code>@RestController
+public class IndexController &#123;
+    @GetMapping(&quot;index&quot;)
+    public String index()&#123;
+        return &quot;success&quot;;
+    &#125;
+    @GetMapping(&quot;hello&quot;)
+    public String hello()&#123;
+        return &quot;hello&quot;;
+    &#125;
+    @GetMapping(&quot;/findAll&quot;)
+    @ResponseBody
+    public String findAll()&#123;
+        return &quot;findAll&quot;;
+    &#125;
+    &#125;
+</code></pre>
+<h4 id="3-3-4-编写配置类放行登录页面以及静态资源"><a href="#3-3-4-编写配置类放行登录页面以及静态资源" class="headerlink" title="3.3.4 编写配置类放行登录页面以及静态资源"></a>3.3.4 编写配置类放行登录页面以及静态资源</h4><pre><code>package com.sevattal.config;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter &#123;
+    // 注入 PasswordEncoder 类到 spring 容器中
+    @Bean
+    public PasswordEncoder passwordEncoder()&#123;
+        return new BCryptPasswordEncoder();
+    &#125;
+    @Override
+    protected void configure(HttpSecurity http) throws Exception &#123;
+        http.formLogin() //自定义自己编写的登录页面
+                .loginPage(&quot;/login.html&quot;) // 登录页面
+                .loginProcessingUrl(&quot;/user/login&quot;)  // 登录访问的路径
+                .defaultSuccessUrl(&quot;/index&quot;).permitAll() //登录成功之后，跳转到的路径
+                .and().authorizeRequests()
+                .antMatchers(&quot;/&quot;,&quot;/user/login&quot;,&quot;/hello&quot;).permitAll() // 设置哪些路径不需要登录可以直接访问
+                .anyRequest().authenticated()
+                .and().csrf().disable(); // 关闭csrf 防护
+    &#125;
+&#125;
+</code></pre>
+<h4 id="3-3-5-测试"><a href="#3-3-5-测试" class="headerlink" title="3.3.5 测试"></a>3.3.5 测试</h4><p>访问 localhost:8080&#x2F;index</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/22.png"></p>
+<p>访问 localhost:8080&#x2F;findAll 会提示 403 错误 表示没有这个权限。</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/23.png"></p>
+<h3 id="3-4-基于角色或权限进行访问控制"><a href="#3-4-基于角色或权限进行访问控制" class="headerlink" title="3.4 基于角色或权限进行访问控制"></a>3.4 基于角色或权限进行访问控制</h3><h4 id="3-4-1-hasAuthority-方法"><a href="#3-4-1-hasAuthority-方法" class="headerlink" title="3.4.1 hasAuthority 方法"></a>3.4.1 hasAuthority 方法</h4><p>如果当前的主体具有指定的权限，则返回 true,否则返回 false</p>
+<p><strong>修改配置类</strong></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/24.png"></p>
+<pre><code>http.authorizeRequests()
+    .antMatchers(&quot;/&quot;,&quot;/user/login&quot;,&quot;/hello&quot;).permitAll() // 设置哪些路径不需要登录可以直接访问
+    .antMatchers(&quot;/findAll&quot;).hasAuthority(&quot;admin&quot;) // 需要用户带有admin权限
+    .antMatchers(&quot;/find&quot;).hasAnyAuthority(&quot;role&quot;) // 需要用户带有 role 权限
+    .anyRequest().authenticated()
+    .and().csrf().disable(); // 关闭csrf 防护
+</code></pre>
+<p><strong>添加一个控制器</strong></p>
+<pre><code>@GetMapping(&quot;/find&quot;)
+@ResponseBody
+public String find()&#123;
+    return &quot;find&quot;;
+&#125;
+</code></pre>
+<p><strong>修改 UserDetailsService 实现类，给用户登录主体赋予权限</strong></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/25.png"></p>
+<p>注意：hasAuthority 只能支持用户有一个角色权限，多个角色权限就无法访问到路径。<br>要想支持多个角色权限使用 hasAnyAuthority</p>
+<p><strong>测试</strong></p>
+<p><a target="_blank" rel="noopener" href="http://localhost:8080/findAll">http://localhost:8080/findAll</a></p>
+<p>访问 findAll 进入登录页面</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/26.png"></p>
+<p>认证完成之后返回登录成功</p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/27.png"></p>
+<h4 id="3-4-2-hasAnyAuthority-方法"><a href="#3-4-2-hasAnyAuthority-方法" class="headerlink" title="3.4.2 hasAnyAuthority 方法"></a>3.4.2 hasAnyAuthority 方法</h4><p><strong>修改 UserDetailsService 实现类，给用户登录主体赋予权限</strong></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/28.png"></p>
+<p>如果当前的主体有任何提供的角色（给定的作为一个逗号分隔的字符串列表）的话，返回 true.</p>
+<p>访问 <a target="_blank" rel="noopener" href="http://localhost:8080/find">http://localhost:8080/find</a></p>
+<h4 id="3-4-3-hasRole-方法"><a href="#3-4-3-hasRole-方法" class="headerlink" title="3.4.3 hasRole 方法"></a>3.4.3 hasRole 方法</h4><p>如果用户具备给定角色就允许访问,否则出现 403。<br>如果当前主体具有指定的角色，则返回 true。</p>
+<p><strong>底层源码：</strong></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/29.png"></p>
+<p><strong>修改配置文件：</strong></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/30.png"></p>
+<p><strong>给用户添加角色：</strong></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/31.png"></p>
+<p>注意配置文件中不需要添加”ROLE_“，因为上述的底层代码会自动添加与之进行匹配。</p>
+<h4 id="3-4-4-hasAnyRole"><a href="#3-4-4-hasAnyRole" class="headerlink" title="3.4.4 hasAnyRole"></a>3.4.4 hasAnyRole</h4><p>表示用户具备任何一个条件都可以访问。</p>
+<p><strong>修改配置文件：</strong></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/32.png"></p>
+<p><strong>给用户添加角色：</strong></p>
+<p><img src="/2021/05/24/Spring-Security-BASE-1/33.png"></p>
+<h3 id="3-5-自定义-403-页面"><a href="#3-5-自定义-403-页面" class="headerlink" title="3.5 自定义 403 页面"></a>3.5 自定义 403 页面</h3><h4 id="3-5-1-修改访问配置类"><a href="#3-5-1-修改访问配置类" class="headerlink" title="3.5.1 修改访问配置类"></a>3.5.1 修改访问配置类</h4><pre><code>http.exceptionHandling().accessDeniedPage(&quot;/unauth.html&quot;);
+</code></pre>
+<h4 id="3-5-2-添加对应控制器"><a href="#3-5-2-添加对应控制器" class="headerlink" title="3.5.2 添加对应控制器"></a>3.5.2 添加对应控制器</h4><pre><code>@GetMapping(&quot;/unauth&quot;)
+public String accessDenyPage()&#123;
+    return &quot;unauth&quot;;
+&#125;
+</code></pre>
+<h4 id="3-5-3-unauth-html-没有权限页面"><a href="#3-5-3-unauth-html-没有权限页面" class="headerlink" title="3.5.3 unauth.html 没有权限页面"></a>3.5.3 unauth.html 没有权限页面</h4><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;没有访问权限！&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="3-6-注解使用"><a href="#3-6-注解使用" class="headerlink" title="3.6 注解使用"></a>3.6 注解使用</h3><h4 id="3-6-1-Secured"><a href="#3-6-1-Secured" class="headerlink" title="3.6.1 @Secured"></a>3.6.1 @Secured</h4><p>判断是否具有角色，另外需要注意的是这里匹配的字符串需要添加前缀“ROLE_“。<br>使用注解先要开启注解功能！</p>
+<p><strong>@EnableGlobalMethodSecurity(securedEnabled&#x3D;true)</strong></p>
+<pre><code>@SpringBootApplication
+@EnableGlobalMethodSecurity(securedEnabled=true)
+public class DemosecurityApplication &#123;
+    public static void main(String[] args) &#123;
+        SpringApplication.run(DemosecurityApplication.class, args);
+    &#125;
+&#125;
+</code></pre>
+<p><strong>在控制器方法上添加注解</strong></p>
+<pre><code>// 测试注解：
+@RequestMapping(&quot;testSecured&quot;)
+@ResponseBody
+@Secured(&#123;&quot;ROLE_normal&quot;,&quot;ROLE_admin&quot;&#125;)
+public String helloUser() &#123;
+    return &quot;hello,user&quot;;
+&#125;
+</code></pre>
+<p>登录之后直接访问：<a target="_blank" rel="noopener" href="http://localhost:8080/testSecured">http://localhost:8080/testSecured</a> 控制器</p>
+<h4 id="3-6-2-PreAuthorize"><a href="#3-6-2-PreAuthorize" class="headerlink" title="3.6.2 @PreAuthorize"></a>3.6.2 @PreAuthorize</h4><p>先开启注解功能：</p>
+<p><strong>@EnableGlobalMethodSecurity(prePostEnabled &#x3D; true)</strong></p>
+<p>@PreAuthorize：注解适合进入方法前的权限验证， @PreAuthorize 可以将登录用户的 roles&#x2F;permissions 参数传到方法中。</p>
+<pre><code>@RequestMapping(&quot;/preAuthorize&quot;)
+@ResponseBody
+//@PreAuthorize(&quot;hasRole(&#39;ROLE_管理员&#39;)&quot;)
+@PreAuthorize(&quot;hasAnyAuthority(&#39;admin&#39;)&quot;)
+public String preAuthorize()&#123;
+    System.out.println(&quot;preAuthorize&quot;);
+    return &quot;preAuthorize&quot;;
+&#125;
+</code></pre>
+<p>登录测试: <a target="_blank" rel="noopener" href="http://localhost:8080/preAuthorize">http://localhost:8080/preAuthorize</a></p>
+<h4 id="3-6-3-PostAuthorize"><a href="#3-6-3-PostAuthorize" class="headerlink" title="3.6.3 @PostAuthorize"></a>3.6.3 @PostAuthorize</h4><p>先开启注解功能：</p>
+<p><strong>@EnableGlobalMethodSecurity(prePostEnabled &#x3D; true)</strong></p>
+<h4 id="3-6-4-PostAuthorize"><a href="#3-6-4-PostAuthorize" class="headerlink" title="3.6.4 @PostAuthorize"></a>3.6.4 @PostAuthorize</h4><p>注解使用并不多，在方法执行后再进行权限验证，适合验证带有返回值的权限.</p>
+<pre><code>@RequestMapping(&quot;/testPostAuthorize&quot;)
+@ResponseBody
+@PostAuthorize(&quot;hasAnyAuthority(&#39;admin&#39;)&quot;)
+public String testpreAuthorize()&#123;
+    System.out.println(&quot;test--PostAuthorize&quot;);
+    return &quot;PostAuthorize&quot;;
+&#125;
+</code></pre>
+<p>登陆测试：<a target="_blank" rel="noopener" href="http://localhost:8080/testPostAuthorize">http://localhost:8080/testPostAuthorize</a></p>
+<h4 id="3-6-5-PostFilter"><a href="#3-6-5-PostFilter" class="headerlink" title="3.6.5 @PostFilter"></a>3.6.5 @PostFilter</h4><p>权限验证之后对数据进行过滤</p>
+<pre><code>@PostFilter(&quot;filterObject.username == &#39;sevattal&#39;&quot;)//只拿到 username 为 sevattal 的数据，过滤掉其他数据
+@PreAuthorize(&quot;hasAnyAuthority(&#39;admin&#39;)&quot;)
+@GetMapping(&quot;getAll&quot;)
+@ResponseBody
+public List&lt;Users&gt; getAllUser()&#123;
+    List&lt;Users&gt; users = new ArrayList&lt;&gt;();
+    users.add(new Users(null,&quot;sevattal&quot;,&quot;sevattal&quot;));
+    users.add(new Users(null,&quot;sevattal&quot;,&quot;sevattal&quot;));
+    return users;
+&#125;
+</code></pre>
+<p><strong>结果</strong></p>
+<pre><code>[&#123;&quot;id&quot;:null,&quot;username&quot;:&quot;sevattal&quot;,&quot;password&quot;:&quot;sevattal&quot;&#125;,&#123;&quot;id&quot;:null,&quot;username&quot;:&quot;sevattal&quot;,&quot;password&quot;:&quot;sevattal&quot;&#125;]
+</code></pre>
+<h4 id="3-6-6-PreFilter"><a href="#3-6-6-PreFilter" class="headerlink" title="3.6.6 @PreFilter"></a>3.6.6 @PreFilter</h4><p>权限验证之前对数据进行过滤</p>
+<h3 id="3-6-7-权限表达式"><a href="#3-6-7-权限表达式" class="headerlink" title="3.6.7 权限表达式"></a>3.6.7 权限表达式</h3><p>官方介绍：<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-security/site/docs/5.3.4.RELEASE/reference/html5/#el-access">https://docs.spring.io/spring-security/site/docs/5.3.4.RELEASE/reference/html5/#el-access</a></p>
+<h3 id="3-7-用户注销"><a href="#3-7-用户注销" class="headerlink" title="3.7 用户注销"></a>3.7 用户注销</h3><h4 id="3-7-1-在配置类中设置退出的配置"><a href="#3-7-1-在配置类中设置退出的配置" class="headerlink" title="3.7.1 在配置类中设置退出的配置"></a>3.7.1 在配置类中设置退出的配置</h4><pre><code>http.logout()
+    .logoutUrl(&quot;/logout&quot;) //设置退出的请求地址
+    .logoutSuccessUrl(&quot;/test/hello&quot;).permitAll(); //退出完成后跳转页面
+</code></pre>
+<h4 id="3-7-3-修改配置类，登录成功之后跳转到成功页面"><a href="#3-7-3-修改配置类，登录成功之后跳转到成功页面" class="headerlink" title="3.7.3 修改配置类，登录成功之后跳转到成功页面"></a>3.7.3 修改配置类，登录成功之后跳转到成功页面</h4><pre><code>.defaultSuccessUrl(&quot;/success.html&quot;).permitAll()
+</code></pre>
+<h4 id="3-7-2-在成功页面添加超链接，写设置的退出路径"><a href="#3-7-2-在成功页面添加超链接，写设置的退出路径" class="headerlink" title="3.7.2 在成功页面添加超链接，写设置的退出路径"></a>3.7.2 在成功页面添加超链接，写设置的退出路径</h4><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  登录成功！
+  &lt;a href=&quot;/logout&quot;&gt;退出&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="3-7-3-登录成功后，在点击页面点击退出"><a href="#3-7-3-登录成功后，在点击页面点击退出" class="headerlink" title="3.7.3 登录成功后，在点击页面点击退出"></a>3.7.3 登录成功后，在点击页面点击退出</h4><p>登录成功后跳转到 成功界面，然后可以正常访问有权限的地址，点击退出后再进行访问则需要登陆</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2021-05-24, 18:51:25</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:44</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2021/05/24/Spring-Security-BASE-1/" title="Spring-Security-BASE-1">http://yoursite.com/2021/05/24/Spring-Security-BASE-1/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/05/24/Spring-Security-BASE-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/05/27/Spring-Security-BASE-2/">
+                    Spring-Security-BASE-2
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/05/24/Netty-BASE-3/">
+                    Netty-BASE-3
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-Security-%E5%9F%BA%E7%A1%80-1"><span class="toc-number">1.</span> <span class="toc-text">Spring Security 基础 1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringSecurity-%E6%A1%86%E6%9E%B6%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">SpringSecurity 框架简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A6%82%E8%A6%81"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 概要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8E%86%E5%8F%B2"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 历史</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%90%8C%E6%AC%BE%E4%BA%A7%E5%93%81%E5%AF%B9%E6%AF%94"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 同款产品对比</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-Spring-Security"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">1.3.1 Spring Security</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-Shiro"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">1.3.2 Shiro</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E6%A8%A1%E5%9D%97%E5%88%92%E5%88%86"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 模块划分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-SpringSecurity-%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B-hello-world"><span class="toc-number">1.2.</span> <span class="toc-text">2. SpringSecurity 入门案例 hello world</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%88%9B%E5%BB%BA-SpringBoot-%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 创建 SpringBoot 项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 创建配置类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E8%BF%90%E8%A1%8C%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 运行这个项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B8%AD%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 权限管理中的相关概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-%E4%B8%BB%E4%BD%93%EF%BC%88principal%EF%BC%89"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">2.4.1 主体（principal）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-2-%E8%AE%A4%E8%AF%81%EF%BC%88authentication%EF%BC%89"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">2.4.2 认证（authentication）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%88%E6%9D%83%EF%BC%88authorization%EF%BC%89"><span class="toc-number">1.2.4.3.</span> <span class="toc-text">授权（authorization）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%8E%A7%E5%88%B6%E5%99%A8%E8%BF%9B%E8%A1%8C%E8%AE%BF%E9%97%AE"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 添加一个控制器进行访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-SpringSecurity-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.6 SpringSecurity 基本原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-UserDetailsService-%E6%8E%A5%E5%8F%A3%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.2.7.</span> <span class="toc-text">2.7 UserDetailsService 接口讲解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-PasswordEncoder-%E6%8E%A5%E5%8F%A3%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.2.8.</span> <span class="toc-text">2.8 PasswordEncoder 接口讲解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-9-SpringBoot-%E5%AF%B9-Security-%E7%9A%84%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.9.</span> <span class="toc-text">2.9 SpringBoot 对 Security 的自动配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-SpringSecurity-Web-%E6%9D%83%E9%99%90%E6%96%B9%E6%A1%88"><span class="toc-number">1.3.</span> <span class="toc-text">3. SpringSecurity Web 权限方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%AE%BE%E7%BD%AE%E7%99%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A6%E5%8F%B7%E3%80%81%E5%AF%86%E7%A0%81"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 设置登录系统的账号、密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%A4%E8%AF%81%E6%9D%A5%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 实现数据库认证来完成用户登录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-%E5%87%86%E5%A4%87-sql"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">3.2.1 准备 sql</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">3.2.2 添加依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-%E5%88%B6%E4%BD%9C%E5%AE%9E%E4%BD%93%E7%B1%BB"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">3.2.3 制作实体类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-%E6%95%B4%E5%90%88-MybtisPlus-%E5%88%B6%E4%BD%9C-mapper"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">3.2.4 整合 MybtisPlus 制作 mapper</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-5-%E5%88%B6%E4%BD%9C%E7%99%BB%E5%BD%95%E4%B8%9A%E5%8A%A1%E7%B1%BB"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">3.2.5 制作登录业务类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-6-%E6%B5%8B%E8%AF%95%E8%AE%BF%E9%97%AE"><span class="toc-number">1.3.2.6.</span> <span class="toc-text">3.2.6 测试访问</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%9C%AA%E8%AE%A4%E8%AF%81%E8%AF%B7%E6%B1%82%E8%B7%B3%E8%BD%AC%E5%88%B0%E7%99%BB%E5%BD%95%E9%A1%B5"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 未认证请求跳转到登录页</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-%E5%BC%95%E5%85%A5%E5%89%8D%E7%AB%AF%E6%A8%A1%E6%9D%BF%E4%BE%9D%E8%B5%96"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">3.3.1 引入前端模板依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2-%E5%BC%95%E5%85%A5%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">3.3.2 引入登录页面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-3-%E7%BC%96%E5%86%99%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">3.3.3 编写控制器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-4-%E7%BC%96%E5%86%99%E9%85%8D%E7%BD%AE%E7%B1%BB%E6%94%BE%E8%A1%8C%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2%E4%BB%A5%E5%8F%8A%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">3.3.4 编写配置类放行登录页面以及静态资源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-5-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">3.3.5 测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%9F%BA%E4%BA%8E%E8%A7%92%E8%89%B2%E6%88%96%E6%9D%83%E9%99%90%E8%BF%9B%E8%A1%8C%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 基于角色或权限进行访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-1-hasAuthority-%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">3.4.1 hasAuthority 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-hasAnyAuthority-%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">3.4.2 hasAnyAuthority 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-3-hasRole-%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">3.4.3 hasRole 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-4-hasAnyRole"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">3.4.4 hasAnyRole</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E8%87%AA%E5%AE%9A%E4%B9%89-403-%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.5.</span> <span class="toc-text">3.5 自定义 403 页面</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-1-%E4%BF%AE%E6%94%B9%E8%AE%BF%E9%97%AE%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">3.5.1 修改访问配置类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-2-%E6%B7%BB%E5%8A%A0%E5%AF%B9%E5%BA%94%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">3.5.2 添加对应控制器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-3-unauth-html-%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.5.3.</span> <span class="toc-text">3.5.3 unauth.html 没有权限页面</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.6.</span> <span class="toc-text">3.6 注解使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-1-Secured"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">3.6.1 @Secured</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-2-PreAuthorize"><span class="toc-number">1.3.6.2.</span> <span class="toc-text">3.6.2 @PreAuthorize</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-3-PostAuthorize"><span class="toc-number">1.3.6.3.</span> <span class="toc-text">3.6.3 @PostAuthorize</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-4-PostAuthorize"><span class="toc-number">1.3.6.4.</span> <span class="toc-text">3.6.4 @PostAuthorize</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-5-PostFilter"><span class="toc-number">1.3.6.5.</span> <span class="toc-text">3.6.5 @PostFilter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-6-PreFilter"><span class="toc-number">1.3.6.6.</span> <span class="toc-text">3.6.6 @PreFilter</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-7-%E6%9D%83%E9%99%90%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.3.7.</span> <span class="toc-text">3.6.7 权限表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-%E7%94%A8%E6%88%B7%E6%B3%A8%E9%94%80"><span class="toc-number">1.3.8.</span> <span class="toc-text">3.7 用户注销</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-1-%E5%9C%A8%E9%85%8D%E7%BD%AE%E7%B1%BB%E4%B8%AD%E8%AE%BE%E7%BD%AE%E9%80%80%E5%87%BA%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">3.7.1 在配置类中设置退出的配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-3-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E7%B1%BB%EF%BC%8C%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F%E4%B9%8B%E5%90%8E%E8%B7%B3%E8%BD%AC%E5%88%B0%E6%88%90%E5%8A%9F%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.8.2.</span> <span class="toc-text">3.7.3 修改配置类，登录成功之后跳转到成功页面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-2-%E5%9C%A8%E6%88%90%E5%8A%9F%E9%A1%B5%E9%9D%A2%E6%B7%BB%E5%8A%A0%E8%B6%85%E9%93%BE%E6%8E%A5%EF%BC%8C%E5%86%99%E8%AE%BE%E7%BD%AE%E7%9A%84%E9%80%80%E5%87%BA%E8%B7%AF%E5%BE%84"><span class="toc-number">1.3.8.3.</span> <span class="toc-text">3.7.2 在成功页面添加超链接，写设置的退出路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-3-%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F%E5%90%8E%EF%BC%8C%E5%9C%A8%E7%82%B9%E5%87%BB%E9%A1%B5%E9%9D%A2%E7%82%B9%E5%87%BB%E9%80%80%E5%87%BA"><span class="toc-number">1.3.8.4.</span> <span class="toc-text">3.7.3 登录成功后，在点击页面点击退出</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Spring-Security-BASE-1　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/05/27/Spring-Security-BASE-2/" title="Pre: Spring-Security-BASE-2">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/05/24/Netty-BASE-3/" title="Next: Netty-BASE-3">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

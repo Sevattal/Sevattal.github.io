@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="详解Tomcat 配置文件server.xml转自：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kismetv&#x2F;p&#x2F;7228274.html作者： 编程迷思  前言Tomcat隶属于Apache基金会，是开源的轻量级Web应用服务器，使用非常广泛。server.xml是Tomcat中最重要的配置文件，server.xml的每一个元素都对应了Tomcat中的一个组件；通过对xml文件中元素的配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat-Configuration">
+<meta property="og:url" content="http://yoursite.com/2020/11/21/Tomcat-Configuration/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="详解Tomcat 配置文件server.xml转自：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kismetv&#x2F;p&#x2F;7228274.html作者： 编程迷思  前言Tomcat隶属于Apache基金会，是开源的轻量级Web应用服务器，使用非常广泛。server.xml是Tomcat中最重要的配置文件，server.xml的每一个元素都对应了Tomcat中的一个组件；通过对xml文件中元素的配置">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/11/21/Tomcat-Configuration/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/21/Tomcat-Configuration/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/21/Tomcat-Configuration/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/21/Tomcat-Configuration/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/21/Tomcat-Configuration/5.png">
+<meta property="article:published_time" content="2020-11-21T10:02:03.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:44.381Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Tomcat">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/11/21/Tomcat-Configuration/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Tomcat-Configuration | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Tomcat-Configuration" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/11/21/Tomcat-Configuration/" class="article-date">
+      <time datetime="2020-11-21T10:02:03.000Z" itemprop="datePublished">2020-11-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Tomcat-Configuration
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="详解Tomcat-配置文件server-xml"><a href="#详解Tomcat-配置文件server-xml" class="headerlink" title="详解Tomcat 配置文件server.xml"></a>详解Tomcat 配置文件server.xml</h1><p>转自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kismetv/p/7228274.html">https://www.cnblogs.com/kismetv/p/7228274.html</a><br>作者： 编程迷思 </p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Tomcat隶属于Apache基金会，是开源的轻量级Web应用服务器，使用非常广泛。server.xml是Tomcat中最重要的配置文件，server.xml的每一个元素都对应了Tomcat中的一个组件；通过对xml文件中元素的配置，可以实现对Tomcat中各个组件的控制。因此，学习server.xml文件的配置，对于了解和使用Tomcat至关重要。<br>本文将通过实例，介绍server.xml中各个组件的配置，并详细说明Tomcat各个核心组件的作用以及各个组件之间的相互关系。<br>说明：由于server.xml文件中元素与Tomcat中组件的对应关系，后文中为了描述方便，“元素”和“组件”的使用不严格区分。<br>如果觉得文章对你有帮助，欢迎点赞或转载。文章有疏漏之处，欢迎批评指正。</p>
+<span id="more"></span>
+
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>一、一个server.xml配置实例<br>二、server.xml文档的元素分类和整体结构<br>　　1、整体结构<br>　　2、元素分类<br>三、核心组件<br>　　1、Server<br>　　2、Service<br>　　3、Connector<br>　　4、Engine<br>　　5、Host<br>　　6、Context<br>四、核心组件的关联<br>　　1、整体关系<br>　　2、如何确定请求由谁处理？<br>　　3、如何配置多个服务<br>五、其他组件<br>　　1、Listener<br>　　2、GlobalNamingResources与Realm<br>　　3、Valve<br>六、参考文献</p>
+<h2 id="一、一个server-xml配置实例"><a href="#一、一个server-xml配置实例" class="headerlink" title="一、一个server.xml配置实例"></a>一、一个server.xml配置实例</h2><p>server.xml位于$TOMCAT_HOME&#x2F;conf目录下；下面是一个server.xml实例。后文中将结合该实例讲解server.xml中，各个元素的含义和作用；在阅读后续章节过程中，可以对照该xml文档便于理解。</p>
+<pre><code>  &lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot;&gt;   
+  	&lt;Listener className=&quot;org.apache.catalina.startup.VersionLoggerListener&quot; /&gt;   
+  	&lt;Listener className=&quot;org.apache.catalina.core.AprLifecycleListener&quot; SSLEngine=&quot;on&quot; /&gt;   
+  	&lt;Listener className=&quot;org.apache.catalina.core.JasperListener&quot; /&gt;   
+  	&lt;Listener className=&quot;org.apache.catalina.core.JreMemoryLeakPreventionListener&quot; /&gt;   
+  	&lt;Listener className=&quot;org.apache.catalina.mbeans.GlobalResourcesLifecycleListener&quot; /&gt;   
+  	&lt;Listener className=&quot;org.apache.catalina.core.ThreadLocalLeakPreventionListener&quot; /&gt;    
+  	&lt;GlobalNamingResources&gt;     
+  		&lt;Resource name=&quot;UserDatabase&quot; auth=&quot;Container&quot; type=&quot;org.apache.catalina.UserDatabase&quot; 
+  		description=&quot;User database that can be updated and saved&quot; 
+  		factory=&quot;org.apache.catalina.users.MemoryUserDatabaseFactory&quot; pathname=&quot;conf/tomcat-users.xml&quot; /&gt;   
+  	&lt;/GlobalNamingResources&gt;     
+  	&lt;Service name=&quot;Catalina&quot;&gt;     
+  		&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot; connectionTimeout=&quot;20000&quot; redirectPort=&quot;8443&quot; /&gt;     
+  		&lt;Connector port=&quot;8009&quot; protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; /&gt;     
+  		&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;       
+  			&lt;Realm className=&quot;org.apache.catalina.realm.LockOutRealm&quot;&gt;         
+  				&lt;Realm className=&quot;org.apache.catalina.realm.UserDatabaseRealm&quot; resourceName=&quot;UserDatabase&quot;/&gt;       
+  			&lt;/Realm&gt;         
+  			&lt;Host name=&quot;localhost&quot;  appBase=&quot;webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;         
+  				&lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot; prefix=&quot;localhost_access_log.&quot; 
+  				suffix=&quot;.txt&quot; pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;       
+  			&lt;/Host&gt;     
+  		&lt;/Engine&gt;   
+  		&lt;/Service&gt; 
+  	&lt;/Server&gt;
+</code></pre>
+<h2 id="二、server-xml文档的元素分类和整体结构"><a href="#二、server-xml文档的元素分类和整体结构" class="headerlink" title="二、server.xml文档的元素分类和整体结构"></a>二、server.xml文档的元素分类和整体结构</h2><h3 id="1、整体结构"><a href="#1、整体结构" class="headerlink" title="1、整体结构"></a>1、整体结构</h3><p>server.xml的整体结构如下：</p>
+<pre><code>  &lt;Server&gt;      
+  	&lt;Service&gt;          
+  		&lt;Connector /&gt;          
+  		&lt;Connector /&gt;         
+  		&lt;Engine&gt;              
+  			&lt;Host&gt;                  
+  				&lt;Context /&gt;&lt;!-- 现在常常使用自动部署，不推荐配置Context元素，Context小节有详细说明 --&gt;              
+  			&lt;/Host&gt;          
+  		&lt;/Engine&gt;     
+  	&lt;/Service&gt; 
+  &lt;/Server&gt;
+</code></pre>
+<p>该结构中只给出了Tomcat的核心组件，除了核心组件外，Tomcat还有一些其他组件，下面介绍一下组件的分类。</p>
+<h3 id="2、元素分类"><a href="#2、元素分类" class="headerlink" title="2、元素分类"></a>2、元素分类</h3><p>server.xml文件中的元素可以分为以下4类：<br>（1）顶层元素：<Server>和<Service><br><Server>元素是整个配置文件的根元素，<Service>元素则代表一个Engine元素以及一组与之相连的Connector元素。<br>（2）连接器：<Connector><br><Connector>代表了外部客户端发送请求到特定Service的接口；同时也是外部客户端从特定Service接收响应的接口。<br>（3）容器：<Engine><Host><Context><br>容器的功能是处理Connector接收进来的请求，并产生相应的响应。Engine、Host和Context都是容器，但它们不是平行的关系，而是父子关系：Engine包含Host，Host包含Context。一个Engine组件可以处理Service中的所有请求，一个Host组件可以处理发向一个特定虚拟主机的所有请求，一个Context组件可以处理一个特定Web应用的所有请求。<br>（4）内嵌组件：可以内嵌到容器中的组件。实际上，Server、Service、Connector、Engine、Host和Context是最重要的最核心的Tomcat组件，其他组件都可以归为内嵌组件。<br>下面将详细介绍Tomcat中各个核心组件的作用，以及相互之间的关系。</Context></Host></Engine></Connector></Connector></Service></Server></Service></Server></p>
+<h2 id="三、核心组件"><a href="#三、核心组件" class="headerlink" title="三、核心组件"></a>三、核心组件</h2><p>本部分将分别介绍各个核心组件的作用、特点以及配置方式等。</p>
+<h3 id="1、Server"><a href="#1、Server" class="headerlink" title="1、Server"></a>1、Server</h3><p>Server元素在最顶层，代表整个Tomcat容器，因此它必须是server.xml中唯一一个最外层的元素。一个Server元素中可以有一个或多个Service元素。<br>在第一部分的例子中，在最外层有一个<Server>元素，shutdown属性表示关闭Server的指令；port属性表示Server接收shutdown指令的端口号，设为-1可以禁掉该端口。<br>Server的主要任务，就是提供一个接口让客户端能够访问到这个Service集合，同时维护它所包含的所有的Service的声明周期，包括如何初始化、如何结束服务、如何找到客户端要访问的Service。</Server></p>
+<h3 id="2、Service"><a href="#2、Service" class="headerlink" title="2、Service"></a>2、Service</h3><p>Service的作用，是在Connector和Engine外面包了一层，把它们组装在一起，对外提供服务。一个Service可以包含多个Connector，但是只能包含一个Engine；其中Connector的作用是从客户端接收请求，Engine的作用是处理接收进来的请求。<br>在第一部分的例子中，Server中包含一个名称为“Catalina”的Service。实际上，Tomcat可以提供多个Service，不同的Service监听不同的端口，后文会有介绍。</p>
+<h3 id="3、Connector"><a href="#3、Connector" class="headerlink" title="3、Connector"></a>3、Connector</h3><p>Connector的主要功能，是接收连接请求，创建Request和Response对象用于和请求端交换数据；然后分配线程让Engine来处理这个请求，并把产生的Request和Response对象传给Engine。<br>通过配置Connector，可以控制请求Service的协议及端口号。在第一部分的例子中，Service包含两个Connector：</p>
+<pre><code> &lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot; connectionTimeout=&quot;20000&quot; redirectPort=&quot;8443&quot; /&gt; 
+ &lt;Connector port=&quot;8009&quot; protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; /&gt;
+</code></pre>
+<p>（1）通过配置第1个Connector，客户端可以通过8080端口号使用http协议访问Tomcat。其中，protocol属性规定了请求的协议，port规定了请求的端口号，redirectPort表示当强制要求https而请求是http时，重定向至端口号为8443的Connector，connectionTimeout表示连接的超时时间。<br>在这个例子中，Tomcat监听HTTP请求，使用的是8080端口，而不是正式的80端口；实际上，在正式的生产环境中，Tomcat也常常监听8080端口，而不是80端口。这是因为在生产环境中，很少将Tomcat直接对外开放接收请求，而是在Tomcat和客户端之间加一层代理服务器(如nginx)，用于请求的转发、负载均衡、处理静态文件等；通过代理服务器访问Tomcat时，是在局域网中，因此一般仍使用8080端口。</p>
+<p>（2）通过配置第2个Connector，客户端可以通过8009端口号使用AJP协议访问Tomcat。AJP协议负责和其他的HTTP服务器(如Apache)建立连接；在把Tomcat与其他HTTP服务器集成时，就需要用到这个连接器。之所以使用Tomcat和其他服务器集成，是因为Tomcat可以用作Servlet&#x2F;JSP容器，但是对静态资源的处理速度较慢，不如Apache和IIS等HTTP服务器；因此常常将Tomcat与Apache等集成，前者作Servlet容器，后者处理静态资源，而AJP协议便负责Tomcat和Apache的连接。Tomcat与Apache等集成的原理如下图(图片来源)：<br><img src="/2020/11/21/Tomcat-Configuration/1.png"></p>
+<p>关于Connector的更多内容，可以参考我的另一篇文章：详解tomcat的连接数与线程池</p>
+<h3 id="4、Engine"><a href="#4、Engine" class="headerlink" title="4、Engine"></a>4、Engine</h3><p>Engine组件在Service组件中有且只有一个；Engine是Service组件中的请求处理组件。Engine组件从一个或多个Connector中接收请求并处理，并将完成的响应返回给Connector，最终传递给客户端。<br>前面已经提到过，Engine、Host和Context都是容器，但它们不是平行的关系，而是父子关系：Engine包含Host，Host包含Context。<br>在第一部分的例子中，Engine的配置语句如下：</p>
+<pre><code> &lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;
+</code></pre>
+<p>其中，name属性用于日志和错误信息，在整个Server中应该唯一。defaultHost属性指定了默认的host名称，当发往本机的请求指定的host名称不存在时，一律使用defaultHost指定的host进行处理；因此，defaultHost的值，必须与Engine中的一个Host组件的name属性值匹配。</p>
+<h3 id="5、Host"><a href="#5、Host" class="headerlink" title="5、Host"></a>5、Host</h3><p>（1）Engine与Host<br>Host是Engine的子容器。Engine组件中可以内嵌1个或多个Host组件，每个Host组件代表Engine中的一个虚拟主机。Host组件至少有一个，且其中一个的name必须与Engine组件的defaultHost属性相匹配。</p>
+<p>（2）Host的作用<br>Host虚拟主机的作用，是运行多个Web应用（一个Context代表一个Web应用），并负责安装、展开、启动和结束每个Web应用。<br>Host组件代表的虚拟主机，对应了服务器中一个网络名实体(如”<a target="_blank" rel="noopener" href="http://www.test.com”,或ip地址”116.25.25.25”);为了使用户可以通过网络名连接tomcat服务器,这个名字应该在dns服务器上注册./">www.test.com”，或IP地址”116.25.25.25”)；为了使用户可以通过网络名连接Tomcat服务器，这个名字应该在DNS服务器上注册。</a><br>客户端通常使用主机名来标识它们希望连接的服务器；该主机名也会包含在HTTP请求头中。Tomcat从HTTP头中提取出主机名，寻找名称匹配的主机。如果没有匹配，请求将发送至默认主机。因此默认主机不需要是在DNS服务器中注册的网络名，因为任何与所有Host名称不匹配的请求，都会路由至默认主机。</p>
+<p>（3）Host的配置<br>在第一部分的例子中，Host的配置如下：</p>
+<pre><code>&lt;Host name=&quot;localhost&quot; appBase=&quot;webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;
+</code></pre>
+<p>下面对其中配置的属性进行说明：<br>name属性指定虚拟主机的主机名，一个Engine中有且仅有一个Host组件的name属性与Engine组件的defaultHost属性相匹配；一般情况下，主机名需要是在DNS服务器中注册的网络名，但是Engine指定的defaultHost不需要，原因在前面已经说明。<br>unpackWARs指定了是否将代表Web应用的WAR文件解压；如果为true，通过解压后的文件结构运行该Web应用，如果为false，直接使用WAR文件运行Web应用。<br>Host的autoDeploy和appBase属性，与Host内Web应用的自动部署有关；此外，本例中没有出现的xmlBase和deployOnStartup属性，也与Web应用的自动部署有关；将在下一节(Context)中介绍。</p>
+<h3 id="6、Context"><a href="#6、Context" class="headerlink" title="6、Context"></a>6、Context</h3><p>（1）Context的作用<br>Context元素代表在特定虚拟主机上运行的一个Web应用。在后文中，提到Context、应用或Web应用，它们指代的都是Web应用。每个Web应用基于WAR文件，或WAR文件解压后对应的目录（这里称为应用目录）。<br>Context是Host的子容器，每个Host中可以定义任意多的Context元素。<br>在第一部分的例子中，可以看到server.xml配置文件中并没有出现Context元素的配置。这是因为，Tomcat开启了自动部署，Web应用没有在server.xml中配置静态部署，而是由Tomcat通过特定的规则自动部署。下面介绍一下Tomcat自动部署Web应用的机制。</p>
+<p>（2）Web应用自动部署</p>
+<p>Host的配置<br>要开启Web应用的自动部署，需要配置所在的虚拟主机；配置的方式就是前面提到的Host元素的deployOnStartup和autoDeploy属性。如果deployOnStartup和autoDeploy设置为true，则tomcat启动自动部署：当检测到新的Web应用或Web应用的更新时，会触发应用的部署(或重新部署)。二者的主要区别在于，deployOnStartup为true时，Tomcat在启动时检查Web应用，且检测到的所有Web应用视作新应用；autoDeploy为true时，Tomcat在运行时定期检查新的Web应用或Web应用的更新。除此之外，二者的处理相似。<br>通过配置deployOnStartup和autoDeploy可以开启虚拟主机自动部署Web应用；实际上，自动部署依赖于检查是否有新的或更改过的Web应用，而Host元素的appBase和xmlBase设置了检查Web应用更新的目录。<br>其中，appBase属性指定Web应用所在的目录，默认值是webapps，这是一个相对路径，代表Tomcat根目录下webapps文件夹。<br>xmlBase属性指定Web应用的XML配置文件所在的目录，默认值为conf&#x2F;<engine_name>&#x2F;<host_name>，例如第一部分的例子中，主机localhost的xmlBase的默认值是$TOMCAT_HOME&#x2F;conf&#x2F;Catalina&#x2F;localhost。</host_name></engine_name></p>
+<p>检查Web应用更新<br>一个Web应用可能包括以下文件：XML配置文件，WAR包，以及一个应用目录(该目录包含Web应用的文件结构)；其中XML配置文件位于xmlBase指定的目录，WAR包和应用目录位于appBase指定的目录。<br>Tomcat按照如下的顺序进行扫描，来检查应用更新：<br>A、扫描虚拟主机指定的xmlBase下的XML配置文件<br>B、扫描虚拟主机指定的appBase下的WAR文件<br>C、扫描虚拟主机指定的appBase下的应用目录<br><Context>元素的配置<br>Context元素最重要的属性是docBase和path，此外reloadable属性也比较常用。<br>docBase指定了该Web应用使用的WAR包路径，或应用目录。需要注意的是，在自动部署场景下，docBase不在appBase目录中，才需要指定；如果docBase指定的WAR包或应用目录就在appBase中，则不需要指定，因为Tomcat会自动扫描appBase中的WAR包和应用目录，指定了反而会造成问题。<br>path指定了访问该Web应用的上下文路径，当请求到来时，Tomcat根据Web应用的 path属性与URI的匹配程度来选择Web应用处理相应请求。例如，Web应用app1的path属性是”&#x2F;app1”，Web应用app2的path属性是”&#x2F;app2”，那么请求&#x2F;app1&#x2F;index.html会交由app1来处理；而请求&#x2F;app2&#x2F;index.html会交由app2来处理。如果一个Context元素的path属性为””，那么这个Context是虚拟主机的默认Web应用；当请求的uri与所有的path都不匹配时，使用该默认Web应用来处理。<br>但是，需要注意的是，在自动部署场景下，不能指定path属性，path属性由配置文件的文件名、WAR文件的文件名或应用目录的名称自动推导出来。如扫描Web应用时，发现了xmlBase目录下的app1.xml，或appBase目录下的app1.WAR或app1应用目录，则该Web应用的path属性是”app1”。如果名称不是app1而是ROOT，则该Web应用是虚拟主机默认的Web应用，此时path属性推导为””。<br>reloadable属性指示tomcat是否在运行时监控在WEB-INF&#x2F;classes和WEB-INF&#x2F;lib目录下class文件的改动。如果值为true，那么当class文件改动时，会触发Web应用的重新加载。在开发环境下，reloadable设置为true便于调试；但是在生产环境中设置为true会给服务器带来性能压力，因此reloadable参数的默认值为false。<br>下面来看自动部署时，xmlBase下的XML配置文件app1.xml的例子：</Context></p>
+<pre><code> &lt;Context docBase=&quot;D:\Program Files\app1.war&quot; reloadable=&quot;true&quot;/&gt;
+</code></pre>
+<p>在该例子中，docBase位于Host的appBase目录之外；path属性没有指定，而是根据app1.xml自动推导为”app1”；由于是在开发环境下，因此reloadable设置为true，便于开发调试。<br>自动部署举例<br>最典型的自动部署，就是当我们安装完Tomcat后，$TOMCAT_HOME&#x2F;webapps目录下有如下文件夹：</p>
+<p><img src="/2020/11/21/Tomcat-Configuration/2.png"></p>
+<p>当我们启动Tomcat后，可以使用<a target="_blank" rel="noopener" href="http://localhost:8080/%E6%9D%A5%E8%AE%BF%E9%97%AETomcat%EF%BC%8C%E5%85%B6%E5%AE%9E%E8%AE%BF%E9%97%AE%E7%9A%84%E5%B0%B1%E6%98%AFROOT%E5%AF%B9%E5%BA%94%E7%9A%84Web%E5%BA%94%E7%94%A8%EF%BC%9B%E6%88%91%E4%BB%AC%E4%B9%9F%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87http://localhost:8080/docs%E6%9D%A5%E8%AE%BF%E9%97%AEdocs%E5%BA%94%E7%94%A8%EF%BC%8C%E5%90%8C%E7%90%86%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E8%AE%BF%E9%97%AEexamples/host-manager/manager%E8%BF%99%E5%87%A0%E4%B8%AAWeb%E5%BA%94%E7%94%A8%E3%80%82">http://localhost:8080/来访问Tomcat，其实访问的就是ROOT对应的Web应用；我们也可以通过http://localhost:8080/docs来访问docs应用，同理我们可以访问examples/host-manager/manager这几个Web应用。</a><br>（3）server.xml中静态部署Web应用<br>除了自动部署，我们也可以在server.xml中通过<context>元素静态部署Web应用。静态部署与自动部署是可以共存的。在实际应用中，并不推荐使用静态部署，因为server.xml 是不可动态重加载的资源，服务器一旦启动了以后，要修改这个文件，就得重启服务器才能重新加载。而自动部署可以在Tomcat运行时通过定期的扫描来实现，不需要重启服务器。<br>server.xml中使用Context元素配置Web应用，Context元素应该位于Host元素中。举例如下：</context></p>
+<pre><code> &lt;Context path=&quot;/&quot; docBase=&quot;D:\Program Files \app1.war&quot; reloadable=&quot;true&quot;/&gt;
+</code></pre>
+<p>docBase：静态部署时，docBase可以在appBase目录下，也可以不在；本例中，docBase不在appBase目录下。<br>path：静态部署时，可以显式指定path属性，但是仍然受到了严格的限制：只有当自动部署完全关闭(deployOnStartup和autoDeploy都为false)或docBase不在appBase中时，才可以设置path属性。在本例中，docBase不在appBase中，因此path属性可以设置。<br>reloadable属性的用法与自动部署时相同。</p>
+<h2 id="四、核心组件的关联"><a href="#四、核心组件的关联" class="headerlink" title="四、核心组件的关联"></a>四、核心组件的关联</h2><h3 id="1、整体关系"><a href="#1、整体关系" class="headerlink" title="1、整体关系"></a>1、整体关系</h3><p>核心组件之间的整体关系，在上一部分有所介绍，这里总结一下：<br>Server元素在最顶层，代表整个Tomcat容器；一个Server元素中可以有一个或多个Service元素。<br>Service在Connector和Engine外面包了一层，把它们组装在一起，对外提供服务。一个Service可以包含多个Connector，但是只能包含一个Engine；Connector接收请求，Engine处理请求。<br>Engine、Host和Context都是容器，且 Engine包含Host，Host包含Context。每个Host组件代表Engine中的一个虚拟主机；每个Context组件代表在特定Host上运行的一个Web应用。</p>
+<h3 id="2、如何确定请求由谁处理？"><a href="#2、如何确定请求由谁处理？" class="headerlink" title="2、如何确定请求由谁处理？"></a>2、如何确定请求由谁处理？</h3><p>当请求被发送到Tomcat所在的主机时，如何确定最终哪个Web应用来处理该请求呢？<br>（1）根据协议和端口号选定Service和Engine<br>Service中的Connector组件可以接收特定端口的请求，因此，当Tomcat启动时，Service组件就会监听特定的端口。在第一部分的例子中，Catalina这个Service监听了8080端口（基于HTTP协议）和8009端口（基于AJP协议）。当请求进来时，Tomcat便可以根据协议和端口号选定处理请求的Service；Service一旦选定，Engine也就确定。<br>通过在Server中配置多个Service，可以实现通过不同的端口号来访问同一台机器上部署的不同应用。<br>（2）根据域名或IP地址选定Host<br>Service确定后，Tomcat在Service中寻找名称与域名&#x2F;IP地址匹配的Host处理该请求。如果没有找到，则使用Engine中指定的defaultHost来处理该请求。在第一部分的例子中，由于只有一个Host（name属性为localhost），因此该Service&#x2F;Engine的所有请求都交给该Host处理。<br>（3）根据URI选定Context&#x2F;Web应用<br>这一点在Context一节有详细的说明：Tomcat根据应用的 path属性与URI的匹配程度来选择Web应用处理相应请求，这里不再赘述。<br>（4）举例<br>以请求<a target="_blank" rel="noopener" href="http://localhost:8080/app1/index.html%E4%B8%BA%E4%BE%8B%EF%BC%8C%E9%A6%96%E5%85%88%E9%80%9A%E8%BF%87%E5%8D%8F%E8%AE%AE%E5%92%8C%E7%AB%AF%E5%8F%A3%E5%8F%B7%EF%BC%88http%E5%92%8C8080%EF%BC%89%E9%80%89%E5%AE%9AService%EF%BC%9B%E7%84%B6%E5%90%8E%E9%80%9A%E8%BF%87%E4%B8%BB%E6%9C%BA%E5%90%8D%EF%BC%88localhost%EF%BC%89%E9%80%89%E5%AE%9AHost%EF%BC%9B%E7%84%B6%E5%90%8E%E9%80%9A%E8%BF%87uri%EF%BC%88/app1/index.html%EF%BC%89%E9%80%89%E5%AE%9AWeb%E5%BA%94%E7%94%A8%E3%80%82">http://localhost:8080/app1/index.html为例，首先通过协议和端口号（http和8080）选定Service；然后通过主机名（localhost）选定Host；然后通过uri（/app1/index.html）选定Web应用。</a></p>
+<h3 id="3、如何配置多个服务"><a href="#3、如何配置多个服务" class="headerlink" title="3、如何配置多个服务"></a>3、如何配置多个服务</h3><p>通过在Server中配置多个Service服务，可以实现通过不同的端口号来访问同一台机器上部署的不同Web应用。<br>在server.xml中配置多服务的方法非常简单，分为以下几步：<br>（1）复制<Service>元素，放在当前<Service>后面。<br>（2）修改端口号：根据需要监听的端口号修改<Connector>元素的port属性；必须确保该端口没有被其他进程占用，否则Tomcat启动时会报错，而无法通过该端口访问Web应用。<br>以Win7为例，可以用如下方法找出某个端口是否被其他进程占用：netstat -aon|findstr “8081”发现8081端口被PID为2064的进程占用，tasklist |findstr “2064”发现该进程为FrameworkService.exe(这是McAfee杀毒软件的进程)。<br><img src="/2020/11/21/Tomcat-Configuration/3.png"></Connector></Service></Service></p>
+<p>（3）修改Service和Engine的name属性<br>（4）修改Host的appBase属性（如webapps2）<br>（5）Web应用仍然使用自动部署<br>（6）将要部署的Web应用(WAR包或应用目录)拷贝到新的appBase下。<br>以第一部分的server.xml为例，多个Service的配置如下：</p>
+<pre><code>  &lt;?xml version=&#39;1.0&#39; encoding=&#39;utf-8&#39;?&gt;  
+  &lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot;&gt;    
+  	&lt;Listener className=&quot;org.apache.catalina.startup.VersionLoggerListener&quot; /&gt;    
+  	&lt;Listener className=&quot;org.apache.catalina.core.AprLifecycleListener&quot; SSLEngine=&quot;on&quot; /&gt;    
+  	&lt;Listener className=&quot;org.apache.catalina.core.JasperListener&quot; /&gt;    
+  	&lt;Listener className=&quot;org.apache.catalina.core.JreMemoryLeakPreventionListener&quot; /&gt;    
+  	&lt;Listener className=&quot;org.apache.catalina.mbeans.GlobalResourcesLifecycleListener&quot; /&gt;    
+  	&lt;Listener className=&quot;org.apache.catalina.core.ThreadLocalLeakPreventionListener&quot; /&gt;     
+  	&lt;GlobalNamingResources&gt;     
+  		&lt;Resource name=&quot;UserDatabase&quot; auth=&quot;Container&quot; type=&quot;org.apache.catalina.UserDatabase&quot; description=&quot;User database that can be updated and saved&quot; factory=&quot;org.apache.catalina.users.MemoryUserDatabaseFactory&quot; pathname=&quot;conf/tomcat-users.xml&quot; /&gt;   
+  	&lt;/GlobalNamingResources&gt;    
+  	&lt;Service name=&quot;Catalina&quot;&gt;     
+  		&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot; connectionTimeout=&quot;20000&quot; redirectPort=&quot;8443&quot; /&gt;     
+  		&lt;Connector port=&quot;8009&quot; protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; /&gt;     
+  		&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;       
+  			&lt;Realm className=&quot;org.apache.catalina.realm.LockOutRealm&quot;&gt;         
+  				&lt;Realm className=&quot;org.apache.catalina.realm.UserDatabaseRealm&quot; resourceName=&quot;UserDatabase&quot;/&gt;       
+  			&lt;/Realm&gt;        &lt;Host name=&quot;localhost&quot;  appBase=&quot;/opt/project/webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;         
+  				&lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot; prefix=&quot;localhost_access_log.&quot; suffix=&quot;.txt&quot; pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;       
+  			&lt;/Host&gt;     
+  		&lt;/Engine&gt;   
+  	&lt;/Service&gt;    
+  	&lt;Service name=&quot;Catalina2&quot;&gt;     	
+  		&lt;Connector port=&quot;8084&quot; protocol=&quot;HTTP/1.1&quot; connectionTimeout=&quot;20000&quot; redirectPort=&quot;8443&quot; /&gt;    
+  		&lt;Connector port=&quot;8010&quot; protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; /&gt;     
+  		&lt;Engine name=&quot;Catalina2&quot; defaultHost=&quot;localhost&quot;&gt;       
+  			&lt;Realm className=&quot;org.apache.catalina.realm.LockOutRealm&quot;&gt;         
+  				&lt;Realm className=&quot;org.apache.catalina.realm.UserDatabaseRealm&quot; resourceName=&quot;UserDatabase&quot;/&gt;       
+  			&lt;/Realm&gt;        
+  			&lt;Host name=&quot;localhost&quot;  appBase=&quot;/opt/project/webapps2&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;         
+  				&lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot; prefix=&quot;localhost_access_log.&quot; suffix=&quot;.txt&quot; pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;       
+  			&lt;/Host&gt;     
+  		&lt;/Engine&gt;   
+  	&lt;/Service&gt; 
+&lt;/Server&gt;
+</code></pre>
+<p>再将原webapps下的docs目录拷贝到webapps2中，则通过如下两个接口都可以访问docs应用：<br><a target="_blank" rel="noopener" href="http://localhost:8080/docs/">http://localhost:8080/docs/</a><br><a target="_blank" rel="noopener" href="http://localhost:8084/docs/">http://localhost:8084/docs/</a></p>
+<h2 id="五、其他组件"><a href="#五、其他组件" class="headerlink" title="五、其他组件"></a>五、其他组件</h2><p>除核心组件外，server.xml中还可以配置很多其他组件。下面只介绍第一部分例子中出现的组件，如果要了解更多内容，可以查看Tomcat官方文档。</p>
+<h3 id="1、Listener"><a href="#1、Listener" class="headerlink" title="1、Listener"></a>1、Listener</h3><pre><code>   &lt;Listener className=&quot;org.apache.catalina.startup.VersionLoggerListener&quot; /&gt;   
+   &lt;Listener className=&quot;org.apache.catalina.core.AprLifecycleListener&quot; SSLEngine=&quot;on&quot; /&gt;   
+   &lt;Listener className=&quot;org.apache.catalina.core.JasperListener&quot; /&gt;   
+   &lt;Listener className=&quot;org.apache.catalina.core.JreMemoryLeakPreventionListener&quot; /&gt;   
+   &lt;Listener className=&quot;org.apache.catalina.mbeans.GlobalResourcesLifecycleListener&quot; /&gt;   
+   &lt;Listener className=&quot;org.apache.catalina.core.ThreadLocalLeakPreventionListener&quot; /&gt;
+</code></pre>
+<p>Listener(即监听器)定义的组件，可以在特定事件发生时执行特定的操作；被监听的事件通常是Tomcat的启动和停止。<br>监听器可以在Server、Engine、Host或Context中，本例中的监听器都是在Server中。实际上，本例中定义的6个监听器，都只能存在于Server组件中。监听器不允许内嵌其他组件。<br>监听器需要配置的最重要的属性是className，该属性规定了监听器的具体实现类，该类必须实现了org.apache.catalina.LifecycleListener接口。<br>下面依次介绍例子中配置的监听器：<br>VersionLoggerListener：当Tomcat启动时，该监听器记录Tomcat、Java和操作系统的信息。该监听器必须是配置的第一个监听器。</p>
+<p>AprLifecycleListener：Tomcat启动时，检查APR库，如果存在则加载。APR，即Apache Portable </p>
+<p>Runtime，是Apache可移植运行库，可以实现高可扩展性、高性能，以及与本地服务器技术更好的集成。</p>
+<p>JasperListener：在Web应用启动之前初始化Jasper，Jasper是JSP引擎，把JVM不认识的JSP文件解析成java文件，然后编译成class文件供JVM使用。</p>
+<p>JreMemoryLeakPreventionListener：与类加载器导致的内存泄露有关。</p>
+<p>GlobalResourcesLifecycleListener：通过该监听器，初始化&lt; GlobalNamingResources&gt;标签中定义的全局JNDI资源；如果没有该监听器，任何全局资源都不能使用。&lt; GlobalNamingResources&gt;将在后文介绍。</p>
+<p>ThreadLocalLeakPreventionListener：当Web应用因thread-local导致的内存泄露而要停止时，该监听器会触发线程池中线程的更新。当线程执行完任务被收回线程池时，活跃线程会一个一个的更新。只有当Web应用(即Context元素)的renewThreadsWhenStoppingContext属性设置为true时，该监听器才有效。</p>
+<h3 id="2、GlobalNamingResources与Realm"><a href="#2、GlobalNamingResources与Realm" class="headerlink" title="2、GlobalNamingResources与Realm"></a>2、GlobalNamingResources与Realm</h3><p>第一部分的例子中，Engine组件下定义了Realm组件：</p>
+<pre><code> &lt;Realm className=&quot;org.apache.catalina.realm.LockOutRealm&quot;&gt;         
+ 	&lt;Realm className=&quot;org.apache.catalina.realm.UserDatabaseRealm&quot; resourceName=&quot;UserDatabase&quot;/&gt;
+ &lt;/Realm&gt;
+</code></pre>
+<p>Realm，可以把它理解成“域”；Realm提供了一种用户密码与web应用的映射关系，从而达到角色安全管理的作用。在本例中，Realm的配置使用name为UserDatabase的资源实现。而该资源在Server元素中使用GlobalNamingResources配置：</p>
+<pre><code>   &lt;GlobalNamingResources&gt;     
+   	&lt;Resource name=&quot;UserDatabase&quot; auth=&quot;Container&quot; type=&quot;org.apache.catalina.UserDatabase&quot; description=&quot;User database that can be updated and saved&quot; factory=&quot;org.apache.catalina.users.MemoryUserDatabaseFactory&quot; pathname=&quot;conf/tomcat-users.xml&quot; /&gt;   
+   &lt;/GlobalNamingResources&gt;
+</code></pre>
+<p>GlobalNamingResources元素定义了全局资源，通过配置可以看出，该配置是通过读取$TOMCAT_HOME&#x2F; conf&#x2F;tomcat-users.xml实现的。<br>关于Tomcat域管理的更多内容，可以参考：Realm域管理</p>
+<h3 id="3、Valve"><a href="#3、Valve" class="headerlink" title="3、Valve"></a>3、Valve</h3><p>在第一部分的例子中，Host元素内定义了Valve组件：</p>
+<pre><code>&lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot; prefix=&quot;localhost_access_log.&quot; suffix=&quot;.txt&quot; pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;
+</code></pre>
+<p>单词Valve的意思是“阀门”，在Tomcat中代表了请求处理流水线上的一个组件；Valve可以与Tomcat的容器(Engine、Host或Context)关联。<br>不同的Valve有不同的特性，下面介绍一下本例中出现的AccessLogValve。<br>AccessLogValve的作用是通过日志记录其所在的容器中处理的所有请求，在本例中，Valve放在Host下，便可以记录该Host处理的所有请求。AccessLogValve记录的日志就是访问日志，每天的请求会写到一个日志文件里。AccessLogValve可以与Engine、Host或Context关联；在本例中，只有一个Engine，Engine下只有一个Host，Host下只有一个Context，因此AccessLogValve放在三个容器下的作用其实是类似的。<br>本例的AccessLogValve属性的配置，使用的是默认的配置；下面介绍AccessLogValve中各个属性的作用：<br>（1）className：规定了Valve的类型，是最重要的属性；本例中，通过该属性规定了这是一个AccessLogValve。<br>（2）directory：指定日志存储的位置，本例中，日志存储在$TOMCAT_HOME&#x2F;logs目录下。<br>（3）prefix：指定了日志文件的前缀。<br>（4）suffix：指定了日志文件的后缀。通过directory、prefix和suffix的配置，在$TOMCAT_HOME&#x2F;logs目录下，可以看到如下所示的日志文件。</p>
+<p><img src="/2020/11/21/Tomcat-Configuration/4.png"></p>
+<p>（5）pattern：指定记录日志的格式，本例中各项的含义如下：<br>%h：远程主机名或IP地址；如果有nginx等反向代理服务器进行请求分发，该主机名&#x2F;IP地址代表的是nginx，否则代表的是客户端。后面远程的含义与之类似，不再解释。<br>%l：远程逻辑用户名，一律是”-”，可以忽略。<br>%u：授权的远程用户名，如果没有，则是”-”。<br>%t：访问的时间。<br>%r：请求的第一行，即请求方法(get&#x2F;post等)、uri、及协议。<br>%s：响应状态，200,404等等。<br>%b：响应的数据量，不包括请求头，如果为0，则是””-。<br>例如，下面是访问日志中的一条记录</p>
+<p><img src="/2020/11/21/Tomcat-Configuration/5.png"></p>
+<p>pattern的配置中，除了上述各项，还有一个非常常用的选项是%D，含义是请求处理的时间(单位是毫秒)，对于统计分析请求的处理速度帮助很大。<br>开发人员可以充分利用访问日志，来分析问题、优化应用。例如，分析访问日志中各个接口被访问的比例，不仅可以为需求和运营人员提供数据支持，还可以使自己的优化有的放矢；分析访问日志中各个请求的响应状态码，可以知道服务器请求的成功率，并找出有问题的请求；分析访问日志中各个请求的响应时间，可以找出慢请求，并根据需要进行响应时间的优化。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2020-11-21, 18:02:03</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:44</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2020/11/21/Tomcat-Configuration/" title="Tomcat-Configuration">http://yoursite.com/2020/11/21/Tomcat-Configuration/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2020/11/21/Tomcat-Configuration/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/11/21/Mysql-Log-Restore/">
+                    Mysql-Log-Restore
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2020/11/21/Spring-Boot-Packing/">
+                    Spring-Boot-Packing
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%A6%E8%A7%A3Tomcat-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6server-xml"><span class="toc-number">1.</span> <span class="toc-text">详解Tomcat 配置文件server.xml</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%80%E4%B8%AAserver-xml%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text">一、一个server.xml配置实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81server-xml%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%83%E7%B4%A0%E5%88%86%E7%B1%BB%E5%92%8C%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">二、server.xml文档的元素分类和整体结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.1.</span> <span class="toc-text">1、整体结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%85%83%E7%B4%A0%E5%88%86%E7%B1%BB"><span class="toc-number">1.4.2.</span> <span class="toc-text">2、元素分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6"><span class="toc-number">1.5.</span> <span class="toc-text">三、核心组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Server"><span class="toc-number">1.5.1.</span> <span class="toc-text">1、Server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Service"><span class="toc-number">1.5.2.</span> <span class="toc-text">2、Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81Connector"><span class="toc-number">1.5.3.</span> <span class="toc-text">3、Connector</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81Engine"><span class="toc-number">1.5.4.</span> <span class="toc-text">4、Engine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81Host"><span class="toc-number">1.5.5.</span> <span class="toc-text">5、Host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81Context"><span class="toc-number">1.5.6.</span> <span class="toc-text">6、Context</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E7%9A%84%E5%85%B3%E8%81%94"><span class="toc-number">1.6.</span> <span class="toc-text">四、核心组件的关联</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E6%95%B4%E4%BD%93%E5%85%B3%E7%B3%BB"><span class="toc-number">1.6.1.</span> <span class="toc-text">1、整体关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E8%AF%B7%E6%B1%82%E7%94%B1%E8%B0%81%E5%A4%84%E7%90%86%EF%BC%9F"><span class="toc-number">1.6.2.</span> <span class="toc-text">2、如何确定请求由谁处理？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AA%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.6.3.</span> <span class="toc-text">3、如何配置多个服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%85%B6%E4%BB%96%E7%BB%84%E4%BB%B6"><span class="toc-number">1.7.</span> <span class="toc-text">五、其他组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Listener"><span class="toc-number">1.7.1.</span> <span class="toc-text">1、Listener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81GlobalNamingResources%E4%B8%8ERealm"><span class="toc-number">1.7.2.</span> <span class="toc-text">2、GlobalNamingResources与Realm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81Valve"><span class="toc-number">1.7.3.</span> <span class="toc-text">3、Valve</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Tomcat-Configuration　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2020/11/21/Mysql-Log-Restore/" title="Pre: Mysql-Log-Restore">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2020/11/21/Spring-Boot-Packing/" title="Next: Spring-Boot-Packing">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

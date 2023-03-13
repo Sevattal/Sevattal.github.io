@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="信息管理系统设计论文指导 (计算机应用与软件工程)前言本篇文章主要给于计算机应用与软件工程的本科生毕业在写信息管理系统的毕业设计论文的一些建议与案例。该篇所有注意事项与内容均采用复旦大学计算机系老师（李大学、韩光、夏宽理）给出的如何写信息管理系统毕业设计论文的文档。我只是将老师的文档整理到一起方便需要写论文的同学来使用该文档。后续我也将会把个人的毕业论文发布到blog中（预计在2021年11月份发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graduation-Thesis-Guidance-1">
+<meta property="og:url" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="信息管理系统设计论文指导 (计算机应用与软件工程)前言本篇文章主要给于计算机应用与软件工程的本科生毕业在写信息管理系统的毕业设计论文的一些建议与案例。该篇所有注意事项与内容均采用复旦大学计算机系老师（李大学、韩光、夏宽理）给出的如何写信息管理系统毕业设计论文的文档。我只是将老师的文档整理到一起方便需要写论文的同学来使用该文档。后续我也将会把个人的毕业论文发布到blog中（预计在2021年11月份发">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/1.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/2.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/3.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/4.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/5.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/6.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/7.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/8.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/9.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/10.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/11.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/12.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/13.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/14.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/15.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/16.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/17.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/18.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/19.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/20.png">
+<meta property="og:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/21.png">
+<meta property="article:published_time" content="2021-09-22T07:38:42.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:41.985Z">
+<meta property="article:author" content="Sevattal">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Graduation-Thesis-Guidance-1 | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Graduation-Thesis-Guidance-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/09/22/Graduation-Thesis-Guidance-1/" class="article-date">
+      <time datetime="2021-09-22T07:38:42.000Z" itemprop="datePublished">2021-09-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Graduation-Thesis-Guidance-1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Thesis/">Thesis</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="信息管理系统设计论文指导-计算机应用与软件工程"><a href="#信息管理系统设计论文指导-计算机应用与软件工程" class="headerlink" title="信息管理系统设计论文指导 (计算机应用与软件工程)"></a>信息管理系统设计论文指导 (计算机应用与软件工程)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本篇文章主要给于计算机应用与软件工程的本科生毕业在写信息管理系统的毕业设计论文的一些建议与案例。该篇所有注意事项与内容均采用复旦大学计算机系老师（李大学、韩光、夏宽理）给出的如何写信息管理系统毕业设计论文的文档。我只是将老师的文档整理到一起方便需要写论文的同学来使用该文档。后续我也将会把个人的毕业论文发布到blog中（预计在2021年11月份发出），该文档包括了我的毕业论文以及我如何从软件层面实现毕业设计。该项目大部分功能没有完成，但是足以应对毕业论文中各个模块的截图以及需要在论文中展示的部分代码。论文可以说是对于大学所学的专业知识的一种总结吧，在论文中几乎用到了大部分的所学知识。可以说几乎没有一个知识是没有用的，但是写毕业论文也不用太害怕，所用到的知识也不会太深。</p>
+<span id="more"></span>
+
+<h2 id="论文选题与前期注意事项"><a href="#论文选题与前期注意事项" class="headerlink" title="论文选题与前期注意事项"></a>论文选题与前期注意事项</h2><h3 id="1-论文的选题方面基本介绍"><a href="#1-论文的选题方面基本介绍" class="headerlink" title="1. 论文的选题方面基本介绍"></a>1. 论文的选题方面基本介绍</h3><p>1、论文选题必须是论述一个具体信息管理系统的设计和实现。</p>
+<p>2、论文论述内容必须完整，论文结构应该与论文样例基本一致。论文的格式、字体，字号和章节编号形式也与样例相同。为此，学生在撰写论文之前，必须认真阅读论文辅导资料，参考样例确定自己论文的结构。</p>
+<p>3、指导老师一般只会审阅论文中的数据流程图或UML图、数据库设计中的实体描述、联系描述、E-R图、关系模式和数据库表。其它部分内容，指导老师一般不仔细审阅这些内容。</p>
+<p>4、论文指导流程如下：</p>
+<pre><code>（1）、在看了论文指导课后，在要求的日期内，向指导老师报告自己的论文题目，让老师审核论文选题是否妥当并听取老师的建议。
+（2）、组织结构图、业务流程图，数据流程图中的关联图、系统顶层图，系统一层图和二层图（或UML图）。
+（3）、数据字典、HIPO图、IPO图。
+（4）、数据库设计：确认系统要管理的实体，实体的基本属性，实体之间的联系、E-R图、关系模式和数据库表。
+（5）、最后，提供完整的论文，让老师审阅，听取老师的修改意见。
+</code></pre>
+<h3 id="2-论文选题的三种项目样板"><a href="#2-论文选题的三种项目样板" class="headerlink" title="2. 论文选题的三种项目样板"></a>2. 论文选题的三种项目样板</h3><h4 id="一、进销存的几种实现方案"><a href="#一、进销存的几种实现方案" class="headerlink" title="一、进销存的几种实现方案"></a>一、进销存的几种实现方案</h4><pre><code>1、最简单的方案-零售进销存，客户购买商品，付款后立即取商品走人。
+库存管理依据销售信息修改库存。
+2、稍难一些方案-付款给提货单，客户自己到仓库提货。
+库存管理依据销售信息和提货确认单修改库存。
+3、较难一些方案-付款给购买凭证，商店通过物流给客户送货。
+库存管理依据销售信息和物流送货回执修改库存。
+4、更难一些方案-为库存管理增加盘点功能。
+考虑到库存数量因为种种原因而损耗，至某个特殊时间点，库存实际数量由仓管员指定。库存管理依据盘点信息更新库存。
+</code></pre>
+<h4 id="二、图书流通的几种实现方案"><a href="#二、图书流通的几种实现方案" class="headerlink" title="二、图书流通的几种实现方案"></a>二、图书流通的几种实现方案</h4><pre><code>1、最简单的方案-借阅和归还。
+库存管理依据借阅和归还信息修改库存。
+2、稍难一些方案--借阅、归还和预约。
+库存管理依据借阅和归还信息修改库存。如果不能当时借阅，产生预约借书信息。有人归还，或有新书购入系统产生提示信息，由管理员通知预约人来借书。
+3、较难一些方案-增加赔付功能。
+丢失或损坏需要赔付。
+</code></pre>
+<h4 id="三、单位器材流通的几种实现方案"><a href="#三、单位器材流通的几种实现方案" class="headerlink" title="三、单位器材流通的几种实现方案"></a>三、单位器材流通的几种实现方案</h4><pre><code>1、最简单的方案-申领和归还。
+库存管理依据申领和归还信息修改器件的状态。
+2、稍难一些方案--申领、归还和申购。
+库存管理依据申领和归还信息器件状态。如果不能当时申领，产生申购信息。。
+3、较难一些方案-申领、归还和申购，申领和申购要有审核，并且丢失或损坏需要报损。
+</code></pre>
+<h3 id="3-办公自动化与信息管理系统比较（不要搞混淆）"><a href="#3-办公自动化与信息管理系统比较（不要搞混淆）" class="headerlink" title="3. 办公自动化与信息管理系统比较（不要搞混淆）"></a>3. 办公自动化与信息管理系统比较（不要搞混淆）</h3><p>办公自动化是利用计算机管理业务处理的流程，主要能对信息作录入、存储和查询等处理，大大提高信息处理业务的效率。在办公自动化系统中，通常不特别考虑信息之间的关联性。信息管理系统除能对信息作录入、存储和查询等处理功能外，更能对信息按业务要求能作自动加工处理。在信息管理系统中，各条信息之间会有一定的关联。<br>办公自动化系统可以不用数据库，用Excel表格就可以完成其功能；而信息管理系统如不用数据库，则很多功能就无法实现。论文要求设计一个信息管理系统，而不是一个办公自动化系统。</p>
+<h3 id="4-论文选题的注意点"><a href="#4-论文选题的注意点" class="headerlink" title="4. 论文选题的注意点"></a>4. 论文选题的注意点</h3><p>论文选题期间请先注意以下几点，以便节省为选题而多次与指导老师联系，还是无法确定，希望能参考老师的建议，能尽快准确完成选题。</p>
+<p>1、多看几遍老师的论文指导视频课件，仔细领会老师讲解的内容和其中的提醒、建议、时间节点要求。<br>2、选择的题目要注意体现管理信息系统的管理功能，体现出管理信息系统所应该具有的业务处理功能（包括业务管理和数据加工）。这些管理功能会反映在数据流图中，包括处理模块的划分和向下层的逐级分解。<br>3、是一个信息管理系统，而不是办公自动化系统。选题时先想一下，你要做的系统是不是主要是建表和查表？是不是除了界面，用Excel就可以做到的？如果是 ，那就不是一个论文要求的管理信息系统，因为选题内容过于简单，以后就会发现在画数据流图时除顶层图外，已经无需做进一步步分解了。<br>4、不要选自己完全不了解的题目，如功能需求不知道，内部如何运作不熟悉的项目。<br>5、不要选项目内部运作非常繁杂，而基本逻辑又相对简单的项目。<br>6、不能搞财务系统，财务系统必须经国家财经部审核，财务系统中要避免信息之间有多对多联系。<br>7、如果是管理药品或食品的进销存系统中，物品的属性中要有批号和保质期，还必须要有对超过保质期的药品或食品的处理，不同批号和保质期的药品或食品的库存量不能简单累计。<br>这里列出一些论文题目供大家参考。</p>
+<pre><code>1、XXX###进销存信息管理系统
+2、XXX办公设备信息管理系统
+3、XXX图书馆信息管理系统
+4、XXX学籍信息管理系统
+5、XXX培训信息管理系统
+6、XXX设备信息管理系统
+7、XXX物品租赁信息管理系统
+</code></pre>
+<h3 id="5-各类信息管理系统包含的主要模块"><a href="#5-各类信息管理系统包含的主要模块" class="headerlink" title="5. 各类信息管理系统包含的主要模块"></a>5. 各类信息管理系统包含的主要模块</h3><p><strong>1、进销存</strong></p>
+<p>各种商品进销存，确定一类（种），如一类（种）电子产品，一类（种）生活用品等。<br>建议不要选药品或食品。<br>主要模块包括销售管理、采购管理、库存管理和统计分析</p>
+<p><strong>2、办公设备管理</strong></p>
+<p>办公设备申领管理，采购管理，库存管理和统计分析。</p>
+<p><strong>3、图书管理</strong></p>
+<p>读者管理，图书借&#x2F;还管理， 图书采编管理，图书库存管理和统计分析。</p>
+<p><strong>4、学籍管理</strong></p>
+<p>学生管理，学生选课管理，教学计划管理，教师管理，教学管理。</p>
+<p><strong>5、培训管理</strong></p>
+<p>学员管理，培训计划管理，教师管理，教学管理。</p>
+<p><strong>6、设备管理</strong></p>
+<p>设备申领管理，资产借用&#x2F;归还管理，物品采购与编码管理、库存管理和统计分析。</p>
+<p><strong>7、XX物品租赁信息管理系统</strong></p>
+<p>客户管理，物品租赁&#x2F;归还管理，物品采编管理，物品库存管理和统计分析。</p>
+<h2 id="论文中要到的各种图以及术语介绍"><a href="#论文中要到的各种图以及术语介绍" class="headerlink" title="论文中要到的各种图以及术语介绍"></a>论文中要到的各种图以及术语介绍</h2><h3 id="1-数据流图部分"><a href="#1-数据流图部分" class="headerlink" title="1. 数据流图部分"></a>1. 数据流图部分</h3><p>数据流图是结构化系统分析的工具。它既可以表达数据在系统内部的逻辑流向及存储，又可以表达系统的逻辑功能和数据的逻辑变换。数据流图既能表达现行人工系统的数据流程和逻辑处理功能，也能表达自动化系统的数据流程和逻辑处理功能。数据流程基本符号：外部项、数据流、处理逻辑（加工）、数据元素和数据存储。</p>
+<p><strong>数据流图包含：</strong></p>
+<p>关联图，顶层图，一层图，二层图……</p>
+<p><strong>系统关联图案例</strong></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/1.png"></p>
+<h4 id="1-外部项"><a href="#1-外部项" class="headerlink" title="1. 外部项"></a>1. 外部项</h4><p>外部项又称外部实体，是指不受系统控制，在系统之外的事物或人。是系统数据的外部来源或去处；也可以是另外一个数据处理系统，向该系统提供数据或接收来自该系统向它发出的数据。 </p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/2.png"></p>
+<h4 id="2-数据流"><a href="#2-数据流" class="headerlink" title="2. 数据流"></a>2. 数据流</h4><p>数据流用单箭头表示数据流动的方向，并给予以字母F开头的编号命名，并给出编号代表的数据流的意义。数据流可以由某一个外部项产生，也可以由某一个处理逻辑产生，还可以来自某一个数据存储。一般来说，数据流可以在数据流箭头的上方加以简单的描述。一般不允许用双向箭头表示数据流。</p>
+<p><label style="color:red">注意：数据流不是控制流</label></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/3.png"></p>
+<h4 id="3-处理逻辑（加工）"><a href="#3-处理逻辑（加工）" class="headerlink" title="3. 处理逻辑（加工）"></a>3. 处理逻辑（加工）</h4><p>处理逻辑对数据的变换方式有两种：</p>
+<pre><code>    A、变换数据的结构
+    B、在原有数据内容基础上产生新的数据内容
+</code></pre>
+<p>可以用一个长方形框表示处理逻辑。用标识部分、功能描述部分表示。</p>
+<p>标识部分用于惟一地标识一个处理逻辑，以区别于其它逻辑。一般用数字编号表示主处理逻辑，编号下再接子编号，表示某个处理逻辑被进一步分解后某个处理逻辑下的某个子处理逻辑等。</p>
+<p>功能描述部分是处理逻辑必不可少的部分。用一句非常简单的话，直接表示这个处理逻辑要做的事，即它的逻辑功能。在逻辑的功能描述部分中没有主语，只有动词和宾语。</p>
+<p>执行这项功能的主体可能是某一个部门，也可以是某一个人或计算机程序，它们被看作处理逻辑的执行者。</p>
+<p>一个加工一定会有数据流进入加工,也有数据流从加工流出。不允许只有数据流出，或只有数据流进的加工。 </p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/4.png"></p>
+<h4 id="4-数据元素"><a href="#4-数据元素" class="headerlink" title="4. 数据元素"></a>4. 数据元素</h4><p>数据元素是数据最小组成单位，是不可分的数据单位。数据元素是数据流或数据存储中的基本成分。</p>
+<h4 id="5-数据存储（文件）"><a href="#5-数据存储（文件）" class="headerlink" title="5. 数据存储（文件）"></a>5. 数据存储（文件）</h4><p>数据存储用长方条表记，在长方条内部写上该数据存储的名称。用作标识的编号一般用英文字母D和数字组成。同外部项一样，允许在一张数据流程式图上重复出现相同的数据存储，以避免数据流线的交叉，这时应在重复的数据存储符号的左侧再加一条竖线。</p>
+<p>一个处理逻辑可能要从数据存储中读出某些数据，或者可能把一些数据存入到某个数据存储中，甚至修改数据存储中的某些数据，那么就得用数据流将处理逻辑和数据存储联结起来。</p>
+<p>只出或只进的数据存储不必在数据流图中不画出。 </p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/5.png"></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/6.png"></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/7.png"></p>
+<h3 id="2．数据流图的分解"><a href="#2．数据流图的分解" class="headerlink" title="2．数据流图的分解"></a>2．数据流图的分解</h3><p>编制数据流图，采用自顶向下扩展逐层分解。首先是系统关联图，给出外部实体与即将开发的管理信息系统之间的数据流（从外部实体流入系统、从系统流向外部实体）。回答系统从外部世界得到什么，系统将给外部世界是什么。从关联图分解得到顶层图，又从顶层图分解得到一层数据流程图，再分解出二层数据流程图。在分解过程中，随着更具体和更详细，新的数据流和数据存储被引入，但在关联图中提及的那些数据流是不能再增加，也不允许被减少。</p>
+<p>在上述分解过程中，上层的一个处理逻辑可能被分解成多个更具体的处理逻辑，新的数据存储和数据流被引入。如此逐一分解扩展，直至不需要再分解为止。</p>
+<p><strong>模块分解案例图</strong></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/8.png"></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/9.png"></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/10.png"></p>
+<p><strong>特别提示</strong></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/11.png"></p>
+<h3 id="3-数据词典"><a href="#3-数据词典" class="headerlink" title="3. 数据词典"></a>3. 数据词典</h3><p>数据词典，既用于描述数据流和数据存储的详细逻辑内容，也可用于描述外部项和处理逻辑的某些数据特性。数据词典把数据的最小组成单位看作数据元素，若干个数据元素组成数据结构。它通过对数据元素和数据结构的定义，来描述数据流和数据存储的逻辑内容。</p>
+<h4 id="1-数据元素"><a href="#1-数据元素" class="headerlink" title="1. 数据元素"></a>1. 数据元素</h4><p>数据元素是数据的最小组成单位，也就是不可分的数据单位。在数据词典中，对数据元素的定义包括以下五项内容：</p>
+<pre><code>（1）数据元素的名称
+（2）在其他场合下的别名
+（3）取值的范围和取值的含义
+（4）数据元素的长度
+（5）在何处出现
+</code></pre>
+<h4 id="2-数据结构"><a href="#2-数据结构" class="headerlink" title="2. 数据结构"></a>2. 数据结构</h4><p>在数据词典中，数据结构是用来对数据之间的组合关系进行定义的，完全是一种逻辑的描述。一个数据结构可以由若干个数据元素组成，也可以由若干个数据结构组成，还可以由若干个数据元素和数据结构混合组成。</p>
+<p>在数据结构中，对数据结构的定义包括以下几项内容：</p>
+<pre><code>（1） 数据结构的名称
+（2） 数据结构的组成
+</code></pre>
+<h4 id="3-数据流"><a href="#3-数据流" class="headerlink" title="3. 数据流"></a>3. 数据流</h4><p>数据流是系统内传输的信息。在数据词典中对数据流的定义要包括以下五项内容：</p>
+<pre><code>a)数据流的来源
+b)数据流的去向
+c)数据流的组成
+d)数据流的流通量
+e)高峰时期的流通量
+</code></pre>
+<h4 id="4-数据存储"><a href="#4-数据存储" class="headerlink" title="4. 数据存储"></a>4. 数据存储</h4><p>数据存储也是数据流的来源或去向之一。在数据词典中，对数据存储定义的内容简单地给予以下描述：</p>
+<pre><code>（1） 数据存储的名称及其编号
+（2） 流入/流出的数据流
+（3） 数据存储的组成：数据结构
+</code></pre>
+<h4 id="5-处理逻辑"><a href="#5-处理逻辑" class="headerlink" title="5. 处理逻辑"></a>5. 处理逻辑</h4><p>处理逻辑的表达工具有判断树、判定表、结构化语言等。在数据词典中，对处理逻辑的定义有以下的内容：</p>
+<pre><code>（1）处理逻辑在数据流程图内的名称和编号。处理逻辑的名称应该反映它的逻辑功能
+（2）对处理逻辑简单的描述
+（3）处理逻辑的输入和输出
+（4）对处理逻辑的主要功能描述，可用结构化语言简单地概括其逻辑功能
+</code></pre>
+<p>处理逻辑在数据词典中的表达应该按“输入-处理-输出”的顺序排列。</p>
+<h4 id="6-外部项"><a href="#6-外部项" class="headerlink" title="6. 外部项"></a>6. 外部项</h4><p>外部项的数量反映了系统的独立性程度，以及人机界面设计的合理性。外部项的个数应尽可能少。外部项在数据词典中的定义包括以下两项内容：</p>
+<pre><code>(1)外部项的名称
+(2)有关的数据流
+</code></pre>
+<h3 id="4-其他的注意事项"><a href="#4-其他的注意事项" class="headerlink" title="4. 其他的注意事项"></a>4. 其他的注意事项</h3><p>1、关联图中提及的外部项、与外部项连接的数据流，在数据流程图的分解中不可以增加，也不可以减少。<br>2、数据存储与外部项之间不可以直接连接。<br>3、要保持各层成分的完整性和一致性。下层数据流图中，上层图中的数据流和数据存储必须继续出现；并可出现只限于下层专用的的数据存储，或数据流。<br>4、加工和数据存储，一定有数据流入，也有数据流出。不会只有流入，没有流出；也不会有只有出，没有入的加工。<br>5、数据存储环节作为两个加工的界面。一般来说，两个加工不能直接用数据流相连。数据存储之间不得出现未经加工的数据流。<br>6、同一流入数据流不可以重复向系统流入多次。流入和流出的数据流不可以同名。<br>7、关联图出，数据流必须有名称和意义说明，并且在下层数据流图中不能改名。</p>
+<h3 id="5-编写论文时容易犯得错误"><a href="#5-编写论文时容易犯得错误" class="headerlink" title="5. 编写论文时容易犯得错误"></a>5. 编写论文时容易犯得错误</h3><h4 id="一、数据流图（DFD）的规范性问题："><a href="#一、数据流图（DFD）的规范性问题：" class="headerlink" title="一、数据流图（DFD）的规范性问题："></a>一、数据流图（DFD）的规范性问题：</h4><h5 id="1、关于外部项"><a href="#1、关于外部项" class="headerlink" title="1、关于外部项"></a>1、关于外部项</h5><p>● 外部项是系统的数据来源和归宿。系统由哪些外部项提供数据，和哪些数据流向外部项，在关联图上就表示系统有哪些外部项，有哪些数据从某外部项流入，和向哪些外部项流出数据。在数据流图进一步分解时，无论分解到哪层，都不允许再多出别的外部项或少了一些外部项；从外部项流入的数据流，和从系统流出的数据流都 不能增加和减少。</p>
+<p>● 在数据流图分解时，无论分解到哪层，所涉及的外部项的名称要与关联图上外部项的名称一致。例如：关联图上的名字叫“仓储部”，下层图变成“仓管部”，虽然意思相同，但这是不允许的。</p>
+<p>● 假设关联图上有某个外部项，但在后面的数据流图分解时没有用到该外部项，这也是不允许的，说明该外部项与系统无关。</p>
+<p>● 在数据流图分解时，无论分解到哪层，如果某个处理模块可以被某个外部项访问，那么该模块的父模块（在上一层图中）必然要存在与该外部项连接的数据流。</p>
+<p>● 在任何一层的数据流图中，外部项都不可以直接访问存储（即外部项不可以与数报春存储直连）。</p>
+<h5 id="2、关于数据流"><a href="#2、关于数据流" class="headerlink" title="2、关于数据流"></a>2、关于数据流</h5><p>● 在关联图上，明确确定了外部项向系统输入的、从系统读取的数据流，包括数据流的个数、名称、编号。在数据流图分解时，无论分解到哪层，都不允许再多出关联图上没有出现的数据流。</p>
+<p>● 在数据流图分解时，无论分解到哪层，用到某数据流时，该数据流的名称、编号、方向要与关联图上取的名称、编号和流向保持一致。</p>
+<p>● 处理模块与数据存储之间的数据流不要编写数据流名称和编号（因为存储本身已经可以反映该数据流的组成），但要标明方向（读、写、读和写）。数据流方向在上下层数据流图间要一致。例如，本层图是写某数据存储，下层图却没看到哪个模块向其写，或是变成了只读等等。</p>
+<h5 id="3、关于处理模块"><a href="#3、关于处理模块" class="headerlink" title="3、关于处理模块"></a>3、关于处理模块</h5><p>● 切记每个加工（处理模块）需要的已知数据，或是外部项的输入数据流，或是别的加工产生的数据存储。一个加工不能没有输入而产生输出，也不能只有输入没有输出。</p>
+<p>● 不可以出现处理模块到处理模块间的直连，中间要有数据存储 。</p>
+<p>● 处理模块与外部项间的数据流是否与上层图的标示相符。</p>
+<p>● 处理模块对某数据存储的访问，如果该存储在上层图出现过，则要检查本处对该存储的访问类型（读、写、读和写）是否与上层图的标示一致。</p>
+<h5 id="4、关于数据存储"><a href="#4、关于数据存储" class="headerlink" title="4、关于数据存储"></a>4、关于数据存储</h5><p>● 数据存储不可以与外部项直连。</p>
+<p>● 不可以出现存储到存储间的直连，中间要有处理模块。</p>
+<p>● 在数据流图中，一个数据存储何时出现，掌握一个原则：<br>在某层数据流图中，如果一个数据存储要被该层多个（2个及以上）处理模块访问（读或写），则该数据存储要出现在该层图上。<br>如果要访问其上层图中出现的数据存储，则该存储要出现在该层图上。如果一个数据存储只被某一个模块内部访问，则该数据存储在该模块做进一步分解时按上述原则决定是否出现。</p>
+<p>● 下层图访问上层图出现过的数据存储时，其编号、名称、访问类型（读、写、读和写）要与上层图相一致。</p>
+<p>● 一个数据存储不该只有写者而没有读者（写了何用？）。<br>反之，一个数据存储不该只有读者而没有写者（数据何来？）<br>除非数据是直接来自或去往另外一个系统，这种情况我们先不考虑。</p>
+<h4 id="二、HIPO图的规范性问题："><a href="#二、HIPO图的规范性问题：" class="headerlink" title="二、HIPO图的规范性问题："></a>二、HIPO图的规范性问题：</h4><p><strong>HIOP图容易画，掌握如下规则：</strong></p>
+<p>最上面的方框内（只有一个方框）填系统的名称。</p>
+<p>第二行各方框内分别对应数据流图（以下简称DFD）顶层图中各处理模块的名称。（注意：模块的数量和模块名字要与DFD顶层图中的模块数量与名字一致。）</p>
+<p>第三行的方框是对第二行各方框的细化展示，对应各DFD一层图的处理模块。</p>
+<p>第四行的方框是对第三行各方框的细化展示，对应各DFD二层图的处理模块。</p>
+<h4 id="三、实体描述、联系描述，ER图，关系模式的规范性问题："><a href="#三、实体描述、联系描述，ER图，关系模式的规范性问题：" class="headerlink" title="三、实体描述、联系描述，ER图，关系模式的规范性问题："></a>三、实体描述、联系描述，ER图，关系模式的规范性问题：</h4><h5 id="1、数据库模式设计步骤："><a href="#1、数据库模式设计步骤：" class="headerlink" title="1、数据库模式设计步骤："></a>1、数据库模式设计步骤：</h5><p>（1）确定系统要管理的数据实体。<br>（2）确定每个实体的属性，注意，实体暂时不设主键属性。<br>（3）分析数据实体之间的各种联系。注意联系也可能有属性，例如采购联系，采购日期是采购联系的属性之一，能明确表示这个联系的发生时间。<br>（4）用一张E-R图表示步骤3的结果。<br>（5）利用转换规则，得到关系模式，为每个模式设定主键和外键。<br>（6）对关系模式作一些必要的优化。<br>例如：将采购部、销售部、仓库模式合并为部门模式（表）；<br>将不同部门的员工合并为员工模式（表）。<br>【注：在ER图上不要用优化后的模式来表示实体，因为ER图上要反映不同类实体所代表的不同角色。】<br>（7）为每个模式给出数据库表。在数据库中，必须为每个属性标出是否是主键属性、是否是外键属性，以及该属性可否为空等状态。并且必须要有一个主键属性。</p>
+<h5 id="2、需要注意的是："><a href="#2、需要注意的是：" class="headerlink" title="2、需要注意的是："></a>2、需要注意的是：</h5><p>● 每个实体一般是形成一张表的（即形成一个关系模式），但有部分实体可以进行优化合并（见上述三、1、（6）条中的说明），合并形成一张表。<br>● 按转换规则，每个多对多的联系是占一张表的。<br>● 核查最后形成的关系模式，是否都包含了上述表。<br>● 在ER图上，实体和联系都不需要标出属性。<br>● 检查一下数据库中的表，各属性的数据类型选择和取值范围是否合理。</p>
+<h4 id="四、处理逻辑的合理性问题："><a href="#四、处理逻辑的合理性问题：" class="headerlink" title="四、处理逻辑的合理性问题："></a>四、处理逻辑的合理性问题：</h4><h5 id="1、数据流图的设计步骤："><a href="#1、数据流图的设计步骤：" class="headerlink" title="1、数据流图的设计步骤："></a>1、数据流图的设计步骤：</h5><p>管理信息系统的主要作用之一就是业务处理（代替原来的某些跑腿、电话、手工操作等工作方式。例如：网上申请，网上审批，自动排课等。）、数据处理（加工）、数据存储、统计分析。</p>
+<p>管理信息系统的设计有不同的方法，其中结构化设计方法（SD）是一种自顶向下、逐步求精的方法。与普通程序设计中使用SD方法的不同之处是：有时根据下层处理模块的需要反过来会对上层提出部分调整需求。</p>
+<p>对于管理信息系统，首先根据系统要实现的范围与目标，确定系统要实现哪几项功能。</p>
+<p>根据要实现的几项功能，确定需要分哪几个大的功能模块来处理，从而产生DFD顶层图。<br>一个大的功能模块一般分解成若干个子功能模块，不同的子模块完成不同的功能，从而产生各模块的一层图。同样的方法，产生各子模块的二层图。</p>
+<h5 id="2、需要注意的是：-1"><a href="#2、需要注意的是：-1" class="headerlink" title="2、需要注意的是："></a>2、需要注意的是：</h5><p>● DFD中，是否完全反映了系统想要实现的功能。<br>● 功能模块的划分是否合理，层次是否清晰，是否便于系统的维护和功能修改，是否会出现因修改一个功能模块的功能牵一发而动全身。<br>● 功能逻辑是否合理和清晰。可以把自己假想为系统的使用者（以不同的角色）进行体验、判断。<br>● 当发现某处理模块需要新增与某外部项的数据流时，逐级修改上层DFD的数据流，直到关联图。<br>●  一般来讲，统计分析模块是管理信息系统应该具有的功能。鉴于毕业设计时间紧张，该模块在DFD中不要求做进一步分解，分析功能也不做要求。但同学们要清楚：不只是总经理，有些角色也会使用该模块查询相关统计信息的，所以该模块会读一些存储的。同学们给出少部分就可以了。</p>
+<h2 id="论文简单版案例（以主要容易出错的部分为例）"><a href="#论文简单版案例（以主要容易出错的部分为例）" class="headerlink" title="论文简单版案例（以主要容易出错的部分为例）"></a>论文简单版案例（以主要容易出错的部分为例）</h2><h3 id="1、组织结构图"><a href="#1、组织结构图" class="headerlink" title="1、组织结构图"></a>1、组织结构图</h3><p>要建立信息管理系统，就必需知道当前系统的组织机构设置情况和组织机构中各部门之间的隶属关系。通常用组织结构图来描述当前系统组织机构和各部门的隶属关系。所谓组织结构图就是一个行政单位分成部门，及各部门之间的关系。用矩形框表示组织机构中的一个部门，用上下连线表示隶属关系。以下是2个组织结构图的样例。</p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/12.png"></p>
+<p>图1.1 组织结构图样例1</p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/13.png"></p>
+<p>图1.2 组织结构图样例2</p>
+<p>注：组织结构图的一个部门的称呼可以有中心、部、处、科、室、组等。部门之间只有上、下级关系，用无向的连线联结。注意上下级两部门不能用相同称呼，如不能都是处，在处之下可以是科、组等。</p>
+<h3 id="2、关联图"><a href="#2、关联图" class="headerlink" title="2、关联图"></a>2、关联图</h3><p>数据流图分析的第一步根据管理信息系统建设的总体要求，确定系统的外部项，即系统数据的数据来源和去处。通过分析，掌握本系统的外部项和输入输出数据流，绘制系统的关联图。以下是2个关联图的样例。</p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/14.png"></p>
+<p>图2.1 一个进销存信息管理的关联图</p>
+<p>外部项数据流统计：<br>采购部：流入1条，流出1条。客户：流入1条，流出1条。供应商：流入1条，流出1条。仓管部：流入1条，流出3条。<br>对系统的运行过程作以下约定：<br>1、	首先由采购部提出采购订单，系统以订货合同给供应商。<br>2、	采购部发出采购订单的依据之一是系统向采购部提示的缺补货汇总信息。<br>3、	供应商依据采购合同向单位发货，以到货通知形式向系统报告到货商品和数量。<br>4、	客户向系统给出销售订单，系统给客户提贷单。<br>5、	系统的库存管理，依据到货信息修改库存；依据销售信息修改库存，并可能产生缺货信息（销售数量小于库存量）或产生补货信息（库存量小于预先设定的最低库存量）。</p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/15.png"></p>
+<p>图2.2 一个物业信息管理的关联图</p>
+<p>注：画关联图时，首先是确定系统必须有的外部实体，再是各外部实体进出的数据流。必须保证进出数据对系统是平衡的，即进入的数据是系统中某些加工要用的；出来的数据是对进入系统的某些数据作某种处理得到的结果。例如，进入的是学生的单科成绩，出来的有学生成绩单。</p>
+<p>有关关联图中数据流说明如下:</p>
+<p>F1：报修申请信息；                           		F9:  查询响应信息；<br>F2：维修安排信息；                           		F10：收费一览信息 ；<br>F3：物业基本信息（业主、房屋、员工信息）；    		F11：综合统计信息；<br>F4： 仪表（水表、电表、煤气表）数据信息；     		F12：业主交款信息；<br>F5： 报修汇总信息；                           	F13: 付款通知信息；<br>F6： 维修一览表信息；                         	F14: 业主投诉信息；<br>F7:  物料领用信息；                          		F15: 投诉汇总信息；<br>F8:  库存量信息；                            		F16: 物料入库信息<br>F17：催款通知信息                            		F18: 施工情况信息<br>F19: 维修通知信息</p>
+<p>从系统关联图可以看出：</p>
+<p>业主向本系统提供报修申请信息（F1）,得出报修汇总信息（F5）给管理员,而后管理员输入维修安排信息（F2），并产生维修通知信息（F19）给维修员,而维修员向系统提供施工情况信息（F18），最后通过从本系统获得维修一览表信息（F6）。</p>
+<p>系统管理员可由维修中所用的物料领用信息（F7）及物料入库信息（F16）提交本系统进行管理，从而通过本系统查询获得物料库存量信息（F8）。</p>
+<p>对于每月每个业主（住户）的仪表（水表、电表、煤气表）信息（F4）及维修所产生的费用，按照收费标准信息，计算出精确费用，并产生收费一览信息（F10）、付款通知信息（F13），随后业主向系统提交业主交款信息(F12),如业主因各种不同原因未能在规定时间内交款，则系统输出催款通知信息(F17)，以告知业主。</p>
+<p>系统还可以对物业基本信息（业主、房屋、员工信息）（F3）和业主投诉信息(F14)进行处理，而分别获得查询响应信息(F9)和投诉汇总信息(F15)。<br>另外，本系统支持总经理对有关数据的统计分析功能（F11）。</p>
+<h3 id="3、顶层图"><a href="#3、顶层图" class="headerlink" title="3、顶层图"></a>3、顶层图</h3><p>在系统关联图的基础上，根据管理信息系统的实际运行情况，划分出若干基本信息管理功能模块，并明确各功能之间的联系，绘制出数据流程图的顶层图。<br>以下是2个顶层图的样例。</p>
+<p>注：画顶层图时，首先是确定系统需要分解的功能模块，一般以3-4个为宜。顶层图中关联图中提及的处部实体、数据流都要出现，同时会出现许多数据存储。另约定：</p>
+<pre><code>1、	加工不能直接相连，必须中间经过数据存储。
+2、	任一加工不能没有进入的数据流，也不能没有出来的数据流。
+</code></pre>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/16.png"></p>
+<p>图3.1 图2.1的顶层图</p>
+<p><strong>加工数据流统计：</strong></p>
+<p>P1采购管理   流入4条，流出4条。<br>P2销售管理   流入3条，流出3条。<br>P3库存管理   流入3条，流出4条。<br>P4统计分析   流入4条，流出1条。</p>
+<p>销售部门根据客户的订购要求产生了F5销售订单流入P2销售管理处理，查询D2库存文件，当库存不足时产生D5缺货信息，流入P1采购管理，经F2缺&#x2F;补货汇总表到采购部进行采购；</p>
+<p>当库存充足时产生D4出库单流入P3库存管理，同时对D2库存文件进行修改，经F8出库通知单给仓管部，同时产生F6提货单给客户。出库后若低于最低存则产生D6补货信息，流入P1采购管理，经F2缺&#x2F;补货汇总表到采购部进行采购；</p>
+<p>采购部的F1采购订单流入P1采购管理处理，产生F3订货合同给供应商。</p>
+<p>供应商的F4到货通知流入P1采购管理，产生D1到货信息和入库单。D3入库单，流入P3库存管理，同时修改D2库存文件，流出F7入库通知单给仓管部。</p>
+<p>仓管部输入F9统计要求信息，流入P4统计分析，查询D2库存文件，D4出库单，D3入库单，产生F10统计报表至仓管部。</p>
+<p>从图上可以看出整个系统总体上划分为销售管理 ，采购管理，库存管理和统计分析四大部分。</p>
+<p>销售管理根据客户的销售订单，及时进行销售操作事宜；采购管理根据销售管理产生的缺货信息，进行商品的采购事宜；库存管理根据销售管理发出的出库单和采购管理发出入库单更新库存文件和及时发出䃼货信息。统计分析根据输入的统计要求信息，对库存文件，入库单，出库单进行统计分析以能更好的了解公司的经营情况。</p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/17.png"></p>
+<p>图3.2 图2.2的顶层图</p>
+<p>顶层数据流图仅从总体上反映了物业管理系统的信息联系。从图上可以看出整个物业管理系统的项目信息管理功能从总体上可分为七个功能模块,其分别如下:</p>
+<pre><code>1)基本物业信息管理(P1)
+2)报修维修管理(P2)
+3)仪表数据管理(P3)
+4)物料管理(P4)
+5)收费管理(P5)
+6)投诉管理(P6)
+7)统计分析管理(P7)
+</code></pre>
+<p>以下对本系统被划分以上各功能模块进行简单扼要描述：</p>
+<p>对一个小区物业管理系统而言，基本的物业信息（包括住户、房屋信息）模块(P1)是本系统管理的基础，因为小区的管理都是基于该小区的房产资源而产生的，而物业管理产生基础，是小区内业主的详细资料处理。有了上面的功能模块对基本的信息处理后，就能实现实质性的物业管理，即报修维修管理(P2)、仪表数据管理(P3)、物料管理(P4)、收费管理(P5)、投诉管理(P6)等，这些功能模块构成了小区物业管理的主体。最后，设置统计分析管理(P7)以便物业公司领导层对整个小区的管理信息有个全面了解。</p>
+<h3 id="4、一层图"><a href="#4、一层图" class="headerlink" title="4、一层图"></a>4、一层图</h3><p>顶层数据流图仅从总体上反映了公司的信息联系，还必须按照自顶向下，逐层分解的分析方法对顶层图进一步细化。以下是2个一层图的样例。</p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/18.png"></p>
+<p>图4.1 图3.1的加工p1的一层图</p>
+<p><strong>加工项数据流统计</strong></p>
+<p>P1.1请购管理  流入3条 F1采购订单；补货信息，缺货信息<br>              流出3条  F2缺&#x2F;补货汇总表；请购单；F3订购合同</p>
+<p>P1.2到货处理  流入2条 请购单；F4到货通知<br>              流出2条  到货信息，入库单</p>
+<p>出库后库存低于最低库存时产生D6补货信息，出货时库存不足时产生D5缺货信息，流入P1.1请购管理，经F2缺&#x2F;补货汇总表到采购部采购。</p>
+<p>采购部的F1采购订单流入P1.1请购管理，产生F3订购合同到供应商。</p>
+<p>供应商由F4到货通知流入P1.2到货处理，产生D3入库单和D1到货信息 </p>
+<p>对销售管理进一步细化，得到销售管理一层数据流程图（图3.5），从图中可以看到，整个销售管理功能可分确定订货处理和发货管理两个子功能。</p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/19.png"></p>
+<p>图4.2 图3.2的加工p1的一层图</p>
+<h3 id="5、E-R图和关系模式"><a href="#5、E-R图和关系模式" class="headerlink" title="5、E-R图和关系模式"></a>5、E-R图和关系模式</h3><h4 id="1）一个进销存信息管理系统的E-R图和关系模式。"><a href="#1）一个进销存信息管理系统的E-R图和关系模式。" class="headerlink" title="1）一个进销存信息管理系统的E-R图和关系模式。"></a>1）一个进销存信息管理系统的E-R图和关系模式。</h4><p><strong>实体和属性</strong></p>
+<p>系统涉及以下8个实体，它们的属性分别如下：</p>
+<p>1、客户（客户编号、客户名称、地址、联系电话）<br>2、供应商（供应商编号、供应商名称、地址、联系人、联系电话）<br>3、采购部（采购部编号、联系人、联系电话）<br>4、采购员（采购员号、姓名、性别、出生日期）<br>5、销售员（销售员号、姓名、性别、出生日期）<br>6、销售部（销售部编号、联系人、联系电话）<br>7、仓库（仓库名称、联系人、联系电话）<br>8、产品（产品号、产品名称、规格、单价、计量单位）</p>
+<p><strong>联系</strong></p>
+<p>1：1联系的有：<br>“管理”：业务员和业务部，采购员和采购部，其属性有：职务<br>1：N联系的有：<br>“存储”：仓库和商品，其属性有：数量、最低库存<br>“聘用”：业务部和业务员，采购部和采购员，其属性有：聘期<br>M：N联系的有：<br> “供应”：供应商和商品：其属性有：采购单号，日期，数量<br>M：N：P联系的有：<br> “采购”：采购员、供应商和商品，其属性有：采购单号、采购日期、数量、单价<br> “销售”：销售员、客户和商品，其属性有：销售单号、销售日期、数量、单价</p>
+<p><strong>E-R图</strong></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/20.png"></p>
+<p>图5.1 一个进销存信息管理的E-R图</p>
+<p><strong>关系模式</strong></p>
+<p>每个关系的主码用下划线，外码用＃标出：</p>
+<p>1、	客户（客户编号、客户名称、地址、联系电话）<br>2、	供应商（供应商编号、供应商名称、地址、联系人、联系电话）<br>3、	部门（部门编号、联系人、联系电话、员工编号＃）<br>4、	员工（员工编号、姓名、性别、部门编号＃、职务）<br>5、	产品（产品号、产品名称、规格、计量单位、单价）<br>6、	采购（采购单号、产品号＃、供应商编号＃、员工编号＃、采购日期、数量、单价）<br>7、	供应（供应号、采购单号＃、日期、数量）<br>8、	销售（销售单号、产品号＃、客户编号＃、员工编号＃、销售日期、数量、单价）<br>9、	存储（产品号＃，数量、最低库存量）</p>
+<h4 id="2）一个物业信息管理系统的E-R图和关系模式"><a href="#2）一个物业信息管理系统的E-R图和关系模式" class="headerlink" title="2）一个物业信息管理系统的E-R图和关系模式"></a>2）一个物业信息管理系统的E-R图和关系模式</h4><p><strong>实体及属性描述</strong></p>
+<p>主要涉及的实体及其属性如下：</p>
+<ol>
+<li>实体集 &lt;房产&gt; 房产编号、物业地址、建筑面积、使用面积、房型、装修情况、售价、是否已出售、备注</li>
+<li>实体集 &lt;业主&gt; 业主编号、业主姓名、性别、工作单位、身份证号、联系电话、银行帐号、入住时间、迁出时间</li>
+<li>实体集 &lt;员工&gt; 员工工号、姓名、所属部门、性别、出身年月、职位、学历、入职年份、家庭地址、联系电话、电子邮件<br>          （说明：将管理员、接待员、抄表员、维修员、发料员等实体行综合,用于存放公司所有员工信息。）</li>
+<li>实体集 &lt;仪表&gt; 仪表序号、仪表名称、型号、始用日期</li>
+<li>实体集 &lt;报修项目&gt; 报修项目编号、报修项目名、摘要</li>
+<li>实体集 &lt;物料&gt; 物料代码、物料名称、物料规格、单价、库存量</li>
+<li>实体集 &lt;物料室&gt; 物料室号、物料室名、负责人、电话</li>
+</ol>
+<p><strong>实体间的联系描述</strong></p>
+<p>从需求分析抽取出合适的实体间联系，其描述如下：</p>
+<ol>
+<li>拥有：实体集[业主]与[房产]之间的1:N联系，即每位小区业主可以拥有多套房产，而一套房产只属于一位业主。</li>
+<li>位于：实体集[房产]与[仪表]之间的1:N联系，即一套房产中可被安装多台仪表，而一台仪表只能位于一套房产中。</li>
+<li>抄录：实体集[抄表员]、[仪表]之间的N:M联系,即一个抄表员可以抄录多台仪表读数，而反之多台仪表的读数也可有不同的抄表员来记录。</li>
+<li>报修：实体集[房产]、[报修项目]、[管理员]三者之间的N:M:P联系,即业主可对其所拥有的房产向不同管理人员提出多项报修项目，反之亦然。</li>
+<li>安排：实体集[管理员]与[维修员]之间的M:N联系，即每个管理员可安排多名维修员上门实施维修工作，而一位维修员可被由不同管理员所安排。</li>
+<li>领料：实体集[维修员]、[发料员]、[物料]三者之间的N:M: P联系,即维修员可向不同的发料员领取多种物料，反之亦然。</li>
+<li>维修：实体集[维修员]与[房产]之间的M:N联系，即一位维修员向多套房产实施维修工作，而一套房产可由多个维修员来维修。</li>
+<li>存放：实体集[物料]与[物料室]之间的M:N联系，即多种物料可存放于一间物料室中，而一种物料可存放在不同物料室。</li>
+<li>进料：实体集[物料]、[物料室]、[物料员]三者之间的N:M:P联系,即一个物料员可以购进多种物料放入不同物料室中，反之亦然。</li>
+<li>投诉：实体集[业主]、[接待员]之间的N:M联系,即一位业主可以向不同的接待员进行对各种服务的投诉，而反之一位接待员也可接受多为业主的投诉。</li>
+</ol>
+<p><strong>E-R图</strong></p>
+<p><img src="/2021/09/22/Graduation-Thesis-Guidance-1/21.png"></p>
+<p>图5.2 一个物业信息管理的E-R图</p>
+<p><strong>关系模式</strong></p>
+<p>上述小区物业信息系统E-R图可转换成如下关系模式：</p>
+<p><strong>房产</strong>   (房产编号，业主编号＃，物业地址，建筑面积，使用面积，房型，装修情况，售价，是否已出售，备注)<br><strong>业主</strong>   (业主编号，业主姓名，性别，工作单位，身份证号，联系电话，银行帐号，入住时间，迁出时间)<br><strong>员工</strong>   (员工工号，姓名，所属部门，性别，出身年月，职位，学历，身份证号，入职年份，家庭地址，联系电话，电子邮件)<br><strong>投诉</strong>  （投诉表编号，业主编号＃，接待员工号＃，投诉日期，投诉内容，处理日期，处理结果，备注）<br><strong>仪表</strong>  （仪表序号，仪表名称，型号，始用日期，房产编号＃）<br><strong>抄录</strong>   (抄表记录单号，抄表员工号＃，仪表序号＃，抄表日期，上月抄见数，本月抄见数)<br><strong>报修项目</strong>（报修项目编号，报修项目名，摘要）<br><strong>报修</strong>    （报修单号，报修项目编号＃，房产编号＃，管理员工号＃，报修日期，摘要）<br><strong>安排</strong>    （安排编号，管理员工号＃，维修员工号＃，报修申请号＃，维修地址，摘要）<br><strong>维修</strong>    （维修员工号＃，房产编号＃，维修日期，报修单号＃，维修情况，完工日期）<br><strong>物料</strong>    （物料代码，物料名称，物料规格，单价，库存量）<br><strong>物料室</strong>   （物料室号，物料室名，负责人，电话）<br><strong>领用</strong>    （领用单号，物料代码＃，维修员工号＃，物料员工号＃，数量，领用日期，摘要)<br><strong>进料</strong>   （进料单号，物料代码＃，物料员工号＃，物料室号＃，数量，进料日期，摘要）<br><strong>存放</strong>     (物料代码＃，物料室号＃，数量，存放位置)</p>
+<p>★ 说明：1）其中属性中加下划线的是主键，加＃的是外键。<br>         2）另外，经以上ER图及转换后的关系模式仔细分析，由业主、报修项目、管理员三者之间所产生的报修联系转换为关系模式（该关系模式又可称为“虚实体”）后,又可与维修关系模式产生联系，故可对维修这一关系模式做进一步修改。安排关系模式也类似地做修改。因此，修改后的维修和安排关系模式如下：</p>
+<p><strong>维修</strong>（维修员工号＃，房产编号＃，维修日期，报修单号＃，维修情况，完工日期）<br><strong>安排</strong>（安排工号，管理员工号＃，维修员工号＃，报修单号＃，维修地址，摘要）</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2021-09-22, 15:38:42</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:41</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2021/09/22/Graduation-Thesis-Guidance-1/" title="Graduation-Thesis-Guidance-1">http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/09/22/Graduation-Thesis-Guidance-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/10/31/Graduation-Thesis-Guidance-2/">
+                    Graduation-Thesis-Guidance-2
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/06/13/Rogue-Software-Process/">
+                    Rogue-Software-Process
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E8%AE%BA%E6%96%87%E6%8C%87%E5%AF%BC-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BA%94%E7%94%A8%E4%B8%8E%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">信息管理系统设计论文指导 (计算机应用与软件工程)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%80%89%E9%A2%98%E4%B8%8E%E5%89%8D%E6%9C%9F%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.2.</span> <span class="toc-text">论文选题与前期注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AE%BA%E6%96%87%E7%9A%84%E9%80%89%E9%A2%98%E6%96%B9%E9%9D%A2%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 论文的选题方面基本介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%BA%E6%96%87%E9%80%89%E9%A2%98%E7%9A%84%E4%B8%89%E7%A7%8D%E9%A1%B9%E7%9B%AE%E6%A0%B7%E6%9D%BF"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 论文选题的三种项目样板</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%BF%9B%E9%94%80%E5%AD%98%E7%9A%84%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">一、进销存的几种实现方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BE%E4%B9%A6%E6%B5%81%E9%80%9A%E7%9A%84%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">二、图书流通的几种实现方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8D%95%E4%BD%8D%E5%99%A8%E6%9D%90%E6%B5%81%E9%80%9A%E7%9A%84%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">三、单位器材流通的几种实现方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8A%9E%E5%85%AC%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%8E%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%AF%94%E8%BE%83%EF%BC%88%E4%B8%8D%E8%A6%81%E6%90%9E%E6%B7%B7%E6%B7%86%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">3. 办公自动化与信息管理系统比较（不要搞混淆）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AE%BA%E6%96%87%E9%80%89%E9%A2%98%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">1.2.4.</span> <span class="toc-text">4. 论文选题的注意点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%90%84%E7%B1%BB%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%8C%85%E5%90%AB%E7%9A%84%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.5.</span> <span class="toc-text">5. 各类信息管理系统包含的主要模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E4%B8%AD%E8%A6%81%E5%88%B0%E7%9A%84%E5%90%84%E7%A7%8D%E5%9B%BE%E4%BB%A5%E5%8F%8A%E6%9C%AF%E8%AF%AD%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.3.</span> <span class="toc-text">论文中要到的各种图以及术语介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE%E9%83%A8%E5%88%86"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. 数据流图部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%A4%96%E9%83%A8%E9%A1%B9"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">1. 外部项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">2. 数据流</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91%EF%BC%88%E5%8A%A0%E5%B7%A5%EF%BC%89"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">3. 处理逻辑（加工）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%95%B0%E6%8D%AE%E5%85%83%E7%B4%A0"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">4. 数据元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%EF%BC%88%E6%96%87%E4%BB%B6%EF%BC%89"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">5. 数据存储（文件）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8E%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3"><span class="toc-number">1.3.2.</span> <span class="toc-text">2．数据流图的分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E8%AF%8D%E5%85%B8"><span class="toc-number">1.3.3.</span> <span class="toc-text">3. 数据词典</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E5%85%83%E7%B4%A0"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">1. 数据元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">2. 数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">3. 数据流</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">4. 数据存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">5. 处理逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E5%A4%96%E9%83%A8%E9%A1%B9"><span class="toc-number">1.3.3.6.</span> <span class="toc-text">6. 外部项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%B6%E4%BB%96%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.3.4.</span> <span class="toc-text">4. 其他的注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%BC%96%E5%86%99%E8%AE%BA%E6%96%87%E6%97%B6%E5%AE%B9%E6%98%93%E7%8A%AF%E5%BE%97%E9%94%99%E8%AF%AF"><span class="toc-number">1.3.5.</span> <span class="toc-text">5. 编写论文时容易犯得错误</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE%EF%BC%88DFD%EF%BC%89%E7%9A%84%E8%A7%84%E8%8C%83%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">一、数据流图（DFD）的规范性问题：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E5%85%B3%E4%BA%8E%E5%A4%96%E9%83%A8%E9%A1%B9"><span class="toc-number">1.3.5.1.1.</span> <span class="toc-text">1、关于外部项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">1.3.5.1.2.</span> <span class="toc-text">2、关于数据流</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81%E5%85%B3%E4%BA%8E%E5%A4%84%E7%90%86%E6%A8%A1%E5%9D%97"><span class="toc-number">1.3.5.1.3.</span> <span class="toc-text">3、关于处理模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8"><span class="toc-number">1.3.5.1.4.</span> <span class="toc-text">4、关于数据存储</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81HIPO%E5%9B%BE%E7%9A%84%E8%A7%84%E8%8C%83%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">二、HIPO图的规范性问题：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E4%BD%93%E6%8F%8F%E8%BF%B0%E3%80%81%E8%81%94%E7%B3%BB%E6%8F%8F%E8%BF%B0%EF%BC%8CER%E5%9B%BE%EF%BC%8C%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%A7%84%E8%8C%83%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="toc-number">1.3.5.3.</span> <span class="toc-text">三、实体描述、联系描述，ER图，关系模式的规范性问题：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="toc-number">1.3.5.3.1.</span> <span class="toc-text">1、数据库模式设计步骤：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%EF%BC%9A"><span class="toc-number">1.3.5.3.2.</span> <span class="toc-text">2、需要注意的是：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91%E7%9A%84%E5%90%88%E7%90%86%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="toc-number">1.3.5.4.</span> <span class="toc-text">四、处理逻辑的合理性问题：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="toc-number">1.3.5.4.1.</span> <span class="toc-text">1、数据流图的设计步骤：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%EF%BC%9A-1"><span class="toc-number">1.3.5.4.2.</span> <span class="toc-text">2、需要注意的是：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%AE%80%E5%8D%95%E7%89%88%E6%A1%88%E4%BE%8B%EF%BC%88%E4%BB%A5%E4%B8%BB%E8%A6%81%E5%AE%B9%E6%98%93%E5%87%BA%E9%94%99%E7%9A%84%E9%83%A8%E5%88%86%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">论文简单版案例（以主要容易出错的部分为例）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">1.4.1.</span> <span class="toc-text">1、组织结构图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%85%B3%E8%81%94%E5%9B%BE"><span class="toc-number">1.4.2.</span> <span class="toc-text">2、关联图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E9%A1%B6%E5%B1%82%E5%9B%BE"><span class="toc-number">1.4.3.</span> <span class="toc-text">3、顶层图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E4%B8%80%E5%B1%82%E5%9B%BE"><span class="toc-number">1.4.4.</span> <span class="toc-text">4、一层图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81E-R%E5%9B%BE%E5%92%8C%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.5.</span> <span class="toc-text">5、E-R图和关系模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%BC%89%E4%B8%80%E4%B8%AA%E8%BF%9B%E9%94%80%E5%AD%98%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84E-R%E5%9B%BE%E5%92%8C%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%BC%8F%E3%80%82"><span class="toc-number">1.4.5.1.</span> <span class="toc-text">1）一个进销存信息管理系统的E-R图和关系模式。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%BC%89%E4%B8%80%E4%B8%AA%E7%89%A9%E4%B8%9A%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84E-R%E5%9B%BE%E5%92%8C%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.5.2.</span> <span class="toc-text">2）一个物业信息管理系统的E-R图和关系模式</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Graduation-Thesis-Guidance-1　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/10/31/Graduation-Thesis-Guidance-2/" title="Pre: Graduation-Thesis-Guidance-2">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/06/13/Rogue-Software-Process/" title="Next: Rogue-Software-Process">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

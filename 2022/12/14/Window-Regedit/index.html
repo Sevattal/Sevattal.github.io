@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="Windows注册表内容详解（转载）链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;0cfcbba813ac (关于windows注册表的整理，来源网络)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Window-Regedit">
+<meta property="og:url" content="http://yoursite.com/2022/12/14/Window-Regedit/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="Windows注册表内容详解（转载）链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;0cfcbba813ac (关于windows注册表的整理，来源网络)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-12-14T03:00:36.000Z">
+<meta property="article:modified_time" content="2022-12-14T03:32:27.096Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Regedit">
+<meta name="twitter:card" content="summary">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Window-Regedit | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Window-Regedit" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/12/14/Window-Regedit/" class="article-date">
+      <time datetime="2022-12-14T03:00:36.000Z" itemprop="datePublished">2022-12-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Window-Regedit
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Window/">Window</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Windows注册表内容详解（转载）"><a href="#Windows注册表内容详解（转载）" class="headerlink" title="Windows注册表内容详解（转载）"></a>Windows注册表内容详解（转载）</h1><p>链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0cfcbba813ac">https://www.jianshu.com/p/0cfcbba813ac</a></p>
+<p>(关于windows注册表的整理，来源网络)</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>一、什么是注册表</strong></p>
+<p>​注册表是 windows 操作系统、硬件设备以及客户应用程序得以正常运行和保存设置的核心 “数据库”，也可以说是一个非常巨大的树状分层结构的数据库系统。<br>​注册表记录了用户安装在计算机上的软件和每个程序的相互关联信息，它包括了计算机的硬件配置，包括自动配置的即插即用的设备和已有的各种设备说明、状态属性以及各种状态信息和数据。利用一个功能强大的注册表数据库来统一集中地管理系统硬件设施、软件配置等信息，从而方便了管理，增强了系统的稳定性。</p>
+<p><strong>二、注册表的功能</strong><br>​<br>刚才我们看到了，注册表中记录了用户安装在计算机上的软件和每个程序的相关信息，通过它可以控制硬件、软件、用户环境和操作系统界面的数据信息文件。<br>相关知识：注册表文件的数据信息保存在 system.dat 和 user.dat 中、利用 regedit.exe 程序能够存取注册表文件（其实大家可能也知道 regedt32.exe，这两个程序是一样的）</p>
+<p><strong>三、编辑器说明</strong></p>
+<p>在运行里键入 regedit 就可以进入了<br>根键：这个称为 HKEY…………，某一项的句柄项：附加的文件夹和一个或多个值<br>子项：在某一个项（父项）下面出现的项（子项）<br>值项：带有一个名称和一个值的有序值，每个项都可包括任何数量的值项，值项由三个部分组成：名称、数据类型和数据。</p>
+<pre><code>1、名称：不包括反斜线的字符、数字、代表符和空格的任意组合。同一键中不可有相同的名称
+2、数据类型：包括字符串、二进制和双字节等
+3、数据：值项的具体值，它的大小可以占用 64KB
+</code></pre>
+<h2 id="总体结构分析"><a href="#总体结构分析" class="headerlink" title="总体结构分析"></a>总体结构分析</h2><p>注册表包括以下 5 个根键</p>
+<pre><code>1.HKEY_CLASSES_ROOT
+说明：该根键包括启动应用程序所需的全部信息，包括扩展名，应用程序与文档之间的关系，驱动程序名，DDE 和 OLE 信息，类 ID 编号和应用程序与文档的图标等。
+2.HKEY_CURRENT_USER
+说明：该根键包括当前登录用户的配置信息，包括环境变量，个人程序以及桌面设置等
+3.HKEY_LOCAL_MACHINE
+说明：该根键包括本地计算机的系统信息，包括硬件和操作系统信息，安全数据和计算机专用的各类软件设置信息
+4.HKEY_USERS
+说明：该根键包括计算机的所有用户使用的配置数据，这些数据只有在用户登录系统时才能访问。这些信息告诉系统当前用户使用的图标，激活的程序组，开始菜单的内容以及颜色，字体
+5.HKEY_CURRENT_CONFIG
+说明：该根键包括当前硬件的配置信息，其中的信息是从 HKEY_LOCAL_MACHINE 中映射出来的。
+</code></pre>
+<p><strong>HKEY_CLASSES_ROOT</strong></p>
+<p>我们知道，在这一个根键中记录的是 WINDOWS 操作系统中所有数据文件的信息内容，主要记录了不同文件的文件扩展名和与之相对应的应用程序。这就是为什么我们双击某一个文档的时候，可以由系统自动调出应用程序的所在了。这个根键的子键当大家展开时发现是非常多的，它主要分为两种：</p>
+<pre><code>一是已经注册的各类文件的扩展名
+一是各种文件类型的有关信息。
+</code></pre>
+<p>下面我们以 AVIFILE 举例说明一下其下面的子项的含义：</p>
+<pre><code>1、CLSID：分类标识，系统可以用这个类标识来识别相同类型的文件
+2、Compressors：它下面有两个子项：auds:用于设置音频数据压缩程序的类标识；vids:用于设置视频数据压缩程序的类标识
+3、defaultlcon：用于设置默认图标，这个大家可以改一下试试
+4、RIFFHandlers：在它的下面有两个类标识：AVI：用于设置AVI文件的类标识；WAVE：用于设置WAVE文件的类标识
+5、protocol：包括了执行程序和编辑程序的路径和文件名：
+StdExecute（stdfileediting)server：用于指定编辑程序；
+StdExecute（stdfileediting)_PackageObjects:用于指定后打开AVI包对象的编辑程序；StdExecute（stdfileediting)_verb：用于设置编辑程序时的工作状态，其中有0、1、2等状态
+6、Shell子项：用于设置视频文件的外壳：open:用于设置打开AVI文件的程序；play：用于设置播放命令的程序
+7、Shellex：包括了视频文件的外壳扩展
+</code></pre>
+<p><strong>HKEY_CURRENT_USER</strong></p>
+<p>此根键中保存的信息（当前用户的子项信息）与HKEY_USERS_DEFAULT下面的一模一样的。任何对 HKEY_CURRENT_USER 根键中的信息的修改都会导致对 HKEY_USERS_DEFAULT 中子项的修改</p>
+<p><strong>HKEY_LOCAL_MACHINE</strong></p>
+<p>此根键中存放的是用来控制系统和软件的设置，由于这些设置是针对那些使用 Windows 系统的用户而设置的，是一个公共配置信息，所以它与具体的用户没多大关系。</p>
+<pre><code>1、HARDWARE子项：该子项包括了系统使用的浮点处理器、串口等信息：
+    ACPI:存放高级电源管理接口数据；
+    DEVICEMAP：用于存放设备映射；
+    DEscriptION：存放有关系统信息；
+    RESOURCEMAP：用于存放资源列表
+2、SAM子项：哈哈，这部分被保护了，看不到
+3、SECURITY子项：该子项只是为将来的高级功能而预留的
+4、SOFTWARE子项：该子项中保留的是所有已安装的32位应用程序的信息，各个程序的控制信息分别安装在相应的子项中，由于不同的计算机安装的应用程序互不相同，因此这个子项下面的子项信息也不完全一样。
+5、SYSTEM子项：该子项是启动时所需的信息和修复系统时所需要的信息
+    currentcontrol:保存了当前驱动程序控制集中的所有信息
+</code></pre>
+<p><strong>HKEY_USERS</strong></p>
+<p>此根键中保存的是默认用户（default)，当前登录用户和软件（software) 的信息，其中 DEFAULT 子项是其中最重要的，它的配置是针对未来将会被创建的新用户的。新用户根据默认用户的配置信息来生成自己的配置文件，该配置文件包括环境、屏幕和声<br>音等多种信息，其中常用的 3 项有：</p>
+<pre><code>1、AppEvents子项：它包括了各种应用事件的列表：EventLabels:按字母顺序列表；Schemes:按事件分类列表
+2、Control Panel子项：它包括内容与桌面、光标、键盘和鼠标等设置有关
+3、Keyboard layout子项：用于键盘的布局（如语言的加载顺序等）
+​	Preload:语言的加载顺序
+​	Substitutes:设置可替换的键盘语言布局
+​	Toggle:用于选择键盘语言
+</code></pre>
+<p><strong>HKEY_CURRENT_CONFIG</strong></p>
+<p>此根键存放的是当前配置的文件信息。<br>实际上细心的读者已经发现了，五大根键实际上并不是五个，现在把这个做了总结<br>我们都知道用 regedit 或 regedit32 都可以打开注册表文件，在 XP 系统下的时候，这两种方法其实都是一样的，当我们打开注册表后看到了类似资源管理器的东西，这里面都有什么呢？</p>
+<pre><code>HKEY_CLASSES_ROOT
+HKEY_CURRENT_USER
+HKEY_LOCAL_MACHINE
+HKEY_USERS
+HKEY_CURRENT_CONFIG
+</code></pre>
+<p>看是五个分支，其实就是 HKEY_LOCAL_MACHINE、HKEY_USERS 这两个才是真正的注册表键，其它都是从某个分支映射出来的，</p>
+<p>相当于快捷方式或是别名，这样的话看注册表就简单了许多了，现在说一下每个分支的作用：</p>
+<pre><code>HKEY_CLASSES_ROOT：列出当前计算机注册的所有 COM 服务器和与应用程序相关联的所有文件扩展名。
+HKEY_CURRENT_USER：保存着当前登录到由这个注册服务的计算机上的用户配置文件。
+HKEY_LOCAL_MACHINE：保存操作系统及硬件相关信息的配置单元，它是一个公共的配置信息与具体用户无关，其中关键是两个键值
+SOFTWARE：保存着与这台电脑中安装的应用程序相关的设置。
+SYSTEM：WINDOWS所装载的设备驱动程序以及当 WINDOWS 启动时所需要的各种参数。
+HKEY_USERS：包含当前计算机所有用户配置文件。
+HKEY_CURRENT_CONFIG： 计算机当前会话中的所有硬件配置信息。
+</code></pre>
+<p><strong>注册表的基本操作</strong></p>
+<pre><code>1、创建项和项值
+2、更值项的数据
+3、删除项、子项或值项
+4、查找项、值项或数据
+</code></pre>
+<p><strong>注册表中常用的数据类型有5种：</strong></p>
+<pre><code>二进制值（reg_binary）: 多数硬件信息以二进制数据存储，而以十六进制格式显示在注册表编辑器中
+字符串值（reg_sz）:包括字符串的注册表键，使用字符串数据类型
+双字节值（reg_dword）: 是 32 位信息常显示成 4 个字节。它在出错控制功能上用处极大，其数据一般以十六进制格式显示在注册表编辑器中。
+多字符串值(reg_multi_sz): 允许将一系列项目作为单独的一个值使用。对于多种网络协议、多个项目、设备列表以及其他类似的列表项目来说，可以使用多字符串值
+可扩充字符串值（reg_expand_sz）：代表一个可扩展的字符串
+</code></pre>
+<h2 id="注册表破坏的现象及原因"><a href="#注册表破坏的现象及原因" class="headerlink" title="注册表破坏的现象及原因"></a>注册表破坏的现象及原因</h2><p><strong>一、注册表破坏后的常见现象</strong></p>
+<pre><code>1、无法启动系统
+2、无法运行或正常运行合法的应用程序
+3、找不到启动系统或运行应用程序所需的文件
+4、没有访问应用程序的权限
+5、不能正确安装或装入驱动程序
+6、不能进行网络连接
+7、注册表条目有错误
+</code></pre>
+<p><strong>二、注册表被破坏的原因</strong></p>
+<pre><code>1、应用程序错误：这个出现的时候比较多，因为我们知道应用程序或多或少的时候都有错误，都有可能导致不同的后果；另外在系统中安装过多的软件后，有可能出现彼此之间的冲突。
+2、驱动程序不兼容：其实我发现好多出在系统自动安装的驱动程序上，如果你本身有驱动程序盘的话，还是用专业的比较好一些
+3、硬件问题：这里面好我问题出现在硬件质量上，比如硬盘或内存质量不过关造成读写错误，或超频或CMOS或病毒等
+4、误操作：这个大家不知出现了没有，您的误操作可能会导致注册表出现错误，有的时候甚至会很严重的。
+</code></pre>
+<h2 id="备份注册表"><a href="#备份注册表" class="headerlink" title="备份注册表"></a>备份注册表</h2><p><strong>一、手工备份注册表</strong></p>
+<p>大家把以下几个文件直接复制到另一个文件夹就可以了</p>
+<pre><code>1、在 windowssystem32config 下有以下几个文件用以保存系统配置：SAM,SYSTEM,SOFYWARE,DEFAULT
+2、在 Documetents and settingsusername文件夹中保存用户配置文件：NETUSER.DAT,当然对应的 LOG 文件应该一块保存
+</code></pre>
+<p><strong>二、注册表导出法导出注册表</strong></p>
+<p>在文件中选择导出命令,回答文件名和位置，OK了</p>
+<p><strong>三、通过系统备份功能进行备份</strong></p>
+<pre><code>1、选择开始—程序—附件—系统工具—备份
+2、选择高级模式点下一步
+3、选择system state(系统状态),在底下文件名中位置中回答路径及文件名
+4、点击开始备份
+</code></pre>
+<h2 id="恢复注册表"><a href="#恢复注册表" class="headerlink" title="恢复注册表"></a>恢复注册表</h2><p><strong>1、重新启动系统恢复注册表</strong></p>
+<pre><code>一重启就可以修正各种在注册表中出现的错误了，但是以硬盘上的注册表的信息正确为前提的。
+</code></pre>
+<p><strong>2、手工恢复注册表</strong></p>
+<pre><code>把上节中复制出来的文件再弄回去就OK了。
+</code></pre>
+<p><strong>3、注册表导入法恢复</strong></p>
+<pre><code>首先上节中的导出的文件你要有啊，然后运行 regedit.exe 文件，文件中的导入，选择要导入的注册表文件，点找开就可以了
+</code></pre>
+<p><strong>4、利用高级启动选项恢复注册表</strong></p>
+<p>重启计算机，启动时按 F8 键进入高级选项菜单， 选择最后一次正确的配置，回车了，OK</p>
+<p><strong>5、通过局域网来恢复注册表</strong></p>
+<p>这个我们一般是指连入局域网的某一计算机（我们假设叫 aaaaa）的注册表被管理员锁了，但有另一台计算机（我们假设叫 B）的注册表可以用，现在我们用B来解除 A 的锁定。</p>
+<p>进入 B 的注册表，选择文件中的连接网络注册表，在查找位置中输入aaaaa，这时注册表中出现了songxiang计算机的注册表，修改键值：aaaaaHEKY_USERSS-1-5-21-823518204-688789844-842925246-500SoftwareMicrosoftWindowsCurrentVersionPoliciesSystem下的disableregistrytools值改为0就可以了。S-1-5-21-823518204-688789844-842925246-500 这一大堆数知道什么意思吗，是超级管理员，重新安装系统</p>
+<h2 id="注册表的优化"><a href="#注册表的优化" class="headerlink" title="注册表的优化"></a>注册表的优化</h2><p><strong>一、我们为什么要优化注册表</strong></p>
+<pre><code>1、在计算机使用过程中可能经常添加或删除应用程序；在上网时遇到恶意网站，向注册表强行添加信息；
+2、原来的应用程序卸载后注册表没删除，启动时出现没找到某某应用程序
+3、多余注册表的子项可能造成浪费或降低启动速度
+</code></pre>
+<p><strong>二、手工优化注册表</strong></p>
+<p>1、清除多余的 DLL 文件</p>
+<pre><code>大家找到这个项：HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionShareDLLs，在这个项下存放的是共享的DLL信息，注意看括号里面的数据，它表示共享文件的数目，如果为0，那么删除掉吧
+</code></pre>
+<p>2、安装卸载应用程序的垃圾信息</p>
+<pre><code>这个主要是一些非法卸载应用程序导致的，我们首先要知道什么程序被非法卸载了，这个很好办，你自己现在正使着的你是知道的，其余的就没用了
+注册表位置：HKEY_CURRENT_USERSoftware HKEY_LOCAL_MACHINESoftware
+看到没用的就全删了就行了
+</code></pre>
+<p>3、系统安装时产生的无用信息：去掉吧，有可能启动变快呢</p>
+<p>3.1、删除多余时区（我是只留北京时区）</p>
+<pre><code>位置：HKEY_LOCAL_MACHINESoftwareMicrosoftWindowsNTCurrentVersionTime Zones
+如果你只要北京时区的话，那么除了China Standard Time，其余的都删了吧
+</code></pre>
+<p>3.2、清除国家列表（我只留中华人民共和国）</p>
+<pre><code>位置：HKEY_LOCAL_MACHINESoftwareMicrosoftWindowsCurrentVersionTelephonyCountry List
+保留86号文件夹，其余删
+</code></pre>
+<p>3.3、清除多余的语言代码（我只保留英语—0409和中文—0804）</p>
+<pre><code>位置：HKEY_LOCAL_MACHINESYSTEMCurrnetControlSetControlNlsLocale
+没用的删了吧
+</code></pre>
+<p>3.4、删除多余的键盘布局：</p>
+<pre><code>位置：HKEY_LOCAL_MACHINESYSTEMCurrnetControlSetControlKeyboard Layouts
+你可以把每个键值都打开看看，不需要的输入法删除即可
+</code></pre>
+<p>3.5、删除失效的文件关联</p>
+<pre><code>位置：HKEY_CLASSES_ROOT 主键可分为两部分：第一部分用来定义文件类型；第二部分与第一部分一一对应，用于记录打开
+文件的应用程序。一般，在打开第二部分的可疑子项后，若该键下的 COMMAND 下没有内容，就可以删掉了
+</code></pre>
+<h2 id="个性化设置"><a href="#个性化设置" class="headerlink" title="个性化设置"></a>个性化设置</h2><p><strong>1、去掉桌面快捷方式上的小键头</strong></p>
+<pre><code>位置：HKEY_CLASSES_ROOTLNKFILE项 ：IsShortcut
+操作：删除此项
+</code></pre>
+<p><strong>2、隐藏桌面上的所有图标</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareWindowsCurrentVersionPoliciesExplorer
+新建：NoDesktop（双字节）
+操作：值设为1
+</code></pre>
+<p><strong>3、修改桌面上“回收站”的名字及图标位置：</strong></p>
+<pre><code>HKEY_LOCAL_MACHINESOFTWAREClassesCLSID&#123;645FF040-5081-101B-9F08-00AA002F954E&#125;（这个大家也可直接查找“回收站”
+修改：（默认）一项随便换个名字就可以了
+然后展开此项，选择DEfaultIcon
+这时大家看到有3个子项，意思吗一看就明白了
+如果想改变图标时，只需将路径和文件名改了即可，比如改为&quot;d: t.ico&quot;
+</code></pre>
+<p><strong>4 、去掉桌面上的网上邻居</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建：NoNetHood（双字节）值： 1
+</code></pre>
+<p><strong>5、在桌面上显示系统版本号</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERControl PanelDesktop
+项：PaintDesktopVersion
+修改：将值改为1
+</code></pre>
+<p><strong>6、改变窗口按钮字体的颜色</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERControl PannelColors
+键值：ButtonText
+修改：大家知道PS吧，比如改为红么(255,0,0)
+</code></pre>
+<p><strong>7、屏蔽桌面上的 IE 图标</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareWindowsCurrentVersionPoliciesExplorer
+新建值项：NoInternetIcon
+修改：1
+</code></pre>
+<p><strong>8、禁止更改桌面墙纸</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareWindowsCurrentVersionPoliciesExplorer
+新建项值：NoChangingWallPaper(双字节）
+修改：1
+</code></pre>
+<p><strong>9、设置登录背景</strong></p>
+<pre><code>位置：HKEY_USERSDEFAULTControlPanelDesktop
+键值：WallPaper
+修改：把背景图片一写就OK了（比如C:aa.bmp）
+</code></pre>
+<p><strong>—————-以上需重启计算机—————-</strong></p>
+<p><strong>10、更改：我的电脑的提示信息位置：</strong></p>
+<pre><code>HKEY_LOCAL_MACHINESOFTWAREClassesCLSID&#123;20D04FE0-3AEA-1069-A2D8-08002B30309D&#125;
+键值：InfoTip
+修改：哈，随便打吧，我打成了“这是我的电脑噢&quot;
+</code></pre>
+<p><strong>11、更改：回收站的提示信息位置：</strong></p>
+<pre><code>HKEY_LOCAL_MACHINESOFTWAREClassesCLSID&#123;645FF040-5081-101B-9F08-00AA002F954E&#125;
+键值：InfoTip
+修改：跟上面一样,自己改吧
+</code></pre>
+<p><strong>12、更改 IE 的提示信息位置：</strong></p>
+<pre><code>HKEY_LOCAL_MACHINESOFTWAREClassesCLSID&#123;871C5380-42A0-1069-A2EA-08002B30309D&#125;
+键值：InfoTip
+修改：同上
+</code></pre>
+<p><strong>13、更改网上邻居的提示信息位置：</strong></p>
+<pre><code>HKEY_LOCAL_MACHINESOFTWAREClassesCLSID&#123;208D2C60-3AEA-1069-A2D7-08002B30309D&#125;
+键值：InfoTip
+修改：同上
+</code></pre>
+<p><strong>14、更改我的文档的提示信息位置：</strong></p>
+<pre><code>HKEY_LOCAL_MACHINESOFTWAREClassesCLSID&#123;450D8FBA-AD25-11D0-98A8-0800361B1103&#125;
+键值：InfoTip
+修改：同上
+</code></pre>
+<p><strong>15、更改任务计划提示信息位置：</strong></p>
+<pre><code>HKEY_LOCAL_MACHINESOFTWAREClassesCLSID&#123;D6277990-4C6A-11CF-8D87-00AA0060F5BF&#125;
+键值：InfoTip
+修改：同上
+</code></pre>
+<p><strong>16、改变桌面图标顺序位置：</strong></p>
+<pre><code>HKEY_LOCAL_MACHINESOFTWAREClassesCLSID&#123;450D8FBA-AD25-11D0-98A8-0800361B1103&#125;
+键值：SortOrderIndex
+修改：48（我的文档在第一位）
+54（我的电脑在第一位）
+</code></pre>
+<p><strong>17、禁止帮助提示信息(需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced
+键值：showinfotip
+修改：0
+</code></pre>
+<p><strong>18、用真彩色显示图标(需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERControl
+PanelDesktopWindowMetrics
+键值：Shell Icon BPP
+修改：32
+</code></pre>
+<p><strong>19、更改图标显示尺寸(需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERControl PanelDesktopWindowMetrics
+键值：Shell Icon SIZE
+修改：在显示器分辨率为1024768时可改为：48；在显示器分辨率为16001200时可改为：64
+</code></pre>
+<p><strong>20、自动清除“文档”菜单中的历史记录（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建：CleanReccentDocsOn-Exit
+(REG-DWORD)值：1
+</code></pre>
+<p><strong>21、禁止“文档”的历史记录（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建：NoReccentDocsHistory
+(REG-DWORD)值：1
+</code></pre>
+<p><strong>22、去掉开始菜单的“文档”项（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建：NoReccentDocsMenu
+(REG-DWORD)值：1
+</code></pre>
+<p><strong>23、去掉开始菜单的“查找”项（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建：NoFind
+(REG-DWORD)值：1
+</code></pre>
+<p><strong>24、去掉开始菜单的“运行”项（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建：NoRun
+(REG-DWORD)值：1
+</code></pre>
+<p><strong>25、禁止用户更改“开始”菜单（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建：NoChangeStartMenu
+(REG-DWORD)值：1
+</code></pre>
+<p><strong>26、禁止显示开始菜单中的windows update项（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建：NoWindowsUpdate
+(REG-DWORD)值：1
+</code></pre>
+<p><strong>27、屏蔽开始菜单中的“关闭计算机”项（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建：NoClose (REG-DWORD)值：1
+</code></pre>
+<p><strong>28、加快“开始”菜单与“任务栏”的速度</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERControl PanelDesktop
+键值：MenuShowDelay
+值：数值资料改为100或更小（默认值为：400），建议不要使用0，因为如此一来只要鼠标一不小心触碰到“所有程序”，整条菜单就会跑出来，那这乱了套。
+</code></pre>
+<p><strong>29、为回收站的右键菜单增加“删除”和“重命名”</strong></p>
+<pre><code>位置：HKEY_CLASSES_ROOTCLSID&#123;645FF040-5081-101B-9F08-00AA002F954E&#125;ShellFolder
+键值：Attributes
+值：70 01 00 20
+</code></pre>
+<p><strong>30、为右键菜单添加“在新窗口打开”命令</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREClassesDirectoryshell
+新建子项：NewWindow
+修改：将默认值项值改为“在新窗口打开”
+继续：在NewWindow项下新建个子项command
+修改：将默认值项值改为explorer.exe
+</code></pre>
+<p><strong>31、为右键菜单添加“快速关闭计算机”命令</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREClassesDirectoryshell
+新建子项：
+快速关闭计算机
+修改：将默认值项值改为“快速关闭计算机”
+继续：在NewWindow项下新建个子项command
+修改：将默认值项值改为&quot;c:windows undll32.exe user.exe,exitwindowsexec&quot;
+</code></pre>
+<p><strong>32、禁止任务栏的快捷菜单（需重启)</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建键值：NoTrayContextMenu
+(REG_DWORD)值：1
+</code></pre>
+<p><strong>33、将任务栏显示时间的地方改为要显示的文字（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERControl PanelInternational
+键值：STimeFormat
+修改：自己喜欢什么文字就改成什么吧
+</code></pre>
+<p><strong>34、禁止使用任务栏（需重启）</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesExplorer
+新建键值：NoSetTaskBar
+(REG_DWORD)修改：1
+</code></pre>
+<h2 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h2><h3 id="控制面板常用选项设置，系统性能优化设置"><a href="#控制面板常用选项设置，系统性能优化设置" class="headerlink" title="控制面板常用选项设置，系统性能优化设置"></a>控制面板常用选项设置，系统性能优化设置</h3><p><strong>1、禁用“控制面板”中的“显示”选项</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPolicies
+新建项值：System
+新建值项：NodispCPL
+（REG_DWORD）
+值：1
+</code></pre>
+<p><strong>2、屏蔽显示选项中的“屏幕保护程序”</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesSystem
+新建值项：NoDispScrSavPage
+（REG_DWORD）
+值：1
+</code></pre>
+<p><strong>3、屏蔽显示选项中的“外观”</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesSystem
+新建值项：NoDispAppearancePage
+（REG_DWORD）值：1
+</code></pre>
+<p><strong>4、屏蔽显示选项中的“设置”</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesSystem
+新建值项：NoDispSettingsPage
+（REG_DWORD）值：1
+</code></pre>
+<p><strong>5、屏蔽显示选项中的“屏幕保护程序密码”</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwarePoliciesMicrosoft
+新建项：Control Panel
+再新建子项：Desktop
+新建值：ScreenSaverIsSecure (REG_DWORD)值：1
+</code></pre>
+<p><strong>6、禁止使用“添加删除程序”项</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPolicies
+新建子项：Uninstall
+新建值项：NoAddRemovePrograms (REG_DWORD)值：1
+</code></pre>
+<p><strong>7、屏蔽“添加删除程序”中的“更改或删除程序”选项</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesuninstall
+新建值项：NoRemovePage (REG_DWORD)值：1
+</code></pre>
+<p><strong>8、屏蔽“添加删除程序”中的“添加新程序”选项</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesuninstall
+新建值项：NoAddpage (REG_DWORD)值：1
+</code></pre>
+<p><strong>9、屏蔽“添加删除程序”中的“添加或删除windows组件”选项</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesuninstall
+新建值项：NoWindowsSetupPage (REG_DWORD)值：1
+</code></pre>
+<p><strong>10、屏蔽“添加删除程序”中的“更改或删除程序”中的“单击此处获得支持信息”选项</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesuninstall
+新建值项：NoSupportInfo (REG_DWORD)值：1
+</code></pre>
+<p><strong>11、屏蔽“更改或删除程序”中的“添加新程序”中的“从CD-ROM或软盘安装程序”选项</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesuninstall
+新建值项：NoAddFromCDorFloppy (REG_DWORD)值：1
+</code></pre>
+<p><strong>12、屏蔽“更改或删除程序”中的“添加新程序”中的“从Microsoft添加程序程序”选项</strong></p>
+<pre><code>位置：HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionPoliciesuninstall
+新建值项：NoAddFromInternet (REG_DWORD)值：1
+</code></pre>
+<p><strong>13、设置windows的关机时间</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControl
+值项：WaitToKillServiceTimeout
+修改：它以毫秒为单位，请自行设置
+</code></pre>
+<p><strong>14、更改 windows 服务启动的顺序</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlServiceGroupOrder
+值项：ServiceGroupOrder
+修改：按你想要的顺序自行输入
+</code></pre>
+<p><strong>15、更改 windows 启动时运行的程序</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlSession
+Manager
+值项：BootExecite
+修改：自行输入一行启动时要执行的命令即可
+</code></pre>
+<p><strong>16、删除多余的DLL文件</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionSharedDlls
+值项：这里好多了，都是DLL的，注意看好了，所有是0的都是没用的，删了即可，然后再将相应的系统文件夹中的文件删除
+</code></pre>
+<p><strong>17、删除不必要的自启程序</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun
+值项：这里面列出的都是启动项，不要的可以删掉，他和msconig中列出的是一样的
+</code></pre>
+<p><strong>18、清除注册表垃圾（需重启）</strong></p>
+<pre><code>位置1：HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionUninstall
+位置2：HKEY_LOCAL_MACHINESOFTWARE
+操作：很简单了，没用的删了吧
+</code></pre>
+<p><strong>19、自动刷新窗口（需重启）</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlUpdate
+键值：UpdateMode
+修改：0
+</code></pre>
+<p><strong>20、更改开始菜单存放的目录（需重启）</strong></p>
+<pre><code>位置：HKEY_USERS.DEFAULTSoftwareMicrosoftWindowsCurrentVersionExplorerShell Folders
+键值：Start Menu
+修改：把要改到的路径添上就可以了,并将原源件复制到目标文件夹下
+</code></pre>
+<p><strong>21、更改开始菜单中的程序的存放目录（需重启）</strong></p>
+<pre><code>位置：HKEY_USERS.DEFAULTSoftwareMicrosoftWindowsCurrentVersionExplorerShell Folders
+键值：Program
+修改：把要改到的路径添上就可以了，并将原源件复制到目标文件夹下
+</code></pre>
+<p><strong>22、更改开始菜单中的程序里的应用程序存放目录（需重启）</strong></p>
+<pre><code>位置：HKEY_USERS.DEFAULTSoftwareMicrosoftWindowsCurrentVersionExplorerShell Folders
+键值：appdate
+修改：把要改到的路径添上就可以了，并将原源件复制到目标文件夹下
+</code></pre>
+<p><strong>23、更改开始菜单中的程序里的发送到存放目录（需重启）</strong></p>
+<pre><code>位置：HKEY_USERS.DEFAULTSoftwareMicrosoftWindowsCurrentVersionExplorerShell Folders
+键值：SendTo
+修改：把要改到的路径添上就可以了，并将原源件复制到目标文件夹下,其实我们也可以在这里建立一个新的发送到项目，比如发送到你的U盘
+</code></pre>
+<p><strong>24、更改开始菜单中的程序里的启动程序存放目录（需重启）</strong></p>
+<pre><code>位置：HKEY_USERS.DEFAULTSoftwareMicrosoftWindowsCurrentVersionExplorerShell Folders
+键值：StartUp
+修改：把要改到的路径添上就可以了，并将原源件复制到目标文件夹下
+</code></pre>
+<p><strong>25、更改网页历史记录存放目录（需重启）</strong></p>
+<pre><code>位置：HKEY_USERS.DEFAULTSoftwareMicrosoftWindowsCurrentVersionExplorerShell Folders
+键值：History
+修改：把要改到的路径添上就可以了，并将原源件复制到目标文件夹下
+</code></pre>
+<p><strong>26、更改我的文档存放目录（需重启）</strong></p>
+<pre><code>位置：HKEY_USERS.DEFAULTSoftwareMicrosoftWindowsCurrentVersionExplorerShell Folders
+键值：Personal
+修改：把要改到的路径添上就可以了，并将原源件复制到目标文件夹下
+</code></pre>
+<p><strong>27、更改新建文件的存放目录（需重启）</strong></p>
+<pre><code>位置：HKEY_USERS.DEFAULTSoftwareMicrosoftWindowsCurrentVersionExplorerShell Folders
+键值：Templates
+修改：把要改到的路径添上就可以了
+</code></pre>
+<p><strong>28、在我的电脑中显示网络连接</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionExplorerMyComputerNameSpace
+新建子项：&#123;992CFFA0-F557-101A-88EC-00DD010CCC48&#125;
+修改默认值：网络连接
+</code></pre>
+<p><strong>29、在我的电脑中显示打印机和传真</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionExplorerMyComputerNameSpace
+新建子项：&#123;2227A280-3AEA-1069-A2DE-08002B3039D&#125;
+修改默认值：打印机和传真
+</code></pre>
+<p><strong>30、打开或关闭启动优化功能（启动时碎片整理）</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREMicrosoftDfrgBootOptimizeFunction
+键值：Enable
+修改：Y开启N不开启
+</code></pre>
+<p><strong>31、加快程序运行速度(需要重启)</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlFileSystem
+新建值项：configfileallocsize
+值：1f4
+</code></pre>
+<p><strong>32、缩短关闭无响应程序的等待时间（需重启）</strong></p>
+<pre><code>位置：HKEY_USERS.DEFAULTControl PanelDesktop
+值项：WaitToKillTimeout
+修改：增大一点可以加快处理程序的速度
+</code></pre>
+<p><strong>33、关机时自动删除交换文件</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESYSTEMControlSet001ControlSession ManagerMemory Management
+值：ClearPageFileAtShutdown
+修改：1
+</code></pre>
+<p><strong>34、自动关闭计算机（指关机后停在关机界面）</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows
+NTCurrentVersionWinlogon
+值：PowerdownAfterShutdown
+修改：1
+</code></pre>
+<h3 id="硬件设置"><a href="#硬件设置" class="headerlink" title="硬件设置"></a>硬件设置</h3><p><strong>1、启用CPU的二级缓存（需重启）</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlSession ManagerMemory Management
+值项：secondleveldatacache
+修改：我改成了200了，你呢
+</code></pre>
+<p><strong>2、修改认证标识（拥有个性化的CPU）</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINEHARDWAREDEscriptIONSystemCentralProcessor
+值项：ProcessorNameString
+修改：随便改，改成了奔8CPU,9.99GHZ主频
+</code></pre>
+<p><strong>3、更改系统属性对话框里的CPU信息</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINEHARDWAREDEscriptIONSystemCentralProcessor
+值项：VendorIdentifer
+修改：随便改
+</code></pre>
+<p><strong>4、清除内存中不使用的DLL文件（需重启）</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionExplorer
+新建值项：Always UnloadDll
+(REG-DWORD)值：1
+</code></pre>
+<p><strong>5、启动自动优化磁盘功能（需重启）</strong></p>
+<pre><code>位置：HKEY_LOCAL_MACHINESOFTWAREMicrosoftDfrgBootOptimizeFunction
+值项：Enable
+修改：Yes
+</code></pre>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2022/12/14/Window-Regedit/">Window-Regedit</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2022-12-14, 11:00:36</p>
+        <p><span>Updated:</span>2022-12-14, 11:32:27</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2022/12/14/Window-Regedit/" title="Window-Regedit">http://yoursite.com/2022/12/14/Window-Regedit/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2022/12/14/Window-Regedit/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2022/12/14/Neo4j-1-Window-Install/">
+                    Neo4j-1-Window-Install
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2022/12/14/CentOS-9-NetworkManger-1/">
+                    CentOS-9-NetworkManger-1
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows%E6%B3%A8%E5%86%8C%E8%A1%A8%E5%86%85%E5%AE%B9%E8%AF%A6%E8%A7%A3%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Windows注册表内容详解（转载）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">总体结构分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E8%A1%A8%E7%A0%B4%E5%9D%8F%E7%9A%84%E7%8E%B0%E8%B1%A1%E5%8F%8A%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.3.</span> <span class="toc-text">注册表破坏的现象及原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E6%B3%A8%E5%86%8C%E8%A1%A8"><span class="toc-number">1.4.</span> <span class="toc-text">备份注册表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D%E6%B3%A8%E5%86%8C%E8%A1%A8"><span class="toc-number">1.5.</span> <span class="toc-text">恢复注册表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E8%A1%A8%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">1.6.</span> <span class="toc-text">注册表的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AA%E6%80%A7%E5%8C%96%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.7.</span> <span class="toc-text">个性化设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.8.</span> <span class="toc-text">系统设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E8%AE%BE%E7%BD%AE%EF%BC%8C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.8.1.</span> <span class="toc-text">控制面板常用选项设置，系统性能优化设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.8.2.</span> <span class="toc-text">硬件设置</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Window-Regedit　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2022/12/14/Neo4j-1-Window-Install/" title="Pre: Neo4j-1-Window-Install">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2022/12/14/CentOS-9-NetworkManger-1/" title="Next: CentOS-9-NetworkManger-1">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

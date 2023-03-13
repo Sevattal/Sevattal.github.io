@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="Spring 框架基础7转载：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_35843514&#x2F;article&#x2F;details&#x2F;114287046?spm&#x3D;1001.2014.3001.5501 一、新的功能Spring Framework 5.0是在Spring Framework 4.0之后将近四年内一次重大的升级。 在这个时间框架内，主要的发展之一就是Spring Boot项目的演变。 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring-BASE-7">
+<meta property="og:url" content="http://yoursite.com/2021/05/16/Spring-BASE-7/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="Spring 框架基础7转载：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_35843514&#x2F;article&#x2F;details&#x2F;114287046?spm&#x3D;1001.2014.3001.5501 一、新的功能Spring Framework 5.0是在Spring Framework 4.0之后将近四年内一次重大的升级。 在这个时间框架内，主要的发展之一就是Spring Boot项目的演变。 1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/1.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/2.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/3.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/4.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/5.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/6.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/7.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/8.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/9.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/10.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/11.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/12.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/13.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/14.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/15.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/16.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/17.png">
+<meta property="article:published_time" content="2021-05-16T05:47:46.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:43.896Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/05/16/Spring-BASE-7/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Spring-BASE-7 | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Spring-BASE-7" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/16/Spring-BASE-7/" class="article-date">
+      <time datetime="2021-05-16T05:47:46.000Z" itemprop="datePublished">2021-05-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring-BASE-7
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Spring-框架基础7"><a href="#Spring-框架基础7" class="headerlink" title="Spring 框架基础7"></a>Spring 框架基础7</h1><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
+<h2 id="一、新的功能"><a href="#一、新的功能" class="headerlink" title="一、新的功能"></a>一、新的功能</h2><p>Spring Framework 5.0是在Spring Framework 4.0之后将近四年内一次重大的升级。 在这个时间框架内，主要的发展之一就是Spring Boot项目的演变。</p>
+<h3 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h3><p>Spring Framework 5.0的最大特点之一是响应式编程（Reactive Programming）。 响应式编程核心功能和对响应式endpoints的支持可通过Spring Framework 5.0中获得。 重要变动如下列表所示：</p>
+<p><strong>常规升级</strong></p>
+<pre><code>对 JDK 9 运行时兼容性
+在Spring Framework代码中使用JDK 8特性
+响应式编程支持
+函数式Web框架
+Jigsaw的Java模块化
+对Kotlin支持
+舍弃的特性
+</code></pre>
+<span id="more"></span>
+
+<h3 id="2、基于Java8兼容Java9"><a href="#2、基于Java8兼容Java9" class="headerlink" title="2、基于Java8兼容Java9"></a>2、基于Java8兼容Java9</h3><p>整个 Spring5 框架的代码基于 Java8，运行时兼容 JDK9，许多不建议使用的类和方法在代码库中删除</p>
+<p><strong>使用的一些Java 8特性如下：</strong></p>
+<p>核心Spring接口中的Java 8 static 方法<br>基于Java 8反射增强的内部代码改进<br>在框架代码中使用函数式编程——lambdas表达式和stream流</p>
+<h3 id="3、支持响应式编程"><a href="#3、支持响应式编程" class="headerlink" title="3、支持响应式编程"></a>3、支持响应式编程</h3><p>响应式编程是Spring Framework 5.0最重要的功能之一。</p>
+<p>微服务通常基于事件通信的架构构建。 应用程序被设计为对事件（或消息）做出反应。</p>
+<p>响应式编程提供了一种可选的编程风格，专注于构建应对事件的应用程序。</p>
+<p>虽然Java 8没有内置的响应式性编程支持，但是有一些框架提供了对响应式编程的支持：</p>
+<p><strong>Reactive Streams：</strong>尝试定义与语言无关的响应性API。<br><strong>Reactor：</strong>Spring Pivotal团队提供的响应式编程的Java实现。<br><strong>Spring WebFlux：</strong>启用基于响应式编程的Web应用程序的开发。 提供类似于Spring MVC的编程模型。</p>
+<h3 id="4、函数式Web框架"><a href="#4、函数式Web框架" class="headerlink" title="4、函数式Web框架"></a>4、函数式Web框架</h3><p>除了响应式特性之外，Spring 5还提供了一个函数式Web框架。</p>
+<p>函数式Web框架提供了使用函数式编程风格来定义endpoints的功能。</p>
+<h2 id="二、Spring-5-之日志框架"><a href="#二、Spring-5-之日志框架" class="headerlink" title="二、Spring 5 之日志框架"></a>二、Spring 5 之日志框架</h2><h3 id="1、Spring-5-0-框架自带了通用的日志封装"><a href="#1、Spring-5-0-框架自带了通用的日志封装" class="headerlink" title="1、Spring 5.0 框架自带了通用的日志封装"></a>1、Spring 5.0 框架自带了通用的日志封装</h3><p>（1） Spring5已经移除 Log4jConfigListener，官方建议使用 Log4j2<br>（2） Spring5框架整合 Log4j2</p>
+<h4 id="第一步引入jar-包"><a href="#第一步引入jar-包" class="headerlink" title="第一步引入jar 包"></a>第一步引入jar 包</h4><p><img src="/2021/05/16/Spring-BASE-7/1.png"></p>
+<h4 id="第二步：创建log4j2-xml"><a href="#第二步：创建log4j2-xml" class="headerlink" title="第二步：创建log4j2.xml"></a>第二步：创建log4j2.xml</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!--日志级别以及优先级排序: OFF&gt; FATAL&gt; ERROR&gt; WARN&gt; INFO&gt; DEBUG&gt; TRACE&gt; ALL--&gt;
+&lt;!--Configuration后面的 status用于设置 log4j2自身内部的信息输出，可以不设置， 当设置成trace时，可以看到log4j2内部各种详细输出--&gt;
+&lt;configuration status=&quot;DEBUG&quot;&gt;
+    &lt;!--先定义所有的 appender--&gt;
+    &lt;appenders&gt;
+        &lt;!--输出日志信息到控制台--&gt;
+        &lt;console name=&quot;Console&quot; target=&quot;SYSTEM_OUT&quot;&gt;
+            &lt;!--控制日志输出的格式--&gt;
+            &lt;PatternLayout pattern=&quot;%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [%t] %-5level %logger&#123;36&#125; - %msg%n&quot;/&gt;
+        &lt;/console&gt;
+    &lt;/appenders&gt;
+    &lt;!--然后定义 logger，只有定义 logger并引入的 appender，appender才会生效--&gt;
+    &lt;!--root：用于指定项目的根日志，如果没有单独指定 Logger，则会使用 root作为默认的日志输出--&gt;
+    &lt;loggers&gt;
+        &lt;root level=&quot;info&quot;&gt;
+            &lt;appender-ref ref=&quot;Console&quot;/&gt;
+        &lt;/root&gt;
+    &lt;/loggers&gt;
+&lt;/configuration&gt;
+</code></pre>
+<h4 id="测试-随便运行一个程序"><a href="#测试-随便运行一个程序" class="headerlink" title="测试(随便运行一个程序)"></a>测试(随便运行一个程序)</h4><p><img src="/2021/05/16/Spring-BASE-7/2.png"></p>
+<p>从上述运行控制台可以看出，已经打印出很多日志信息了</p>
+<h3 id="2、Spring5-框架核心容器支持-Nullable-注解"><a href="#2、Spring5-框架核心容器支持-Nullable-注解" class="headerlink" title="2、Spring5 框架核心容器支持@Nullable 注解"></a>2、Spring5 框架核心容器支持@Nullable 注解</h3><h4 id="1-Nullable注解可以使用在方法上面，属性上面，参数上面，表示方法返回可以为空，属性值可以为空，参数值可以为空"><a href="#1-Nullable注解可以使用在方法上面，属性上面，参数上面，表示方法返回可以为空，属性值可以为空，参数值可以为空" class="headerlink" title="(1) @Nullable注解可以使用在方法上面，属性上面，参数上面，表示方法返回可以为空，属性值可以为空，参数值可以为空"></a>(1) @Nullable注解可以使用在方法上面，属性上面，参数上面，表示方法返回可以为空，属性值可以为空，参数值可以为空</h4><h4 id="2-注解用在方法上面，方法返回值可以为空"><a href="#2-注解用在方法上面，方法返回值可以为空" class="headerlink" title="(2) 注解用在方法上面，方法返回值可以为空"></a>(2) 注解用在方法上面，方法返回值可以为空</h4><p><img src="/2021/05/16/Spring-BASE-7/3.png"></p>
+<h4 id="3-注解使用在方法参数里面，方法参数可以为空"><a href="#3-注解使用在方法参数里面，方法参数可以为空" class="headerlink" title="(3) 注解使用在方法参数里面，方法参数可以为空"></a>(3) 注解使用在方法参数里面，方法参数可以为空</h4><p><img src="/2021/05/16/Spring-BASE-7/4.png"></p>
+<h4 id="4-注解使用在属性上面，属性值可以为空"><a href="#4-注解使用在属性上面，属性值可以为空" class="headerlink" title="(4) 注解使用在属性上面，属性值可以为空"></a>(4) 注解使用在属性上面，属性值可以为空</h4><p><img src="/2021/05/16/Spring-BASE-7/5.png"></p>
+<h3 id="3、Spring5-核心容器支持函数式风格-GenericApplication-Context"><a href="#3、Spring5-核心容器支持函数式风格-GenericApplication-Context" class="headerlink" title="3、Spring5 核心容器支持函数式风格 GenericApplication Context"></a>3、Spring5 核心容器支持函数式风格 GenericApplication Context</h3><p>&#x2F;&#x2F;函数式风格创建对象，交给 spring 进行管理</p>
+<pre><code>@Test
+public void testGenericApplicationContext() &#123;
+    //1 创建 GenericApplicationContext 对象
+    GenericApplicationContext context = new GenericApplicationContext();
+    //2 调用 context 的方法对象注册
+    context.refresh();
+    context.registerBean(&quot;user1&quot;,User.class,() -&gt; new User());
+    //3 获取在 spring 注册的对象
+    // User user = (User)context.getBean(&quot;com.sevattal.domain.User&quot;);
+    User user = (User)context.getBean(&quot;user1&quot;);
+    System.out.println(user);
+&#125;
+</code></pre>
+<h3 id="4、Spring5-支持整合-JUnit5"><a href="#4、Spring5-支持整合-JUnit5" class="headerlink" title="4、Spring5 支持整合 JUnit5"></a>4、Spring5 支持整合 JUnit5</h3><h4 id="1-整合-JUnit4"><a href="#1-整合-JUnit4" class="headerlink" title="(1) 整合 JUnit4"></a>(1) 整合 JUnit4</h4><p><strong>第一步 引入 Spring 相关针对测试依赖</strong></p>
+<p><img src="/2021/05/16/Spring-BASE-7/6.png"></p>
+<p><strong>第二步 创建测试类，使用注解方式完成</strong></p>
+<pre><code>@RunWith(SpringJUnit4ClassRunner.class) 
+//单元测试框架
+@ContextConfiguration(&quot;classpath:bean.xml&quot;) 
+//加载配置文件 
+public class JTest4 &#123;
+    @Autowired
+    private UserService userService;
+    @Test
+    public void test1() &#123;
+        userService.accountMoney();
+    &#125;
+&#125;
+</code></pre>
+<h4 id="2-整合Junit5"><a href="#2-整合Junit5" class="headerlink" title="(2) 整合Junit5"></a>(2) 整合Junit5</h4><p><strong>第一步：引入jar包</strong></p>
+<p><img src="/2021/05/16/Spring-BASE-7/7.png"></p>
+<p><strong>第二步： 创建测试类，使用注解方式完成</strong></p>
+<pre><code>@ExtendWith(SpringExtension.class)  // JUnit5
+//@RunWith(SpringJUnit4ClassRunner.class) JUnit4
+@ContextConfiguration(&quot;classpath:bean.xml&quot;) // 加载配置文件
+public class JTest5 &#123;
+    @Autowired
+    private UserService userService;
+    @Test
+    public void test1() &#123;
+        userService.accountMoney();
+    &#125;
+&#125; 
+</code></pre>
+<p><strong>第三步： 使用一个复合注解代替上面2个注解完成整合</strong></p>
+<pre><code>@SpringJUnitConfig(locations = &quot;classpath:bean.xml&quot;)
+public class JTest5&#123;
+    @Autowired
+    private UserService userService;
+    @Test
+    public void test1() &#123;
+        userService.accountMoney();
+    &#125;
+&#125; 
+</code></pre>
+<h2 id="三、Spring-Web-Flux"><a href="#三、Spring-Web-Flux" class="headerlink" title="三、Spring Web Flux"></a>三、Spring Web Flux</h2><h3 id="1、Spring-Web-Flux-介绍"><a href="#1、Spring-Web-Flux-介绍" class="headerlink" title="1、Spring Web Flux 介绍"></a>1、Spring Web Flux 介绍</h3><h4 id="1-是-Spring5-添加新的模块，用于-web-开发的，功能和-SpringMVC-类似的，Webflux-使用当前一种比较流程响应式编程出现的框架。"><a href="#1-是-Spring5-添加新的模块，用于-web-开发的，功能和-SpringMVC-类似的，Webflux-使用当前一种比较流程响应式编程出现的框架。" class="headerlink" title="(1)是 Spring5 添加新的模块，用于 web 开发的，功能和 SpringMVC 类似的，Webflux 使用当前一种比较流程响应式编程出现的框架。"></a>(1)是 Spring5 添加新的模块，用于 web 开发的，功能和 SpringMVC 类似的，Webflux 使用当前一种比较流程响应式编程出现的框架。</h4><p><img src="/2021/05/16/Spring-BASE-7/8.png"></p>
+<h4 id="2-使用传统-web框架，比如-SpringMVC，这些基于-Servlet容器，WebFlux是一种异步非阻塞的框架，异步非阻塞的框架在-Servlet-3-1以后才支持，核心是基于-Reactor的相关-API实现的。"><a href="#2-使用传统-web框架，比如-SpringMVC，这些基于-Servlet容器，WebFlux是一种异步非阻塞的框架，异步非阻塞的框架在-Servlet-3-1以后才支持，核心是基于-Reactor的相关-API实现的。" class="headerlink" title="(2) 使用传统 web框架，比如 SpringMVC，这些基于 Servlet容器，WebFlux是一种异步非阻塞的框架，异步非阻塞的框架在 Servlet 3.1以后才支持，核心是基于 Reactor的相关 API实现的。"></a>(2) 使用传统 web框架，比如 SpringMVC，这些基于 Servlet容器，WebFlux是一种异步非阻塞的框架，异步非阻塞的框架在 Servlet 3.1以后才支持，核心是基于 Reactor的相关 API实现的。</h4><h4 id="3-解释什么是异步非阻塞"><a href="#3-解释什么是异步非阻塞" class="headerlink" title="(3) 解释什么是异步非阻塞"></a>(3) 解释什么是异步非阻塞</h4><pre><code>异步和同步
+非阻塞和阻塞
+上面都是针对对象不一样
+
+异步和同步针对调用者，调用者发送请求，如果等着对方回应之后才去做其他事情就是同步，如果发送请求之后不等着对方回应就去做其他事情就是异步
+
+阻塞和非阻塞针对被调用者，被调用者受到请求之后，做完请求任务之后才给出反馈就是阻塞，受到请求之后马上给出反馈然后再去做事情就是非阻塞
+</code></pre>
+<h4 id="4-WebFlux特点："><a href="#4-WebFlux特点：" class="headerlink" title="(4) WebFlux特点："></a>(4) WebFlux特点：</h4><p>第一 非阻塞式：在有限资源下，提高系统吞吐量和伸缩性，以 Reactor 为基础实现响应式编程<br>第二 函数式编程：Spring5 框架基于 java8，Webflux使用 Java8函数式编程方式实现路由请求</p>
+<h4 id="5-比较-SpringMVC"><a href="#5-比较-SpringMVC" class="headerlink" title="(5) 比较 SpringMVC"></a>(5) 比较 SpringMVC</h4><p><img src="/2021/05/16/Spring-BASE-7/9.png"></p>
+<p>第一 两个框架都可以使用注解方式，都运行在 Tomcat 等容器中<br>第二 SpringMVC 采用命令式编程，Webflux 采用异步响应式编程</p>
+<h3 id="2、响应式编程（Java-实现）"><a href="#2、响应式编程（Java-实现）" class="headerlink" title="2、响应式编程（Java 实现）"></a>2、响应式编程（Java 实现）</h3><h4 id="1-什么是响应式编程"><a href="#1-什么是响应式编程" class="headerlink" title="(1) 什么是响应式编程"></a>(1) 什么是响应式编程</h4><p>响应式编程是一种面向数据流和变化传播的编程范式。这意味着可以在编程语言中很方便地表达静态或动态的数据流，而相关的计算模型会自动将变化的值通过数据流进行传播。电子表格程序就是响应式编程的一个例子。单元格可以包含字面值或类似”&#x3D;B1+C1”的公式，而包含公式的单元格的值会依据其他单元格的值的变化而变</p>
+<h4 id="2-Java8及其之前版本"><a href="#2-Java8及其之前版本" class="headerlink" title="(2) Java8及其之前版本"></a>(2) Java8及其之前版本</h4><p>提供的观察者模式两个类 Observer和 Observable</p>
+<pre><code>public class ObserverDemo extends Observable&#123;
+    public static void main(String[] args) &#123;
+        ObserverDemo observer = new ObserverDemo();
+        //添加观察者 
+        observer.addObserver((o,arg)-&gt;&#123;
+            System.out.println(&quot;发生变化&quot;);
+        &#125;);
+        observer.addObserver((o,arg)-&gt;&#123;
+            System.out.println(&quot;手动被观察者通知，准备改变&quot;);
+        &#125;);
+        observer.setChanged(); //数据变化 
+        observer.notifyObservers(); //通知 
+    &#125;
+&#125; 
+</code></pre>
+<h3 id="3、响应式编程（Reactor-实现）"><a href="#3、响应式编程（Reactor-实现）" class="headerlink" title="3、响应式编程（Reactor 实现）"></a>3、响应式编程（Reactor 实现）</h3><h4 id="1-响应式编程操作中，Reactor-是满足-Reactive-规范框架"><a href="#1-响应式编程操作中，Reactor-是满足-Reactive-规范框架" class="headerlink" title="(1) 响应式编程操作中，Reactor 是满足 Reactive 规范框架"></a>(1) 响应式编程操作中，Reactor 是满足 Reactive 规范框架</h4><h4 id="2-Reactor-有两个核心类，Mono-和-Flux，这两个类实现接口-Publisher，提供丰富操作符。Flux对象实现发布者，返回-N个元素；Mono实现发布者，返回-0-或者-1个元素"><a href="#2-Reactor-有两个核心类，Mono-和-Flux，这两个类实现接口-Publisher，提供丰富操作符。Flux对象实现发布者，返回-N个元素；Mono实现发布者，返回-0-或者-1个元素" class="headerlink" title="(2) Reactor 有两个核心类，Mono 和 Flux，这两个类实现接口 Publisher，提供丰富操作符。Flux对象实现发布者，返回 N个元素；Mono实现发布者，返回 0 或者 1个元素"></a>(2) Reactor 有两个核心类，Mono 和 Flux，这两个类实现接口 Publisher，提供丰富操作符。Flux对象实现发布者，返回 N个元素；Mono实现发布者，返回 0 或者 1个元素</h4><h4 id="3-Flux-和-Mono-都是数据流的发布者，使用-Flux-和-Mono-都可以发出三种数据信号：-元素值，错误信号，完成信号，错误信号和完成信号都代表终止信号，终止信号用于告诉订阅者数据流结束了，错误信号终止数据流同时把错误信息传递给订阅者"><a href="#3-Flux-和-Mono-都是数据流的发布者，使用-Flux-和-Mono-都可以发出三种数据信号：-元素值，错误信号，完成信号，错误信号和完成信号都代表终止信号，终止信号用于告诉订阅者数据流结束了，错误信号终止数据流同时把错误信息传递给订阅者" class="headerlink" title="(3) Flux 和 Mono 都是数据流的发布者，使用 Flux 和 Mono 都可以发出三种数据信号： 元素值，错误信号，完成信号，错误信号和完成信号都代表终止信号，终止信号用于告诉订阅者数据流结束了，错误信号终止数据流同时把错误信息传递给订阅者"></a>(3) Flux 和 Mono 都是数据流的发布者，使用 Flux 和 Mono 都可以发出三种数据信号： 元素值，错误信号，完成信号，错误信号和完成信号都代表终止信号，终止信号用于告诉订阅者数据流结束了，错误信号终止数据流同时把错误信息传递给订阅者</h4><p><img src="/2021/05/16/Spring-BASE-7/10.png"></p>
+<h4 id="4-代码演示-Flux-和-Mono"><a href="#4-代码演示-Flux-和-Mono" class="headerlink" title="(4) 代码演示 Flux 和 Mono"></a>(4) 代码演示 Flux 和 Mono</h4><h5 id="第一步-Maven-工程引入依赖-pom-xml"><a href="#第一步-Maven-工程引入依赖-pom-xml" class="headerlink" title="第一步 Maven 工程引入依赖 pom.xml"></a>第一步 Maven 工程引入依赖 pom.xml</h5><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;io.projectreactor&lt;/groupId&gt;
+    &lt;artifactId&gt;reactor-core&lt;/artifactId&gt;
+    &lt;version&gt;3.1.5.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h5 id="第二步-编程代码"><a href="#第二步-编程代码" class="headerlink" title="第二步 编程代码"></a>第二步 编程代码</h5><pre><code>public static void main(String[] args) &#123;
+    //just 方法直接声明 
+    Flux.just(1,2,3,4);
+    Mono.just(1);
+    //其他的方法 
+    Integer[] array = &#123;1,2,3,4&#125;;
+    Flux.fromArray(array);
+    List&lt;Integer&gt; list = Arrays.asList(array);
+    Flux.fromIterable(list);
+    Stream&lt;Integer&gt; stream = list.stream();
+    Flux.fromStream(stream);
+&#125;
+</code></pre>
+<h4 id="5-三种信号特点"><a href="#5-三种信号特点" class="headerlink" title="(5) 三种信号特点"></a>(5) 三种信号特点</h4><p>错误信号和完成信号都是终止信号，不能共存的<br>如果没有发送任何元素值，而是直接发送错误或者完成信号，表示是空数据流<br>如果没有错误信号，没有完成信号，表示是无限数据流</p>
+<h4 id="6-调用-just或者其他方法只是声明数据流，数据流并没有发出，只有进行订阅之后才会触发数据流，不订阅什么都不会发生的"><a href="#6-调用-just或者其他方法只是声明数据流，数据流并没有发出，只有进行订阅之后才会触发数据流，不订阅什么都不会发生的" class="headerlink" title="(6) 调用 just或者其他方法只是声明数据流，数据流并没有发出，只有进行订阅之后才会触发数据流，不订阅什么都不会发生的"></a>(6) 调用 just或者其他方法只是声明数据流，数据流并没有发出，只有进行订阅之后才会触发数据流，不订阅什么都不会发生的</h4><p><img src="/2021/05/16/Spring-BASE-7/11.png"></p>
+<h4 id="7-操作符"><a href="#7-操作符" class="headerlink" title="(7) 操作符"></a>(7) 操作符</h4><p>对数据流进行一道道操作，成为操作符，比如工厂流水线</p>
+<p><strong>第一 map 元素映射为新元素</strong></p>
+<p><img src="/2021/05/16/Spring-BASE-7/12.png"></p>
+<p><strong>第二 flatMap 元素映射为流</strong><br>把每个元素转换流，把转换之后多个流合并大的流</p>
+<p><img src="/2021/05/16/Spring-BASE-7/13.png"></p>
+<h3 id="4、SpringWebflux-执行流程和核心-API"><a href="#4、SpringWebflux-执行流程和核心-API" class="headerlink" title="4、SpringWebflux 执行流程和核心 API"></a>4、SpringWebflux 执行流程和核心 API</h3><p>Spring Web Flux 基于 Reactor，默认使用容器是 Netty，Netty 是高性能的 NIO 框架，异步非阻塞的框架</p>
+<h4 id="1-Netty"><a href="#1-Netty" class="headerlink" title="(1) Netty"></a>(1) Netty</h4><p>BIO:</p>
+<p><img src="/2021/05/16/Spring-BASE-7/14.png"></p>
+<p>NIO:</p>
+<p><img src="/2021/05/16/Spring-BASE-7/15.png"></p>
+<h4 id="2-Spring-WebFlux-执行过程和-SpringMVC-相似的"><a href="#2-Spring-WebFlux-执行过程和-SpringMVC-相似的" class="headerlink" title="(2) Spring WebFlux 执行过程和 SpringMVC 相似的"></a>(2) Spring WebFlux 执行过程和 SpringMVC 相似的</h4><p>Spring WebFlux 核心控制器 DispatchHandler，实现接口 WebHandler<br>接口 WebHandler有一个方法</p>
+<p><img src="/2021/05/16/Spring-BASE-7/16.png"></p>
+<p><img src="/2021/05/16/Spring-BASE-7/17.png"></p>
+<h4 id="3-SpringWebflux-里面-DispatcherHandler，负责请求的处理"><a href="#3-SpringWebflux-里面-DispatcherHandler，负责请求的处理" class="headerlink" title="(3) SpringWebflux 里面 DispatcherHandler，负责请求的处理"></a>(3) SpringWebflux 里面 DispatcherHandler，负责请求的处理</h4><ul>
+<li>HandlerMapping：请求查询到处理的方法</li>
+<li>HandlerAdapter：真正负责请求处理</li>
+<li>HandlerResultHandler：响应结果处理</li>
+</ul>
+<h4 id="4-SpringWebflux-实现函数式编程，两个接口：RouterFunction（路由处理）-和-HandlerFunction（处理函数）"><a href="#4-SpringWebflux-实现函数式编程，两个接口：RouterFunction（路由处理）-和-HandlerFunction（处理函数）" class="headerlink" title="(4) SpringWebflux 实现函数式编程，两个接口：RouterFunction（路由处理） 和 HandlerFunction（处理函数）"></a>(4) SpringWebflux 实现函数式编程，两个接口：RouterFunction（路由处理） 和 HandlerFunction（处理函数）</h4><h3 id="5、SpringWebflux（基于注解编程模型）"><a href="#5、SpringWebflux（基于注解编程模型）" class="headerlink" title="5、SpringWebflux（基于注解编程模型）"></a>5、SpringWebflux（基于注解编程模型）</h3><p>SpringWebflux 实现方式有两种：注解编程模型和函数式编程模型<br>使用注解编程模型方式，和之前 SpringMVC 使用相似的，只需要把相关依赖配置到项目中，SpringBoot 自动配置相关运行容器，默认情况下使用 Netty 服务器</p>
+<h4 id="1-第一步-创建-Maven-工程，引入-Webflux-依赖"><a href="#1-第一步-创建-Maven-工程，引入-Webflux-依赖" class="headerlink" title="(1) 第一步 创建 Maven 工程，引入 Webflux 依赖"></a>(1) 第一步 创建 Maven 工程，引入 Webflux 依赖</h4><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-webflux&lt;/artifactId&gt;
+    &lt;version&gt;2.4.5&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="2-第二步：更改-application-yml-配置文件-设置启动端口号"><a href="#2-第二步：更改-application-yml-配置文件-设置启动端口号" class="headerlink" title="(2) 第二步：更改 application.yml 配置文件 设置启动端口号"></a>(2) 第二步：更改 application.yml 配置文件 设置启动端口号</h4><pre><code>server:
+  port: 8082
+</code></pre>
+<h4 id="3-创建包和相关类"><a href="#3-创建包和相关类" class="headerlink" title="(3) 创建包和相关类"></a>(3) 创建包和相关类</h4><p><strong>启动类</strong></p>
+<pre><code>@SpringBootApplication
+public class WebfluxdemoApplication &#123;
+    public static void main(String[] args) &#123;
+        SpringApplication.run(WebfluxdemoApplication.class,args);
+    &#125;
+&#125;
+</code></pre>
+<p><strong>User类</strong></p>
+<pre><code>package com.sevattal.webflux.entity;
+public class User &#123;
+    private String name;
+    private String gender;
+    private Integer age;
+    public User(String name, String gender, Integer age) &#123;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+    &#125;
+    public String getName() &#123;
+        return name;
+    &#125;
+    public void setName(String name) &#123;
+        this.name = name;
+    &#125;
+    public String getGender() &#123;
+        return gender;
+    &#125;
+    public void setGender(String gender) &#123;
+        this.gender = gender;
+    &#125;
+    public Integer getAge() &#123;
+        return age;
+    &#125;
+    public void setAge(Integer age) &#123;
+        this.age = age;
+    &#125;
+&#125;
+</code></pre>
+<p><strong>UserService接口</strong></p>
+<pre><code>public interface UserService &#123;
+    /**
+     * 根据id查询用户
+     * @param id 主键
+     * @return 指定id的用户
+     */
+    Mono&lt;User&gt; getUserById(int id);
+    /**
+     * 查询所有用户
+     * @return 用户集合
+     */
+    Flux&lt;User&gt; getAllUser();
+    /**
+     * 添加一个用户
+     * @param user 插入的用户
+     * @return 无返回值
+     */
+    Mono&lt;Void&gt; saveUserInfo(Mono&lt;User&gt; user);
+&#125;
+</code></pre>
+<p><strong>UserServiceImpl</strong></p>
+<pre><code>package com.sevattal.webflux.service.impl;
+import com.sevattal.webflux.entity.User;
+import com.sevattal.webflux.service.UserService;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import java.util.HashMap;
+import java.util.Map;
+@Service
+public class UserServiceImpl implements UserService &#123;
+    // 创建一个Map集合，来存储模拟数据
+    private final Map&lt;Integer, User&gt; users = new HashMap&lt;&gt;();
+    public UserServiceImpl() &#123;
+        this.users.put(1, new User(&quot;Micah&quot;,&quot;男&quot;,22));
+        this.users.put(2, new User(&quot;Maruko&quot;,&quot;女&quot;,19));
+    &#125;
+    @Override
+    public Mono&lt;User&gt; getUserById(int id) &#123;
+        return Mono.justOrEmpty(this.users.get(id));
+    &#125;
+    @Override
+    public Flux&lt;User&gt; getAllUser() &#123;
+        return Flux.fromIterable(this.users.values());
+    &#125;
+    @Override
+    public Mono&lt;Void&gt; saveUserInfo(Mono&lt;User&gt; userMono) &#123;
+        return userMono.doOnNext(person -&gt; &#123;
+            // 向map中存放值
+            int id = users.size() + 1;
+            users.put(id, person);
+        &#125;).thenEmpty(Mono.empty());
+    &#125;
+&#125;
+
+@RestController
+public class UserController &#123;
+    @Autowired
+    private UserService userService;
+    @GetMapping(&quot;/user/&#123;id&#125;&quot;)
+    public Mono&lt;User&gt; getUserId(@PathVariable int id)&#123;
+        return userService.getUserById(id);
+    &#125;
+    @GetMapping(&quot;/user&quot;)
+    public Flux&lt;User&gt; getUsers()&#123;
+        return userService.getAllUser();
+    &#125;
+    @GetMapping(&quot;/save_user&quot;)
+    public Mono&lt;Void&gt; saveUser(@RequestBody User user) &#123;
+        Mono&lt;User&gt; userMono = Mono.just(user);
+        return userService.saveUserInfo(userMono);
+    &#125;
+&#125;
+</code></pre>
+<p>说明：<br>SpringMVC 方式实现，同步阻塞的方式，基于 SpringMVC+Servlet+Tomcat SpringWebFlux 方式实现，异步非阻塞 方式，基于 SpringWebFlux+Reactor+Netty。</p>
+<h3 id="6、Spring-WebFlux（基于函数式编程模型）"><a href="#6、Spring-WebFlux（基于函数式编程模型）" class="headerlink" title="6、Spring WebFlux（基于函数式编程模型）"></a>6、Spring WebFlux（基于函数式编程模型）</h3><h4 id="1-在使用函数式编程模型操作时候，需要自己初始化服务器"><a href="#1-在使用函数式编程模型操作时候，需要自己初始化服务器" class="headerlink" title="(1) 在使用函数式编程模型操作时候，需要自己初始化服务器"></a>(1) 在使用函数式编程模型操作时候，需要自己初始化服务器</h4><h4 id="2-基于函数式编程模型时候，有两个核心接口：RouterFunction（实现路由功能，请求转发给对应的-handler）和-HandlerFunction（处理请求生成响应的函数）。核心任务定义两个函数式接口的实现并且启动需要的服务器。"><a href="#2-基于函数式编程模型时候，有两个核心接口：RouterFunction（实现路由功能，请求转发给对应的-handler）和-HandlerFunction（处理请求生成响应的函数）。核心任务定义两个函数式接口的实现并且启动需要的服务器。" class="headerlink" title="(2) 基于函数式编程模型时候，有两个核心接口：RouterFunction（实现路由功能，请求转发给对应的 handler）和 HandlerFunction（处理请求生成响应的函数）。核心任务定义两个函数式接口的实现并且启动需要的服务器。"></a>(2) 基于函数式编程模型时候，有两个核心接口：RouterFunction（实现路由功能，请求转发给对应的 handler）和 HandlerFunction（处理请求生成响应的函数）。核心任务定义两个函数式接口的实现并且启动需要的服务器。</h4><h4 id="3-Spring-WebFlux-请-求-和-响-应-不-再-是-ServletRequest-和-ServletResponse-，而是ServerRequest-和-ServerResponse"><a href="#3-Spring-WebFlux-请-求-和-响-应-不-再-是-ServletRequest-和-ServletResponse-，而是ServerRequest-和-ServerResponse" class="headerlink" title="(3) Spring WebFlux 请 求 和 响 应 不 再 是 ServletRequest 和 ServletResponse ，而是ServerRequest 和 ServerResponse"></a>(3) Spring WebFlux 请 求 和 响 应 不 再 是 ServletRequest 和 ServletResponse ，而是ServerRequest 和 ServerResponse</h4><p><strong>第一步</strong> 把注解编程模型工程复制一份 ，保留 entity 和 service 内容<br><strong>第二步</strong> 创建 Handler（具体实现方法）</p>
+<pre><code>public class UserHandler &#123;
+    @Autowired
+    private final UserService userService;
+    public UserHandler(UserService userService)&#123;
+        this.userService = userService;
+    &#125;
+    //根据 id 查询 
+    public Mono&lt;ServerResponse&gt; getUserById(ServerRequest request) &#123;
+        //获取 id 值 
+        int userId = Integer.valueOf(request.pathVariable(&quot;id&quot;));
+        //空值处理 
+        Mono&lt;ServerResponse&gt; notFound = ServerResponse.notFound().build();
+        //调用 service 方法得到数据 
+        Mono&lt;User&gt; userMono = this.userService.getUserById(userId);
+        //把 userMono 进行转换返回 
+        //使用 Reactor 操作符 flatMap 
+        return userMono
+               .flatMap(person -&gt; ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+               .body(fromObject(person)))
+               .switchIfEmpty(notFound);
+    &#125;
+    //查询所有 
+    public Mono&lt;ServerResponse&gt; getAllUsers() &#123;
+        //调用 service 得到结果 
+        Flux&lt;User&gt; users = this.userService.getAllUser();
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(users,User.class);
+    &#125;
+    
+    //添加 
+    public Mono&lt;ServerResponse&gt; saveUser(ServerRequest request) &#123;
+        //得到 user 对象 
+        Mono&lt;User&gt; userMono = request.bodyToMono(User.class);
+        return ServerResponse.ok().build(this.userService.saveUserInfo(userMono));
+    &#125;
+&#125;
+</code></pre>
+<p><strong>第三步</strong> 初始化服务器，编写 Router</p>
+<p><strong>创建路由的方法</strong></p>
+<pre><code>//1、创建 Router 路由 
+public RouterFunction&lt;ServerResponse&gt; routingFunction() &#123;
+    //创建 hanler 对象 
+    UserService userService = new UserServiceImpl();
+    UserHandler handler = new UserHandler(userService);
+    //设置路由 
+    return RouterFunctions.route(GET(&quot;/users/&#123;id&#125;&quot;).and(accept(APPLICATION_JSON)),handler::getUserById).andRoute(GET(&quot;/users&quot;).and(accept(APPLICATION_JSON)),handler::get AllUsers);
+&#125; 
+</code></pre>
+<p><strong>创建服务器，完成适配</strong></p>
+<pre><code>//2 创建服务器完成适配 
+public void createReactorServer() &#123;
+    //路由和 handler 适配 
+    RouterFunction&lt;ServerResponse&gt; route = routingFunction();
+    HttpHandler httpHandler = toHttpHandler(route);
+    ReactorHttpHandlerAdapter adapter = new ReactorHttpHandlerAdapter(httpHandler);
+    //创建服务器 
+    HttpServer httpServer = HttpServer.create();
+    httpServer.handle(adapter).bindNow();
+&#125; 
+</code></pre>
+<p><strong>最终调用</strong></p>
+<pre><code>public static void main(String[] args) throws Exception&#123;
+    Server server = newServer();
+    server.createReactorServer();
+    System.out.println(&quot;enter to exit&quot;);
+    System.in.read();
+&#125;
+</code></pre>
+<h4 id="4-使用-WebClient-调用"><a href="#4-使用-WebClient-调用" class="headerlink" title="(4) 使用 WebClient 调用"></a>(4) 使用 WebClient 调用</h4><pre><code>public class Client &#123;
+    public static void main(String[] args) &#123;
+        //调用服务器地址 
+        WebClient webClient = WebClient.create(&quot;http://127.0.0.1:5794&quot;);
+        //根据 id 查询 
+        String id = &quot;1&quot;;
+        User userresult = webClient.get().uri(&quot;/users/&#123;id&#125;&quot;, id)
+        .accept(MediaType.APPLICATION_JSON).retrieve().bodyToMono(User.class)
+        .block();
+        System.out.println(userresult.getName());
+        //查询所有 
+        Flux&lt;User&gt; results = webClient.get().uri(&quot;/users&quot;)
+                .accept(MediaType.APPLICATION_JSON).retrieve().bodyToFlux(User
+                        .class);
+        results.map(stu -&gt; stu.getName())
+                .buffer().doOnNext(System.out::println).blockFirst();
+    &#125;
+&#125;
+</code></pre>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2021-05-16, 13:47:46</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2021/05/16/Spring-BASE-7/" title="Spring-BASE-7">http://yoursite.com/2021/05/16/Spring-BASE-7/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/05/16/Spring-BASE-7/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/05/19/SpringBoot2-BASE-1/">
+                    SpringBoot2-BASE-1
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/05/16/Spring-BASE-6/">
+                    Spring-BASE-6
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-%E6%A1%86%E6%9E%B6%E5%9F%BA%E7%A1%807"><span class="toc-number">1.</span> <span class="toc-text">Spring 框架基础7</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%96%B0%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">1.1.</span> <span class="toc-text">一、新的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text">1、概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%9F%BA%E4%BA%8EJava8%E5%85%BC%E5%AE%B9Java9"><span class="toc-number">1.1.2.</span> <span class="toc-text">2、基于Java8兼容Java9</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E6%94%AF%E6%8C%81%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">3、支持响应式编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8FWeb%E6%A1%86%E6%9E%B6"><span class="toc-number">1.1.4.</span> <span class="toc-text">4、函数式Web框架</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Spring-5-%E4%B9%8B%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6"><span class="toc-number">1.2.</span> <span class="toc-text">二、Spring 5 之日志框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Spring-5-0-%E6%A1%86%E6%9E%B6%E8%87%AA%E5%B8%A6%E4%BA%86%E9%80%9A%E7%94%A8%E7%9A%84%E6%97%A5%E5%BF%97%E5%B0%81%E8%A3%85"><span class="toc-number">1.2.1.</span> <span class="toc-text">1、Spring 5.0 框架自带了通用的日志封装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E5%BC%95%E5%85%A5jar-%E5%8C%85"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">第一步引入jar 包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BAlog4j2-xml"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">第二步：创建log4j2.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95-%E9%9A%8F%E4%BE%BF%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">测试(随便运行一个程序)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Spring5-%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E5%AE%B9%E5%99%A8%E6%94%AF%E6%8C%81-Nullable-%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.2.2.</span> <span class="toc-text">2、Spring5 框架核心容器支持@Nullable 注解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Nullable%E6%B3%A8%E8%A7%A3%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%9C%A8%E6%96%B9%E6%B3%95%E4%B8%8A%E9%9D%A2%EF%BC%8C%E5%B1%9E%E6%80%A7%E4%B8%8A%E9%9D%A2%EF%BC%8C%E5%8F%82%E6%95%B0%E4%B8%8A%E9%9D%A2%EF%BC%8C%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA%EF%BC%8C%E5%B1%9E%E6%80%A7%E5%80%BC%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA%EF%BC%8C%E5%8F%82%E6%95%B0%E5%80%BC%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">(1) @Nullable注解可以使用在方法上面，属性上面，参数上面，表示方法返回可以为空，属性值可以为空，参数值可以为空</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B3%A8%E8%A7%A3%E7%94%A8%E5%9C%A8%E6%96%B9%E6%B3%95%E4%B8%8A%E9%9D%A2%EF%BC%8C%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E5%80%BC%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">(2) 注解用在方法上面，方法返回值可以为空</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8%E5%9C%A8%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E9%87%8C%E9%9D%A2%EF%BC%8C%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">(3) 注解使用在方法参数里面，方法参数可以为空</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8%E5%9C%A8%E5%B1%9E%E6%80%A7%E4%B8%8A%E9%9D%A2%EF%BC%8C%E5%B1%9E%E6%80%A7%E5%80%BC%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">(4) 注解使用在属性上面，属性值可以为空</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81Spring5-%E6%A0%B8%E5%BF%83%E5%AE%B9%E5%99%A8%E6%94%AF%E6%8C%81%E5%87%BD%E6%95%B0%E5%BC%8F%E9%A3%8E%E6%A0%BC-GenericApplication-Context"><span class="toc-number">1.2.3.</span> <span class="toc-text">3、Spring5 核心容器支持函数式风格 GenericApplication Context</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81Spring5-%E6%94%AF%E6%8C%81%E6%95%B4%E5%90%88-JUnit5"><span class="toc-number">1.2.4.</span> <span class="toc-text">4、Spring5 支持整合 JUnit5</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%95%B4%E5%90%88-JUnit4"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">(1) 整合 JUnit4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%95%B4%E5%90%88Junit5"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">(2) 整合Junit5</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Spring-Web-Flux"><span class="toc-number">1.3.</span> <span class="toc-text">三、Spring Web Flux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Spring-Web-Flux-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.3.1.</span> <span class="toc-text">1、Spring Web Flux 介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%98%AF-Spring5-%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%9A%84%E6%A8%A1%E5%9D%97%EF%BC%8C%E7%94%A8%E4%BA%8E-web-%E5%BC%80%E5%8F%91%E7%9A%84%EF%BC%8C%E5%8A%9F%E8%83%BD%E5%92%8C-SpringMVC-%E7%B1%BB%E4%BC%BC%E7%9A%84%EF%BC%8CWebflux-%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E4%B8%80%E7%A7%8D%E6%AF%94%E8%BE%83%E6%B5%81%E7%A8%8B%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%87%BA%E7%8E%B0%E7%9A%84%E6%A1%86%E6%9E%B6%E3%80%82"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">(1)是 Spring5 添加新的模块，用于 web 开发的，功能和 SpringMVC 类似的，Webflux 使用当前一种比较流程响应式编程出现的框架。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E4%BC%A0%E7%BB%9F-web%E6%A1%86%E6%9E%B6%EF%BC%8C%E6%AF%94%E5%A6%82-SpringMVC%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%9F%BA%E4%BA%8E-Servlet%E5%AE%B9%E5%99%A8%EF%BC%8CWebFlux%E6%98%AF%E4%B8%80%E7%A7%8D%E5%BC%82%E6%AD%A5%E9%9D%9E%E9%98%BB%E5%A1%9E%E7%9A%84%E6%A1%86%E6%9E%B6%EF%BC%8C%E5%BC%82%E6%AD%A5%E9%9D%9E%E9%98%BB%E5%A1%9E%E7%9A%84%E6%A1%86%E6%9E%B6%E5%9C%A8-Servlet-3-1%E4%BB%A5%E5%90%8E%E6%89%8D%E6%94%AF%E6%8C%81%EF%BC%8C%E6%A0%B8%E5%BF%83%E6%98%AF%E5%9F%BA%E4%BA%8E-Reactor%E7%9A%84%E7%9B%B8%E5%85%B3-API%E5%AE%9E%E7%8E%B0%E7%9A%84%E3%80%82"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">(2) 使用传统 web框架，比如 SpringMVC，这些基于 Servlet容器，WebFlux是一种异步非阻塞的框架，异步非阻塞的框架在 Servlet 3.1以后才支持，核心是基于 Reactor的相关 API实现的。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%A7%A3%E9%87%8A%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%82%E6%AD%A5%E9%9D%9E%E9%98%BB%E5%A1%9E"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">(3) 解释什么是异步非阻塞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-WebFlux%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">(4) WebFlux特点：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E6%AF%94%E8%BE%83-SpringMVC"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">(5) 比较 SpringMVC</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%88Java-%E5%AE%9E%E7%8E%B0%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">2、响应式编程（Java 实现）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">(1) 什么是响应式编程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Java8%E5%8F%8A%E5%85%B6%E4%B9%8B%E5%89%8D%E7%89%88%E6%9C%AC"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">(2) Java8及其之前版本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%88Reactor-%E5%AE%9E%E7%8E%B0%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">3、响应式编程（Reactor 实现）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%93%8D%E4%BD%9C%E4%B8%AD%EF%BC%8CReactor-%E6%98%AF%E6%BB%A1%E8%B6%B3-Reactive-%E8%A7%84%E8%8C%83%E6%A1%86%E6%9E%B6"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">(1) 响应式编程操作中，Reactor 是满足 Reactive 规范框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Reactor-%E6%9C%89%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E7%B1%BB%EF%BC%8CMono-%E5%92%8C-Flux%EF%BC%8C%E8%BF%99%E4%B8%A4%E4%B8%AA%E7%B1%BB%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3-Publisher%EF%BC%8C%E6%8F%90%E4%BE%9B%E4%B8%B0%E5%AF%8C%E6%93%8D%E4%BD%9C%E7%AC%A6%E3%80%82Flux%E5%AF%B9%E8%B1%A1%E5%AE%9E%E7%8E%B0%E5%8F%91%E5%B8%83%E8%80%85%EF%BC%8C%E8%BF%94%E5%9B%9E-N%E4%B8%AA%E5%85%83%E7%B4%A0%EF%BC%9BMono%E5%AE%9E%E7%8E%B0%E5%8F%91%E5%B8%83%E8%80%85%EF%BC%8C%E8%BF%94%E5%9B%9E-0-%E6%88%96%E8%80%85-1%E4%B8%AA%E5%85%83%E7%B4%A0"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">(2) Reactor 有两个核心类，Mono 和 Flux，这两个类实现接口 Publisher，提供丰富操作符。Flux对象实现发布者，返回 N个元素；Mono实现发布者，返回 0 或者 1个元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Flux-%E5%92%8C-Mono-%E9%83%BD%E6%98%AF%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E5%8F%91%E5%B8%83%E8%80%85%EF%BC%8C%E4%BD%BF%E7%94%A8-Flux-%E5%92%8C-Mono-%E9%83%BD%E5%8F%AF%E4%BB%A5%E5%8F%91%E5%87%BA%E4%B8%89%E7%A7%8D%E6%95%B0%E6%8D%AE%E4%BF%A1%E5%8F%B7%EF%BC%9A-%E5%85%83%E7%B4%A0%E5%80%BC%EF%BC%8C%E9%94%99%E8%AF%AF%E4%BF%A1%E5%8F%B7%EF%BC%8C%E5%AE%8C%E6%88%90%E4%BF%A1%E5%8F%B7%EF%BC%8C%E9%94%99%E8%AF%AF%E4%BF%A1%E5%8F%B7%E5%92%8C%E5%AE%8C%E6%88%90%E4%BF%A1%E5%8F%B7%E9%83%BD%E4%BB%A3%E8%A1%A8%E7%BB%88%E6%AD%A2%E4%BF%A1%E5%8F%B7%EF%BC%8C%E7%BB%88%E6%AD%A2%E4%BF%A1%E5%8F%B7%E7%94%A8%E4%BA%8E%E5%91%8A%E8%AF%89%E8%AE%A2%E9%98%85%E8%80%85%E6%95%B0%E6%8D%AE%E6%B5%81%E7%BB%93%E6%9D%9F%E4%BA%86%EF%BC%8C%E9%94%99%E8%AF%AF%E4%BF%A1%E5%8F%B7%E7%BB%88%E6%AD%A2%E6%95%B0%E6%8D%AE%E6%B5%81%E5%90%8C%E6%97%B6%E6%8A%8A%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E4%BC%A0%E9%80%92%E7%BB%99%E8%AE%A2%E9%98%85%E8%80%85"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">(3) Flux 和 Mono 都是数据流的发布者，使用 Flux 和 Mono 都可以发出三种数据信号： 元素值，错误信号，完成信号，错误信号和完成信号都代表终止信号，终止信号用于告诉订阅者数据流结束了，错误信号终止数据流同时把错误信息传递给订阅者</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA-Flux-%E5%92%8C-Mono"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">(4) 代码演示 Flux 和 Mono</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-Maven-%E5%B7%A5%E7%A8%8B%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96-pom-xml"><span class="toc-number">1.3.3.4.1.</span> <span class="toc-text">第一步 Maven 工程引入依赖 pom.xml</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E7%BC%96%E7%A8%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">1.3.3.4.2.</span> <span class="toc-text">第二步 编程代码</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%B8%89%E7%A7%8D%E4%BF%A1%E5%8F%B7%E7%89%B9%E7%82%B9"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">(5) 三种信号特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E8%B0%83%E7%94%A8-just%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95%E5%8F%AA%E6%98%AF%E5%A3%B0%E6%98%8E%E6%95%B0%E6%8D%AE%E6%B5%81%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%B5%81%E5%B9%B6%E6%B2%A1%E6%9C%89%E5%8F%91%E5%87%BA%EF%BC%8C%E5%8F%AA%E6%9C%89%E8%BF%9B%E8%A1%8C%E8%AE%A2%E9%98%85%E4%B9%8B%E5%90%8E%E6%89%8D%E4%BC%9A%E8%A7%A6%E5%8F%91%E6%95%B0%E6%8D%AE%E6%B5%81%EF%BC%8C%E4%B8%8D%E8%AE%A2%E9%98%85%E4%BB%80%E4%B9%88%E9%83%BD%E4%B8%8D%E4%BC%9A%E5%8F%91%E7%94%9F%E7%9A%84"><span class="toc-number">1.3.3.6.</span> <span class="toc-text">(6) 调用 just或者其他方法只是声明数据流，数据流并没有发出，只有进行订阅之后才会触发数据流，不订阅什么都不会发生的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">1.3.3.7.</span> <span class="toc-text">(7) 操作符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81SpringWebflux-%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E5%92%8C%E6%A0%B8%E5%BF%83-API"><span class="toc-number">1.3.4.</span> <span class="toc-text">4、SpringWebflux 执行流程和核心 API</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Netty"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">(1) Netty</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Spring-WebFlux-%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%E5%92%8C-SpringMVC-%E7%9B%B8%E4%BC%BC%E7%9A%84"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">(2) Spring WebFlux 执行过程和 SpringMVC 相似的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-SpringWebflux-%E9%87%8C%E9%9D%A2-DispatcherHandler%EF%BC%8C%E8%B4%9F%E8%B4%A3%E8%AF%B7%E6%B1%82%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">(3) SpringWebflux 里面 DispatcherHandler，负责请求的处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-SpringWebflux-%E5%AE%9E%E7%8E%B0%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%8C%E4%B8%A4%E4%B8%AA%E6%8E%A5%E5%8F%A3%EF%BC%9ARouterFunction%EF%BC%88%E8%B7%AF%E7%94%B1%E5%A4%84%E7%90%86%EF%BC%89-%E5%92%8C-HandlerFunction%EF%BC%88%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%89"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">(4) SpringWebflux 实现函数式编程，两个接口：RouterFunction（路由处理） 和 HandlerFunction（处理函数）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81SpringWebflux%EF%BC%88%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-number">1.3.5.</span> <span class="toc-text">5、SpringWebflux（基于注解编程模型）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%88%9B%E5%BB%BA-Maven-%E5%B7%A5%E7%A8%8B%EF%BC%8C%E5%BC%95%E5%85%A5-Webflux-%E4%BE%9D%E8%B5%96"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">(1) 第一步 创建 Maven 工程，引入 Webflux 依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%9B%B4%E6%94%B9-application-yml-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-%E8%AE%BE%E7%BD%AE%E5%90%AF%E5%8A%A8%E7%AB%AF%E5%8F%A3%E5%8F%B7"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">(2) 第二步：更改 application.yml 配置文件 设置启动端口号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%88%9B%E5%BB%BA%E5%8C%85%E5%92%8C%E7%9B%B8%E5%85%B3%E7%B1%BB"><span class="toc-number">1.3.5.3.</span> <span class="toc-text">(3) 创建包和相关类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81Spring-WebFlux%EF%BC%88%E5%9F%BA%E4%BA%8E%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-number">1.3.6.</span> <span class="toc-text">6、Spring WebFlux（基于函数式编程模型）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9C%A8%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E6%93%8D%E4%BD%9C%E6%97%B6%E5%80%99%EF%BC%8C%E9%9C%80%E8%A6%81%E8%87%AA%E5%B7%B1%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">(1) 在使用函数式编程模型操作时候，需要自己初始化服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9F%BA%E4%BA%8E%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E6%97%B6%E5%80%99%EF%BC%8C%E6%9C%89%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3%EF%BC%9ARouterFunction%EF%BC%88%E5%AE%9E%E7%8E%B0%E8%B7%AF%E7%94%B1%E5%8A%9F%E8%83%BD%EF%BC%8C%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E7%BB%99%E5%AF%B9%E5%BA%94%E7%9A%84-handler%EF%BC%89%E5%92%8C-HandlerFunction%EF%BC%88%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%E7%94%9F%E6%88%90%E5%93%8D%E5%BA%94%E7%9A%84%E5%87%BD%E6%95%B0%EF%BC%89%E3%80%82%E6%A0%B8%E5%BF%83%E4%BB%BB%E5%8A%A1%E5%AE%9A%E4%B9%89%E4%B8%A4%E4%B8%AA%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%B9%B6%E4%B8%94%E5%90%AF%E5%8A%A8%E9%9C%80%E8%A6%81%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%82"><span class="toc-number">1.3.6.2.</span> <span class="toc-text">(2) 基于函数式编程模型时候，有两个核心接口：RouterFunction（实现路由功能，请求转发给对应的 handler）和 HandlerFunction（处理请求生成响应的函数）。核心任务定义两个函数式接口的实现并且启动需要的服务器。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Spring-WebFlux-%E8%AF%B7-%E6%B1%82-%E5%92%8C-%E5%93%8D-%E5%BA%94-%E4%B8%8D-%E5%86%8D-%E6%98%AF-ServletRequest-%E5%92%8C-ServletResponse-%EF%BC%8C%E8%80%8C%E6%98%AFServerRequest-%E5%92%8C-ServerResponse"><span class="toc-number">1.3.6.3.</span> <span class="toc-text">(3) Spring WebFlux 请 求 和 响 应 不 再 是 ServletRequest 和 ServletResponse ，而是ServerRequest 和 ServerResponse</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8-WebClient-%E8%B0%83%E7%94%A8"><span class="toc-number">1.3.6.4.</span> <span class="toc-text">(4) 使用 WebClient 调用</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Spring-BASE-7　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/05/19/SpringBoot2-BASE-1/" title="Pre: SpringBoot2-BASE-1">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/05/16/Spring-BASE-6/" title="Next: Spring-BASE-6">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

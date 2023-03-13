@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="RIP路由协议 (以华为主)转载： Astion 路由交换技术笔记，可在 Gitee 上找到相关笔记项目 Routing Information Protocol 路由信息协议最典型的距离矢量路由协议常用于小型网络交互路由信息目前存在三个版本 面向IPv4的 RIPv1 和 RIPv2 及面向 IPv6 的 RIPng">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Network-Route-Rip-1">
+<meta property="og:url" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="RIP路由协议 (以华为主)转载： Astion 路由交换技术笔记，可在 Gitee 上找到相关笔记项目 Routing Information Protocol 路由信息协议最典型的距离矢量路由协议常用于小型网络交互路由信息目前存在三个版本 面向IPv4的 RIPv1 和 RIPv2 及面向 IPv6 的 RIPng">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/1.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/2.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/3.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/4.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/5.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/6.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/7.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/8.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/9.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/10.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/11.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/12.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/13.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/14.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/15.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/16.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/17.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/18.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/19.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/20.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/21.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/22.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/23.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/24.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/25.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/26.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/27.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/28.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/29.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/30.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/31.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/32.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/33.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/34.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/35.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/36.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/37.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/38.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/39.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/40.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/41.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/42.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/43.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/44.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/45.png">
+<meta property="article:published_time" content="2022-04-02T12:40:01.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:43.109Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Route">
+<meta property="article:tag" content="HUAWEI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2022/04/02/Network-Route-Rip-1/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Network-Route-Rip-1 | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Network-Route-Rip-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/04/02/Network-Route-Rip-1/" class="article-date">
+      <time datetime="2022-04-02T12:40:01.000Z" itemprop="datePublished">2022-04-02</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Network-Route-Rip-1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Network/">Network</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Route/" rel="tag">Route</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="RIP路由协议-以华为主"><a href="#RIP路由协议-以华为主" class="headerlink" title="RIP路由协议 (以华为主)"></a>RIP路由协议 (以华为主)</h1><p>转载： Astion 路由交换技术笔记，可在 Gitee 上找到相关笔记项目</p>
+<p>Routing Information Protocol 路由信息协议最典型的距离矢量路由协议常用于小型网络交互路由信息目前存在三个版本 面向IPv4的 RIPv1 和 RIPv2 及面向 IPv6 的 RIPng</p>
+<span id="more"></span>
+
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>摘要：更新与接收机制 RIP 度量 RIPv1、RIPv2 报文格式 RIP 几种计时器及含义 Silent-Interface 概念及配置</p>
+<h2 id="路由更新及接收"><a href="#路由更新及接收" class="headerlink" title="路由更新及接收"></a>路由更新及接收</h2><p>每台 RIP 路由器都维护着一个 RIP 数据库，保存发现的所有路由；每条路由包括：目的网络&#x2F;掩码、度量、下一跳、老化计时器、路由状态标识等。</p>
+<p>每台运行 RIP 的路由器周期性地将自己的路由表通告出去，接收到更新的路由器发现是自己并未发现且有效的则将其加载到路由表，同时设置度量值和下一跳。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/1.png"></p>
+<h2 id="1-路由器初始启动"><a href="#1-路由器初始启动" class="headerlink" title="1.路由器初始启动"></a>1.路由器初始启动</h2><p>将上图所有路由器接口都激活 RIP，初始情况下所有路由器都自动发现自己的直连路由，并将其加载至路由表中；<br>RIP将直连路由视为 “0” 跳，即不需要经过任何一台路由器。<br>基本配置：使用 rip 1 手动指定 RIP 进程号，不指定则自动分配，只有本地意义，每个进程数据库相互隔离。<br>在RIP视图下执行 version 2 即使用 RIPv2 版本<br>network 宣告网络时只能使用主类 IP 地址，不可使用子网地址会报错。</p>
+<h3 id="主要配置："><a href="#主要配置：" class="headerlink" title="主要配置："></a>主要配置：</h3><p><strong>华为的配置方式</strong></p>
+<pre><code>R1:
+rip 1
+version 2
+network 192.168.12.0 
+network 10.0.0.0
+
+R2:
+rip 1
+version 2
+network 192.168.12.0
+network 192.168.23.0
+
+R3:
+rip 1
+version 2
+network 192.168.23.0
+network 3.0.0.0
+</code></pre>
+<p><strong>Cisco的配置方式</strong></p>
+<pre><code>R1:
+# config
+(config)# router rip
+(config-router)# version 2
+(config-router)# no auto-summary
+(config-router)# network 192.168.12.0 
+(config-router)# network 10.0.0.0
+
+R2:
+# config
+(config)# router rip
+(config-router)# version 2
+(config-router)# no auto-summary
+(config-router)# network 192.168.12.0
+(config-router)# network 192.168.23.0
+
+R3:
+# config
+(config)# router rip
+(config-router)# version 2
+(config-router)# no auto-summary
+(config-router)# network 192.168.23.0
+</code></pre>
+<p><label style="color: red"><strong>注：你也可以将 本地回环地址 加入到里面，使之可以被其他机器 ping 通。在 Cisco 中 no auto-summary 为关闭自动汇总，一般建议在生产环境关闭该功能。</strong></label></p>
+<h2 id="2-初次交换路由信息"><a href="#2-初次交换路由信息" class="headerlink" title="2.初次交换路由信息"></a>2.初次交换路由信息</h2><p>激活 RIP 的接口周期性地将路由表中的路由通告出去（RIPv1 使用广播地址,RIPv2 使用组播 224.0.0.9）；</p>
+<p>RIP路由器将自己路由表中的路由通告出去时将跳数加1，接收到该路由的路由器将使用这个度量值。</p>
+<p>即：这次 RIP 周期更新R1学习到 192.168.23.0&#x2F;24,R2 学习到 1.0.0.0&#x2F;8和 3.0.0.0&#x2F;8 两条路由，R3 学习到 192.168.12.0&#x2F;24 。</p>
+<p>通过宣告自己路由表中的直连路由完成了初次路由信息的交换,并且它们学习到的路由 Cost 都为 1.</p>
+<p><strong>此时R1和R3是没有学习到 3.0.0.0 和 1.0.0.0 这两条路由的，因为这两条路由初始交换后被 R2 学习，R1和R3需要等下个更新周期才能学习。</strong></p>
+<h2 id="3-路由完成收敛"><a href="#3-路由完成收敛" class="headerlink" title="3.路由完成收敛"></a>3.路由完成收敛</h2><p>下一次更新周期到来所有路由器再次将路由表通告出去,由于第一次的学习 R2 已经存在 3.0.0.0 和 1.0.0.0 这两条路由,通告给R1时其会学习到 3.0.0.0 的路由 R3 同理. 这样三台路由器都拥有了到达全网各个网段的路由 ;</p>
+<p>虽然网络中路由器的路由表已经稳定,但它们依然会周期性地将自己的路由表通过RIP通告出去,以确保路由的有效性.</p>
+<h3 id="路由更新与路由表"><a href="#路由更新与路由表" class="headerlink" title="路由更新与路由表"></a>路由更新与路由表</h3><p>从单台 RIP 路由器的角度看它只是简单的侦听直连的 RIP 路由器通告的 RIP 路由更新,从更新中发现路由,将学习到的路由加载至路由表;另一方面它将自己的路由表宣告出去,以便直连 RIP 路由器学习到.</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/2.png"></p>
+<p>上图除高带宽链路接口不使能RIP之外其它接口均激活 RIP,一开始四台路由器都能通过 RIP 相互学习到路由.</p>
+<p>查看R4的路由表发现它可以通过 R3-R2-R1 的路径去访问 192.168.1.0&#x2F;24 这条路由</p>
+<pre><code>[Huawei]dis ip routing-table protocol rip
+Route Flags: R - relay, D - download to fib
+------------------------------------------------------------------------------
+Public routing table : RIP
+         Destinations : 3        Routes : 3        
+
+RIP routing table status : &lt;Active&gt;
+         Destinations : 3        Routes : 3
+
+Destination/Mask    Proto   Pre  Cost      Flags NextHop         Interface
+
+    192.168.1.0/24  RIP     100  3           D   192.168.34.3    Ethernet0/0/0
+   192.168.12.0/24  RIP     100  2           D   192.168.34.3    Ethernet0/0/0
+   192.168.23.0/24  RIP     100  1           D   192.168.34.3    Ethernet0/0/0
+
+RIP routing table status : &lt;Inactive&gt;
+         Destinations : 0        Routes : 0
+</code></pre>
+<p>当我们在 R1 与 R3 之间增加一条高带宽的链路,RIP 并不能感知到这条链路因为它并没有激活 RIP, 此时我们在 R3 配置一条静态路由来使 192.168.1.0&#x2F;24 的下一条指向 192.168.13.1,由于静态路由的优先级为 60,RIP 优先级为 100,所以 192.168.1.0&#x2F;24 这条路由将在路由表中被静态路由替换掉.</p>
+<p>由于之前 192.168.1.0 是一条 RIP 路由,现在被静态路由代替,在路由表中消失,即 R3 将会把1 92.168.1.0 这条RIP路由撤销,R4 也就无法获取到这条 RIP 路由无法对它进行访问.</p>
+<p><strong>R3 只剩一条 RIP 路由:</strong></p>
+<pre><code>[Huawei]dis ip routing-table pro rip 
+Route Flags: R - relay, D - download to fib
+------------------------------------------------------------------------------
+Public routing table : RIP
+         Destinations : 1        Routes : 1        
+
+RIP routing table status : &lt;Active&gt;
+         Destinations : 1        Routes : 1
+
+Destination/Mask    Proto   Pre  Cost      Flags NextHop         Interface
+
+   192.168.12.0/24  RIP     100  1           D   192.168.23.2    Ethernet0/0/0
+
+RIP routing table status : &lt;Inactive&gt;
+         Destinations : 0        Routes : 0
+</code></pre>
+<p>R4 路由表中只剩 R3 的 RIP 直连路由和 R2 通告给 R3 的直连路由:</p>
+<pre><code>Route Flags: R - relay, D - download to fib
+------------------------------------------------------------------------------
+Public routing table : RIP
+         Destinations : 2        Routes : 2        
+
+RIP routing table status : &lt;Active&gt;
+         Destinations : 2        Routes : 2
+
+Destination/Mask    Proto   Pre  Cost      Flags NextHop         Interface
+
+   192.168.12.0/24  RIP     100  2           D   192.168.34.3    Ethernet0/0/0
+   192.168.23.0/24  RIP     100  1           D   192.168.34.3    Ethernet0/0/0
+
+RIP routing table status : &lt;Inactive&gt;
+         Destinations : 0        Routes : 0
+</code></pre>
+<h2 id="度量值"><a href="#度量值" class="headerlink" title="度量值"></a>度量值</h2><p>RIP 以跳数（Hop Count）作为路由的度量值，即到达目的网络所经过的路由器个数，跳数越少则越优先。本地直连路由跳数为0跳。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/3.png"></p>
+<p>所有路由器均启用 RIP，正常情况下 R1 去往 192.168.5.0&#x2F;24 这条路由是经过 R1-R2-R5 这样的路径，因为 R1-R3-R4-R5 这条路径是 3 跳，所以优先走上面。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/4.png"></p>
+<p>但我们现在想要让 R1 去往 192.168.5.0&#x2F;24 这条路由从下面的高带宽链路经过，就需要配置接口附加度量值。<br>可以在 R1 的 E0&#x2F;0&#x2F;0 接口配置附加度量值，让其接收到 192.168.5.0&#x2F;24 的路由在原度量值再加上附加度量值后加载至路由表中从而降低这条路由的优先程度。<br>关键配置如下：</p>
+<pre><code>R1:
+acl 2000
+rule 5 permit source 192.168.5.0 0.0.0.0	#使用acl匹配这条路由
+quit 
+int e0/0/0
+rip metricin 2000 2		#调用acl 2000 将匹配的路由度量加2
+</code></pre>
+<p>配置后的效果（注意这个配置是接收的路由，接收的路由rip会沿用上跳路由器已经加过的跳数，接收路由器本身并不会增加路由开销。）</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/5.png"></p>
+<p>这样配置之后我们改变的只是R1向外转发的路径，当 192.168.1.0&#x2F;24 和 192.168.5.0&#x2F;24 进行通信时就会产生数据往返路径不一致的问题，192.168.1.1 访问 192.168.5.5 时，R5 会将去往 192.168.1.0&#x2F;24 的数据经过 R5-R2-R1。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/6.png"></p>
+<p>为解决往返不一致的问题需要再从 R2 的 E0&#x2F;0&#x2F;1 口配置附加度量。</p>
+<p><label style="color: red"><strong>注意: R2 给 192.168.1.0&#x2F;24 的路由附加度量时，由于它是向 R5 宣告路由而非接收，所以它的附加度量应是在接收沿用 R1 宣告的度量基础上加，而并不是 R2 加 1 再加上附加度量。</strong></label></p>
+<p><strong>关键配置如下：</strong></p>
+<pre><code>R2:
+acl 2000
+rule 5 permit source 192.168.1.0 0.0.0.0
+quit
+int e0/0/1
+rip metricout 2000 3    #注意关键字为metricout  不是metricin
+</code></pre>
+<p>这样配置后，R2 将在度量为 1 的 192.168.1.0&#x2F;24 这条路由上加 3，再发送给 R5，R5 的 192.168.1.0&#x2F;24 路由度量从 2 变为 4 。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/7.png"></p>
+<h2 id="报文类型与格式"><a href="#报文类型与格式" class="headerlink" title="报文类型与格式"></a>报文类型与格式</h2><p>RIP 协议报文采用 UDP 封装，报文的源、目的端口均是 UDP 520 端口。RIP 定义两种报文：请求（Request）、响应（Response）Request 请求部分或全部 RIP 路由信息。Response 携带路由及该路由的度量等信息。</p>
+<p>一旦路由器某个接口激活了 RIP，它将发送第一个 Request 和 Response 报文，并开始侦听 RIP 协议报文。</p>
+<p>之后开始周期性发送 Response 报文。</p>
+<p>RIPv2 使用组播地址 224.0.0.9</p>
+<h3 id="报文结构："><a href="#报文结构：" class="headerlink" title="报文结构："></a>报文结构：</h3><pre><code>命令字段：用于标识报文类型
+    该值为1时，报文为Request，用于向直连路由器请求路由信息。
+    该值为2时，报文为Response，用于发送路由更新，一个Response报文最多可携带25条路由。
+版本字段（version）: 标识版本号
+地址族标识符（Address Family Identifier , AFI）: 该字段为2时表示IP协议。
+路由标记（Route Tag）：用于为路由设置标记，缺省为0，当外部路由引入RIP时为其打上标记。
+IP地址（IP Address）：目的网络地址
+掩码（netmask）：目的网络掩码
+下一跳（NextHop）：
+度量值（Metric）：路由度量值
+</code></pre>
+<h2 id="计时器"><a href="#计时器" class="headerlink" title="计时器"></a>计时器</h2><pre><code>更新计时器（Update Timer）：RIP路由器周期性泛洪路由表的时间间隔，缺省为30s从已激活RIP的接口向外发送Response报文，为避免同一RIP网络的路由器同时发送Response，RIP引入了（0~5s）的随机偏移量。
+老化计时器（Age Timer）：当一条路由被学习并加载至路由表，路由器为其启用老化计时器（缺省180s），每次更新周期路由再次收到该路由条目更新，老化计时器重置并重新开始计时。
+    在老化计时器超时的同时启用垃圾回收计时器，该路由被从路由表中删除但此然存储在RIP数据库中，这条路由依然包含在发送的Response报文中，不过该路由的度量值被设置为16条，即不可达。
+垃圾回收计时器（Garbage-Collect Timer）：垃圾回收计时器缺省为120s。若该计时器也超时则路由被彻底删除。
+</code></pre>
+<p>在 RIP 配置视图下，使用 times rip 可以修改三个计时器的值，该命令可指定三个参数，即更新时间间隔、老化时间、垃圾回收时间。</p>
+<pre><code>rip 1
+times rip 35 190 200
+</code></pre>
+<h2 id="Silent-Interface"><a href="#Silent-Interface" class="headerlink" title="Silent-Interface"></a>Silent-Interface</h2><p>在连接终端的接口上启用，只接收 Response 不发送。<br>为避免解析 RIP 报文所产生的资源损耗。<br>同 OSPF Silent-Interface ,此处不再赘述。<br>在终端连接处不希望接收到RIP协议报文</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/8.png"></p>
+<p>在PC的接口处抓包查看，一直收到网关发来的 Response 报文。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/9.png"></p>
+<p>将网关的接口配置为静默接口可以避免发送无意义的协议报文。</p>
+<pre><code>R1:
+rip 1
+silent-interface E0/0/0
+</code></pre>
+<p>查看 R1 的 RIP 摘要信息，可以看到 E0&#x2F;0&#x2F;0 被加入到 Silent-Interface 中。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/10.png"></p>
+<p>在终端处抓包验证，没有发现任何协议报文</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/11.png"></p>
+<h2 id="RIP-防环机制"><a href="#RIP-防环机制" class="headerlink" title="RIP 防环机制"></a>RIP 防环机制</h2><h3 id="环路的产生"><a href="#环路的产生" class="headerlink" title="环路的产生"></a>环路的产生</h3><p>距离矢量路由协议只是简单地将自己的路由表周期性的通告出去，同时也将收到的有效路由加载到路由表中，通过累加的度量体现到达目的网络的距离，所以运行距离矢量路由协议的路由器不了解整个网络拓扑，非常容易产生环路。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/12.png"></p>
+<p>我们在拓扑中的路由器运行 RIP 使其正常通信，为了复刻环路的产生我们将默认使能的水平分割关闭;</p>
+<p><strong>使用如下命令关闭水平分割：</strong></p>
+<pre><code>undo rip split-horizon 
+</code></pre>
+<p>当我们关闭水平分割后，R2 会将学习到的 10.0.0.0&#x2F;24 的路由从 E0&#x2F;0&#x2F;0 接口通告给 R1 。<br>此时 R1 的 E0&#x2F;0&#x2F;0 接口故障，它将会在下个更新周期将 10.0.0.0&#x2F;24 这条路由的开销置为 16 即不可达。</p>
+<p>在 R1 的下个周期到来之前，R2 将 10.0.0.0&#x2F;24 的路由开销加1并通告给了 R1，R1 会将其加载至路由表中且开销为 2，下一跳指向 R2，从而产生环路。</p>
+<p><strong>此时R2的路由表：</strong></p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/13.png"></p>
+<p><strong>此时R1的路由表：</strong></p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/14.png"></p>
+<p>此时去往 10.0.0.0&#x2F;24 的数据将会在 R1 和 R2 之间来回传递直至 TTL 值耗尽。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/15.png"></p>
+<p>并且若R1没有触发更新10.0.0.0&#x2F;24路由失效的Response报文，R1下个更新周期就会将这条路由开销值加1通告给R2，循环往复，直到开销叠加至无限大。</p>
+<h3 id="定义最大跳数"><a href="#定义最大跳数" class="headerlink" title="定义最大跳数"></a>定义最大跳数</h3><p>为了避免RIP路由在网络中被无休止地泛洪，RIP定义了路由的最大跳数：15跳，路由产生环路，RIP路由最大跳数为15跳，当数值达到16跳，则表示该路由不可达。</p>
+<h3 id="水平分割"><a href="#水平分割" class="headerlink" title="水平分割"></a>水平分割</h3><p>水平分割的原理是：RIP路由器从某个接口收到的路由不会再从该接口通告出去。</p>
+<p>使能水平分割的命令是：</p>
+<pre><code>#在接口模式下
+rip split-horizon
+</code></pre>
+<p><img src="/2022/04/02/Network-Route-Rip-1/16.png"></p>
+<p>使能水平分割后 R1 就不会再接收的 R2 通告的 10.0.0.0&#x2F;24 的路由。</p>
+<p><strong>R1 的 RIP 报文：</strong></p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/17.png"></p>
+<p><strong>R2 的 RIP 报文：</strong></p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/18.png"></p>
+<h3 id="毒性逆转"><a href="#毒性逆转" class="headerlink" title="毒性逆转"></a>毒性逆转</h3><p>毒性逆转的原理是 RIP 从某个接口学到路由后，当它从该接口发送 Response 报文时会携带这些路由，但是这些路由度量值被设置为 16 跳。</p>
+<p>如果同时使能水平分割和毒性逆转那么只有毒性逆转生效。</p>
+<p><strong>使能命令：</strong></p>
+<pre><code>#在接口模式下
+rip poison-reverse
+</code></pre>
+<p>当我们使能毒性逆转后观察 R2 的 Response 报文：</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/19.png"></p>
+<h3 id="触发更新"><a href="#触发更新" class="headerlink" title="触发更新"></a>触发更新</h3><p>当路由器感知到拓扑发生变更或RIP路由度量值变更时，它无需等待下一个更新周期到来即可立即发送Response报文。</p>
+<h3 id="毒性路由"><a href="#毒性路由" class="headerlink" title="毒性路由"></a>毒性路由</h3><p>路由度量为 16 跳的路由条目为不可达路由。</p>
+<p>当一个网络变为不可达时会触发一个 16 跳的路由更新，这中路由更新称为毒性路由，告知其它路由器这条路由不可达。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/20.png"></p>
+<p>当我们将 R1 的 E0&#x2F;0&#x2F;0 接口 down 掉时会触发 10.0.0.0&#x2F;24 开销值为 16 的毒性路由告知 R2 这条路由不可达。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/21.png"></p>
+<h2 id="RIPv2"><a href="#RIPv2" class="headerlink" title="RIPv2"></a>RIPv2</h2><h3 id="RIPv1-与-RIPv2"><a href="#RIPv1-与-RIPv2" class="headerlink" title="RIPv1 与 RIPv2"></a>RIPv1 与 RIPv2</h3><pre><code>RIPv1不支持VLSM；
+RIPv1的Response报文中携带的路由信息只有IP地址；
+RIPv1的缺陷可能会导致在子网路由通告中产生问题：
+</code></pre>
+<p><img src="/2022/04/02/Network-Route-Rip-1/22.png"></p>
+<p>当 R1 和 R3 启用RIP后，它们将从各自 E0&#x2F;0&#x2F;0 接口通告自己的直连路由，并且它们都处于主类网络的边界，在通告路由时会自动将子网路由汇总成主类路由进行通告。即 172.16.3.0&#x2F;24 或 172.16.1.0&#x2F;24 都将汇总成 172.16.0.0&#x2F;16 向 R2 通告，此时 R2 接收到的 Response 报文中没有掩码字段，它只能填充主类掩码，由于R1与R3的网络地址相同，所以 R2 的路由表 172.16.0.0&#x2F;16 会成为一条负载分担路由，且有可能转发 172.16.3.0 的数据时会从 192.168.12.0 方向发出导致通信故障。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/23.png"></p>
+<p>更改成 RIPv2 再次查看路由表</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/24.png"></p>
+<p>RIPv2 RFC2453 使用组播方式发送 RIP 报文，支持无类路由选择；<br>在 Response 报文携带的路由信息中增加网络掩码；<br>支持报文认证；<br>增加下一跳特性；<br>增加路由标记功能；<br>支持手工汇总路由；</p>
+<h3 id="报文发送方式"><a href="#报文发送方式" class="headerlink" title="报文发送方式"></a>报文发送方式</h3><p>RIPv1 使用广播发送协议报文，目的地址为255.255.255.255，使用广播地址发送协议报文，同处在同一广播域的网络设备、系统，都需要先解析该报文查看UDP端口后丢弃，造成资源损耗。</p>
+<p>RIPv2 采用组播地址224.0.0.9作为协议报文的目的IP，所有RIPv2都侦听该组播地址，采用组播发送协议报文可以减少对广播域中其它设备的影响。</p>
+<h3 id="报文认证"><a href="#报文认证" class="headerlink" title="报文认证"></a>报文认证</h3><p>缺省情况下RIP路由信息的交互是缺乏安全性的，容易遭受攻击或垃圾路由填充。<br>通过在已知的设备接口上激活RIP认证并在两端配置相同的认证口令，只有当接口上收到的RIP报文中相关认证字段匹配本地配置的认证口令，该报文才被认为是有效的，否则被认为是非法报文并丢弃。</p>
+<p>RIP认证是基于报文的；</p>
+<p>认证信息会占用报文的第一个路由项，可携带最大路由从25条变为24条。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/25.png"></p>
+<p>当同一多路访问网络中存在攻击者时，若攻击者也下发 192.168.2.0&#x2F;24 的路由，R1 上这条路由可能会形成负载分担，那么R1上的业务就会受到影响；<br>如果R3下发的路由比 R2 的开销值小，那么R1上的业务将会彻底中断。<br>尝试在R1上部署简单口令认证：</p>
+<pre><code>R1:
+#在相应的接口模式下
+int e0/0/0
+rip authentication-mode simple plain 123456
+#simple表示简单口令
+#plain在配置文件中明文显示口令
+</code></pre>
+<p>在配置中可以直接看到口令</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/26.png"></p>
+<p>这样是不安全的通常使用 cipher 关键字代替 plain</p>
+<pre><code>rip authentication-mode simple cipher 123456
+</code></pre>
+<p>这样会在配置中显示密文的口令，但发送的报文中仍显示明文的口令，攻击者可以通过捕获报文直接查看口令，这里可以使用 md5 加密的方式对报文中的口令进行加密,md5加密可选usual通用报文格式（私有标准）、也可以选择nonstandard非标报文格式（IETF格式）</p>
+<pre><code>rip authentication-mode md5 usual cipher 123456    #私有标准
+或
+rip authentication-mode md5 nonstandard cipher 123456  #IETF格式
+</code></pre>
+<h2 id="下一跳字段"><a href="#下一跳字段" class="headerlink" title="下一跳字段"></a>下一跳字段</h2><p>下一跳字段在多路访问网络上可以避免次优路径，原理与 OSPF 的 FA 字段类似。</p>
+<p>R1、R3 运行 RIP 交互路由信息，为了让 R1 能访问 2.0.0.0&#x2F;8，在 R1 上部署静态路由下一跳指向 192.168.123.2 他的直连路由。</p>
+<p>为了让 R3 通过 RIP 学习到 2.0.0.0&#x2F;8 的路由，需要在R1上将静态路由引入到 RIP 中。</p>
+<p>R3收到路由后将其加载至路由表，由于距离矢量协议路由通告者即为路由下一跳，所以R3中2.0.0.8&#x2F;24的路由下一跳为192.168.123.1</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/27.png"></p>
+<p>从而产生次优路径，显然R3直接转发给R2更优，上图为运行RIPv1时产生的效果。<br>将RIP版本改成V2再次查看路由表。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/28.png"></p>
+<p>查看R1通告的RIP协议报文。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/29.png"></p>
+<p>通过报文发现R1不仅通告了下一跳为192.168.123.2的路由，还追加了一条下一跳为0.0.0.0的毒性路由，以此消除下一跳为宣告者的路由。</p>
+<h2 id="路由标记"><a href="#路由标记" class="headerlink" title="路由标记"></a>路由标记</h2><pre><code>RIPv2增加了“路由标记”字段，使从外部被引入RIP的路由能够携带特定的标记信息。通过network向RIP发布的路由它的路由标记字段被置为0
+</code></pre>
+<p>当外部路由被重分发到RIP时，可以为该条路由设备路由标记，被引入的外部路由会携带网络管理员设置的路由标记。</p>
+<p>可以基于该标记执行路由策略。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/30.png"></p>
+<p>将外部静态路由引入到 RIP 并打上相应标记，A业务打标记10，B业务打标记20。<br>部署静态路由，在静态路由中追加 tag 关键字可为静态路由添加标记：<br>R2 #用黑洞路由来模拟外部路由</p>
+<pre><code>ip route-static 10.1.1.0 255.255.255.0 NULL0 tag 10
+ip route-static 10.2.2.0 255.255.255.0 NULL0 tag 10
+ip route-static 11.1.1.0 255.255.255.0 NULL0 tag 20
+ip route-static 11.2.2.0 255.255.255.0 NULL0 tag 20
+</code></pre>
+<p>将静态路由引入RIP观察RIP数据库。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/31.png"></p>
+<h2 id="路由汇总"><a href="#路由汇总" class="headerlink" title="路由汇总"></a>路由汇总</h2><pre><code>RIP支持路由自动汇总
+</code></pre>
+<p>路由自动汇总指的是如果RIP路由处于主类路由的边界，自动将该子网路由汇总成主类路由，只将主类路由通告给直连的RIP路由器。</p>
+<pre><code>RIPv1中，路由自动汇总缺省被激活，且不能被关闭
+RIPv2中，路由自动汇总缺省被激活，可以通过命令关闭
+</code></pre>
+<p>RIP自动汇总只能将明细路由汇总成主类路由。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/32.png"></p>
+<p>观察R2路由表发现明细路由并没有被自动汇总。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/33.png"></p>
+<p>查看自动汇总是否激活，如果未激活可以在rip视图下使用summary激活。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/34.png"></p>
+<p>查看RIP接口信息，如果开启了毒性逆转或水平分割，缺省的自动汇总是不生效的</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/35.png"></p>
+<p>看到水平分割是使能的状态，现在关闭水平分割后再查看R2的路由表。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/36.png"></p>
+<p>关闭了水平分割后，之前的明细路由被自动汇总成了一条，但是关闭水平分割后增加了环路的风险，更可靠的办法是开启防环功能，在rip视图中使用summary always 即无论是否开启水平分割或毒性逆转，都使用自动路由汇总。</p>
+<pre><code>R1:
+int e0/0/0
+rip split-horizon   #开启水平分割
+quit
+rip 1
+summary always
+</code></pre>
+<p>再次查看R2路由表</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/37.png"></p>
+<p>这种方式固然方便，但它只能汇总成主类路由，在使用VLSM时会产生严重问题。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/38.png"></p>
+<p>当一个主类分割了两个子网，同时这两个子网属于同一主类时，就会产生运行RIPv1时的路由冲突问题，R1和R3都会产生子网汇总主类宣告给R2，R2收到两条主类路由后会形成负载分担，从而产生路径转发错误的情况。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/39.png"></p>
+<p>这是路由汇总不够精确导致的，IP地址规划的十分规则，这种情况下将路由汇总成172.16.0.0&#x2F;22才符合我们的预期。<br>在接口模式下使用：</p>
+<pre><code>int e0/0/0	#路由宣告出接口处
+rip summary-address 172.16.0.0 255.255.252.0
+</code></pre>
+<p>通过这种方式实现更精准的路由汇总来避免错误的形成负载分担。</p>
+<p>再次查看 R2 路由表</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/40.png"></p>
+<h3 id="下发默认路由"><a href="#下发默认路由" class="headerlink" title="下发默认路由"></a>下发默认路由</h3><p>当RIP网络需要访问外网时，出口路由器需要部署一条静态路由指向外网，但内网中的RIP网络却无法访问。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/41.png"></p>
+<p>需要将静态默认路由下发到RIP网络中</p>
+<pre><code>#在RIP视图中配置
+rip 1
+default-route originate cost 1    #设置这条默认路由开销为1   发出时+1
+</code></pre>
+<p>查看 R1 路由表，默认路由已经生效</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/42.png"></p>
+<p>这种配置存在一个缺陷，当 OR 路由器与 Internet 链路故障或断开时，静态默认路由消失，但 RIP 仍旧会通告这条默认路由，导致下联路由器仍旧使用默路由将数据转发至 OR，返回不可达消息，这显然不符合预期。</p>
+<p>此时断开 OR 上联链路：</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/43.png"></p>
+<p>查看R1路由表，默认路由仍旧存在</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/44.png"></p>
+<p>为避免这种瑕疵路由，在配置下发命令时追加match default关键字。</p>
+<pre><code>在未使关键字前，无论OR中是否存在默认路由始终下发默认路由。使用关键字后，只有当OR中其它路由协议或RIP其他进程中存在默认路由时才会下发默认路由，当链路故障时静态路由消失，OR也会下发一条毒性路由将默认路由撤销。
+
+# 追加match default关键字
+default-route originate cost 1 match default 
+</code></pre>
+<p>此时当我们断开链路，再次查看R1路由表时，之前的默认路由被撤销。</p>
+<p><img src="/2022/04/02/Network-Route-Rip-1/45.png"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2022-04-02, 20:40:01</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2022/04/02/Network-Route-Rip-1/" title="Network-Route-Rip-1">http://yoursite.com/2022/04/02/Network-Route-Rip-1/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2022/04/02/Network-Route-Rip-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2022/04/03/Network-Route-OSPF-1/">
+                    Network-Route-OSPF-1
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2022/04/02/Network-Route-Base-1/">
+                    Network-Route-Base-1
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RIP%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE-%E4%BB%A5%E5%8D%8E%E4%B8%BA%E4%B8%BB"><span class="toc-number">1.</span> <span class="toc-text">RIP路由协议 (以华为主)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%9B%B4%E6%96%B0%E5%8F%8A%E6%8E%A5%E6%94%B6"><span class="toc-number">1.2.</span> <span class="toc-text">路由更新及接收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%9D%E5%A7%8B%E5%90%AF%E5%8A%A8"><span class="toc-number">1.3.</span> <span class="toc-text">1.路由器初始启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="toc-number">1.3.1.</span> <span class="toc-text">主要配置：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%88%9D%E6%AC%A1%E4%BA%A4%E6%8D%A2%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF"><span class="toc-number">1.4.</span> <span class="toc-text">2.初次交换路由信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%B7%AF%E7%94%B1%E5%AE%8C%E6%88%90%E6%94%B6%E6%95%9B"><span class="toc-number">1.5.</span> <span class="toc-text">3.路由完成收敛</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%9B%B4%E6%96%B0%E4%B8%8E%E8%B7%AF%E7%94%B1%E8%A1%A8"><span class="toc-number">1.5.1.</span> <span class="toc-text">路由更新与路由表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%A6%E9%87%8F%E5%80%BC"><span class="toc-number">1.6.</span> <span class="toc-text">度量值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%A5%E6%96%87%E7%B1%BB%E5%9E%8B%E4%B8%8E%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.7.</span> <span class="toc-text">报文类型与格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-number">1.7.1.</span> <span class="toc-text">报文结构：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E6%97%B6%E5%99%A8"><span class="toc-number">1.8.</span> <span class="toc-text">计时器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Silent-Interface"><span class="toc-number">1.9.</span> <span class="toc-text">Silent-Interface</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RIP-%E9%98%B2%E7%8E%AF%E6%9C%BA%E5%88%B6"><span class="toc-number">1.10.</span> <span class="toc-text">RIP 防环机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E8%B7%AF%E7%9A%84%E4%BA%A7%E7%94%9F"><span class="toc-number">1.10.1.</span> <span class="toc-text">环路的产生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E6%9C%80%E5%A4%A7%E8%B7%B3%E6%95%B0"><span class="toc-number">1.10.2.</span> <span class="toc-text">定义最大跳数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B4%E5%B9%B3%E5%88%86%E5%89%B2"><span class="toc-number">1.10.3.</span> <span class="toc-text">水平分割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%92%E6%80%A7%E9%80%86%E8%BD%AC"><span class="toc-number">1.10.4.</span> <span class="toc-text">毒性逆转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E6%9B%B4%E6%96%B0"><span class="toc-number">1.10.5.</span> <span class="toc-text">触发更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%92%E6%80%A7%E8%B7%AF%E7%94%B1"><span class="toc-number">1.10.6.</span> <span class="toc-text">毒性路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RIPv2"><span class="toc-number">1.11.</span> <span class="toc-text">RIPv2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RIPv1-%E4%B8%8E-RIPv2"><span class="toc-number">1.11.1.</span> <span class="toc-text">RIPv1 与 RIPv2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E6%96%87%E5%8F%91%E9%80%81%E6%96%B9%E5%BC%8F"><span class="toc-number">1.11.2.</span> <span class="toc-text">报文发送方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E6%96%87%E8%AE%A4%E8%AF%81"><span class="toc-number">1.11.3.</span> <span class="toc-text">报文认证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E8%B7%B3%E5%AD%97%E6%AE%B5"><span class="toc-number">1.12.</span> <span class="toc-text">下一跳字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%A0%87%E8%AE%B0"><span class="toc-number">1.13.</span> <span class="toc-text">路由标记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%B1%87%E6%80%BB"><span class="toc-number">1.14.</span> <span class="toc-text">路由汇总</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E5%8F%91%E9%BB%98%E8%AE%A4%E8%B7%AF%E7%94%B1"><span class="toc-number">1.14.1.</span> <span class="toc-text">下发默认路由</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Network-Route-Rip-1　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2022/04/03/Network-Route-OSPF-1/" title="Pre: Network-Route-OSPF-1">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2022/04/02/Network-Route-Base-1/" title="Next: Network-Route-Base-1">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

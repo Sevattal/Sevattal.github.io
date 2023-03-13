@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="PGPool-ll + PG 流复制实现HA主备基于PG的流复制能实现热备切换，但是是要手动建立触发文件实现，对于一些HA场景来说，需要当主机down了后，备机自动切换，经查询资料知道pgpool-II可以实现这种功能。本文基于PG流复制基础上 ，以pgpool-II实现主备切换。在配置pgpool之前需分别在两台规划机上安装好pg数据库，且配置好了流复制环境，关于流复制配置参考前文：https:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Postgres-PGPool-II">
+<meta property="og:url" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="PGPool-ll + PG 流复制实现HA主备基于PG的流复制能实现热备切换，但是是要手动建立触发文件实现，对于一些HA场景来说，需要当主机down了后，备机自动切换，经查询资料知道pgpool-II可以实现这种功能。本文基于PG流复制基础上 ，以pgpool-II实现主备切换。在配置pgpool之前需分别在两台规划机上安装好pg数据库，且配置好了流复制环境，关于流复制配置参考前文：https:">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/8.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/9.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/10.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/11.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/12.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/13.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/14.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/15.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/16.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/17.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/18.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/19.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/20.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/21.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/22.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/23.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/24.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/25.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/26.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/27.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/28.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/29.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/30.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/31.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/32.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/33.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/34.png">
+<meta property="article:published_time" content="2020-09-26T06:43:45.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:43.622Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Postgres">
+<meta property="article:tag" content="PGPool-II">
+<meta property="article:tag" content="Postgres+PGPool-II">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/09/26/Postgres-PGPool-II/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Postgres-PGPool-II | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Postgres-PGPool-II" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/09/26/Postgres-PGPool-II/" class="article-date">
+      <time datetime="2020-09-26T06:43:45.000Z" itemprop="datePublished">2020-09-26</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Postgres-PGPool-II
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Database/">Database</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="PGPool-ll-PG-流复制实现HA主备"><a href="#PGPool-ll-PG-流复制实现HA主备" class="headerlink" title="PGPool-ll + PG 流复制实现HA主备"></a>PGPool-ll + PG 流复制实现HA主备</h1><p>基于PG的流复制能实现热备切换，但是是要手动建立触发文件实现，对于一些HA场景来说，需要当主机down了后，备机自动切换，经查询资料知道pgpool-II可以实现这种功能。本文基于PG流复制基础上 ，以pgpool-II实现主备切换。在配置pgpool之前需分别在两台规划机上安装好pg数据库，且配置好了流复制环境，关于流复制配置参考前文：<a target="_blank" rel="noopener" href="https://www.pgpool.net/docs/pgpool-II-4.0.6/en/html/example-basic.html">https://www.pgpool.net/docs/pgpool-II-4.0.6/en/html/example-basic.html</a></p>
+<span id="more"></span>
+
+<p><img src="/2020/09/26/Postgres-PGPool-II/1.png"></p>
+<p>基于PGPool的双机集群如上图所示：pg主节点和备节点实现流复制热备，pgpool1，pgpool2作为中间件，将主备pg节点加入集群，实现读写分离，负载均衡和HA故障自动切换。两pgpool节点可以委托一个虚拟ip节点作为应用程序访问的地址，两节点之间通过watchdog进行监控，当pgpool1宕机时，pgpool2会自动接管虚拟ip继续对外提供不间断服务。</p>
+<h1 id="一、主机规划"><a href="#一、主机规划" class="headerlink" title="一、主机规划"></a>一、主机规划</h1><h2 id="操作系统与软件版本"><a href="#操作系统与软件版本" class="headerlink" title="操作系统与软件版本"></a>操作系统与软件版本</h2><p>操作系统：CentOS7<br>postgresql 12.2<br>pgpool-ll 4.1.3</p>
+<h2 id="PG-规划"><a href="#PG-规划" class="headerlink" title="PG 规划"></a>PG 规划</h2><table>
+<thead>
+<tr>
+<th align="left">主机名</th>
+<th align="left">IP</th>
+<th align="left">虚拟IP</th>
+<th align="left">角色</th>
+<th align="left">端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">postgres1</td>
+<td align="left">192.168.30.11</td>
+<td align="left">192.168.30.10</td>
+<td align="left">Master</td>
+<td align="left">5432</td>
+</tr>
+<tr>
+<td align="left">postgres2</td>
+<td align="left">192.168.30.12</td>
+<td align="left">192.168.30.10</td>
+<td align="left">Slave1</td>
+<td align="left">5432</td>
+</tr>
+<tr>
+<td align="left">postgres3</td>
+<td align="left">192.168.30.13</td>
+<td align="left">192.168.30.10</td>
+<td align="left">Slave2</td>
+<td align="left">5432</td>
+</tr>
+</tbody></table>
+<h2 id="PG路径"><a href="#PG路径" class="headerlink" title="PG路径"></a>PG路径</h2><p>PG安装路径：&#x2F;postgres<br>PG数据路径：&#x2F;postgres&#x2F;data<br>PG Archive mode路径：&#x2F;postgres&#x2F;arch<br>PG版本：12.2</p>
+<h2 id="PGPool-ll-规划"><a href="#PGPool-ll-规划" class="headerlink" title="PGPool-ll 规划"></a>PGPool-ll 规划</h2><table>
+<thead>
+<tr>
+<th align="left">主机名</th>
+<th align="left">IP</th>
+<th align="left">角色</th>
+<th align="left">Pool连接-端口</th>
+<th align="left">PCP 端口</th>
+<th align="left">watchdog 端口</th>
+<th align="left">Watchdog 心跳</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">postgres1</td>
+<td align="left">192.168.30.11</td>
+<td align="left">Master</td>
+<td align="left">9999</td>
+<td align="left">9898</td>
+<td align="left">9000</td>
+<td align="left">9694</td>
+</tr>
+<tr>
+<td align="left">postgres2</td>
+<td align="left">192.168.30.12</td>
+<td align="left">Slave1</td>
+<td align="left">9999</td>
+<td align="left">9898</td>
+<td align="left">9000</td>
+<td align="left">9694</td>
+</tr>
+<tr>
+<td align="left">postgres3</td>
+<td align="left">192.168.30.13</td>
+<td align="left">Slave2</td>
+<td align="left">9999</td>
+<td align="left">9898</td>
+<td align="left">9000</td>
+<td align="left">9694</td>
+</tr>
+</tbody></table>
+<h2 id="PGPool-II路径"><a href="#PGPool-II路径" class="headerlink" title="PGPool-II路径"></a>PGPool-II路径</h2><p>PGPool-II安装路径：&#x2F;pgpool<br>PGPool-II运行模式：streaming replication mode<br>Watchdog：on</p>
+<h2 id="修改-x2F-etc-x2F-hosts文件"><a href="#修改-x2F-etc-x2F-hosts文件" class="headerlink" title="修改&#x2F;etc&#x2F;hosts文件"></a>修改&#x2F;etc&#x2F;hosts文件</h2><p>建立好主机规划之后，在postgres1,postgres2,postgres3 上三台机器设置下host</p>
+<pre><code>192.168.30.11 postgres1
+192.168.30.12 postgres2
+192.168.30.13 postgres3
+192.168.30.10 vip
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/2.png"></p>
+<h1 id="二、安装PG数据库"><a href="#二、安装PG数据库" class="headerlink" title="二、安装PG数据库"></a>二、安装PG数据库</h1><h2 id="1、创建postgres用户"><a href="#1、创建postgres用户" class="headerlink" title="1、创建postgres用户"></a>1、创建postgres用户</h2><pre><code>adduser postgres #增加新用户，系统提示要给定新用户密码
+</code></pre>
+<h2 id="2、创建数据库路径"><a href="#2、创建数据库路径" class="headerlink" title="2、创建数据库路径"></a>2、创建数据库路径</h2><pre><code>mkdir /postgres
+chown -R postgres:postgres /postgres
+</code></pre>
+<h2 id="3、使用postgres用户安装postgres数据库（以下都以postgres用户）"><a href="#3、使用postgres用户安装postgres数据库（以下都以postgres用户）" class="headerlink" title="3、使用postgres用户安装postgres数据库（以下都以postgres用户）"></a>3、使用postgres用户安装postgres数据库（以下都以postgres用户）</h2><pre><code>su - postgres #使用postgres帐号操作
+tar xjvf postgresql-12.2.bz2 	#解压至一个目录
+cd potgresql-12.2
+./configure --prefix=/postgres 	#安装至/postgres
+make world
+make install-world
+</code></pre>
+<h2 id="4、添加环境变量"><a href="#4、添加环境变量" class="headerlink" title="4、添加环境变量"></a>4、添加环境变量</h2><pre><code>vim /home/postgres/.bash_profile
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/3.png"><br><label style="color: red"><strong>注：由于后期需要安装pgpool，所以这边为了后期维护方便将pgpool的环境变量提前写入</strong></label></p>
+<h2 id="5、建立数据目录与日志目录"><a href="#5、建立数据目录与日志目录" class="headerlink" title="5、建立数据目录与日志目录"></a>5、建立数据目录与日志目录</h2><pre><code>mkdir /postgres/data	 #创建数据库目录
+mkdir /postgres/log		#创建日志目录
+</code></pre>
+<h2 id="6、建立数据库"><a href="#6、建立数据库" class="headerlink" title="6、建立数据库"></a>6、建立数据库</h2><pre><code>initdb -D /opt/pgsql/data #初始化数据库
+pg_ctl -D /postgres/data -l /postgres/log/logfile start #启动数据库
+</code></pre>
+<h1 id="三、ssh密钥配置（postgres用户）"><a href="#三、ssh密钥配置（postgres用户）" class="headerlink" title="三、ssh密钥配置（postgres用户）"></a>三、ssh密钥配置（postgres用户）</h1><p>三节点互信(各个节点都要执行一遍)</p>
+<pre><code>ssh-keygen -t rsa
+ssh-copy-id -i  .ssh/id_rsa.pub postgres@192.168.30.11
+ssh-copy-id -i  .ssh/id_rsa.pub postgres@192.168.30.12
+ssh-copy-id -i  .ssh/id_rsa.pub postgres@192.168.30.13
+</code></pre>
+<h1 id="四、PRIMARY主节点配置"><a href="#四、PRIMARY主节点配置" class="headerlink" title="四、PRIMARY主节点配置"></a>四、PRIMARY主节点配置</h1><h2 id="1、修改-pg-hba-conf-添加如下内容"><a href="#1、修改-pg-hba-conf-添加如下内容" class="headerlink" title="1、修改 pg_hba.conf,添加如下内容"></a>1、修改 pg_hba.conf,添加如下内容</h2><p>表示允许该网段192.168.30.0用户通过trust进行认证连接<br>表示允许该网段192.168.30.0的repl 用户进行流复制</p>
+<pre><code>echo &quot;host    all            all        192.168.30.0/24  trust&quot; &gt;&gt; /postgres/data/pg_hba.conf
+echo &quot;host    replication    repl       192.168.30.0/24  trust&quot; &gt;&gt; /postgres/data/pg_hba.conf
+</code></pre>
+<h2 id="2、修改postgresql-conf配置文件"><a href="#2、修改postgresql-conf配置文件" class="headerlink" title="2、修改postgresql.conf配置文件"></a>2、修改postgresql.conf配置文件</h2><pre><code>listen_addresses = &#39;*&#39;                       				# rtm
+port = 5532                                  					# rtm
+max_connections = 100                        				# rtm
+superuser_reserved_connections = 10          			# rtm
+wal_level = logical                          					# rtm
+full_page_writes = on                        				# rtm
+wal_log_hints = off                          				# rtm
+archive_mode = on                            				# rtm
+archive_command = &#39;cp &quot;%p&quot; &quot;/postgres/arch&quot;&#39; 		# rtm
+max_wal_senders = 50                         				# rtm
+hot_standby = on                             				# rtm
+log_destination = &#39;csvlog&#39;                   				# rtm
+logging_collector = on                     				# rtm  
+log_directory = &#39;log&#39;                        					# rtm
+log_filename = &#39;postgresql-%Y-%m-%d_%H%M%S&#39;  	# rtm
+log_rotation_age = 1d                        				# rtm
+log_rotation_size = 10MB                    				# rtm
+log_statement = &#39;mod&#39;                       				# rtm
+synchronous_standby_names = &#39;slave1,slave2&#39; 		# 表示该备库与主库为同步
+synchronous_commit = off  						# 该参数主要控制主库提交事务是否等待备库提交完成后才提交
+</code></pre>
+<h2 id="3、创建arch文件"><a href="#3、创建arch文件" class="headerlink" title="3、创建arch文件"></a>3、创建arch文件</h2><pre><code>mkdir /postgres/arch
+</code></pre>
+<h2 id="4、创建arch文件"><a href="#4、创建arch文件" class="headerlink" title="4、创建arch文件"></a>4、创建arch文件</h2><pre><code>pg_ctl -D /postgres/data -l /postgres/log/logfile start
+</code></pre>
+<h2 id="5、主库修改postgres的密码、创建流复制用户-repl，pgcheck"><a href="#5、主库修改postgres的密码、创建流复制用户-repl，pgcheck" class="headerlink" title="5、主库修改postgres的密码、创建流复制用户 repl，pgcheck"></a>5、主库修改postgres的密码、创建流复制用户 repl，pgcheck</h2><pre><code>ALTER USER postgres WITH PASSWORD &#39;postgres&#39;;
+CREATE ROLE pgpool WITH PASSWORD &#39;pgpool&#39; LOGIN;
+CREATE user repl WITH PASSWORD &#39;repl&#39; REPLICATION LOGIN;
+CREATE user pgcheck WITH PASSWORD &#39;pgcheck&#39; LOGIN;
+</code></pre>
+<h2 id="6、创建测试数据库pgpool，并给pgpool授予权限，并创建测试表"><a href="#6、创建测试数据库pgpool，并给pgpool授予权限，并创建测试表" class="headerlink" title="6、创建测试数据库pgpool，并给pgpool授予权限，并创建测试表"></a>6、创建测试数据库pgpool，并给pgpool授予权限，并创建测试表</h2><pre><code>CREATE DATABASE pgpool ;
+GRANT ALL ON DATABASE pgpool to pgpool;
+\c pgpool pgpool           
+</code></pre>
+<p>注：前一个pgpool为数据库名称，后一个pgpool为用户</p>
+<pre><code>CREATE TABLE pgpool (id serial,age bigint,insertTime timestamp default now());
+insert into pgpool (age) values (1);
+select * from pgpool;
+</code></pre>
+<h2 id="7、查看数据库是否为主库"><a href="#7、查看数据库是否为主库" class="headerlink" title="7、查看数据库是否为主库"></a>7、查看数据库是否为主库</h2><pre><code>\c postgres
+select * from pg_is_in_recovery();
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/4.png"></p>
+<p><label style="color: red">注：f 表示为主库</label></p>
+<h1 id="五、主库备库都创建pgpass免密文件（postgres用户）"><a href="#五、主库备库都创建pgpass免密文件（postgres用户）" class="headerlink" title="五、主库备库都创建pgpass免密文件（postgres用户）"></a>五、主库备库都创建pgpass免密文件（postgres用户）</h1><pre><code>su - postgres
+echo &quot;192.168.30.11:5432:replication:repl:repl&quot; &gt;&gt; ~/.pgpass
+echo &quot;192.168.30.12:5432:replication:repl:repl&quot; &gt;&gt; ~/.pgpass
+echo &quot;192.168.30.13:5432:replication:repl:repl&quot; &gt;&gt; ~/.pgpass
+chmod 600 ~/.pgpass
+
+scp /home/postgres/.pgpass postgres@postgres2:/home/postgres/
+scp /home/postgres/.pgpass postgres@postgres3:/home/postgres/
+</code></pre>
+<h1 id="六、备库的配置slave1与slave2"><a href="#六、备库的配置slave1与slave2" class="headerlink" title="六、备库的配置slave1与slave2"></a>六、备库的配置slave1与slave2</h1><h2 id="1、编译安装postgres，不需要初始化创建数据库"><a href="#1、编译安装postgres，不需要初始化创建数据库" class="headerlink" title="1、编译安装postgres，不需要初始化创建数据库"></a>1、编译安装postgres，不需要初始化创建数据库</h2><h2 id="2、创建数据目录"><a href="#2、创建数据目录" class="headerlink" title="2、创建数据目录"></a>2、创建数据目录</h2><pre><code>mkdir /postgres/data
+mkdir /postgres/arch
+</code></pre>
+<h2 id="3、使用-pg-basebackup-命令在线创建一个备库-使用该命令"><a href="#3、使用-pg-basebackup-命令在线创建一个备库-使用该命令" class="headerlink" title="3、使用 pg_basebackup 命令在线创建一个备库,使用该命令"></a>3、使用 pg_basebackup 命令在线创建一个备库,使用该命令</h2><p><label style="color: red"><strong>注：确保 主库已经启动</strong></label></p>
+<pre><code>pg_basebackup -h 192.168.30.11 -p 5432 -U repl -w -Fp -Xs -Pv -R -D /postgres/data
+</code></pre>
+<p><strong>参数说明</strong></p>
+<pre><code>-h  启动的主库数据库地址             	 	-p  主库数据库端口
+-U  流复制用户                        	-w  不使用密码验证
+-Fp 备份输出正常的数据库目录           	-Xs 使用流复制的方式进行复制
+-Pv 输出复制过程的详细信息             	-R  为备库创建recovery.conf文件
+-D  指定创建的备库的数据库目录
+</code></pre>
+<h2 id="4、配置备库postgresql-conf"><a href="#4、配置备库postgresql-conf" class="headerlink" title="4、配置备库postgresql.conf"></a>4、配置备库postgresql.conf</h2><p><strong>postgresql.conf添加 application_name 为slave1,配置如下</strong></p>
+<pre><code>primary_conninfo = &#39;application_name=slave1 user=repl passfile=&#39;&#39;/home/postgres/.pgpass&#39;&#39; host=192.168.30.11 port=5432 sslmode=disable sslcompression=1 target_session_attrs=any&#39;
+</code></pre>
+<p><label style="color: red"><strong>注：若是slave2那么将application_name更改为slave2即可</strong></label></p>
+<pre><code>primary_conninfo = &#39;application_name=slave2 user=repl passfile=&#39;&#39;/home/postgres/.pgpass&#39;&#39; host=192.168.30.11 port=5432 sslmode=disable sslcompression=1 target_session_attrs=any&#39;
+</code></pre>
+<h2 id="5、编辑standby-signal文件，postgres12版本后添加standby-mode"><a href="#5、编辑standby-signal文件，postgres12版本后添加standby-mode" class="headerlink" title="5、编辑standby.signal文件，postgres12版本后添加standby_mode"></a>5、编辑standby.signal文件，postgres12版本后添加standby_mode</h2><pre><code>vim standby.signal
+
+standby_mode = &#39;on&#39;
+</code></pre>
+<p><label style="color: red"><strong>注：postgres12版本之前配置standby_mode参数是在recovery.conf文件</strong></label></p>
+<h2 id="6、配置postgresql-conf参数如下"><a href="#6、配置postgresql-conf参数如下" class="headerlink" title="6、配置postgresql.conf参数如下"></a>6、配置postgresql.conf参数如下</h2><pre><code>max_connections = 200   # 允许的最大数据库连接数
+max_wal_senders = 100  # 该参数需要大于主库，否则可能导致备库无法读操作
+</code></pre>
+<h2 id="7、服务器启动备库"><a href="#7、服务器启动备库" class="headerlink" title="7、服务器启动备库"></a>7、服务器启动备库</h2><pre><code>pg_ctl -D /postgres/data/ start
+</code></pre>
+<h2 id="8、服务器连接数据库pgpool，查看数据是否同步-查看上述添加的表"><a href="#8、服务器连接数据库pgpool，查看数据是否同步-查看上述添加的表" class="headerlink" title="8、服务器连接数据库pgpool，查看数据是否同步,查看上述添加的表"></a>8、服务器连接数据库pgpool，查看数据是否同步,查看上述添加的表</h2><pre><code>psql -h 127.0.0.1 -p 5432 -U postgres pgpool
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/5.png"></p>
+<h2 id="9、查看数据库是否未备库，t表示备库"><a href="#9、查看数据库是否未备库，t表示备库" class="headerlink" title="9、查看数据库是否未备库，t表示备库"></a>9、查看数据库是否未备库，t表示备库</h2><pre><code>select * from pg_is_in_recovery();
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/6.png"></p>
+<h2 id="10、查看主库数据库的状态"><a href="#10、查看主库数据库的状态" class="headerlink" title="10、查看主库数据库的状态"></a>10、查看主库数据库的状态</h2><pre><code>select pid,usename,application_name,client_addr,client_port,state,sync_priority,sync_state,replay_lag from pg_stat_replication;
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/7.png"></p>
+<p><strong>参数说明</strong><br>client_addr：备库服务器的地址         usename：使用的流复制用户<br>backend_start：流复制开始的时间       application_name：备库的名称<br>sync_state：备库与主库的同步状态     	sync_priority：备库与主库变成同步状态的优先级</p>
+<p><label style="color: red"><strong>注：从上述参数可以看出，设置的application_name没有生效，原因为postgresql.auto.conf中有自动生成的primary_conninfo配置，里面没有application_name配置，而postgresql.auto.conf文件的优先级高于postgresql.conf文件。</strong></label></p>
+<p><label style="color: red"><strong>解决application_name不生效的办法，修改postgresql.auto.conf，只需要将备库修改即可</strong></label><br><img src="/2020/09/26/Postgres-PGPool-II/8.png"></p>
+<p>更改完上述文件，重启数据库<br>pg_ctl -D &#x2F;postgres&#x2F;data restart<br>再次查看数据库状态，发现application_name信息正常<br><img src="/2020/09/26/Postgres-PGPool-II/9.png"></p>
+<h1 id="安装-pgpool-Ⅱ"><a href="#安装-pgpool-Ⅱ" class="headerlink" title="安装 pgpool-Ⅱ"></a>安装 pgpool-Ⅱ</h1><p>介绍<br>pgpool 主从模式中，pgpool对从节点没有限制，可以为1-127个，也可以没有从节点</p>
+<h2 id="主库备库安装pgpool-II"><a href="#主库备库安装pgpool-II" class="headerlink" title="主库备库安装pgpool-II"></a>主库备库安装pgpool-II</h2><h3 id="1、创建pgpool用户"><a href="#1、创建pgpool用户" class="headerlink" title="1、创建pgpool用户"></a>1、创建pgpool用户</h3><pre><code>useradd pgpool
+usermod  -g 
+passwd pgpool
+usermod  -G pgpool,postgres pgpool
+chmod 644 /var/log/messages
+</code></pre>
+<h3 id="2、创建pgpool安装路径"><a href="#2、创建pgpool安装路径" class="headerlink" title="2、创建pgpool安装路径"></a>2、创建pgpool安装路径</h3><pre><code>mkdir /pgpool
+chown pgpool:pgpool /pgpool
+</code></pre>
+<h3 id="3、更改pgpool用户的sudo权限-由于需要使用ip命令，需要sudo无密码"><a href="#3、更改pgpool用户的sudo权限-由于需要使用ip命令，需要sudo无密码" class="headerlink" title="3、更改pgpool用户的sudo权限(由于需要使用ip命令，需要sudo无密码)"></a>3、更改pgpool用户的sudo权限(由于需要使用ip命令，需要sudo无密码)</h3><pre><code>vim /etc/sudoers
+
+pgpool   ALL=(ALL)      NOPASSWD:ALL
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/10.png"></p>
+<p><label style="color: red"><strong>以下操作皆以pgpool用户操作</strong></label></p>
+<h2 id="4、配置pgpool用户环境变量bash-profile"><a href="#4、配置pgpool用户环境变量bash-profile" class="headerlink" title="4、配置pgpool用户环境变量bash_profile"></a>4、配置pgpool用户环境变量bash_profile</h2><p><img src="/2020/09/26/Postgres-PGPool-II/11.png"></p>
+<p><label style="color: red"><strong>注：该环境变量与postgres用户一样</strong></label></p>
+<h3 id="5、三节点互信-各个节点都要执行一遍"><a href="#5、三节点互信-各个节点都要执行一遍" class="headerlink" title="5、三节点互信(各个节点都要执行一遍)"></a>5、三节点互信(各个节点都要执行一遍)</h3><pre><code>ssh-keygen -t rsa
+ssh-copy-id -i  .ssh/id_rsa.pub pgpool@192.168.30.11
+ssh-copy-id -i  .ssh/id_rsa.pub pgpool@192.168.30.12
+ssh-copy-id -i  .ssh/id_rsa.pub pgpool@192.168.30.13
+</code></pre>
+<h3 id="6、三节点创建-pgpass免密文件"><a href="#6、三节点创建-pgpass免密文件" class="headerlink" title="6、三节点创建.pgpass免密文件"></a>6、三节点创建.pgpass免密文件</h3><pre><code>vim  ~/.pgpass
+
+192.168.30.11:5432:replication:pgcheck:pgcheck
+192.168.30.11:5432:replication:repl:repl
+192.168.30.12:5432:replication:pgcheck:pgcheck
+192.168.30.12:5432:replication:repl:repl
+192.168.30.13:5432:replication:pgcheck:pgcheck
+192.168.30.13:5432:replication:repl:repl
+</code></pre>
+<p><label style="color: red"><strong>注：.pgpass权限设置为600</strong></label></p>
+<pre><code>chmod 600 .pgpass
+</code></pre>
+<h3 id="7、解压pgpool编译安装包"><a href="#7、解压pgpool编译安装包" class="headerlink" title="7、解压pgpool编译安装包"></a>7、解压pgpool编译安装包</h3><pre><code>tar -vxf pgpool-II-4.1.3.tar.gz
+cd pgpool-II-4.1.3/
+</code></pre>
+<h3 id="8、编译安装"><a href="#8、编译安装" class="headerlink" title="8、编译安装"></a>8、编译安装</h3><pre><code>./configure --prefix=/pgpool --with-pgsql=/postgres/
+make &amp;&amp; make install
+</code></pre>
+<p><label style="color: red"><strong>注：以下为主库安装，备库不需要安装，若pgpool用户无法编译使用postgres用户</strong></label></p>
+<h3 id="9、在主库安装-pgpool-regaclalss-PG8-0-后内部使用，防止处理相同名称的临时表出错"><a href="#9、在主库安装-pgpool-regaclalss-PG8-0-后内部使用，防止处理相同名称的临时表出错" class="headerlink" title="9、在主库安装 pgpool_regaclalss,PG8.0 后内部使用，防止处理相同名称的临时表出错"></a>9、在主库安装 pgpool_regaclalss,PG8.0 后内部使用，防止处理相同名称的临时表出错</h3><pre><code>cd  pgpool-II-4.1.3/src/sql/pgpool-regclass
+make &amp;&amp; make install
+</code></pre>
+<p>验证是否安装完成</p>
+<p><img src="/2020/09/26/Postgres-PGPool-II/12.png"></p>
+<h3 id="10、postgres用户操作执行-pgpool-regclass-sql-sql文件到主库的-template1-模板数据库"><a href="#10、postgres用户操作执行-pgpool-regclass-sql-sql文件到主库的-template1-模板数据库" class="headerlink" title="10、postgres用户操作执行 pgpool-regclass.sql sql文件到主库的 template1 模板数据库"></a>10、postgres用户操作执行 pgpool-regclass.sql sql文件到主库的 template1 模板数据库</h3><pre><code>cd  pgpool-II-4.1.3/src/sql/pgpool-regclass
+psql  -f pgpool-regclass.sql -h 192.168.30.11 -p 5432 -U postgres template1
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/13.png"></p>
+<p>至此 pgpool-regclass 函数安装成功</p>
+<h3 id="11、编译安装-insert-lock"><a href="#11、编译安装-insert-lock" class="headerlink" title="11、编译安装 insert_lock"></a>11、编译安装 insert_lock</h3><pre><code>cd  pgpool-II-4.1.3/src/sql
+make &amp;&amp; make install
+</code></pre>
+<h3 id="12、主库template1-模板库建立的-insert-lock表"><a href="#12、主库template1-模板库建立的-insert-lock表" class="headerlink" title="12、主库template1 模板库建立的 insert_lock表"></a>12、主库template1 模板库建立的 insert_lock表</h3><pre><code>psql -f insert_lock.sql -h 192.168.30.11 -p 5432 -U postgres template1
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/14.png"></p>
+<p>注：若报错 schema “pgpool_catalog” 不存在，不用担心，它会自动创建该schema</p>
+<h3 id="13、主库template1模板安装pgpool-recovery函数"><a href="#13、主库template1模板安装pgpool-recovery函数" class="headerlink" title="13、主库template1模板安装pgpool-recovery函数"></a>13、主库template1模板安装pgpool-recovery函数</h3><pre><code>cd  pgpool-II-4.1.3/src/sql/pgpool-recovery
+psql -f pgpool-recovery.sql -h 192.168.30.11 -p 5432 -U postgres template1
+</code></pre>
+<p>至此该扩展函数安装成功</p>
+<h3 id="14、连接主库，创建扩展函数"><a href="#14、连接主库，创建扩展函数" class="headerlink" title="14、连接主库，创建扩展函数"></a>14、连接主库，创建扩展函数</h3><p>(该步骤非必须，上述安装成功内部已经安装了扩展，下述只为方便查看)</p>
+<pre><code>postgres=# create extension pgpool_regclass;
+    CREATE EXTENSION
+    postgres=#  CREATE EXTENSION pgpool_recovery;
+    CREATE EXTENSION
+    postgres=# select * from pg_extension;
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/15.png"></p>
+<p><label style="color: red"><strong>服务器会通过流复制自动安装扩展函数，我们只需要在17、18安装pgpool-Ⅱ即可</strong></label></p>
+<h1 id="服务器配置pgpool-II"><a href="#服务器配置pgpool-II" class="headerlink" title="服务器配置pgpool-II"></a>服务器配置pgpool-II</h1><h2 id="1、创建所需要的目录，主备库都需要创建"><a href="#1、创建所需要的目录，主备库都需要创建" class="headerlink" title="1、创建所需要的目录，主备库都需要创建"></a>1、创建所需要的目录，<label style="color: red"><strong>主备库都需要创建</strong></label></h2><pre><code>mkdir /pgpool/run
+mkdir /pgpool/log
+mkdir /pgpool/script
+mkdir /pgpool/tmp
+</code></pre>
+<h2 id="2、复制pgpool模板配置文件，可以不在备库创建，主库更改完成后copy"><a href="#2、复制pgpool模板配置文件，可以不在备库创建，主库更改完成后copy" class="headerlink" title="2、复制pgpool模板配置文件，可以不在备库创建，主库更改完成后copy"></a>2、复制pgpool模板配置文件，<label style="color: red"><strong>可以不在备库创建，主库更改完成后copy</strong></label></h2><pre><code>cd /pgpool/etc
+cp pcp.conf.sample pcp.conf
+cp pgpool.conf.sample pgpool.conf
+cp pool_hba.conf.sample pool_hba.conf
+</code></pre>
+<h2 id="3、复制pgpool模板脚本文件，可以不在备库创建，主库更改完成后copy"><a href="#3、复制pgpool模板脚本文件，可以不在备库创建，主库更改完成后copy" class="headerlink" title="3、复制pgpool模板脚本文件，可以不在备库创建，主库更改完成后copy"></a>3、复制pgpool模板脚本文件，<label style="color: red"><strong>可以不在备库创建，主库更改完成后copy</strong></label></h2><pre><code>cp failover.sh.sample  			/pgpool/script/failover.sh
+cp follow_master.sh.sample 		/pgpool/script/follow_master.sh
+chmod 755 /pgpool/script/*
+</code></pre>
+<h2 id="4、主库的配置pgpool-conf-参数配置（有中文注释的是需要更改的）"><a href="#4、主库的配置pgpool-conf-参数配置（有中文注释的是需要更改的）" class="headerlink" title="4、主库的配置pgpool.conf,参数配置（有中文注释的是需要更改的）"></a>4、主库的配置pgpool.conf,参数配置（有中文注释的是需要更改的）</h2><pre><code>listen_addresses = &#39;*&#39;
+#用于pgpool监听地址，控制哪些地址可以通过pgpool 连接,`*`表示接受所有连接
+port = 9999                 
+# pgpool 监听的端口
+socket_dir = &#39;/pgpool/tmp&#39;
+# pgpool启动用户需要访问到这个目录，若是访问不到会启动不了
+listen_backlog_multiplier = 2
+serialize_accept = off
+reserved_connections = 0
+pcp_listen_addresses = &#39;*&#39;
+pcp_port = 9898
+pcp_socket_dir = &#39;/pgpool/tmp&#39;
+# pgpool启动用户需要访问到这个目录，若是访问不到会启动不了
+backend_hostname0 = &#39;192.168.30.11&#39;   
+#配置后端postgreSQL 数据库地址，此处为主库
+backend_port0 = 5432                             
+#后端postgreSQL 数据库端口
+backend_weight0 = 1                               
+#权重，用于负载均衡，由于该是主库可以将权重提高, 权重值越小，获得主节概率越大
+backend_data_directory0 = &#39;/postgres/data&#39;  
+#后端postgreSQL 数据库实例目录
+backend_flag0 = &#39;ALLOW_TO_FAILOVER&#39;   
+#允许故障自动切换
+backend_application_name0 = &#39;master&#39;
+backend_hostname1 = &#39;192.168.30.12&#39;  
+#此为备库1的地址
+backend_port1 = 5432
+backend_weight1 = 2
+backend_data_directory1 = &#39;/postgres/data&#39;
+backend_flag1 = &#39;ALLOW_TO_FAILOVER&#39;
+backend_application_name1 = &#39;slave1&#39;
+backend_hostname2 = &#39;192.168.30.13&#39; 
+#此为备库2的地址
+backend_port2 = 5432
+backend_weight2 = 5
+backend_data_directory2 = &#39;/postgres/data&#39;
+backend_flag2 = &#39;ALLOW_TO_FAILOVER&#39;
+backend_application_name2 = &#39;slave2&#39;
+enable_pool_hba = on   
+#开启pgpool认证，需要通过 `pool_passwd` 文件对连接到数据库的用户进行md5认证
+pool_passwd = &#39;pool_passwd&#39;  
+#认证文件
+authentication_timeout = 60
+allow_clear_text_frontend_auth = off
+# - SSL Connections -
+ssl = off
+#ssl_key = &#39;./server.key&#39;
+#ssl_cert = &#39;./server.cert&#39;
+#ssl_ca_cert = &#39;&#39;
+#ssl_ca_cert_dir = &#39;&#39;
+ssl_ciphers = &#39;HIGH:MEDIUM:+3DES:!aNULL&#39;
+ssl_prefer_server_ciphers = off
+ssl_ecdh_curve = &#39;prime256v1&#39;
+ssl_dh_params_file = &#39;&#39;
+num_init_children = 32
+max_pool = 4
+child_life_time = 300
+child_max_connections = 0
+connection_life_time = 0
+client_idle_limit = 0
+log_destination = &#39;stderr,syslog&#39;    
+#日志级别，标注错误输出和系统日志级别
+log_line_prefix = &#39;%t: pid %p: &#39;   
+#日志输出格式
+log_connections = on  
+#开启日志
+log_hostname = on
+# 打印主机名称
+log_statement = on
+log_per_node_statement = on
+#取消注释则开启打印sql负载均衡日志，记录sql负载到每个节点的执行情况
+log_client_messages = off
+log_standby_delay = &#39;none&#39;
+syslog_facility = &#39;LOCAL0&#39;
+syslog_ident = &#39;pgpool&#39;
+#log_error_verbosity = default          # terse, default, or verbose messages
+#client_min_messages = notice           # values in order of decreasing detail:
+#log_min_messages = warning             # values in order of decreasing detail:
+pid_file_name = &#39;/pgpool/run/pgpool.pid&#39; 
+#pgpool的运行目录，若不存在则先创建
+logdir = &#39;/pgpool/log&#39;   
+#指定日志输出的目录
+connection_cache = on
+reset_query_list = &#39;ABORT; DISCARD ALL&#39;
+#reset_query_list = &#39;ABORT; RESET ALL; 
+replication_mode = off    
+replicate_select = off
+insert_lock = on
+lobj_lock_table = &#39;&#39;
+replication_stop_on_mismatch = off
+failover_if_affected_tuples_mismatch = off
+load_balance_mode = on   
+ignore_leading_white_space = on
+white_function_list = &#39;&#39;
+black_function_list = &#39;currval,lastval,nextval,setval&#39;
+black_query_pattern_list = &#39;&#39;
+database_redirect_preference_list = &#39;&#39;
+app_name_redirect_preference_list = &#39;&#39;
+allow_sql_comments = off
+disable_load_balance_on_write = &#39;transaction&#39;
+statement_level_load_balance = off
+master_slave_mode = on   
+#开启主从模式
+master_slave_sub_mode = &#39;stream&#39;   
+#设置主从为流复制模式
+sr_check_period = 10  
+#流复制的延迟检测的时间间隔
+sr_check_user = &#39;pgcheck&#39;  
+#该用户需要在pg数据库中存在，且拥有查询权限
+sr_check_password = &#39;pgchenk&#39;  
+#Pgpool-II 4.0开始，如果这些参数为空，Pgpool-II将首先尝试从sr_check_password文件中获取指定用户的密码
+sr_check_database = &#39;postgres&#39;   
+#流复制检查的数据库名称
+delay_threshold = 10000000       
+#设置允许主备流复制最大延迟字节数,单位为kb。定义slave库能够接收读请求所允许的最大延迟时间。比如：设置为1024，slave库只允许滞后master库1KB 的XLOG；否则，slave库将不会接收到请求。
+follow_master_command = &#39;&#39;
+health_check_period =20    
+#pg数据库检查检查间隔时间。定义系统应该多久检查一次哪些XLOG位置，以弄清楚是否是延迟太高或太低。
+health_check_timeout = 20
+health_check_user = &#39;pgcheck&#39;
+#健康检查用户，需pg数据库中存在。连接到primary来检查当前XLOG的位置的用户名。
+health_check_password = &#39;pgcheck&#39;
+health_check_database = &#39;pgpool&#39;
+#健康检查的数据库名称
+health_check_max_retries = 3
+health_check_retry_delay = 3
+connect_timeout = 10000
+#health_check_period0 = 0
+#health_check_timeout0 = 20
+#health_check_user0 = &#39;nobody&#39;
+#health_check_password0 = &#39;&#39;
+#health_check_database0 = &#39;&#39;
+#health_check_max_retries0 = 0
+#health_check_retry_delay0 = 1
+#connect_timeout0 = 10000
+failover_command = &#39;/pgpool/script/failover.sh %d %h %p %D %m %H %M %P %r %R&#39;
+#在failover_command参数中指定failover后需要执行的failover.sh脚本
+failback_command = &#39;/pgpool/script/follow_master.sh  %d %h %p %D %m %H %M %P %r %R&#39;
+#如果使用3台PostgreSQL服务器，需要在主节点切换后指定follow_master_command运行，如果是两PostgreSQL服务器，则不需要设置follow_master_command
+failover_on_backend_error = off   
+#如果设置了health_check_max_retries次数，则关闭该参数
+detach_false_primary = off
+search_primary_node_timeout = 300
+auto_failback = off
+auto_failback_interval = 60
+recovery_user = &#39;pgcheck&#39;
+recovery_password = &#39;pgcheck&#39;
+recovery_1st_stage_command = &#39;/pgpool/script/restore_1st.sh&#39;
+recovery_2nd_stage_command = &#39;/pgpool/script/restore_2st.sh&#39;
+recovery_timeout = 90
+client_idle_limit_in_recovery = 20
+use_watchdog = on     
+#开启看门狗，用于监控pgpool 集群健康状态
+trusted_servers = &#39;&#39;
+ping_path = &#39;/bin&#39;
+wd_hostname = &#39;192.168.30.11&#39;   
+#本地看门狗地址，配置为当前库的IP
+wd_port = 9000
+wd_priority = 1            
+#看门狗优先级，用于pgpool 集群中master选举
+wd_authkey = &#39;&#39;
+wd_ipc_socket_dir = &#39;/pgpool/tmp&#39;    
+#默认为/tmp目录，如果启动pgpool的用户无法访问该目录，更改该参数，使启动pgpool的用户能够访问
+delegate_IP = &#39;192.168.30.10&#39;   
+#在三个库上指定接受客户端连接的虚拟IP地址
+if_cmd_path = &#39;/sbin&#39;
+if_up_cmd = &#39;/usr/bin/sudo /usr/sbin/ip addr add $_IP_$/24 dev ens33 label ens33:0&#39;   
+# 配置虚拟IP到本地网卡
+if_down_cmd = &#39;/usr/bin/sudo /usr/sbin/ip addr del $_IP_$/24 dev ens33&#39;   
+# 关闭虚拟IP
+arping_path = &#39;/usr/sbin&#39;
+arping_cmd = &#39;/usr/bin/sudo /usr/sbin/arping -U $_IP_$ -w 1 -I ens33&#39;
+clear_memqcache_on_escalation = on
+wd_escalation_command = &#39;&#39;
+wd_de_escalation_command = &#39;&#39;
+failover_when_quorum_exists = on
+failover_require_consensus = on
+allow_multiple_failover_requests_from_node = off
+enable_consensus_with_half_votes = off
+wd_monitoring_interfaces_list = &#39;&#39;
+wd_lifecheck_method = &#39;heartbeat&#39;
+wd_interval = 15
+wd_heartbeat_port = 9694
+wd_heartbeat_keepalive = 10
+wd_heartbeat_deadtime = 30
+heartbeat_destination0 = &#39;192.168.30.12&#39;   
+#配置需要监测健康心跳的IP地址，非本地地址，即互相监控，配置对端的IP地址
+heartbeat_destination_port0 = 9694 
+heartbeat_device0 = &#39;ens33&#39;    
+#监听的网卡名称
+heartbeat_destination1 = &#39;192.168.30.13&#39;  
+# 配置需要监测健康心跳的IP地址，非本地地址，即互相监控，配置对端的IP地址
+heartbeat_destination_port1 = 9694
+heartbeat_device1 = &#39;ens33&#39;
+wd_life_point = 3
+wd_lifecheck_query = &#39;SELECT 1&#39;  
+#用于检查 pgpool-II 的查询语句。默认为“SELECT 1
+wd_lifecheck_dbname = &#39;template1&#39;   
+#检查健康状态的数据库名称
+wd_lifecheck_user = &#39;pgcheck&#39;   
+wd_lifecheck_password = &#39;pgcheck&#39;
+other_pgpool_hostname0 = &#39;192.168.30.12&#39;  
+#指定被监控的 pgpool-II 服务器的主机名
+other_pgpool_port0 = 9999
+other_wd_port0 = 9000
+other_pgpool_hostname1 = &#39;192.168.30.13&#39;  
+#指定被监控的 pgpool-II 服务器的主机名
+other_pgpool_port1 = 9999
+other_wd_port1 = 9000
+relcache_expire = 0
+relcache_size = 256
+check_temp_table = catalog
+check_unlogged_table = on
+enable_shared_relcache = on
+relcache_query_target = master
+memory_cache_enabled = off
+memqcache_method = &#39;shmem&#39;
+memqcache_memcached_host = &#39;localhost&#39;
+memqcache_memcached_port = 11211
+memqcache_total_size = 67108864
+memqcache_max_num_cache = 1000000
+memqcache_expire = 0
+memqcache_auto_cache_invalidation = on
+memqcache_maxcache = 409600
+memqcache_cache_block_size = 1048576
+memqcache_oiddir = &#39;/var/log/pgpool/oiddir&#39;
+white_memqcache_table_list = &#39;&#39;
+black_memqcache_table_list = &#39;&#39;
+</code></pre>
+<p><label style="color: red"><strong>注：if_up_cmd，if_down_cmd这两个参数需要根据你操作系统的环境配置，比如你的网卡名，启动虚拟ip的命令等等。</strong></label></p>
+<h2 id="5、配置pgpool-Ⅱ-pcp-conf-文件，该文件用于配置pcp命令管理用户认证文件"><a href="#5、配置pgpool-Ⅱ-pcp-conf-文件，该文件用于配置pcp命令管理用户认证文件" class="headerlink" title="5、配置pgpool-Ⅱ pcp.conf 文件，该文件用于配置pcp命令管理用户认证文件"></a>5、配置pgpool-Ⅱ pcp.conf 文件，该文件用于配置pcp命令管理用户认证文件</h2><pre><code>pg_md5 postgres
+e8a48653851e28c69d0506508fb27fc5
+
+pg_md5 pgcheck
+63efbbd08d559ffb88978b284842a209
+
+vim pcp.conf
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/16.png"></p>
+<p><label style="color: red"><strong>注:上述通过pg_md5对密码postgres进行MD5加密，注意pcp.conf 一行表示一个认证信息，不允许有空格</strong></label></p>
+<h2 id="6、配置pool-passwd文件，默认不存在，可通过以下命令自动生成，该文件配置哪些用户可以访问-pgpool"><a href="#6、配置pool-passwd文件，默认不存在，可通过以下命令自动生成，该文件配置哪些用户可以访问-pgpool" class="headerlink" title="6、配置pool_passwd文件，默认不存在，可通过以下命令自动生成，该文件配置哪些用户可以访问 pgpool"></a>6、配置pool_passwd文件，默认不存在，可通过以下命令自动生成，该文件配置哪些用户可以访问 pgpool</h2><pre><code>pg_md5 -p -m -u postgres pool_passwd
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/17.png"></p>
+<p>上述表示为 postsgres 用户,密码：postgres,生成一个md5加密的密码，写入到 pool_passwd 文件</p>
+<p>使用相同命令配置 pgcheck用户,密码为 pgcheck</p>
+<pre><code>pg_md5 -p -m -u pgcheck pool_passwd
+</code></pre>
+<h2 id="7、配置pgpool-Ⅱ-认证配置文件-pool-hba-conf，类似于-PostgreSQL-pg-hba-conf-文件"><a href="#7、配置pgpool-Ⅱ-认证配置文件-pool-hba-conf，类似于-PostgreSQL-pg-hba-conf-文件" class="headerlink" title="7、配置pgpool-Ⅱ 认证配置文件 pool_hba.conf，类似于 PostgreSQL pg_hba.conf 文件"></a>7、配置pgpool-Ⅱ 认证配置文件 pool_hba.conf，类似于 PostgreSQL pg_hba.conf 文件</h2><pre><code>vim pool_hba.conf
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/18.png"></p>
+<p>上述本地配置trust 改为md5，防止访问本地pgpool-Ⅱ MD5 验证出错</p>
+<h2 id="8、启动pgpool-II"><a href="#8、启动pgpool-II" class="headerlink" title="8、启动pgpool-II"></a>8、启动pgpool-II</h2><pre><code>pgpool -n -d &gt; pgpool.log 2&gt;&amp;1 &amp;
+</code></pre>
+<h2 id="9、停止pgpool服务"><a href="#9、停止pgpool服务" class="headerlink" title="9、停止pgpool服务"></a>9、停止pgpool服务</h2><pre><code>pgpool -m fast stop
+</code></pre>
+<h2 id="10、将主库的配置文件copy至备服务器"><a href="#10、将主库的配置文件copy至备服务器" class="headerlink" title="10、将主库的配置文件copy至备服务器"></a>10、将主库的配置文件copy至备服务器</h2><pre><code>scp pcp.conf pgpool.conf pool_passwd pool_hba.conf pgpool@postgres2:/pgpool/etc
+scp pcp.conf pgpool.conf pool_passwd pool_hba.conf pgpool@postgres3:/pgpool/etc
+</code></pre>
+<h2 id="11、修改备库的pgpool-conf配置文件"><a href="#11、修改备库的pgpool-conf配置文件" class="headerlink" title="11、修改备库的pgpool.conf配置文件"></a>11、修改备库的pgpool.conf配置文件</h2><pre><code>vim pgpool.conf
+</code></pre>
+<p>以下为备服务器节点1的配置</p>
+<pre><code>wd_hostname = &#39;192.168.30.12&#39;
+wd_port = 9000
+wd_priority = 1
+heartbeat_destination0 = &#39;192.168.30.11&#39; 
+heartbeat_destination_port0 = 9694
+heartbeat_device0 = &#39;ens33&#39;
+heartbeat_destination1 = &#39;192.168.30.13&#39;
+heartbeat_destination_port1 = 9694
+heartbeat_device1 = &#39;ens33&#39;
+other_pgpool_hostname0 = &#39;192.168.30.11&#39;
+other_pgpool_port0 = 9999
+other_wd_port0 = 9000
+other_pgpool_hostname1 = &#39;192.168.30.13&#39;
+other_pgpool_port1 = 9999
+other_wd_port1 = 9000
+</code></pre>
+<p>以下为备服务器节点2的配置</p>
+<pre><code>wd_hostname = &#39;192.168.30.13
+wd_port = 9000
+wd_priority = 1
+heartbeat_destination0 = &#39;192.168.30.12&#39;
+heartbeat_destination_port0 = 9694
+heartbeat_device0 = &#39;ens33&#39;
+heartbeat_destination1 = &#39;192.168.30.11&#39;
+heartbeat_destination_port1 = 9694
+heartbeat_device1 = &#39;ens33&#39;
+other_pgpool_hostname0 = &#39;192.168.30.12&#39;
+other_pgpool_port0 = 9999     
+other_wd_port0 = 9000       
+other_pgpool_hostname1 = &#39;192.168.30.11&#39;
+other_pgpool_port1 = 9999
+other_wd_port1 = 9000
+</code></pre>
+<p><label style="color: red"><strong>pgppool.conf中的网卡请确认为自己对应的网卡名称，此处为 ens33</strong></label></p>
+<h2 id="12、三台服务器分别启动pgpool-II服务"><a href="#12、三台服务器分别启动pgpool-II服务" class="headerlink" title="12、三台服务器分别启动pgpool-II服务"></a>12、三台服务器分别启动pgpool-II服务</h2><pre><code>pgpool -n -d &gt; pgpool.log 2&gt;&amp;1 &amp;
+</code></pre>
+<h2 id="13、主库，备库分别查看-x2F-var-x2F-log-x2F-messages"><a href="#13、主库，备库分别查看-x2F-var-x2F-log-x2F-messages" class="headerlink" title="13、主库，备库分别查看&#x2F;var&#x2F;log&#x2F;messages"></a>13、主库，备库分别查看&#x2F;var&#x2F;log&#x2F;messages</h2><pre><code>tail -f /var/log/messages
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/19.png"></p>
+<p><label style="color: red"><strong>注：可以看到watchdog heartbeat 分别向slave1,slave2服务器发送数据包，received watchdog packet也接收到了对应下响应，则表示该集群正常</strong></label></p>
+<h2 id="14、查看VIP-绑定"><a href="#14、查看VIP-绑定" class="headerlink" title="14、查看VIP 绑定"></a>14、查看VIP 绑定</h2><p><img src="/2020/09/26/Postgres-PGPool-II/20.png"></p>
+<p>从上述可以看出，是节点1，获得了master</p>
+<p><label style="color: red"><strong>注：pgpool 由于配置节点优先级为默认，节点角色取决于启动的先后顺序</strong></label></p>
+<h2 id="15、pgpool-状态查看"><a href="#15、pgpool-状态查看" class="headerlink" title="15、pgpool 状态查看"></a>15、pgpool 状态查看</h2><pre><code>psql -h 192.168.30.10 -p 9999 -U postgres postgres
+</code></pre>
+<p><strong>参数介绍</strong></p>
+<pre><code>-h VIP地址                           	-p pgpool 端口 
+load_balance_node：是否开启负载均衡     	replication_delay：主备数据库之间的复制延迟
+node_id：pgpool服务器的id编号          	hostname ：服务器地址
+port : 数据库端口号                    	staus:数据库的状态，up为正在运行，unused 已启动，但没有连接
+role: 数据库的角色                     	select_cnt： 查询语句的数量统计
+-U 数据库用户，必须在postgres数据库和pgpool的认证文件中存在pgpool 连接的数据库
+</code></pre>
+<p><strong>使用show pool_nodes查看pgpool节点</strong></p>
+<pre><code>show pool_nodes;
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/21.png"></p>
+<p><label style="color: red"><strong>如上所示，所有节点都为standby是有问题的</strong></label></p>
+<p><strong>解决方案如下</strong></p>
+<p>1、将所有节点的pgpool关闭</p>
+<pre><code>pgpool stop
+</code></pre>
+<p>2、先将主节点启动（<label style="color: red"><strong>主节启动后最好多等一会，1分钟左右</strong></label>）</p>
+<pre><code>pgpool -C -D
+#-C清除缓存  -Ddisk-status丢弃pgpool_status文件，不恢复以前的状态，然后重新连接
+</code></pre>
+<p>3、再将备节点启动</p>
+<pre><code>pgpool -C -D
+</code></pre>
+<p><label style="color: red"><strong>注：若是在关闭pgpool时，不能正常关闭，又可能启动不了，需要删除run目录下的pid文件</strong></label></p>
+<p><strong>再次查看pgpool状态</strong></p>
+<p><img src="/2020/09/26/Postgres-PGPool-II/22.png"></p>
+<p><strong>查看pgpool进程信息</strong></p>
+<pre><code>show pool_processes;
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/23.png"></p>
+<p><strong>查看pgpool配置信息</strong></p>
+<pre><code>show pool_status;
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/24.png"></p>
+<p><strong>查看pgpool连接池</strong></p>
+<pre><code>show pool_pools;
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/25.png"></p>
+<h1 id="pcp-配置管理-pgpool"><a href="#pcp-配置管理-pgpool" class="headerlink" title="pcp 配置管理 pgpool"></a>pcp 配置管理 pgpool</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>pcp 是用来管理 pgpool 的linux命令 ，所有参数 pgpool-Ⅱ 3.5之后 都发生了变化,通过pcp.conf 来管理认证连接，管理哪些用户可以通过 pcp 连接管理pgpool-Ⅱ </p>
+<h2 id="pcp参数说明"><a href="#pcp参数说明" class="headerlink" title="pcp参数说明"></a>pcp参数说明</h2><pre><code>-h 为pgpool服务器安装地址，或者VIP 地址 
+-d 表示为debug 模式 
+-U 为pcp 用户，该用户为 `pcp.conf` 配置文件配置的用户，与数据库用户无关，推荐全部使用统 一用户，便于管理 
+-v 表示输出详细信
+</code></pre>
+<h2 id="1、查看pgpool集群状态"><a href="#1、查看pgpool集群状态" class="headerlink" title="1、查看pgpool集群状态"></a>1、查看pgpool集群状态</h2><p><label style="color: red"><strong>注：执行该命令的用户必须在pcp.conf中配置</strong></label></p>
+<pre><code>pcp_watchdog_info -h 192.168.30.10 -p 9898 -U pgcheck -v
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/26.png"></p>
+<p>上述可知11服务器为 Master, 12、13服务器pgpool为 standby,<br>VIP up on local node : YES Master Node Name:192.168.30.10 表示VIP 绑定在11服务器上</p>
+<h2 id="2、查看节点数量"><a href="#2、查看节点数量" class="headerlink" title="2、查看节点数量"></a>2、查看节点数量</h2><pre><code>pcp_node_count  -h 192.168.30.10 -p 9898 -U pgcheck -v
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/27.png"></p>
+<h2 id="3、查看pgpool集群配置"><a href="#3、查看pgpool集群配置" class="headerlink" title="3、查看pgpool集群配置"></a>3、查看pgpool集群配置</h2><pre><code>pcp_pool_status -h 192.168.30.10 -p 9898 -U pgcheck -v
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/28.png"></p>
+<p>查看pgpool processor进程信息</p>
+<pre><code>pcp_proc_count -h 192.168.30.10 -p 9898 -U pgcheck -v
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/29.png"></p>
+<h1 id="PGPOOL故障转移"><a href="#PGPOOL故障转移" class="headerlink" title="PGPOOL故障转移"></a>PGPOOL故障转移</h1><p><label style="color: red"><strong>注：以下在主库中操作完，复制到备库</strong></label></p>
+<h2 id="1、pgpool脚本配置"><a href="#1、pgpool脚本配置" class="headerlink" title="1、pgpool脚本配置"></a>1、pgpool脚本配置</h2><p><strong>查看系节点信息</strong></p>
+<pre><code>psql -h 192.168.30.10 -p 9999 -U postgres postgres
+show pool_nodes;
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/30.png"></p>
+<p><label style="color: red"><strong>从上分别获得 node_id,port等信息</strong></label></p>
+<p><strong>编辑failover.sh文件</strong></p>
+<p><label style="color: red"><strong>注:pgpool-II 4 后 , 于之前的脚本有所不同.只需要更改几个参数</strong></label></p>
+<pre><code>#!/bin/bash
+# This script is run by failover_command.
+set -o xtrace
+exec &gt; &gt;(logger -i -p local1.info) 2&gt;&amp;1
+# Special values:
+#   %d = failed node id
+#   %h = failed node hostname
+#   %p = failed node port number
+#   %D = failed node database cluster path
+#   %m = new master node id
+#   %H = new master node hostname
+#   %M = old master node id
+#   %P = old primary node id
+#   %r = new master port number
+#   %R = new master database cluster path
+#   %N = old primary node hostname
+#   %S = old primary node port number
+#   %% = &#39;%&#39; character
+FAILED_NODE_ID=&quot;$1&quot;
+FAILED_NODE_HOST=&quot;$2&quot;
+FAILED_NODE_PORT=&quot;$3&quot;
+FAILED_NODE_PGDATA=&quot;$4&quot;
+NEW_MASTER_NODE_ID=&quot;$5&quot;
+NEW_MASTER_NODE_HOST=&quot;$6&quot;
+OLD_MASTER_NODE_ID=&quot;$7&quot;
+OLD_PRIMARY_NODE_ID=&quot;$8&quot;
+NEW_MASTER_NODE_PORT=&quot;$9&quot;
+NEW_MASTER_NODE_PGDATA=&quot;$&#123;10&#125;&quot;
+OLD_PRIMARY_NODE_HOST=&quot;$&#123;11&#125;&quot;
+OLD_PRIMARY_NODE_PORT=&quot;$&#123;12&#125;&quot;
+PGHOME=/postgres     
+##postgres家目录
+logger -i -p local1.info failover.sh: start: failed_node_id=$FAILED_NODE_ID old_primary_node_id=$OLD_PRIMARY_NODE_ID failed_host=$FAILED_NODE_HOST new_master_host=$NEW_MASTER_NODE_HOST
+## If there&#39;s no master node anymore, skip failover.
+if [ $NEW_MASTER_NODE_ID -lt 0 ]; then
+    logger -i -p local1.info failover.sh: All nodes are down. Skipping failover.
+    exit 0
+fi
+## Test passwrodless SSH
+ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null postgres@$&#123;NEW_MASTER_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool ls /tmp &gt; /dev/null
+if [ $? -ne 0 ]; then
+    logger -i -p local1.info failover.sh: passwrodless SSH to postgres@$&#123;NEW_MASTER_NODE_HOST&#125; failed. Please setup passwrodless SSH.
+    exit 1
+fi
+## If Standby node is down, skip failover.
+if [ $FAILED_NODE_ID -ne $OLD_PRIMARY_NODE_ID ]; then
+    logger -i -p local1.info failover.sh: Standby node is down. Skipping failover.
+    ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null postgres@$OLD_PRIMARY_NODE_HOST -i ~/.ssh/id_rsa_pgpool &quot;
+        $&#123;PGHOME&#125;/bin/psql -p $OLD_PRIMARY_NODE_PORT -c \&quot;SELECT pg_drop_replication_slot(&#39;$&#123;FAILED_NODE_HOST&#125;&#39;)\&quot;
+    &quot;
+    if [ $? -ne 0 ]; then
+        logger -i -p local1.error failover.sh: drop replication slot &quot;$&#123;FAILED_NODE_HOST&#125;&quot; failed
+        exit 1
+    fi
+    exit 0
+fi
+## Promote Standby node.
+logger -i -p local1.info failover.sh: Primary node is down, promote standby node $&#123;NEW_MASTER_NODE_HOST&#125;.
+ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+    postgres@$&#123;NEW_MASTER_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool $&#123;PGHOME&#125;/bin/pg_ctl -D $&#123;NEW_MASTER_NODE_PGDATA&#125; -w promote
+if [ $? -ne 0 ]; then
+    logger -i -p local1.error failover.sh: new_master_host=$NEW_MASTER_NODE_HOST promote failed
+    exit 1
+fi
+logger -i -p local1.info failover.sh: end: new_master_node_id=$NEW_MASTER_NODE_ID started as the primary node
+exit 0
+</code></pre>
+<p><strong>编辑follow_master.sh文件</strong></p>
+<pre><code>#!/bin/bash
+# This script is run after failover_command to synchronize the Standby with the new Primary.
+# First try pg_rewind. If pg_rewind failed, use pg_basebackup.
+set -o xtrace
+exec &gt; &gt;(logger -i -p local1.info) 2&gt;&amp;1
+# Special values:
+#   %d = failed node id
+#   %h = failed node hostname
+#   %p = failed node port number
+#   %D = failed node database cluster path
+#   %m = new master node id
+#   %H = new master node hostname
+#   %M = old master node id
+#   %P = old primary node id
+#   %r = new master port number
+#   %R = new master database cluster path
+#   %N = old primary node hostname
+#   %S = old primary node port number
+#   %% = &#39;%&#39; character
+FAILED_NODE_ID=&quot;$1&quot;
+FAILED_NODE_HOST=&quot;$2&quot;
+FAILED_NODE_PORT=&quot;$3&quot;
+FAILED_NODE_PGDATA=&quot;$4&quot;
+NEW_MASTER_NODE_ID=&quot;$5&quot;
+NEW_MASTER_NODE_HOST=&quot;$6&quot;
+OLD_MASTER_NODE_ID=&quot;$7&quot;
+OLD_PRIMARY_NODE_ID=&quot;$8&quot;
+NEW_MASTER_NODE_PORT=&quot;$9&quot;
+NEW_MASTER_NODE_PGDATA=&quot;$&#123;10&#125;&quot;
+PGHOME=/postgres
+ARCHIVEDIR=/postgres/arch
+REPLUSER=repl
+PCP_USER=pgpool
+PGPOOL_PATH=/usr/bin
+PCP_PORT=9898
+logger -i -p local1.info follow_master.sh: start: Standby node $&#123;FAILED_NODE_ID&#125;
+## Test passwrodless SSH
+ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null postgres@$&#123;NEW_MASTER_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool ls /tmp &gt; /dev/null
+if [ $? -ne 0 ]; then
+    logger -i -p local1.info follow_master.sh: passwrodless SSH to postgres@$&#123;NEW_MASTER_NODE_HOST&#125; failed. Please setup passwrodless SSH.
+    exit 1
+fi
+## Get PostgreSQL major version
+PGVERSION=`$&#123;PGHOME&#125;/bin/initdb -V | awk &#39;&#123;print $3&#125;&#39; | sed &#39;s/\..*//&#39; | sed &#39;s/\([0-9]*\)[a-zA-Z].*/\1/&#39;`
+if [ $PGVERSION -ge 12 ]; then
+RECOVERYCONF=$&#123;FAILED_NODE_PGDATA&#125;/myrecovery.conf
+else
+RECOVERYCONF=$&#123;FAILED_NODE_PGDATA&#125;/recovery.conf
+fi
+## Check the status of Standby
+ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+postgres@$&#123;FAILED_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool $&#123;PGHOME&#125;/bin/pg_ctl -w -D $&#123;FAILED_NODE_PGDATA&#125; status
+## If Standby is running, synchronize it with the new Primary.
+if [ $? -eq 0 ]; then
+    logger -i -p local1.info follow_master.sh: pg_rewind for $FAILED_NODE_ID
+    # Create replication slot &quot;$&#123;FAILED_NODE_HOST&#125;&quot;
+    ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null postgres@$&#123;NEW_MASTER_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool &quot;
+        $&#123;PGHOME&#125;/bin/psql -p $&#123;NEW_MASTER_NODE_PORT&#125; -c \&quot;SELECT pg_create_physical_replication_slot(&#39;$&#123;FAILED_NODE_HOST&#125;&#39;);\&quot;
+    &quot;
+    ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null postgres@$&#123;FAILED_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool &quot;
+        set -o errexit
+        $&#123;PGHOME&#125;/bin/pg_ctl -w -m f -D $&#123;FAILED_NODE_PGDATA&#125; stop
+        cat &gt; $&#123;RECOVERYCONF&#125; &lt;&lt; EOT
+primary_conninfo = &#39;host=$&#123;NEW_MASTER_NODE_HOST&#125; port=$&#123;NEW_MASTER_NODE_PORT&#125; user=$&#123;REPLUSER&#125; application_name=$&#123;FAILED_NODE_HOST&#125; passfile=&#39;&#39;/var/lib/pgsql/.pgpass&#39;&#39;&#39;
+recovery_target_timeline = &#39;latest&#39;
+restore_command = &#39;scp $&#123;NEW_MASTER_NODE_HOST&#125;:$&#123;ARCHIVEDIR&#125;/%f %p&#39;
+primary_slot_name = &#39;$&#123;FAILED_NODE_HOST&#125;&#39;
+EOT
+        if [ $&#123;PGVERSION&#125; -ge 12 ]; then
+            touch $&#123;FAILED_NODE_PGDATA&#125;/standby.signal
+        else
+            echo \&quot;standby_mode = &#39;on&#39;\&quot; &gt;&gt; $&#123;RECOVERYCONF&#125;
+        fi
+        $&#123;PGHOME&#125;/bin/pg_rewind -D $&#123;FAILED_NODE_PGDATA&#125; --source-server=\&quot;user=postgres host=$&#123;NEW_MASTER_NODE_HOST&#125; port=$&#123;NEW_MASTER_NODE_PORT&#125;\&quot;
+    &quot;
+    if [ $? -ne 0 ]; then
+        logger -i -p local1.error follow_master.sh: end: pg_rewind failed. Try pg_basebackup.
+        ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null postgres@$&#123;FAILED_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool &quot;
+             
+            set -o errexit
+            # Execute pg_basebackup
+            rm -rf $&#123;FAILED_NODE_PGDATA&#125;
+            rm -rf $&#123;ARCHIVEDIR&#125;/*
+            $&#123;PGHOME&#125;/bin/pg_basebackup -h $&#123;NEW_MASTER_NODE_HOST&#125; -U $REPLUSER -p $&#123;NEW_MASTER_NODE_PORT&#125; -D $&#123;FAILED_NODE_PGDATA&#125; -X stream
+            if [ $&#123;PGVERSION&#125; -ge 12 ]; then
+                sed -i -e \&quot;\\\$ainclude_if_exists = &#39;$(echo $&#123;RECOVERYCONF&#125; | sed -e &#39;s/\//\\\//g&#39;)&#39;\&quot; \
+                       -e \&quot;/^include_if_exists = &#39;$(echo $&#123;RECOVERYCONF&#125; | sed -e &#39;s/\//\\\//g&#39;)&#39;/d\&quot; $&#123;FAILED_NODE_PGDATA&#125;/postgresql.conf
+            fi
+     
+            cat &gt; $&#123;RECOVERYCONF&#125; &lt;&lt; EOT
+primary_conninfo = &#39;host=$&#123;NEW_MASTER_NODE_HOST&#125; port=$&#123;NEW_MASTER_NODE_PORT&#125; user=$&#123;REPLUSER&#125; application_name=$&#123;FAILED_NODE_HOST&#125; passfile=&#39;&#39;/var/lib/pgsql/.pgpass&#39;&#39;&#39;
+recovery_target_timeline = &#39;latest&#39;
+restore_command = &#39;scp $&#123;NEW_MASTER_NODE_HOST&#125;:$&#123;ARCHIVEDIR&#125;/%f %p&#39;
+primary_slot_name = &#39;$&#123;FAILED_NODE_HOST&#125;&#39;
+EOT
+            if [ $&#123;PGVERSION&#125; -ge 12 ]; then
+                touch $&#123;FAILED_NODE_PGDATA&#125;/standby.signal
+            else
+                echo \&quot;standby_mode = &#39;on&#39;\&quot; &gt;&gt; $&#123;RECOVERYCONF&#125;
+            fi
+        &quot;
+        if [ $? -ne 0 ]; then
+            # drop replication slot
+            ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null postgres@$&#123;NEW_MASTER_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool &quot;
+                $&#123;PGHOME&#125;/bin/psql -p $&#123;NEW_MASTER_NODE_PORT&#125; -c \&quot;SELECT pg_drop_replication_slot(&#39;$&#123;FAILED_NODE_HOST&#125;&#39;)\&quot;
+            &quot;
+            logger -i -p local1.error follow_master.sh: end: pg_basebackup failed
+            exit 1
+        fi
+    fi
+    # start Standby node on $&#123;FAILED_NODE_HOST&#125;
+    ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+            postgres@$&#123;FAILED_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool $PGHOME/bin/pg_ctl -l /dev/null -w -D $&#123;FAILED_NODE_PGDATA&#125; start
+    # If start Standby successfully, attach this node
+    if [ $? -eq 0 ]; then
+        # Run pcp_attact_node to attach Standby node to Pgpool-II.
+        $&#123;PGPOOL_PATH&#125;/pcp_attach_node -w -h localhost -U $PCP_USER -p $&#123;PCP_PORT&#125; -n $&#123;FAILED_NODE_ID&#125;
+        if [ $? -ne 0 ]; then
+                logger -i -p local1.error follow_master.sh: end: pcp_attach_node failed
+                exit 1
+        fi
+    # If start Standby failed, drop replication slot &quot;$&#123;FAILED_NODE_HOST&#125;&quot;
+    else
+        ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null postgres@$&#123;NEW_MASTER_NODE_HOST&#125; -i ~/.ssh/id_rsa_pgpool \
+        $&#123;PGHOME&#125;/bin/psql -p $&#123;NEW_MASTER_NODE_PORT&#125; -c &quot;SELECT pg_drop_replication_slot(&#39;$&#123;FAILED_NODE_HOST&#125;&#39;)&quot;
+        logger -i -p local1.error follow_master.sh: end: follow master command failed
+        exit 1
+    fi
+else
+    logger -i -p local1.info follow_master.sh: failed_nod_id=$&#123;FAILED_NODE_ID&#125; is not running. skipping follow master command
+    exit 0
+fi
+logger -i -p local1.info follow_master.sh: end: follow master command complete
+exit 0
+</code></pre>
+<h2 id="2、将更改玩的script脚本文件拷贝至各个服务器相同目录下"><a href="#2、将更改玩的script脚本文件拷贝至各个服务器相同目录下" class="headerlink" title="2、将更改玩的script脚本文件拷贝至各个服务器相同目录下"></a>2、将更改玩的script脚本文件拷贝至各个服务器相同目录下</h2><pre><code>scp /pgpool/script/*  pgpool@192.168.30.12:/pgpool/script/
+scp /pgpool/script/*  pgpool@192.168.30.13:/pgpool/script/
+</code></pre>
+<h1 id="PGPOOL故障转移测试"><a href="#PGPOOL故障转移测试" class="headerlink" title="PGPOOL故障转移测试"></a>PGPOOL故障转移测试</h1><h2 id="1、查看当前节点"><a href="#1、查看当前节点" class="headerlink" title="1、查看当前节点"></a>1、查看当前节点</h2><pre><code>pcp_watchdog_info -h 192.168.30.10 -p 9898 -U pgcheck -v
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/31.png"></p>
+<p><label style="color: red"><strong>从上述可以看出当前节点在13节点于VIP绑定</strong></label></p>
+<h2 id="2、kill掉13服务器pgpool服务-模拟pgpool服务器挂掉"><a href="#2、kill掉13服务器pgpool服务-模拟pgpool服务器挂掉" class="headerlink" title="2、kill掉13服务器pgpool服务,模拟pgpool服务器挂掉"></a>2、kill掉13服务器pgpool服务,模拟pgpool服务器挂掉</h2><pre><code>killall pgpool
+ps -ef |grep pgpool
+</code></pre>
+<p><img src="/2020/09/26/Postgres-PGPool-II/32.png"></p>
+<p>此时我们发现11服务器已经获取到VIP绑定, watchdog发现13节点已经关闭</p>
+<p><img src="/2020/09/26/Postgres-PGPool-II/33.png"></p>
+<h2 id="3、kill掉11服务器pgpool服务-模拟pgpool服务器挂掉"><a href="#3、kill掉11服务器pgpool服务-模拟pgpool服务器挂掉" class="headerlink" title="3、kill掉11服务器pgpool服务,模拟pgpool服务器挂掉"></a>3、kill掉11服务器pgpool服务,模拟pgpool服务器挂掉</h2><pre><code>killall pgpool
+ps -ef |grep pgpool
+</code></pre>
+<p>此时我们发现12服务器已经获取到VIP绑定, watchdog发现13节点已经关闭</p>
+<p><img src="/2020/09/26/Postgres-PGPool-II/34.png"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2020-09-26, 14:43:45</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2020/09/26/Postgres-PGPool-II/" title="Postgres-PGPool-II">http://yoursite.com/2020/09/26/Postgres-PGPool-II/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2020/09/26/Postgres-PGPool-II/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/10/02/Redis-Install/">
+                    Redis-Install
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2020/09/26/Postgres-Copy/">
+                    Postgres-Copy
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PGPool-ll-PG-%E6%B5%81%E5%A4%8D%E5%88%B6%E5%AE%9E%E7%8E%B0HA%E4%B8%BB%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">PGPool-ll + PG 流复制实现HA主备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%BB%E6%9C%BA%E8%A7%84%E5%88%92"><span class="toc-number">2.</span> <span class="toc-text">一、主机规划</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BD%AF%E4%BB%B6%E7%89%88%E6%9C%AC"><span class="toc-number">2.1.</span> <span class="toc-text">操作系统与软件版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PG-%E8%A7%84%E5%88%92"><span class="toc-number">2.2.</span> <span class="toc-text">PG 规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PG%E8%B7%AF%E5%BE%84"><span class="toc-number">2.3.</span> <span class="toc-text">PG路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PGPool-ll-%E8%A7%84%E5%88%92"><span class="toc-number">2.4.</span> <span class="toc-text">PGPool-ll 规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PGPool-II%E8%B7%AF%E5%BE%84"><span class="toc-number">2.5.</span> <span class="toc-text">PGPool-II路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-x2F-etc-x2F-hosts%E6%96%87%E4%BB%B6"><span class="toc-number">2.6.</span> <span class="toc-text">修改&#x2F;etc&#x2F;hosts文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85PG%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">3.</span> <span class="toc-text">二、安装PG数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BApostgres%E7%94%A8%E6%88%B7"><span class="toc-number">3.1.</span> <span class="toc-text">1、创建postgres用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E8%B7%AF%E5%BE%84"><span class="toc-number">3.2.</span> <span class="toc-text">2、创建数据库路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E4%BD%BF%E7%94%A8postgres%E7%94%A8%E6%88%B7%E5%AE%89%E8%A3%85postgres%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88%E4%BB%A5%E4%B8%8B%E9%83%BD%E4%BB%A5postgres%E7%94%A8%E6%88%B7%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">3、使用postgres用户安装postgres数据库（以下都以postgres用户）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">3.4.</span> <span class="toc-text">4、添加环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E5%BB%BA%E7%AB%8B%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%97%A5%E5%BF%97%E7%9B%AE%E5%BD%95"><span class="toc-number">3.5.</span> <span class="toc-text">5、建立数据目录与日志目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E5%BB%BA%E7%AB%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">3.6.</span> <span class="toc-text">6、建立数据库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81ssh%E5%AF%86%E9%92%A5%E9%85%8D%E7%BD%AE%EF%BC%88postgres%E7%94%A8%E6%88%B7%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">三、ssh密钥配置（postgres用户）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81PRIMARY%E4%B8%BB%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">四、PRIMARY主节点配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BF%AE%E6%94%B9-pg-hba-conf-%E6%B7%BB%E5%8A%A0%E5%A6%82%E4%B8%8B%E5%86%85%E5%AE%B9"><span class="toc-number">5.1.</span> <span class="toc-text">1、修改 pg_hba.conf,添加如下内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E4%BF%AE%E6%94%B9postgresql-conf%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.2.</span> <span class="toc-text">2、修改postgresql.conf配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%88%9B%E5%BB%BAarch%E6%96%87%E4%BB%B6"><span class="toc-number">5.3.</span> <span class="toc-text">3、创建arch文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E5%88%9B%E5%BB%BAarch%E6%96%87%E4%BB%B6"><span class="toc-number">5.4.</span> <span class="toc-text">4、创建arch文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E4%B8%BB%E5%BA%93%E4%BF%AE%E6%94%B9postgres%E7%9A%84%E5%AF%86%E7%A0%81%E3%80%81%E5%88%9B%E5%BB%BA%E6%B5%81%E5%A4%8D%E5%88%B6%E7%94%A8%E6%88%B7-repl%EF%BC%8Cpgcheck"><span class="toc-number">5.5.</span> <span class="toc-text">5、主库修改postgres的密码、创建流复制用户 repl，pgcheck</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E5%88%9B%E5%BB%BA%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%BA%93pgpool%EF%BC%8C%E5%B9%B6%E7%BB%99pgpool%E6%8E%88%E4%BA%88%E6%9D%83%E9%99%90%EF%BC%8C%E5%B9%B6%E5%88%9B%E5%BB%BA%E6%B5%8B%E8%AF%95%E8%A1%A8"><span class="toc-number">5.6.</span> <span class="toc-text">6、创建测试数据库pgpool，并给pgpool授予权限，并创建测试表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E6%98%AF%E5%90%A6%E4%B8%BA%E4%B8%BB%E5%BA%93"><span class="toc-number">5.7.</span> <span class="toc-text">7、查看数据库是否为主库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%BB%E5%BA%93%E5%A4%87%E5%BA%93%E9%83%BD%E5%88%9B%E5%BB%BApgpass%E5%85%8D%E5%AF%86%E6%96%87%E4%BB%B6%EF%BC%88postgres%E7%94%A8%E6%88%B7%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">五、主库备库都创建pgpass免密文件（postgres用户）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%A4%87%E5%BA%93%E7%9A%84%E9%85%8D%E7%BD%AEslave1%E4%B8%8Eslave2"><span class="toc-number">7.</span> <span class="toc-text">六、备库的配置slave1与slave2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85postgres%EF%BC%8C%E4%B8%8D%E9%9C%80%E8%A6%81%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">7.1.</span> <span class="toc-text">1、编译安装postgres，不需要初始化创建数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95"><span class="toc-number">7.2.</span> <span class="toc-text">2、创建数据目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E4%BD%BF%E7%94%A8-pg-basebackup-%E5%91%BD%E4%BB%A4%E5%9C%A8%E7%BA%BF%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%A4%87%E5%BA%93-%E4%BD%BF%E7%94%A8%E8%AF%A5%E5%91%BD%E4%BB%A4"><span class="toc-number">7.3.</span> <span class="toc-text">3、使用 pg_basebackup 命令在线创建一个备库,使用该命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E9%85%8D%E7%BD%AE%E5%A4%87%E5%BA%93postgresql-conf"><span class="toc-number">7.4.</span> <span class="toc-text">4、配置备库postgresql.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E7%BC%96%E8%BE%91standby-signal%E6%96%87%E4%BB%B6%EF%BC%8Cpostgres12%E7%89%88%E6%9C%AC%E5%90%8E%E6%B7%BB%E5%8A%A0standby-mode"><span class="toc-number">7.5.</span> <span class="toc-text">5、编辑standby.signal文件，postgres12版本后添加standby_mode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E9%85%8D%E7%BD%AEpostgresql-conf%E5%8F%82%E6%95%B0%E5%A6%82%E4%B8%8B"><span class="toc-number">7.6.</span> <span class="toc-text">6、配置postgresql.conf参数如下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%A4%87%E5%BA%93"><span class="toc-number">7.7.</span> <span class="toc-text">7、服务器启动备库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93pgpool%EF%BC%8C%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E6%98%AF%E5%90%A6%E5%90%8C%E6%AD%A5-%E6%9F%A5%E7%9C%8B%E4%B8%8A%E8%BF%B0%E6%B7%BB%E5%8A%A0%E7%9A%84%E8%A1%A8"><span class="toc-number">7.8.</span> <span class="toc-text">8、服务器连接数据库pgpool，查看数据是否同步,查看上述添加的表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9%E3%80%81%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E6%98%AF%E5%90%A6%E6%9C%AA%E5%A4%87%E5%BA%93%EF%BC%8Ct%E8%A1%A8%E7%A4%BA%E5%A4%87%E5%BA%93"><span class="toc-number">7.9.</span> <span class="toc-text">9、查看数据库是否未备库，t表示备库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10%E3%80%81%E6%9F%A5%E7%9C%8B%E4%B8%BB%E5%BA%93%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">7.10.</span> <span class="toc-text">10、查看主库数据库的状态</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-pgpool-%E2%85%A1"><span class="toc-number">8.</span> <span class="toc-text">安装 pgpool-Ⅱ</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%BA%93%E5%A4%87%E5%BA%93%E5%AE%89%E8%A3%85pgpool-II"><span class="toc-number">8.1.</span> <span class="toc-text">主库备库安装pgpool-II</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BApgpool%E7%94%A8%E6%88%B7"><span class="toc-number">8.1.1.</span> <span class="toc-text">1、创建pgpool用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%88%9B%E5%BB%BApgpool%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84"><span class="toc-number">8.1.2.</span> <span class="toc-text">2、创建pgpool安装路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E6%9B%B4%E6%94%B9pgpool%E7%94%A8%E6%88%B7%E7%9A%84sudo%E6%9D%83%E9%99%90-%E7%94%B1%E4%BA%8E%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8ip%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9C%80%E8%A6%81sudo%E6%97%A0%E5%AF%86%E7%A0%81"><span class="toc-number">8.1.3.</span> <span class="toc-text">3、更改pgpool用户的sudo权限(由于需要使用ip命令，需要sudo无密码)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E9%85%8D%E7%BD%AEpgpool%E7%94%A8%E6%88%B7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8Fbash-profile"><span class="toc-number">8.2.</span> <span class="toc-text">4、配置pgpool用户环境变量bash_profile</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E4%B8%89%E8%8A%82%E7%82%B9%E4%BA%92%E4%BF%A1-%E5%90%84%E4%B8%AA%E8%8A%82%E7%82%B9%E9%83%BD%E8%A6%81%E6%89%A7%E8%A1%8C%E4%B8%80%E9%81%8D"><span class="toc-number">8.2.1.</span> <span class="toc-text">5、三节点互信(各个节点都要执行一遍)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E4%B8%89%E8%8A%82%E7%82%B9%E5%88%9B%E5%BB%BA-pgpass%E5%85%8D%E5%AF%86%E6%96%87%E4%BB%B6"><span class="toc-number">8.2.2.</span> <span class="toc-text">6、三节点创建.pgpass免密文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81%E8%A7%A3%E5%8E%8Bpgpool%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%8C%85"><span class="toc-number">8.2.3.</span> <span class="toc-text">7、解压pgpool编译安装包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%E3%80%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85"><span class="toc-number">8.2.4.</span> <span class="toc-text">8、编译安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%E3%80%81%E5%9C%A8%E4%B8%BB%E5%BA%93%E5%AE%89%E8%A3%85-pgpool-regaclalss-PG8-0-%E5%90%8E%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%EF%BC%8C%E9%98%B2%E6%AD%A2%E5%A4%84%E7%90%86%E7%9B%B8%E5%90%8C%E5%90%8D%E7%A7%B0%E7%9A%84%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%87%BA%E9%94%99"><span class="toc-number">8.2.5.</span> <span class="toc-text">9、在主库安装 pgpool_regaclalss,PG8.0 后内部使用，防止处理相同名称的临时表出错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%E3%80%81postgres%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C%E6%89%A7%E8%A1%8C-pgpool-regclass-sql-sql%E6%96%87%E4%BB%B6%E5%88%B0%E4%B8%BB%E5%BA%93%E7%9A%84-template1-%E6%A8%A1%E6%9D%BF%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">8.2.6.</span> <span class="toc-text">10、postgres用户操作执行 pgpool-regclass.sql sql文件到主库的 template1 模板数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11%E3%80%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85-insert-lock"><span class="toc-number">8.2.7.</span> <span class="toc-text">11、编译安装 insert_lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12%E3%80%81%E4%B8%BB%E5%BA%93template1-%E6%A8%A1%E6%9D%BF%E5%BA%93%E5%BB%BA%E7%AB%8B%E7%9A%84-insert-lock%E8%A1%A8"><span class="toc-number">8.2.8.</span> <span class="toc-text">12、主库template1 模板库建立的 insert_lock表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13%E3%80%81%E4%B8%BB%E5%BA%93template1%E6%A8%A1%E6%9D%BF%E5%AE%89%E8%A3%85pgpool-recovery%E5%87%BD%E6%95%B0"><span class="toc-number">8.2.9.</span> <span class="toc-text">13、主库template1模板安装pgpool-recovery函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14%E3%80%81%E8%BF%9E%E6%8E%A5%E4%B8%BB%E5%BA%93%EF%BC%8C%E5%88%9B%E5%BB%BA%E6%89%A9%E5%B1%95%E5%87%BD%E6%95%B0"><span class="toc-number">8.2.10.</span> <span class="toc-text">14、连接主库，创建扩展函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEpgpool-II"><span class="toc-number">9.</span> <span class="toc-text">服务器配置pgpool-II</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BA%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E7%9B%AE%E5%BD%95%EF%BC%8C%E4%B8%BB%E5%A4%87%E5%BA%93%E9%83%BD%E9%9C%80%E8%A6%81%E5%88%9B%E5%BB%BA"><span class="toc-number">9.1.</span> <span class="toc-text">1、创建所需要的目录，主备库都需要创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%A4%8D%E5%88%B6pgpool%E6%A8%A1%E6%9D%BF%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%B8%8D%E5%9C%A8%E5%A4%87%E5%BA%93%E5%88%9B%E5%BB%BA%EF%BC%8C%E4%B8%BB%E5%BA%93%E6%9B%B4%E6%94%B9%E5%AE%8C%E6%88%90%E5%90%8Ecopy"><span class="toc-number">9.2.</span> <span class="toc-text">2、复制pgpool模板配置文件，可以不在备库创建，主库更改完成后copy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%A4%8D%E5%88%B6pgpool%E6%A8%A1%E6%9D%BF%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%B8%8D%E5%9C%A8%E5%A4%87%E5%BA%93%E5%88%9B%E5%BB%BA%EF%BC%8C%E4%B8%BB%E5%BA%93%E6%9B%B4%E6%94%B9%E5%AE%8C%E6%88%90%E5%90%8Ecopy"><span class="toc-number">9.3.</span> <span class="toc-text">3、复制pgpool模板脚本文件，可以不在备库创建，主库更改完成后copy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E4%B8%BB%E5%BA%93%E7%9A%84%E9%85%8D%E7%BD%AEpgpool-conf-%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%EF%BC%88%E6%9C%89%E4%B8%AD%E6%96%87%E6%B3%A8%E9%87%8A%E7%9A%84%E6%98%AF%E9%9C%80%E8%A6%81%E6%9B%B4%E6%94%B9%E7%9A%84%EF%BC%89"><span class="toc-number">9.4.</span> <span class="toc-text">4、主库的配置pgpool.conf,参数配置（有中文注释的是需要更改的）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E9%85%8D%E7%BD%AEpgpool-%E2%85%A1-pcp-conf-%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%A5%E6%96%87%E4%BB%B6%E7%94%A8%E4%BA%8E%E9%85%8D%E7%BD%AEpcp%E5%91%BD%E4%BB%A4%E7%AE%A1%E7%90%86%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%E6%96%87%E4%BB%B6"><span class="toc-number">9.5.</span> <span class="toc-text">5、配置pgpool-Ⅱ pcp.conf 文件，该文件用于配置pcp命令管理用户认证文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E9%85%8D%E7%BD%AEpool-passwd%E6%96%87%E4%BB%B6%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B8%8D%E5%AD%98%E5%9C%A8%EF%BC%8C%E5%8F%AF%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%EF%BC%8C%E8%AF%A5%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE%E5%93%AA%E4%BA%9B%E7%94%A8%E6%88%B7%E5%8F%AF%E4%BB%A5%E8%AE%BF%E9%97%AE-pgpool"><span class="toc-number">9.6.</span> <span class="toc-text">6、配置pool_passwd文件，默认不存在，可通过以下命令自动生成，该文件配置哪些用户可以访问 pgpool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81%E9%85%8D%E7%BD%AEpgpool-%E2%85%A1-%E8%AE%A4%E8%AF%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-pool-hba-conf%EF%BC%8C%E7%B1%BB%E4%BC%BC%E4%BA%8E-PostgreSQL-pg-hba-conf-%E6%96%87%E4%BB%B6"><span class="toc-number">9.7.</span> <span class="toc-text">7、配置pgpool-Ⅱ 认证配置文件 pool_hba.conf，类似于 PostgreSQL pg_hba.conf 文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%E3%80%81%E5%90%AF%E5%8A%A8pgpool-II"><span class="toc-number">9.8.</span> <span class="toc-text">8、启动pgpool-II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9%E3%80%81%E5%81%9C%E6%AD%A2pgpool%E6%9C%8D%E5%8A%A1"><span class="toc-number">9.9.</span> <span class="toc-text">9、停止pgpool服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10%E3%80%81%E5%B0%86%E4%B8%BB%E5%BA%93%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6copy%E8%87%B3%E5%A4%87%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">9.10.</span> <span class="toc-text">10、将主库的配置文件copy至备服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11%E3%80%81%E4%BF%AE%E6%94%B9%E5%A4%87%E5%BA%93%E7%9A%84pgpool-conf%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">9.11.</span> <span class="toc-text">11、修改备库的pgpool.conf配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12%E3%80%81%E4%B8%89%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%88%86%E5%88%AB%E5%90%AF%E5%8A%A8pgpool-II%E6%9C%8D%E5%8A%A1"><span class="toc-number">9.12.</span> <span class="toc-text">12、三台服务器分别启动pgpool-II服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13%E3%80%81%E4%B8%BB%E5%BA%93%EF%BC%8C%E5%A4%87%E5%BA%93%E5%88%86%E5%88%AB%E6%9F%A5%E7%9C%8B-x2F-var-x2F-log-x2F-messages"><span class="toc-number">9.13.</span> <span class="toc-text">13、主库，备库分别查看&#x2F;var&#x2F;log&#x2F;messages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14%E3%80%81%E6%9F%A5%E7%9C%8BVIP-%E7%BB%91%E5%AE%9A"><span class="toc-number">9.14.</span> <span class="toc-text">14、查看VIP 绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15%E3%80%81pgpool-%E7%8A%B6%E6%80%81%E6%9F%A5%E7%9C%8B"><span class="toc-number">9.15.</span> <span class="toc-text">15、pgpool 状态查看</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pcp-%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86-pgpool"><span class="toc-number">10.</span> <span class="toc-text">pcp 配置管理 pgpool</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">10.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pcp%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-number">10.2.</span> <span class="toc-text">pcp参数说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E6%9F%A5%E7%9C%8Bpgpool%E9%9B%86%E7%BE%A4%E7%8A%B6%E6%80%81"><span class="toc-number">10.3.</span> <span class="toc-text">1、查看pgpool集群状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9%E6%95%B0%E9%87%8F"><span class="toc-number">10.4.</span> <span class="toc-text">2、查看节点数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E6%9F%A5%E7%9C%8Bpgpool%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE"><span class="toc-number">10.5.</span> <span class="toc-text">3、查看pgpool集群配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PGPOOL%E6%95%85%E9%9A%9C%E8%BD%AC%E7%A7%BB"><span class="toc-number">11.</span> <span class="toc-text">PGPOOL故障转移</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81pgpool%E8%84%9A%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-number">11.1.</span> <span class="toc-text">1、pgpool脚本配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%B0%86%E6%9B%B4%E6%94%B9%E7%8E%A9%E7%9A%84script%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D%E8%87%B3%E5%90%84%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%90%8C%E7%9B%AE%E5%BD%95%E4%B8%8B"><span class="toc-number">11.2.</span> <span class="toc-text">2、将更改玩的script脚本文件拷贝至各个服务器相同目录下</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PGPOOL%E6%95%85%E9%9A%9C%E8%BD%AC%E7%A7%BB%E6%B5%8B%E8%AF%95"><span class="toc-number">12.</span> <span class="toc-text">PGPOOL故障转移测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E8%8A%82%E7%82%B9"><span class="toc-number">12.1.</span> <span class="toc-text">1、查看当前节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81kill%E6%8E%8913%E6%9C%8D%E5%8A%A1%E5%99%A8pgpool%E6%9C%8D%E5%8A%A1-%E6%A8%A1%E6%8B%9Fpgpool%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E6%8E%89"><span class="toc-number">12.2.</span> <span class="toc-text">2、kill掉13服务器pgpool服务,模拟pgpool服务器挂掉</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81kill%E6%8E%8911%E6%9C%8D%E5%8A%A1%E5%99%A8pgpool%E6%9C%8D%E5%8A%A1-%E6%A8%A1%E6%8B%9Fpgpool%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E6%8E%89"><span class="toc-number">12.3.</span> <span class="toc-text">3、kill掉11服务器pgpool服务,模拟pgpool服务器挂掉</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Postgres-PGPool-II　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2020/10/02/Redis-Install/" title="Pre: Redis-Install">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2020/09/26/Postgres-Copy/" title="Next: Postgres-Copy">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

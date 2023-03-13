@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="Java 线程基础 61 线程管理1.1 线程组类似于在计算机中使用文件夹管理文件,也可以使用线程组来管理线程. 在线程组中定义一组相似(相关)的线程,在线程组中也可以定义子线程组 Thread 类有几个构造方法允许在创建线程时指定线程组,如果在创建线程时没有指定线程组则该线程就属于父线程所在的线程组. JVM 在创建 main 线程时会为它指定一个线程组,因此每个 Java 线程都有一个线程组与">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA-Thread-Base-6">
+<meta property="og:url" content="http://yoursite.com/2021/06/02/JAVA-Thread-Base-6/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="Java 线程基础 61 线程管理1.1 线程组类似于在计算机中使用文件夹管理文件,也可以使用线程组来管理线程. 在线程组中定义一组相似(相关)的线程,在线程组中也可以定义子线程组 Thread 类有几个构造方法允许在创建线程时指定线程组,如果在创建线程时没有指定线程组则该线程就属于父线程所在的线程组. JVM 在创建 main 线程时会为它指定一个线程组,因此每个 Java 线程都有一个线程组与">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/06/02/JAVA-Thread-Base-6/1.png">
+<meta property="og:image" content="http://yoursite.com/2021/06/02/JAVA-Thread-Base-6/2.png">
+<meta property="og:image" content="http://yoursite.com/2021/06/02/JAVA-Thread-Base-6/3.png">
+<meta property="og:image" content="http://yoursite.com/2021/06/02/JAVA-Thread-Base-6/4.png">
+<meta property="og:image" content="http://yoursite.com/2021/06/02/JAVA-Thread-Base-6/5.png">
+<meta property="article:published_time" content="2021-06-02T03:50:07.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:42.283Z">
+<meta property="article:author" content="Sevattal">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/06/02/JAVA-Thread-Base-6/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>JAVA-Thread-Base-6 | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-JAVA-Thread-Base-6" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/06/02/JAVA-Thread-Base-6/" class="article-date">
+      <time datetime="2021-06-02T03:50:07.000Z" itemprop="datePublished">2021-06-02</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JAVA-Thread-Base-6
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Java-线程基础-6"><a href="#Java-线程基础-6" class="headerlink" title="Java 线程基础 6"></a>Java 线程基础 6</h1><h2 id="1-线程管理"><a href="#1-线程管理" class="headerlink" title="1 线程管理"></a>1 线程管理</h2><h3 id="1-1-线程组"><a href="#1-1-线程组" class="headerlink" title="1.1 线程组"></a>1.1 线程组</h3><p>类似于在计算机中使用文件夹管理文件,也可以使用线程组来管理线程. 在线程组中定义一组相似(相关)的线程,在线程组中也可以定义子线程组</p>
+<p>Thread 类有几个构造方法允许在创建线程时指定线程组,如果在创建线程时没有指定线程组则该线程就属于父线程所在的线程组. JVM 在创建 main 线程时会为它指定一个线程组,因此每个 Java 线程都有一个线程组与之关联, 可以调用线程的 getThreadGroup()方法返回线程组. </p>
+<p>线程组开始是出于安全的考虑设计用来 区分不同的 Applet,然而ThreadGroup 并未实现这一目标,在新开发的系统中,已经不常用线程组, 现在一般会将一组相关的线程存入一个数组或一个集合中,如果仅仅是用来区分线程时,可以使用线程名称来区分, 多数情况下,可以忽略线程组</p>
+<span id="more"></span>
+
+<h4 id="1-1-1-创建线程组"><a href="#1-1-1-创建线程组" class="headerlink" title="1.1.1 创建线程组"></a>1.1.1 创建线程组</h4><pre><code>package com.sevattal.threadgroup;
+/**
+ * 演示创建线程组
+ */
+public class Test01 &#123;
+    public static void main(String[] args) &#123;
+        // 1) 返回当前 main 线程的线程组
+        ThreadGroup mainGroup = Thread.currentThread().getThreadGroup();
+        System.out.println(mainGroup);
+        //2) 定义线程组,如果不指定所属线程组,则自动归属当前线程所属的线程组中
+        ThreadGroup group1 = new ThreadGroup(&quot;group1&quot;);
+        System.out.println(group1);
+        //3)定义线程组, 同时指定父线程组
+        ThreadGroup group2 = new ThreadGroup(mainGroup, &quot;group2&quot;);
+        //现在 group1 与 group2 都是 maingroup 线程组中的子线程组, 调用线程组的 getParent()方法返回父线程组
+        System.out.println( group1.getParent() == mainGroup);
+        //true
+        System.out.println( group2.getParent() == mainGroup);
+        //4) 在创建线程时指定所属线程组
+        Runnable r = new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                System.out.println(Thread.currentThread());
+            &#125;
+        &#125;;
+        //在创建线程时,如果没有指定线程组,则默认线程归属到父线程的线程组中
+        //在 main 线程中创建了 t1 线程,称 main 线程为父线程,t1 线程为子线程, t1 没有指定线程组则 t1 线程就归属到父线程 main 线程的线程组中
+        Thread t1 = new Thread(r, &quot;t1&quot;);
+        System.out.println( t1 ); // Thread[t1,5,main], t1 的线程组是 main 线程组
+        //创建线程时,可以指定线程所属线程组
+        Thread t2 = new Thread(group1, r, &quot;t2&quot;);
+        Thread t3 = new Thread(group2, r, &quot;t3&quot;);
+        System.out.println(t2);
+        System.out.println(t3);
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-1-2-线程组的基本操作"><a href="#1-1-2-线程组的基本操作" class="headerlink" title="1.1.2 线程组的基本操作"></a>1.1.2 线程组的基本操作</h4><p>activeCount() 返回当前线程组及子线程组中活动线程的数量(近似值)<br>activeGroupCount() 返回当前线程组及子线程组中活动线程组的数量(近似值)<br>int enumerate(Thread[] list) 将当前线程组中的活动线程复制到参数数组中<br>enumerate(ThreadGroup[] list) 将当前线程组中的活动线程组复制到参数数组中<br>getMaxPriority() 返回线程组的最大优先级,默认是 10<br>getName() 返回线程组的名称<br>getParent() 返回父线程组<br>interrupt() 中断线程组中所有的线程<br>isDaemon() 判断当前线程组是否为守护线程组<br>list() 将当前线程组中的活动线程打印出来<br>parentOf(ThreadGroup g) 判断当前线程组是否为参数线程组的父线程组<br>setDaemon(boolean daemon) 设置线程组为守护线程组</p>
+<pre><code>package com.sevattal.threadgroup;
+/**
+ * 演示线程组的基本操作
+ */
+public class Test02 &#123;
+    public static void main(String[] args) &#123;
+        ThreadGroup mainGroup = Thread.currentThread().getThreadGroup(); //返回当前线程组
+        //再定义线程组
+        ThreadGroup group = new ThreadGroup(&quot;group&quot;); //默认 group 的父线程组是 main线程组
+        Runnable r = new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                while (true)&#123;
+                    System.out.println(&quot;-----------当前线程: &quot; + Thread.currentThread());
+                    try &#123;
+                        Thread.sleep(1000);
+                    &#125; catch (InterruptedException e) &#123;
+                        e.printStackTrace();
+                    &#125;
+                &#125;
+            &#125;
+        &#125;;
+        Thread t1 = new Thread(r, &quot;t1&quot;); //默认在 main 线程组中创建线程
+        Thread t2 = new Thread(group, r, &quot;t2&quot;); //在指定的 group 线程组中创建线程
+        t1.start();
+        t2.start();
+        //打印线程组的相关属性
+        System.out.println(&quot;main 线 程组 中活 动线 程数 量: &quot; + mainGroup.activeCount());
+        //4, main 线程组中活动线程: main, t1, t2, 垃圾回收器
+        System.out.println(&quot;group 子 线 程 组 中 活 动 线 程 数 量 : &quot; + group.activeCount());
+        //1, t2
+        System.out.println(&quot;main 线 程 组 中 子 线 程 组 数 量 : &quot; +
+                mainGroup.activeGroupCount()); //1, group
+        System.out.println(&quot;group 子线程组中子线程组数量: &quot; + group.activeGroupCount());
+        //0
+        System.out.println(&quot;main 线程组的父线程组: &quot; + mainGroup.getParent()); //main线程组的父线程组是 system
+        System.out.println(&quot;group 线程组的父线程组: &quot; + group.getParent()); //main
+        System.out.println( mainGroup.parentOf(mainGroup)); //true, 线程组也是它自己的父线程组
+        System.out.println( mainGroup.parentOf(group)); //true
+        mainGroup.list(); //把 main 线程组中所有的线程打印输出
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-1-3-复制线程组中的线程及子线程组"><a href="#1-1-3-复制线程组中的线程及子线程组" class="headerlink" title="1.1.3 复制线程组中的线程及子线程组"></a>1.1.3 复制线程组中的线程及子线程组</h4><p>enumerate(Thread[] list) 把当前线程组和子线程组中所有的线程复制到参数数组中<br>enumerate(Thread[] list, boolean recursive) , 如果第二个参数设置为 false,则只复制当前线程组中所有的线程,不复制子线程组中的线程<br>enumerate(ThreadGroup[] list) 把当前线程组和子线程组中所有的线程组复制到参数数组中<br>enumerate(ThreadGroup[] list, boolean recurse) 第二个参数设置false,则只复制当前线程组的子线程组</p>
+<pre><code>package com.sevattal.threadgroup;
+/**
+ * 演示复制线程组中的内容
+ */
+public class Test03 &#123;
+    public static void main(String[] args) &#123;
+        ThreadGroup mainGroup = Thread.currentThread().getThreadGroup(); //返回 main线程的 main 线程组
+        //main 线程组中定义了两个子线程组
+        ThreadGroup group1 = new ThreadGroup(&quot;group1&quot;); //默认 group1 的父线程组就是当前线程组 main
+        ThreadGroup group2 = new ThreadGroup(mainGroup, &quot;group2&quot;);
+        Runnable r = new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                while (true)&#123;
+                    System.out.println(&quot;----当前线程: &quot; + Thread.currentThread());
+                    try &#123;
+                        Thread.sleep(1000);
+                    &#125; catch (InterruptedException e) &#123;
+                        e.printStackTrace();
+                    &#125;
+                &#125;
+            &#125;
+        &#125;;
+        //创建并启动三个线程
+        Thread t1 = new Thread(r, &quot;t1&quot;); //默认在 main 线程组中创建线程
+        Thread t2 = new Thread(group1, r, &quot;t2&quot;); //在 group1 线程组中创建线程
+        Thread t3 = new Thread(group2, r, &quot;t3&quot;); //在 group2 线程组中创建线程
+        t1.start();
+        t2.start();
+        t3.start();
+        //1) 把 main 线程组中的线程复制到数组中
+        //先定义存储线程的数组,数组的长度为 main 线程组中活动线程的数量
+        Thread[] threadList = new Thread[mainGroup.activeCount()];
+        /* //把 main 线程组包括子线程组中的所有的线程复制到数组中
+        mainGroup.enumerate(threadList);
+        //遍历 threadList 数组
+        for (Thread thread : threadList) &#123;
+        System.out.println(thread);
+        &#125;
+        System.out.println(&quot;----------------------------&quot;);
+        */
+        //只把 main 线程组中的线程复制到数组中,不包含子线程组的线程
+        mainGroup.enumerate(threadList, false);
+        //遍历 threadList 数组
+        for (Thread thread : threadList) &#123;
+            System.out.println(thread);
+        &#125;
+        System.out.println(&quot;----------------------------&quot;);
+        //2) 把 main 线程组中的子线程组复制到数组中
+        //定义数组存储线程组
+        ThreadGroup [] threadGroups = new ThreadGroup[mainGroup.activeGroupCount()];
+        //把 main 线程组中的子线程组复制到数组中
+        mainGroup.enumerate(threadGroups);
+        System.out.println(&quot;============================&quot;);
+        for (ThreadGroup threadGroup : threadGroups) &#123;
+            System.out.println(threadGroup);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-1-4-线程组的批量中断"><a href="#1-1-4-线程组的批量中断" class="headerlink" title="1.1.4 线程组的批量中断"></a>1.1.4 线程组的批量中断</h4><p>线程组的 interrupt() 可以给该线程组中所有的活动线程添加中断标志</p>
+<pre><code>package com.sevattal.threadgroup;
+/**
+ * 线程组的批量中断
+ */
+public class Test04 &#123;
+    public static void main(String[] args) throws InterruptedException &#123;
+        Runnable r = new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                System.out.println(&quot;当前线程--&quot; + Thread.currentThread() + &quot;--开始循环&quot;);
+                //当线程没有被中断就一直循环
+                while ( !Thread.currentThread().isInterrupted())&#123;
+                    System.out.println(Thread.currentThread().getName() +
+                            &quot;------------------&quot;);
+                /* try &#123;
+                Thread.sleep(500);
+                &#125; catch (InterruptedException e) &#123;
+                //如果中断睡眠中的线程,产生中断异常, 同时会清除中断标志
+                e.printStackTrace();
+                &#125;*/
+                &#125;
+                System.out.println(Thread.currentThread().getName() + &quot;循环结束&quot;);
+            &#125;
+        &#125;;
+        //创建线程组
+        ThreadGroup group = new ThreadGroup(&quot;group&quot;);
+        //在 group 线程组中创建 5 个线程
+        for (int i = 0; i &lt; 5; i++) &#123;
+            new Thread(group,r).start();
+        &#125;
+        //main 线程睡眠 2 秒
+        Thread.sleep(50);
+        //中断线程组, 会中断线程组中所有的线程
+        group.interrupt();
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-1-5-设置守护线程组"><a href="#1-1-5-设置守护线程组" class="headerlink" title="1.1.5 设置守护线程组"></a>1.1.5 设置守护线程组</h4><p>守护线程是为其他线程提供服务的,当 JVM 中只有守护线程时,守护线程会自动销毁,JVM 会退出. </p>
+<p>调用线程组的 setDaemon(true)可以把线程组设置为守护线程组, 当守护线程组中没有任何活动线程时,守护线程组会自动销毁. </p>
+<p>注意线程组的守护属性,不影响线程组中线程的守护属性,或者说守护线程组中的线程可以是非守护线程</p>
+<pre><code>package com.sevattal.threadgroup;
+/**
+ * 演示设置守护线程组
+ */
+public class Test05 &#123;
+    public static void main(String[] args) throws InterruptedException &#123;
+        //先定义线程组
+        ThreadGroup group = new ThreadGroup(&quot;group&quot;);
+        //设置线程组为守护线程组
+        group.setDaemon(true);
+        //向组中添加 3 个线程
+        for (int i = 0; i &lt; 3; i++) &#123;
+            new Thread(group, new Runnable() &#123;
+                @Override
+                public void run() &#123;
+                    for (int j = 0; j &lt; 20; j++) &#123;
+                        System.out.println(Thread.currentThread().getName() + &quot; -- &quot; + j);
+                        try &#123;
+                            Thread.sleep(500);
+                        &#125; catch (InterruptedException e) &#123;
+                            e.printStackTrace();
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;).start();
+        &#125;
+        //main 线程睡眠 5 秒
+        Thread.sleep(5000);
+        System.out.println(&quot;main...end....&quot;);
+    &#125;
+&#125;
+</code></pre>
+<h3 id="1-2-捕获线程的执行异常"><a href="#1-2-捕获线程的执行异常" class="headerlink" title="1.2 捕获线程的执行异常"></a>1.2 捕获线程的执行异常</h3><p>在线程的run方法中,如果有受检异常必须进行捕获处理,如果想要获 得 run() 方 法 中 出 现 的 运 行 时 异 常 信 息 , 可 以 通 过 回 调UncaughtExceptionHandler 接口获得哪个线程出现了运行时异常.在Thread 类中有关处理运行异常的方法有:</p>
+<p>getDefaultUncaughtExceptionHandler() 获 得 全 局 的(默 认的)UncaughtExceptionHandler</p>
+<p>getUncaughtExceptionHandler() 获 得 当 前 线 程 的UncaughtExceptionHandler</p>
+<p>setDefaultUncaughtExceptionHandler(Thread.UncaughtExceptionHandler eh) 设置全局的 UncaughtExceptionHandler</p>
+<p>setUncaughtExceptionHandler(Thread.UncaughtExceptionHandler eh)设置当前线程的 UncaughtExceptionHandler</p>
+<p>当线程运行过程中出现异常 ,JVM 会调用 Thread 类的 dispatchUncaughtException(Throwable e) 方法 , 该方法会调用 getUncaughtExceptionHandler().uncaughtException(this, e); 如果想要获得线程中出现异常的信息 , 就需要设置线程的UncaughtExceptionHandler</p>
+<pre><code>package com.sevattal.threadexception;
+import java.io.FileInputStream;
+/**
+ * 演示设置线程的 UnCaughtExceptionHandler 回调接口
+ */
+public class Test01 &#123;
+    public static void main(String[] args) &#123;
+        //1)设置线程全局的回调接口
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler()
+        &#123;
+            @Override
+            public void uncaughtException(Thread t, Throwable e) &#123;
+                //t 参数接收发生异常的线程, e 就是该线程中的异常
+                System.out.println(t.getName() + &quot;线程产生了异常: &quot; + e.getMessage());
+            &#125;
+        &#125;);
+        Thread t1 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                System.out.println(Thread.currentThread().getName() + &quot;开始运行&quot;);
+                try &#123;
+                    Thread.sleep(2000);
+                &#125; catch (InterruptedException e) &#123;
+                    //线程中的受检异常必须捕获处理
+                    e.printStackTrace();
+                &#125;
+                System.out.println(12 / 0 ); //会产生算术异常
+            &#125;
+        &#125;);
+        t1.start();
+        new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                String txt = null;
+                System.out.println( txt.length()); //会产生空指针异常
+            &#125;
+        &#125;).start();
+        /* 在实际开发中,这种设计异常处理的方式还是比较常用的,尤其是异常执行的方法
+        如果线程产生了异常, JVM 会调用 dispatchUncaughtException()方法,在该方法
+        中调用了 getUncaughtExceptionHandler().uncaughtException(this, e); 如果当前线程设置了
+        UncaughtExceptionHandler 回调接口就直接调用它自己的 uncaughtException 方法, 如果没有
+        设置则调用当前线程所在线程组 UncaughtExceptionHandler 回调接口的 uncaughtException 方
+        法,如果线程组也没有设置回调接口,则直接把异常的栈信息定向到 System.err 中
+        */
+    &#125;
+&#125;
+</code></pre>
+<h3 id="1-3-注入-Hook-钩子线程"><a href="#1-3-注入-Hook-钩子线程" class="headerlink" title="1.3 注入 Hook 钩子线程"></a>1.3 注入 Hook 钩子线程</h3><p>现在很多软件包括 MySQL, Zookeeper, kafka 等都存在 Hook 线程的校验机制, 目的是校验进程是否已启动,防止重复启动程序. </p>
+<p>Hook 线程也称为钩子线程, 当 JVM 退出的时候会执行 Hook 线程. 经常在程序启动时创建一个.lock 文件, 用.lock 文件校验程序是否启动,在程序退出(JVM 退出)时删除该.lock 文件, 在 Hook 线程中除了防止重新启动进程外,还可以做资源释放, 尽量避免在 Hook 线程中进行</p>
+<pre><code>package com.sevattal.hook;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
+/**
+ * 通过 Hook 线程防止程序重复启动
+ */
+public class Test &#123;
+    public static void main(String[] args) &#123;
+        //1)注入 Hook 线程,在程序退出时删除.lock 文件
+        Runtime.getRuntime().addShutdownHook(new Thread()&#123;
+            @Override
+            public void run() &#123;
+                System.out.println(&quot;JVM 退出,会启动当前 Hook 线程,在 Hook 线程中删 除.lock 文件&quot;);
+                getLockFile().toFile().delete();
+            &#125;
+        &#125;);
+        //2)程序运行时,检查 lock 文件是否存在,如果 lock 文件存在,则抛出异常
+        if ( getLockFile().toFile().exists())&#123;
+            throw new RuntimeException(&quot;程序已启动&quot;);
+        &#125;else &#123; //文件不存在,说明程序是第一次启动,创建 lock 文件
+            try &#123;
+                getLockFile().toFile().createNewFile();
+                System.out.println(&quot;程序在启动时创建了 lock 文件&quot;);
+            &#125; catch (IOException e) &#123;
+                e.printStackTrace();
+            &#125;
+        &#125;
+        //模拟程序运行
+        for (int i = 0; i &lt; 10; i++) &#123;
+            System.out.println(&quot;程序正在运行&quot;);
+            try &#123;
+                TimeUnit.SECONDS.sleep(1);
+            &#125; catch (InterruptedException e) &#123;
+                e.printStackTrace();
+            &#125;
+        &#125;
+    &#125;
+    private static Path getLockFile()&#123;
+        return Paths.get(&quot;&quot;, &quot;tmp.lock&quot;);
+    &#125;
+&#125;
+</code></pre>
+<h3 id="1-4-线程池"><a href="#1-4-线程池" class="headerlink" title="1.4 线程池"></a>1.4 线程池</h3><h4 id="1-4-1-什么是线程池"><a href="#1-4-1-什么是线程池" class="headerlink" title="1.4.1 什么是线程池"></a>1.4.1 什么是线程池</h4><p>可以以 new Thread( () -&gt; { 线程执行的任务 }).start(); 这种形式开启一个线程. 当 run()方法运行结束,线程对象会被 GC 释放. </p>
+<p>在真实的生产环境中,可能需要很多线程来支撑整个应用,当线程数量非常多时 ,反而会耗尽 CPU 资源. 如果不对线程进行控制与管理, 反而会影响程序的性能. 线程开销主要包括: 创建与启动线程的开销;线程销毁开销; 线程调度的开销; 线程数量受限 CPU 处理器数量. 线程池就是有效使用线程的一种常用方式. </p>
+<p>线程池内部可以预先创建一定数量的工作线程,客户端代码直接将任务作为一个对象提交给线程池, 线程池将这些任务缓存在工作队列中, 线程池中的工作线程不断地从队列中取出任务并执行.</p>
+<p><img src="/2021/06/02/JAVA-Thread-Base-6/1.png"></p>
+<h4 id="1-4-2-JDK-对线程池的支持"><a href="#1-4-2-JDK-对线程池的支持" class="headerlink" title="1.4.2 JDK 对线程池的支持"></a>1.4.2 JDK 对线程池的支持</h4><p>JDK 提供了一套 Executor 框架,可以帮助开发人员有效的使用线程池</p>
+<p><img src="/2021/06/02/JAVA-Thread-Base-6/2.png"></p>
+<pre><code>package com.sevattal.threadpool;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+/**
+ * 线程池的基本使用
+ */
+public class Test01 &#123;
+    public static void main(String[] args) &#123;
+        //创建有 5 个线程大小的线程池,
+        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);
+        //向线程池中提交 18 个任务,这 18 个任务存储到线程池的阻塞队列中, 线程池中这5 个线程就从阻塞队列中取任务执行
+        for (int i = 0; i &lt; 18; i++) &#123;
+            fixedThreadPool.execute(new Runnable() &#123;
+                @Override
+                public void run() &#123;
+                    System.out.println(Thread.currentThread().getId() + &quot; 编号的任务在执 行任务,开始时间: &quot; + System.currentTimeMillis());
+                    try &#123;
+                        Thread.sleep(3000); //模拟任务执行时长
+                    &#125; catch (InterruptedException e) &#123;
+                        e.printStackTrace();
+                    &#125;
+                &#125;
+            &#125;);
+        &#125;
+    &#125;
+&#125;
+
+package com.sevattal.threadpool;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+/**
+ * 线程池的计划任务
+ */
+public class Test02 &#123;
+    public static void main(String[] args) &#123;
+        //创建一个有调度功能的线程池
+        ScheduledExecutorService scheduledExecutorService =
+                Executors.newScheduledThreadPool(10);
+        //在延迟 2 秒后执行任务, schedule( Runnable 任务, 延迟时长, 时间单位)
+        scheduledExecutorService.schedule(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                System.out.println(Thread.currentThread().getId() + &quot; -- &quot; +
+                        System.currentTimeMillis() );
+            &#125;
+        &#125;, 2, TimeUnit.SECONDS);
+        //以固定的频率执行任务,开启任务的时间是固定的, 在 3 秒后执行任务,以后每隔 5秒重新执行一次
+        /* scheduledExecutorService.scheduleAtFixedRate(new Runnable() &#123;
+        @Override
+        public void run() &#123;
+        System.out.println(Thread.currentThread().getId() + &quot;----在固定频率开启任
+        务---&quot; + System.currentTimeMillis());
+        try &#123;
+        TimeUnit.SECONDS.sleep(3); //睡眠模拟任务执行时间 ,如果任务执
+        行时长超过了时间间隔,则任务完成后立即开启下个任务
+        &#125; catch (InterruptedException e) &#123;
+        e.printStackTrace();
+        &#125;
+        &#125;
+        &#125;, 3, 2, TimeUnit.SECONDS);*/
+        //在上次任务结束后,在固定延迟后再次执行该任务,不管执行任务耗时多长,总是在任务结束后的 2 秒再次开启新的任务
+        scheduledExecutorService.scheduleWithFixedDelay(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                System.out.println(Thread.currentThread().getId() + &quot;----在固定频率开启任 务---&quot; + System.currentTimeMillis());
+                try &#123;
+                    TimeUnit.SECONDS.sleep(3); //睡眠模拟任务执行时间 ,如果任务执行时长超过了时间间隔,则任务完成后立即开启下个任务
+                &#125; catch (InterruptedException e) &#123;
+                    e.printStackTrace();
+                &#125;
+            &#125;
+        &#125;, 3, 2, TimeUnit.SECONDS);
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-4-3-核心线程池的底层实现"><a href="#1-4-3-核心线程池的底层实现" class="headerlink" title="1.4.3 核心线程池的底层实现"></a>1.4.3 核心线程池的底层实现</h4><p>查看 Executors 工具类中 newCachedThreadPool(), newSingleThreadExcecutor(), newFixedThreadPool()源码:</p>
+<pre><code>public static ExecutorService newCachedThreadPool() &#123;
+return new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue&lt;Runnable&gt;());
+&#125;
+该线程池在极端情况下,每次提交新的任务都会创建新的线程执行. 适合用来执行大量耗时短并且提交频繁的任务
+
+public static ExecutorService newFixedThreadPool(int nThreads) &#123;
+return new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue&lt;Runnable&gt;());
+&#125;
+
+public static ExecutorService newSingleThreadExecutor() &#123;
+return new FinalizableDelegatedExecutorService
+(new ThreadPoolExecutor(1, 1,0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue&lt;Runnable&gt;()));
+&#125;
+</code></pre>
+<p>Excutors 工 具 类 中 返 回 线 程 池 的 方 法 底 层 都 使 用 了ThreadPoolExecutor 线程池,这些方法都是 ThreadPoolExecutor 线程池的封装</p>
+<p><strong>ThreadPoolExecutor 的构造方法:</strong></p>
+<pre><code>public ThreadPoolExecutor(int corePoolSize,
+                        int maximumPoolSize,
+                        long keepAliveTime, 
+                        TimeUnit unit, 
+                        BlockingQueue&lt;Runnable&gt; workQueue, 
+                        ThreadFactory threadFactory, 
+                        RejectedExecutionHandler handler)
+</code></pre>
+<p><strong>各个参数含义:</strong></p>
+<p>corePoolSize, 指定线程池中核心线程的数量<br>maxinumPoolSize,指定线程池中最大线程数量<br>keepAliveTime,当线程池线程的数量超过 corePoolSize 时,多余的空闲线程的存活时长,即空闲线程在多长时长内销毁unit, 是 keepAliveTime 时长单位<br>workQueue,任务队列,把任务提交到该任务队列中等待执行<br>threadFactory,线程工厂,用于创建线程<br>handler 拒绝策略,当任务太多来不及处理时,如何拒绝</p>
+<p><strong>说明:</strong></p>
+<p>workQueue 工作队列是指提交未执行的任务队列 , 它 是BlockingQueue 接口的对象,仅用于存储 Runnable 任务.根据队列功能分类,在 ThreadPoolExecutor 构造方法中可以使用以下几种阻塞队列:</p>
+<ol>
+<li><p>直接提交队列,由 SynchronousQueue 对象提供,该队列没有容量,提交给线程池的任务不会被真实的保存,总是将新的任务提交给线程执行,如果没有空闲线程,则尝试创建新的线程,如果线程数量已经达到 maxinumPoolSize 规定的最大值则执行拒绝策略. </p>
+</li>
+<li><p>有 界 任 务 队 列 , 由 ArrayBlockingQueue 实 现 , 在 创 建ArrayBlockingQueue 对象时,可以指定一个容量. 当有任务需要执行时,如果线程池中线程数小于 corePoolSize 核心线程数则创建新的线程;如果大于 corePoolSize 核心线程数则加入等待队列.如果队列已满则无法加入,在线程数小于 maxinumPoolSize 指定的最大线程 数 前 提 下 会 创 建 新 的 线 程 来 执 行 , 如 果 线 程 数 大 于 maxinumPoolSize 最大线程数则执行拒绝策略</p>
+</li>
+</ol>
+<p><img src="/2021/06/02/JAVA-Thread-Base-6/3.png"></p>
+<ol start="3">
+<li><p>无界任务队列,由 LinkedBlockingQueue 对象实现,与有界队列相比,除非系统资源耗尽,否则无界队列不存在任务入队失败的情况. 当有新的任务时,在系统线程数小于 corePoolSize 核心线程数则创建新的线程来执行任务;当线程池中线程数量大于corePoolSize 核心线程数则把任务加入阻塞队列</p>
+</li>
+<li><p>优先任务队列是通过 PriorityBlockingQueue 实现的,是带有任务优先级的队列 , 是一个特殊的无界队列 . 不管 是ArrayBlockingQueue 队列还是 LinkedBlockingQueue 队列都是按照先进先出算法处理任务的.在 PriorityBlockingQueue 队列中可以根据任务优先级顺序先后执行.</p>
+</li>
+</ol>
+<h4 id="1-4-4-拒绝策略"><a href="#1-4-4-拒绝策略" class="headerlink" title="1.4.4 拒绝策略"></a>1.4.4 拒绝策略</h4><p>ThreadPoolExecutor 构造方法的最后一个参数指定了拒绝策略.当提交给线程池的任务量超过实际承载能力时,如何处理? 即线程池中<br>的线程已经用完了,等待队列也满了,无法为新提交的任务服务,可以通过拒绝策略来处理这个问题. JDK 提供了四种拒绝策略:</p>
+<p>AbortPolicy 策略,会抛出异常<br>CallerRunsPolicy 策略,只要线程池没关闭,会在调用者线程中运行当前被丢弃的任务<br>DiscardOldestPolicy 将任务队列中最老的任务丢弃,尝试再次提交新任务<br>DiscardPolicy 直接丢弃这个无法处理的任务<br>Executors 工具类提供的静态方法返回的线程池默认的拒绝策略是AbortPolicy 抛出异常,如果内置的拒绝策略无法满足实际需求,可以扩展 RejectedExecutionHandler 接口</p>
+<pre><code>package com.sevattal.threadpool;
+import java.util.Random;
+import java.util.concurrent.*;
+/**
+ * 自定义拒绝策略
+ */
+public class Test03 &#123;
+    public static void main(String[] args) &#123;
+        //定义任务
+        Runnable r = new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                int num = new Random().nextInt(5);
+                System.out.println(Thread.currentThread().getId() + &quot;--&quot; +
+                        System.currentTimeMillis() + &quot;开始睡眠&quot; + num + &quot;秒&quot;);
+                try &#123;
+                    TimeUnit.SECONDS.sleep(num);
+                &#125; catch (InterruptedException e) &#123;
+                    e.printStackTrace();
+                &#125;
+            &#125;
+        &#125;;
+        //创建线程池, 自定义拒绝策略
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 5, 0, TimeUnit.SECONDS, new LinkedBlockingQueue&lt;&gt;(10), Executors.defaultThreadFactory(), new
+                RejectedExecutionHandler()&#123;
+                    @Override
+                    public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) &#123;
+                        //r 就是请求的任务, executor 就是当前线程池
+                        System.out.println(r + &quot; is discarding..&quot;);
+                    &#125;
+                &#125;);
+        //向线程池提交若干任务
+        for (int i = 0; i &lt; Integer.MAX_VALUE; i++) &#123;
+            threadPoolExecutor.submit(r);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-4-5-ThreadFactory"><a href="#1-4-5-ThreadFactory" class="headerlink" title="1.4.5 ThreadFactory"></a>1.4.5 ThreadFactory</h4><p>线程池中的线程从哪儿来的? 答案就是 ThreadFactory.<br>ThreadFactory 是一个接口,只有一个用来创建线程的方法:Thread newThread(Runnable r);<br>当线程池中需要创建线程时就会调用该方法</p>
+<pre><code>package com.sevattal.threadpool;
+import java.util.Random;
+import java.util.concurrent.*;
+/**
+ * 自定义线程工厂
+ */
+public class Test04 &#123;
+    public static void main(String[] args) throws InterruptedException &#123;
+        //定义任务
+        Runnable r = new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                int num = new Random().nextInt(10);
+                System.out.println(Thread.currentThread().getId() + &quot;--&quot; +
+                        System.currentTimeMillis() + &quot;开始睡眠:&quot; + num + &quot;秒&quot;);
+                try &#123;
+                    TimeUnit.SECONDS.sleep(num);
+                &#125; catch (InterruptedException e) &#123;
+                    e.printStackTrace();
+                &#125;
+            &#125;
+        &#125;;
+        //创建线程池, 使用自定义线程工厂, 采用默认的拒绝策略是抛出异常
+        ExecutorService executorService = new ThreadPoolExecutor(5, 5, 0, TimeUnit.SECONDS, new SynchronousQueue&lt;&gt;(), new ThreadFactory() &#123;
+            @Override
+            public Thread newThread(Runnable r) &#123;
+                //根据参数 r 接收的任务,创建一个线程
+                Thread t = new Thread( r );
+                t.setDaemon(true); //设置为守护线程, 当主线程运行结束,线程池中的线程会自动退出
+                System.out.println(&quot;创建了线程: &quot; + t);
+                return t ;
+            &#125;
+        &#125;);
+        //提交 5 个任务, 当给当前线程池提交的任务超过 5 个时,线程池默认抛出异常
+        for (int i = 0; i &lt; 5; i++) &#123;
+            executorService.submit(r);
+        &#125;
+        //主线程睡眠
+        Thread.sleep(10000);
+        //主线程睡眠超时, 主线程结束, 线程池中的线程会自动退出
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-4-6-监控线程池"><a href="#1-4-6-监控线程池" class="headerlink" title="1.4.6 监控线程池"></a>1.4.6 监控线程池</h4><p><strong>ThreadPoolExecutor 提供了一组方法用于监控线程池</strong></p>
+<p>int getActiveCount() 获得线程池中当前活动线程的数量<br>long getCompletedTaskCount() 返回线程池完成任务的数量<br>int getCorePoolSize() 线程池中核心线程的数量<br>int getLargestPoolSize() 返回线程池曾经达到的线程的最大数<br>int getMaximumPoolSize() 返回线程池的最大容量<br>int getPoolSize() 当前线程池的大小<br>BlockingQueue<Runnable> getQueue() 返回阻塞队列<br>long getTaskCount() 返回线程池收到的任务总数</Runnable></p>
+<pre><code>package com.sevattal.threadpool;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+/**
+ * 监控线程池
+ */
+public class Test05 &#123;
+    public static void main(String[] args) throws InterruptedException &#123;
+        //先定义任务
+        Runnable r = new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                System.out.println(Thread.currentThread().getId() 
+                        + &quot; 编号 的线程开始执 行: &quot; + System.currentTimeMillis());
+                try &#123;
+                    Thread.sleep(10000); //线程睡眠 20 秒,模拟任务执行时长
+                &#125; catch (InterruptedException e) &#123;
+                    e.printStackTrace();
+                &#125;
+            &#125;
+        &#125;;
+        //定义线程池
+        ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(2, 5, 0, TimeUnit.SECONDS, new ArrayBlockingQueue&lt;&gt;(5), Executors.defaultThreadFactory(), new
+                ThreadPoolExecutor.DiscardPolicy());
+        //向线程池提交 30 个任务
+        for (int i = 0; i &lt; 30; i++) &#123;
+            poolExecutor.submit(r);
+            System.out.println(&quot; 当 前 线 程 池 核 心 线 程 数 量 : &quot;
+                    + poolExecutor.getCorePoolSize() + &quot;, 最大线程数:&quot;
+                    + poolExecutor.getMaximumPoolSize() + &quot;,当前线程池大小 :&quot;
+                    + poolExecutor.getPoolSize() + &quot;, 活 动 线 程 数 量 :&quot; +
+            poolExecutor.getActiveCount()+ &quot;,收到任务数量:&quot; + poolExecutor.getTaskCount()
+                    + &quot;,完成任务数 : &quot; + poolExecutor.getCompletedTaskCount() + &quot;, 等 待 任 务 数 :&quot;
+                    + poolExecutor.getQueue().size()) ;
+            TimeUnit.MILLISECONDS.sleep(500);
+        &#125;
+        System.out.println(&quot;-----------------------------------------------&quot;);
+        while ( poolExecutor.getActiveCount() &gt;= 0 )&#123;
+            System.out.println(&quot; 当 前 线 程 池 核 心 线 程 数 量 : &quot;
+                    + poolExecutor.getCorePoolSize() + &quot;, 最大线程数:&quot; + poolExecutor.getMaximumPoolSize()
+                    + &quot;,当前线程池大小 :&quot; + poolExecutor.getPoolSize() + &quot;, 活 动 线 程 数 量 :&quot; +
+            poolExecutor.getActiveCount()+ &quot;,收到任务数量:&quot; +
+                    poolExecutor.getTaskCount() + &quot;,完成任务数 : &quot; +
+                    poolExecutor.getCompletedTaskCount() + &quot;, 等 待 任 务 数 :&quot; +
+            poolExecutor.getQueue().size()) ;
+            Thread.sleep(1000);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-4-7-扩展线程池"><a href="#1-4-7-扩展线程池" class="headerlink" title="1.4.7 扩展线程池"></a>1.4.7 扩展线程池</h4><p>有时需要对线程池进行扩展,如在监控每个任务的开始和结束时间,或者自定义一些其他增强的功能. </p>
+<p><strong>ThreadPoolExecutor 线程池提供了两个方法:</strong></p>
+<p>protected void afterExecute(Runnable r, Throwable t)<br>protected void beforeExecute(Thread t, Runnable r)</p>
+<p>在线程池执行某个任务前会调用 beforeExecute()方法,在任务结束后(任务异常退出)会执行 afterExecute()方法</p>
+<p>查看 ThreadPoolExecutor 源码,在该类中定义了一个内部类 Worker, ThreadPoolExecutor 线程池中的工作线程就是 Worker 类的实例, Worker 实例在执行时会调用 beforeExecute()与 afterExecute()方法</p>
+<pre><code>package com.sevattal.threadpool;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+/**
+ * 扩展线程池
+ */
+public class Test06 &#123;
+    //定义任务类
+    private static class MyTask implements Runnable&#123;
+        String name;
+        public MyTask(String name) &#123;
+            this.name = name;
+        &#125;
+        @Override
+        public void run() &#123;
+            System.out.println(name + &quot;任务正在被线程 &quot; + Thread.currentThread().getId() +
+                    &quot; 执行&quot;);
+            try &#123;
+                Thread.sleep(1000); //模拟任务执行时长
+            &#125; catch (InterruptedException e) &#123;
+                e.printStackTrace();
+            &#125;
+        &#125;
+    &#125;
+    public static void main(String[] args) &#123;
+        //定义扩展线程池, 可以定义线程池类继承 ThreadPoolExecutor,在子类中重写beforeExecute()/afterExecute()方法
+        //也可以直接使用 ThreadPoolExecutor 的内部类
+        ExecutorService executorService = new ThreadPoolExecutor(5, 5, 0, TimeUnit.SECONDS, new LinkedBlockingQueue&lt;&gt;() )&#123;
+            //在内部类中重写任务开始方法
+            @Override
+            protected void beforeExecute(Thread t, Runnable r) &#123;
+                System.out.println(t.getId() + &quot;线程准备执行任务: &quot; + ((MyTask)r).name);
+            &#125;
+            @Override
+            protected void afterExecute(Runnable r, Throwable t) &#123;
+                System.out.println( ((MyTask)r).name + &quot;任务执行完毕&quot;);
+            &#125;
+            @Override
+            protected void terminated() &#123;
+                System.out.println(&quot;线程池退出&quot;);
+            &#125;
+        &#125;;
+        //向线程池中添加任务
+        for (int i = 0; i &lt; 5; i++) &#123;
+            MyTask task = new MyTask(&quot;task-&quot; + i);
+            executorService.execute(task);
+        &#125;
+        //关闭线程池
+        executorService.shutdown(); //关闭线程池仅仅是说线程池不再接收新的任务 , 线程池中已接收的任务正常执行完毕
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-4-8-优化线程池大小"><a href="#1-4-8-优化线程池大小" class="headerlink" title="1.4.8 优化线程池大小"></a>1.4.8 优化线程池大小</h4><p>线程池大小对系统性能是有一定影响的,过大或者过小都会无法发挥最优的系统性能, 线程池大小不需要非常精确,只要避免极大或者极小的情况即可, 一般来说,线程池大小需要考虑 CPU 数量,内存大小等因素. 在<Java concurrency in practice>书中给出一个估算线程池大小的公式:</Java></p>
+<p>线程池大小 &#x3D; CPU 的数量 * 目标 CPU 的使用率 * ( 1 + 等待时间与计算时间的比)</p>
+<h4 id="1-4-9-线程池死锁"><a href="#1-4-9-线程池死锁" class="headerlink" title="1.4.9 线程池死锁"></a>1.4.9 线程池死锁</h4><p>如果在线程池中执行的 任务 A 在执行过程中又向线程池提交了任务 B, 任务 B 添加到了线程池的等待队列中, 如果任务 A 的结束需要等待任务 B 的执行结果. 就有可能会出现这种情况: 线程池中所有的工作线程都处于等待任务处理结果,而这些任务在阻塞队列中等待执行, 线程池中没有可以对阻塞队列中的任务进行处理的线程,这种等待会一直持续下去,从而造成死锁. </p>
+<p>适合给线程池提交相互独立的任务,而不是彼此依赖的任务. 对于<br>彼此依赖的任务,可以考虑分别提交给不同的线程池来执行.</p>
+<h4 id="1-4-10-线程池中的异常处理"><a href="#1-4-10-线程池中的异常处理" class="headerlink" title="1.4.10 线程池中的异常处理"></a>1.4.10 线程池中的异常处理</h4><p>在使用 ThreadPoolExecutor 进行 submit 提交任务时,有的任务抛出了异常,但是线程池并没有进行提示,即线程池把任务中的异常给吃掉了,可以把 submit 提交改为 execute 执行,也可以对 ThreadPoolExecutor 线程池进行扩展.对提交的任务进行包装:</p>
+<pre><code>package com.sevattal.threadpool;
+import java.util.concurrent.*;
+/**
+ * 自定义线程池类,对 ThreadPoolExecutor 进行扩展
+ */
+public class Test08 &#123;
+    //自定义线程池类
+    private static class TraceThreadPollExecutor extends ThreadPoolExecutor&#123;
+        public TraceThreadPollExecutor(int corePoolSize, int maximumPoolSize, long
+                keepAliveTime, TimeUnit unit, BlockingQueue&lt;Runnable&gt; workQueue) &#123;
+            super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
+        &#125;
+        //定义方法,对执行的任务进行包装,接收两个参数,第一个参数接收要执行的任务, 第二个参数是一个 Exception 异常
+        public Runnable wrap( Runnable task, Exception exception)&#123;
+            return new Runnable() &#123;
+                @Override
+                public void run() &#123;
+                    try &#123;
+                        task.run();
+                    &#125;catch (Exception e )&#123;
+                        exception.printStackTrace();
+                        throw e;
+                    &#125;
+                &#125;
+            &#125;;
+        &#125;
+        //重写 submit 方法
+        @Override
+        public Future&lt;?&gt; submit(Runnable task) &#123;
+            return super.submit(wrap(task, new Exception(&quot;客户跟踪异常&quot;)));
+        &#125;
+        @Override
+        public void execute(Runnable command) &#123;
+            super.execute(wrap(command, new Exception(&quot;客户跟踪异常&quot;)));
+        &#125;
+    &#125;
+    //定义类实现 Runnable 接口,用于计算两个数相除
+    private static class DivideTask implements Runnable&#123;
+        private int x;
+        private int y;
+        public DivideTask(int x, int y) &#123;
+            this.x = x;
+            this.y = y;
+        &#125;
+        @Override
+        public void run() &#123;
+            System.out.println(Thread.currentThread().getName() + &quot;计算:&quot; + x + &quot; / &quot; + y + &quot; = &quot; + (x/y));
+        &#125;
+    &#125;
+    public static void main(String[] args) &#123;
+        //创建线程池
+        // ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 0, TimeUnit.SECONDS, new SynchronousQueue&lt;&gt;())
+        //使用自定义的线程池
+        ThreadPoolExecutor poolExecutor = new TraceThreadPollExecutor(0, Integer.MAX_VALUE, 0, TimeUnit.SECONDS, new SynchronousQueue&lt;&gt;());
+        //向线程池中添加计算两个数相除的任务
+        for (int i = 0; i &lt; 5; i++) &#123;
+            poolExecutor.submit(new DivideTask(10, i));
+            // poolExecutor.execute(new DivideTask(10, i));
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="1-4-11-ForkJoinPool-线程池"><a href="#1-4-11-ForkJoinPool-线程池" class="headerlink" title="1.4.11 ForkJoinPool 线程池"></a>1.4.11 ForkJoinPool 线程池</h4><p>“分而治之”是一个有效的处理大数据的方法,著名的 MapReduce就是采用这种分而治之的思路. 简单点说,如果要处理的 1000 个数据, 但是我们不具备处理1000个数据的能力,可以只处理10个数据, 可以把这 1000 个数据分阶段处理 100 次,每次处理 10 个,把 100 次的处理结果进行合成,形成最后这 1000 个数据的处理结果. </p>
+<p>把一个大任务调用 fork()方法分解为若干小的任务,把小任务的处理结果进行 join()合并为大任务的结果</p>
+<p><img src="/2021/06/02/JAVA-Thread-Base-6/4.png"></p>
+<p>系统对 ForkJoinPool 线程池进行了优化,提交的任务数量与线程的数量不一定是一对一关系.在多数情况下,一个物理线程实际上需要处理多个逻辑任务.</p>
+<p><img src="/2021/06/02/JAVA-Thread-Base-6/5.png"></p>
+<p>ForkJoinPool 线程池中最常用 的方法是:</p>
+<p><T> ForkJoinTask<T> submit(ForkJoinTask<T> task) </T></T></T></p>
+<p>向线程池提交一个 ForkJoinTask 任务. ForkJoinTask 任务支持 fork()分解与 join()等待的 任 务 . ForkJoinTask 有 两 个 重 要 的 子 类 :RecursiveAction 和RecursiveTask ,它们的区别在于 RecursiveAction 任务没有返回值, RecursiveTask 任务可以带有返回值</p>
+<pre><code>package com.sevattal.threadpool;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.RecursiveTask;
+/**
+ * 演示 ForkJoinPool 线程池的使用
+ * 使用该线程池模拟数列求和
+ */
+public class Test09 &#123;
+    //计算数列的和, 需要返回结果,可以定义任务继承 RecursiveTask
+    private static class CountTask extends RecursiveTask&lt;Long&gt;&#123;
+        private static final int THRESHOLD = 10000; //定义数据规模的阈值,允许计算10000 个数内的和,超过该阈值的数列就需要分解
+        private static final int TASKNUM = 100; //定义每次把大任务分解为 100 个小任务
+        private long start; //计算数列的起始值
+        private long end; //计算数列的结束值
+        public CountTask(long start, long end) &#123;
+            this.start = start;
+            this.end = end;
+        &#125;
+        //重写 RecursiveTask 类的 compute()方法,计算数列的结果
+        @Override
+        protected Long compute() &#123;
+            long sum = 0 ; //保存计算的结果
+            //判断任务是否需要继续分解,如果当前数列 end 与 start 范围的数超过阈值THRESHOLD,就需要继续分解
+            if ( end - start &lt; THRESHOLD)&#123;
+                //小于阈值可以直接计算
+                for (long i = start ; i &lt;= end; i++)&#123;
+                    sum += i;
+                &#125;
+            &#125;else &#123; //数列范围超过阈值,需要继续分解
+                //约定每次分解成 100 个小任务,计算每个任务的计算量
+                long step = (start + end ) / TASKNUM;
+                //start = 0 , end = 200000, step = 2000, 如果计算[0,200000]范围内数列的
+                //和, 把该范围的数列分解为 100 个小任务,每个任务计算 2000 个数即可
+                //注意,如果任务划分的层次很深,即 THRESHOLD 阈值太小,每个任务的计
+                //算量很小,层次划分就会很深,可能出现两种情况:一是系统内的线程数量会越积越多,导致性
+                //能下降严重; 二是分解次数过多,方法调用过多可能会导致栈溢出
+                //创建一个存储任务的集合
+                ArrayList&lt;CountTask&gt; subTaskList = new ArrayList&lt;&gt;();
+                long pos = start; //每个任务的起始位置
+                for (int i = 0; i &lt; TASKNUM; i++) &#123;
+                    long lastOne = pos + step; //每个任务的结束位置
+                    //调整最后一个任务的结束位置
+                    if ( lastOne &gt; end )&#123;
+                        lastOne = end;
+                    &#125;
+                    //创建子任务
+                    CountTask task = new CountTask(pos, lastOne);
+                    //把任务添加到集合中
+                    subTaskList.add(task);
+                    //调用 for()提交子任务
+                    task.fork();
+                    //调整下个任务的起始位置
+                    pos += step + 1;
+                &#125;
+                //等待所有的子任务结束后,合并计算结果
+                for (CountTask task : subTaskList) &#123;
+                    sum += task.join(); //join()会一直等待子任务执行完毕返回执行结果
+                &#125;
+            &#125;
+            return sum;
+        &#125;
+    &#125;
+    public static void main(String[] args) &#123;
+        //创建 ForkJoinPool 线程池
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        //创建一个大的任务
+        CountTask task = new CountTask(0L, 200000L);
+        //把大任务提交给线程池
+        ForkJoinTask&lt;Long&gt; result = forkJoinPool.submit(task);
+        try &#123;
+            Long res = result.get(); //调用任务的 get()方法返回结果
+            System.out.println(&quot;计算数列结果为:&quot; + res);
+        &#125; catch (InterruptedException e) &#123;
+            e.printStackTrace();
+        &#125; catch (ExecutionException e) &#123;
+            e.printStackTrace();
+        &#125;
+        //验证
+        long s = 0L;
+        for (long i = 0; i &lt;= 200000 ; i++) &#123;
+            s += i;
+        &#125;
+        System.out.println(s);
+    &#125;
+&#125;
+</code></pre>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2021-06-02, 11:50:07</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:42</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2021/06/02/JAVA-Thread-Base-6/" title="JAVA-Thread-Base-6">http://yoursite.com/2021/06/02/JAVA-Thread-Base-6/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/06/02/JAVA-Thread-Base-6/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/06/02/JAVA-Thread-Base-7/">
+                    JAVA-Thread-Base-7
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/06/01/JAVA-Thread-Base-5/">
+                    JAVA-Thread-Base-5
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80-6"><span class="toc-number">1.</span> <span class="toc-text">Java 线程基础 6</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BA%BF%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">1 线程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%BA%BF%E7%A8%8B%E7%BB%84"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 线程组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%BB%84"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">1.1.1 创建线程组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E7%BA%BF%E7%A8%8B%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">1.1.2 线程组的基本操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-%E5%A4%8D%E5%88%B6%E7%BA%BF%E7%A8%8B%E7%BB%84%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%8F%8A%E5%AD%90%E7%BA%BF%E7%A8%8B%E7%BB%84"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">1.1.3 复制线程组中的线程及子线程组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-4-%E7%BA%BF%E7%A8%8B%E7%BB%84%E7%9A%84%E6%89%B9%E9%87%8F%E4%B8%AD%E6%96%AD"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">1.1.4 线程组的批量中断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-5-%E8%AE%BE%E7%BD%AE%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%BB%84"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">1.1.5 设置守护线程组</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%8D%95%E8%8E%B7%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%89%A7%E8%A1%8C%E5%BC%82%E5%B8%B8"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 捕获线程的执行异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%B3%A8%E5%85%A5-Hook-%E9%92%A9%E5%AD%90%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 注入 Hook 钩子线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 线程池</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">1.4.1 什么是线程池</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-2-JDK-%E5%AF%B9%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%94%AF%E6%8C%81"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">1.4.2 JDK 对线程池的支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-3-%E6%A0%B8%E5%BF%83%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">1.4.3 核心线程池的底层实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-4-%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5"><span class="toc-number">1.1.4.4.</span> <span class="toc-text">1.4.4 拒绝策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-5-ThreadFactory"><span class="toc-number">1.1.4.5.</span> <span class="toc-text">1.4.5 ThreadFactory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-6-%E7%9B%91%E6%8E%A7%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.1.4.6.</span> <span class="toc-text">1.4.6 监控线程池</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-7-%E6%89%A9%E5%B1%95%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.1.4.7.</span> <span class="toc-text">1.4.7 扩展线程池</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-8-%E4%BC%98%E5%8C%96%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.1.4.8.</span> <span class="toc-text">1.4.8 优化线程池大小</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-9-%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%AD%BB%E9%94%81"><span class="toc-number">1.1.4.9.</span> <span class="toc-text">1.4.9 线程池死锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-10-%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.1.4.10.</span> <span class="toc-text">1.4.10 线程池中的异常处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-11-ForkJoinPool-%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.1.4.11.</span> <span class="toc-text">1.4.11 ForkJoinPool 线程池</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"JAVA-Thread-Base-6　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/06/02/JAVA-Thread-Base-7/" title="Pre: JAVA-Thread-Base-7">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/06/01/JAVA-Thread-Base-5/" title="Next: JAVA-Thread-Base-5">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

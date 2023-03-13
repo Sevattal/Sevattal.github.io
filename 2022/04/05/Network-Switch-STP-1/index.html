@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="STP - Spanning Tree Protocol 生成树协议 (以华为为主，Cisco 贴出部分命令)转载： Astion 路由交换技术笔记，可在 Gitee 上找到相关笔记项目 STP 如何在保证网络冗余性的情况下，消除二层环路。 网络中部署生成树之后，交换机之间便会开始交互相关协议报文，计算得到一个无环的网络拓扑。 当网络中存在环路时，生成树会将网络中的一个或多个接口进行阻塞（bloc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Network-Switch-STP-1">
+<meta property="og:url" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="STP - Spanning Tree Protocol 生成树协议 (以华为为主，Cisco 贴出部分命令)转载： Astion 路由交换技术笔记，可在 Gitee 上找到相关笔记项目 STP 如何在保证网络冗余性的情况下，消除二层环路。 网络中部署生成树之后，交换机之间便会开始交互相关协议报文，计算得到一个无环的网络拓扑。 当网络中存在环路时，生成树会将网络中的一个或多个接口进行阻塞（bloc">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/1.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/2.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/3.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/4.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/5.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/6.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/7.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/8.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/9.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/10.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/11.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/12.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/13.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/14.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/15.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/16.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/17.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/18.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/19.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/20.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/21.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/22.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/23.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/24.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/25.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/26.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/27.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/28.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/29.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/30.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/31.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/32.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/33.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/34.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/35.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/36.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/37.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/38.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/39.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/40.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/41.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/42.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/43.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/44.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/45.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/47.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/48.png">
+<meta property="article:published_time" content="2022-04-05T05:48:24.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:43.147Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Switch">
+<meta property="article:tag" content="STP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2022/04/05/Network-Switch-STP-1/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Network-Switch-STP-1 | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Network-Switch-STP-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/04/05/Network-Switch-STP-1/" class="article-date">
+      <time datetime="2022-04-05T05:48:24.000Z" itemprop="datePublished">2022-04-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Network-Switch-STP-1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Network/">Network</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="STP-Spanning-Tree-Protocol-生成树协议-以华为为主，Cisco-贴出部分命令"><a href="#STP-Spanning-Tree-Protocol-生成树协议-以华为为主，Cisco-贴出部分命令" class="headerlink" title="STP - Spanning Tree Protocol 生成树协议 (以华为为主，Cisco 贴出部分命令)"></a>STP - Spanning Tree Protocol 生成树协议 (以华为为主，Cisco 贴出部分命令)</h1><p>转载： Astion 路由交换技术笔记，可在 Gitee 上找到相关笔记项目</p>
+<h2 id="STP"><a href="#STP" class="headerlink" title="STP"></a>STP</h2><blockquote>
+<p>如何在保证网络冗余性的情况下，消除二层环路。</p>
+<p>网络中部署生成树之后，交换机之间便会开始交互相关协议报文，计算得到一个无环的网络拓扑。</p>
+<p>当网络中存在环路时，生成树会将网络中的一个或多个接口进行阻塞（block），从而打破二层环路。</p>
+<p>当网络拓扑发生变更时，它能够及时感知，并且动态地调整被阻塞接口。</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="STP基本概念"><a href="#STP基本概念" class="headerlink" title="STP基本概念"></a>STP基本概念</h3><h4 id="桥-ID"><a href="#桥-ID" class="headerlink" title="桥 ID"></a>桥 ID</h4><p>每台运行 STP 的交换机都有一个<strong>唯一的</strong>桥 ID。</p>
+<p>桥 ID 一共 8Byte，包含 16bit 优先级；48bit 桥 MAC 地址。</p>
+<p>默认是<strong>32768</strong></p>
+<p>步长是<strong>4096</strong></p>
+<p>最终得桥 ID 值必须是 4096 的倍数。</p>
+<p>修改桥优先级<code>stp priority</code></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/1.png"></p>
+<h4 id="根桥"><a href="#根桥" class="headerlink" title="根桥"></a>根桥</h4><p>STP 的一系列计算均以根桥为参考点。</p>
+<p>当 STP 开始工作后，第一件事就是在网络中选举根桥。</p>
+<p>在一个交换网络中，根桥只有一个。</p>
+<p><strong>网络中拥有最小桥 ID 的交换机称为根桥。</strong></p>
+<p>桥优先级最小的交换机胜出，若相等，MAC地址最小的成为根桥。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/2.png"></p>
+<h4 id="开销与根路径开销-RPC"><a href="#开销与根路径开销-RPC" class="headerlink" title="开销与根路径开销 RPC"></a>开销与根路径开销 RPC</h4><p>每一个激活了 STP 的接口都维护着一个 Cost 值，接口 Cost 主要用于计算 RPC。</p>
+<p>接口 Cost 与接口速率、工作模式有关，缺省使用 IEEE802.1t</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/3.png"></p>
+<p>使用<code>stp pathcost-standard</code>可以修改 Cost 计算方式，<em>不建议修改。</em></p>
+<p><strong>路径开销是一个端口变量，是 STP 用于选择链路的参考值；在一个 STP 网络中，某端口到根桥累计的路径开销就是所经过的各个桥上的各端口累加而成，即根路径开销 RPC</strong></p>
+<h4 id="接口ID"><a href="#接口ID" class="headerlink" title="接口ID"></a>接口ID</h4><p>主要用于在特定场景下选举根接口。</p>
+<p>高 4bit 是接口优先级；</p>
+<p>低 12bit 是接口编号。</p>
+<p><strong>缺省接口优先级为 128.</strong></p>
+<p><strong>取值范围 0~240，步长 16</strong></p>
+<p>在接口视图下使用<code>stp port priority</code>修改接口优先级。</p>
+<h3 id="基本工作原理"><a href="#基本工作原理" class="headerlink" title="基本工作原理"></a>基本工作原理</h3><h4 id="在交换网络中选举一个根桥-RB"><a href="#在交换网络中选举一个根桥-RB" class="headerlink" title="在交换网络中选举一个根桥 RB"></a>在交换网络中选举一个根桥 RB</h4><p>对于一个交换网络而言，正常情况下只会存在一个根桥。</p>
+<p>STP 的工作依赖该协议所使用的报文正常交互，即<strong>BPDU（网桥协议数据单元）</strong></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/4.png"></p>
+<p>初始桥优先级都为 32768，因此 MAC 地址最小的为根桥，即 SW3 被选举为根桥。</p>
+<p><em>根桥的地位是具有可占性的。</em></p>
+<p>若在网络中新增一台交换机且桥优先级比任何交换机都低，那么它成为该交换网络中的根桥，STP 将重新收敛、计算网络拓扑，<strong>一般建议手工指定根桥。</strong></p>
+<h4 id="在每个非根交换机上选举一个根接口-RP"><a href="#在每个非根交换机上选举一个根接口-RP" class="headerlink" title="在每个非根交换机上选举一个根接口 RP"></a>在每个非根交换机上选举一个根接口 RP</h4><p>一个交换网络中，除了根桥之外的其它交换机都是非根桥；</p>
+<p>根接口即<strong>去往根桥路径开销最小的端口，</strong>非根桥上所有接口中收到的最优 BPDU 的接口。</p>
+<p><strong>在一个STP协议的设备上根端口有且只有一个，根桥上没有根端口。</strong></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/5.png"></p>
+<p><em>在 STP 收敛完成后，根桥依然会周期性地向网络中发送 BPDU，而非根桥则会周期性地在自己的跟接口上收到 BPDU，并沿着 STP 树向下游转发。</em></p>
+<h4 id="选举指定接口-DP"><a href="#选举指定接口-DP" class="headerlink" title="选举指定接口 DP"></a>选举指定接口 DP</h4><p>STP 将在每个网段中选举一个指定接口，是该网段内所有接口到达根桥的最优接口，<em>指定几口还负责向该网段发送 BPDU。</em></p>
+<p><strong>对于非根交换机，根接口是将自己收到的所有 BPDU 进行比较；而指定接口是用自己计算出的 BPDU 与别的设备发来的 BPDU 进行比较。</strong></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/6.png"></p>
+<h4 id="阻塞非指定端口打破二层环路"><a href="#阻塞非指定端口打破二层环路" class="headerlink" title="阻塞非指定端口打破二层环路"></a>阻塞非指定端口打破二层环路</h4><p>如果交换机的某个接口既不是<strong>根接口</strong>，又不是<strong>指定端口</strong>，那么该接口将被 STP 阻塞。</p>
+<p>被阻塞的既不会接收数据也不会转发业务数据。</p>
+<p><em>该接口不发送 BPDU，但会持续监听 BPDU，以便感知网络拓扑的变更情况。</em></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/7.png"></p>
+<h3 id="STP-报文"><a href="#STP-报文" class="headerlink" title="STP 报文"></a>STP 报文</h3><blockquote>
+<p><strong>BPDU （Brige Protocol Data Unit, 网桥协议数据单元）</strong></p>
+<p>STP能够正常工作的基本前提是 BPDU 的正常交互。</p>
+</blockquote>
+<p>STP 的 BPDU 有两种类型：</p>
+<ul>
+<li>配置 BPDU</li>
+<li>TCN BPDU</li>
+</ul>
+<p><strong>BPDU 直接封装在数据帧中，目的 MAC 是组播 0180-c200-0000</strong></p>
+<h4 id="配置-BPDU"><a href="#配置-BPDU" class="headerlink" title="配置 BPDU"></a>配置 BPDU</h4><p>交换网络初始化过程中，每台交换机都从<strong>自己激活了 STP 的接口</strong>向外发送配置 BPDU。</p>
+<p>当 STP 收敛完成后,<strong>只有根桥</strong>才会周期性地发送配置 BPDU，非根桥则会在自己的根桥上收到上游发送过来的配置BPDU，并<strong>立即触发</strong>而产生自己的配置 BPDU，然后从指定接口发送出去。</p>
+<p><strong>发送 BPDU 周期为 2s，系统视图使用<code>stp timer hello</code> 修改发送周期。</strong></p>
+<h4 id="TCN-BPDU"><a href="#TCN-BPDU" class="headerlink" title="TCN BPDU"></a>TCN BPDU</h4><p>TCN BPDU 格式只有 “协议ID”、”协议版本ID” 及 “BPDU 类型”。</p>
+<p><strong>TCN BPDU 用于在网络拓扑发生变化时向根桥通知变化的发生。</strong></p>
+<p>TCN BPDU 需要从发现拓扑变更的交换机传递到根桥，交换机会从其根接口发送 TCN BPDU，一跳一跳的向上游传递直至到达根桥。</p>
+<p>当一台交换机收到 TCN BPDU，STP 要求拓扑变更传递的过程是<strong>可靠的</strong>，当收到下游发送上来的 TCN BPDU 时，需要使用<strong>标志 TCA 为 1</strong>的配置 BPDU 回应对方，并向上游发送 TCN BPDU，直至抵达根桥。</p>
+<p>根桥收到 TCN BPDU 后，它将通知该变化到全网，向网络泛洪<strong>标志位 TC 为 1</strong>，的配置 BPDU，网络中的交换机收到该配置 BPDU，立即将 MAC 地址表老化调整成较小的数值，使 MAC 地址表尽快刷新。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/8.png"></p>
+<h3 id="STP时间参数"><a href="#STP时间参数" class="headerlink" title="STP时间参数"></a>STP时间参数</h3><ul>
+<li>Hello Time：运行 STP 交换机发送 BPDU 的时间间隔（缺省 2s），<em>修改该值必须在根桥上修改，非根交换机会自动对齐</em></li>
+<li>Forward Delay ：运行 STP 的接口从侦听状态进入学习状态，或从学习状态进入转发状态的延迟时间，默认 15s</li>
+<li>MaxAge：BPDU 最大生存时间，或老化时间；若在 BPDU 到达最大生存时间之前再次受到该 BPDU，该定时器重置；若没有及时受到 BPDU 则被老化，根端口将重新选举。</li>
+</ul>
+<h3 id="BPDU-比较原则"><a href="#BPDU-比较原则" class="headerlink" title="BPDU 比较原则"></a>BPDU 比较原则</h3><p>四个关键元素：<strong>根桥 ID、RPC、网桥ID、接口ID</strong></p>
+<p>最优匹配原则：</p>
+<ul>
+<li><strong>最小根桥 ID</strong></li>
+<li><strong>最小 RPC</strong></li>
+<li><strong>最小网桥 ID</strong></li>
+<li><strong>最小接口 ID</strong></li>
+</ul>
+<h3 id="BPDU-交互与拓扑计算"><a href="#BPDU-交互与拓扑计算" class="headerlink" title="BPDU 交互与拓扑计算"></a>BPDU 交互与拓扑计算</h3><p>初始情况下，交换网中的交换机都认为自己是根桥，在开始运行后从所有激活 STP 的接口中发送 BPDU。</p>
+<p><strong>由于所有交换机都认为自己是根桥，所以发送 BPDU 时根桥 ID 字段为自身网桥I D。</strong></p>
+<p><strong>由于自己本身是根桥，所以 BPDU 中根路径开销为 0，即 RPC 为 0。</strong></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/9.png"></p>
+<p>在交互了第一个 BPDU 之后，各桥使用接口上<strong>收到的 BPDU</strong>对比<strong>接口自身 BPDU</strong>，<em>根据 BPDU 比较原则</em>：</p>
+<p>如果<strong>收到的 BPDU</strong>更优，则将该 BPDU 更新到接口下，并且不再发送 BPDU；</p>
+<p>如果<strong>接口自身 BPDU更优</strong>，丢弃该 BPDU，仍使用自身 BPDU，并且周期性发送接口自身 BPDU。</p>
+<p><strong>即：通过这种方式初步选举出最小根桥 ID 的 BPDU，既为最优 BPDU。</strong></p>
+<p><em>此处桥优先级都为默认值 32768，SW3 的 MAC 地址最小，所以 SW3 当选根桥。各桥接口 BPDU 更新情况如下：</em></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/10.png"></p>
+<p>未当选为根桥的交换机为<strong>非根桥，</strong>各非根桥通过<strong>对比自身各接口</strong>收到或拥有的 BPDU，<strong>拥有最优 BPDU 的接口</strong>当选为<strong>根接口。</strong></p>
+<p><em>此处根桥 ID 为 SW3 的 BPDU 显然更优，所以非根桥以下接口为根接口，</em> <strong>每个非根桥有且只有一个根接口，根接口用来接收根桥发送的 BPDU。</strong></p>
+<p><strong>注意：无论是初步选举根接口还是后续的根接口变更，所对比的都是桥接口处已经存在的 BPDU。</strong></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/11.png"></p>
+<p><strong>每条链路上</strong>都需要<strong>有且只有一个指定接口，用来发送根桥 BPDU。根桥所有使能 STP 的接口都发送 BPDU，即根桥所有 STP 接口都为指定接口。</strong></p>
+<p>在选举指定接口之前，非根桥使用根接口的<strong>最优 BPDU</strong>为其它接口计算指定端口配置消息，计算方式为：</p>
+<ul>
+<li>在 “根桥ID” 字段中写入<strong>最优 BPDU 中的根桥 ID</strong>。</li>
+<li>最优 BPDU 中的 PRC 与<strong>根接口 Cost 之和</strong></li>
+<li>“网桥ID” 字段写入本设备桥 ID</li>
+<li>“接口ID” 为本接口 ID（即被计算的接口）</li>
+</ul>
+<p>使用指定端口配置消息与该接口上的 BPDU 对比，<strong>若指定端口配置消息更优，该接口为指定接口，将指定端口配置消息更新到该接口上；若该接口上的 BPDU 更优，则阻塞该接口，BPDU 不变。</strong></p>
+<p><em>此处由于接口开销都为默认值，快速以太网百兆接口，所以 Cost 均为 200000，很显然SW1和SW2均是计算后的 BPDU 更优，所以它们的接口都为指定接口。</em></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/12.png"></p>
+<p><em>此时 SW1 与 SW2 的指定接口周期性的发送刚更新的最优 BPDU，很显然它们之间 SW1 的 BPDU 更优，SW2 的指定接口被更新；此时 SW2 再次触发根接口选举（因为其它接口的 BPDU 再次被更新），很显然根接口本身的 BPDU 更优，并且该接口不再发送消息，即 SW2 E0&#x2F;0&#x2F;1 接口被阻塞</em></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/13.png"></p>
+<h3 id="接口状态"><a href="#接口状态" class="headerlink" title="接口状态"></a>接口状态</h3><p>五种接口状态：</p>
+<ul>
+<li>禁用（Disable）：不收发 BPDU 及业务数据帧。</li>
+<li>阻塞（Blocking）：不收发业务数据帧，不学习 MAC 地址，只侦听 BPDU。</li>
+<li>侦听（Listening）：初步计算该接口为根接口或指定接口，只收发 BPDU，不收发数据帧及 MAC 地址学习。</li>
+<li>学习（Learning）：只侦听业务数据帧，但不转发，学习其 MAC 地址。</li>
+<li>转发（Forwarding）：可以正常收发业务数据帧及处理 BPDU，只有根接口或指定接口才进入此状态。</li>
+</ul>
+<p>交换机接口被激活 STP 后，会从禁用状态进入阻塞状态，被选举为根接口或指定接口会进入侦听状态<strong>并且需要从侦听状态停留 15s</strong>，给予 STP 15s 收敛时间，<strong>防止出现临时环路</strong>，若该接口仍然是根接口或指定接口，进入学习状态并且停留 15s，<strong>持续侦听业务数据帧 MAC 地址，为转发状态作准备。</strong></p>
+<h3 id="STP-基础配置"><a href="#STP-基础配置" class="headerlink" title="STP 基础配置"></a>STP 基础配置</h3><p>在该环网中部署 STP 协议。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/14.png"></p>
+<p>华为 S5700 交换机默认运行 MSTP；</p>
+<p>开启 STP；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp enable</span><br></pre></td></tr></table></figure>
+
+<p>修改交换机 stp 工作模式 stp&#x2F;rstp&#x2F;mstp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp mode stp</span><br></pre></td></tr></table></figure>
+
+<p>在实际部署中需要手工进行根桥指定，将 SW1 指定为根桥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[sw1] stp root primary</span><br></pre></td></tr></table></figure>
+
+<p>指定 SW2 为次根桥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[sw2] stp root secondary</span><br></pre></td></tr></table></figure>
+
+<p>查看 stp 状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">display stp</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/05/Network-Switch-STP-1/15.png"></p>
+<p>查看接口 stp 状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">display stp brief</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/05/Network-Switch-STP-1/16.png"></p>
+<h2 id="RSTP"><a href="#RSTP" class="headerlink" title="RSTP"></a>RSTP</h2><blockquote>
+<p>新增两个接口角色：替代接口和备份接口</p>
+<p>引入了 P&#x2F;A 机制，加快收敛</p>
+<p>引入了边缘接口，终端设备接入无需收敛</p>
+</blockquote>
+<h3 id="接口角色"><a href="#接口角色" class="headerlink" title="接口角色"></a>接口角色</h3><p><strong>替代接口</strong></p>
+<p>可以将替代接口理解为根接口的备份，当设备的根接口发生故障，替代接口可以成为新的根接口。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/17.png"></p>
+<p>执行<code>dis stp brief</code>查看接口角色和接口状态，根接口故障后，最优的替代接口成为根接口。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/18.png"></p>
+<p><strong>备份接口</strong></p>
+<p>备份接口是一台设备上由于收到了自己所发送的 BPDU 从而被阻塞的接口。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/19.png"></p>
+<p>查看其接口角色，由于 e0&#x2F;0&#x2F;2 口收到的 BPDU 中，接口 ID 比自身更优，该接口为备份接口，状态为丢弃状态 Discarding</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/20.png"></p>
+<h3 id="接口状态-1"><a href="#接口状态-1" class="headerlink" title="接口状态"></a>接口状态</h3><p>RSTP 将 STP 的状态：Disabled、Blocking、Listening 合并为丢弃状态（Discarding），Learning、Forwarding 状态不变。</p>
+<p>丢弃状态的接口不转发业务数据，也不学习 MAC 地址。</p>
+<h3 id="RST-BPDU"><a href="#RST-BPDU" class="headerlink" title="RST BPDU"></a>RST BPDU</h3><p><em>版本ID</em> 字段值为 <strong>0x02</strong>  为RSTP</p>
+<p><em>BPDU 类型</em> 字段值为 <strong>0x02</strong></p>
+<p><em>标志</em> 字段中除最高位 TCA 和最低位 TC 位，RSTP 还应用了其余的 6 位；</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/21.png"></p>
+<p>Agreement（同意）和 Proposal（提及）用于 RSTP 的 P&#x2F;A 机制；</p>
+<p>Port Role（接口角色）用于标志发送接口的接口角色：01 为根接口，10 为替代接口，11 为指定接口，00 保留。</p>
+<p>Forwarding 和 Learning 表示 RST BPDU 的接口状态。</p>
+<p><em>无论非根桥设备是否接收到根桥传来的配置 BPDU 报文，非根桥仍然按照 Hello Timer规定的时间间隔发送配置 BPDU，该行为完全由每台设备自主进行。</em></p>
+<p><em>在RSTP中，无论接口角色如何，只要接口收到次优 BPDU，便立即发送自己的 BPDU。</em></p>
+<h3 id="边缘接口"><a href="#边缘接口" class="headerlink" title="边缘接口"></a>边缘接口</h3><p>接入 PC 或终端的接口是没有必要参与 STP 计算的，可以将其交换机接口配置为<strong>边缘接口</strong>，边缘接口缺省不参与生成树计算，当边缘接口激活之后，可以立即切换到转发状态并开始收发业务流量，不用经历转发延迟时间。</p>
+<p><strong>边缘接口的激活和关闭不会触发 RSTP 拓扑变更</strong></p>
+<p>激活边缘接口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[sw3] int e0/0/3</span><br><span class="line">[]stp edge-port enable</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/05/Network-Switch-STP-1/22.png"></p>
+<p>如果在边缘接口上接入交换机并受到了 BPDU，该<strong>接口立即变成生成树接口。</strong></p>
+<p><em>在边缘接口变成生成树接口时，可能会引发 RSTP 重计算。</em></p>
+<p>当接口激活边缘接口后，该接口仍然周期性的向接口发送 BPDU，这显然是多余的；</p>
+<p>激活 BPDU 过滤：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[E0/0/3] stp bpdu-filter enable</span><br></pre></td></tr></table></figure>
+
+<p><em>激活 BPDU 过滤后，该接口不再发送 BPDU，该接口收到 BPDU 时也会将其忽略。</em></p>
+<h3 id="P-x2F-A-机制"><a href="#P-x2F-A-机制" class="headerlink" title="P&#x2F;A 机制"></a>P&#x2F;A 机制</h3><p>RSTP 通过<strong>Proposal&#x2F;Agreement</strong>（提议&#x2F;同意）机制来保证一个指定接口 得以从丢弃状态快速进入转发状态，从而加速了生成树的收敛。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/23.png"></p>
+<p>最开始两交换机交互 RST BPDU，选举出根桥为 SW1，此时 E0&#x2F;0&#x2F;2 成为指定端口 DP，SW2 的 E0&#x2F;0&#x2F;1 成为根端口；此时两个接口都处于<em>Discarding</em>状态。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/24.png"></p>
+<p>此时根桥从指定端口发出<strong>Proposal置位</strong>的 RST BPDU，SW2 收到该 BPDU 发现 Proposal 置位，则立即启动一个同步过程<em>Sync</em>;</p>
+<p>此时 Rstp 的机制是让指定端口 DP 快速的进入转发状态，从而避免标准 STP 的 Forwarding DelayTimer。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/25.png"></p>
+<p>该机制为先将本地的所有非边缘接口全部阻塞，然后答复 SW1 不存在环路，可以进入 Forwarding 状态；</p>
+<p>已经处于丢弃状态的接口缺省同步完成，已经处于转发状态的指定接口需要切换到 Discarding 状态以便完成同步，边缘接口不参与 P&#x2F;A 协商；</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/26.png"></p>
+<p>此时 SW2 完成 Sync 过程，向上游指定接口发送<em>Ageement</em>置位的 RST BPDU；</p>
+<p>SW1 收到<em>Ageement</em>置位的 BPDU 后立即将接口转换到<em>Forwarding</em>状态；</p>
+<p>此时该指定接口至少可以与 SW2 的所有边缘接口进行通信。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/27.png"></p>
+<p>此时 SW2 的指定接口 E0&#x2F;0&#x2F;3 还处于<em>Discarding</em>状态，它需要再与下游设备进行 P&#x2F;A 协商即可进入<em>Forwarding</em>状态。</p>
+<h3 id="保护功能"><a href="#保护功能" class="headerlink" title="保护功能"></a>保护功能</h3><blockquote>
+<p>华为交换机支持多种保护功能，这些功能提升了生成树协议的稳定性。</p>
+</blockquote>
+<p><strong>1.BPDU 保护</strong></p>
+<p>当边缘接口收到 BPDU 后，该接口立即变成普通的 rstp 接口，这个过程可能引发 rstp 重新收敛。</p>
+<p>可以通过在交换机上激活 BPDU 保护功能，如果在边缘接口收到 BPDU  后，交换机立即将接口关闭（Error-Down）同时触发警告。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/28.png"></p>
+<p>在视图视图下执行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp bpdu-protection</span><br></pre></td></tr></table></figure>
+
+<p>在交换机上查看 stp 接口摘要：</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/29.png"></p>
+<p>假设 E0&#x2F;0&#x2F;1 收到了 BPDU，该接口关闭，并且交换机发出警告。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/30.png"></p>
+<p>要使 Error-Down 的接口恢复，可以手工将该接口重启即可恢复如：将该接口<code>shutdown</code>后<code>undo shutdown</code>；或者执行<code>restart</code>重启接口；</p>
+<p>自动恢复可从系统视图下执行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error-down auto-recovery cause bpdu-protection interval &lt;interval-vlaue&gt; <span class="comment">#最后跟接口恢复的延迟时间，至少30s</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2.根保护</strong></p>
+<p>在一个交换网络中将手工选举根桥<code>stp root primary</code>或者<code>stp priority 0</code>这样该设备的优先级为 0，如果有第三方的交换设备接入该网络，其 stp 优先级也为 0，并且 MAC 地址比该网络根桥 MAC 地址更小，那么我们手工选举的根桥将被第三方交换设备抢占。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/31.png"></p>
+<p>可以在接入第三方网络的接口上使能<strong>根保护</strong>，当根桥的指定接口收到更优的 BPDU，则会忽略这些 BPDU，并将接口切换至丢弃状态。如果该接口不再收到更优 BPDU，则一段时间后（通常为两倍的转发延迟时间）将会自动恢复到转发状态。</p>
+<p>在根桥的接口视图下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SW2：</span><br><span class="line">int e0/0/3 stp root-protection</span><br></pre></td></tr></table></figure>
+
+<p><strong>开启根保护之前需要注意：根保护功能只有在指定接口上激活才会生效。即，需要在该接口接入其它交换机之前就要配置，当根桥被抢占，原指定接口就会成为根接口，配置该接口根保护将不会生效。</strong></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/32.png"></p>
+<p>此时是无法与第三方交换网络进行通信的；</p>
+<p>当移除了第三方交换机，激活了根保护的接口不再收到 BPDU，接口状态自动恢复到 Forwarding。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/33.png"></p>
+<p><strong>3.环路保护</strong></p>
+<p>以 SW1 为根桥的交换网络中，SW3 的 E0&#x2F;0&#x2F;2 接口为替代接口，SW2 不断地向 SW3 发送 BPDU；</p>
+<p>SW2 与 SW3 之间通过双向的光纤连接，此时SW2到SW3方向的光纤故障，SW3 无法接收 BPDU；</p>
+<p>SW3 到 SW3 方向可以正常通信，SW3 接收不到 SW2 指定接口发送 BPDU，超过 3 * HelloTimer，SW3 就认为 SW2 的上游接口故障；</p>
+<p>此时 SW3 的替代接口将会变成指定接口并进入 Forwarding 状态，这种情况下便出现了环路。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/34.png"></p>
+<p><em>交换机的根接口以及处于丢弃状态的替代接口都可能出现上述情况。</em></p>
+<ul>
+<li>在根接口上激活环路保护功能，若该接口长时间没有收到 BPDU，该交换机将重新选举根接口，并将该接口调整为指定接口并处于 Discarding 状态。</li>
+<li>在替代接口上激活了环路保护功能后，若长时间没有收到 BPDU，将该接口调整为指定接口，但将其状态保持为 Discarding 状态。</li>
+</ul>
+<p> 在 SW3 的根接口上使能环路保护：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int e0/0/1 stp loop-protection</span><br></pre></td></tr></table></figure>
+
+<p>在 SW 的替代接口上使能环路保护：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int e0/0/2 stp loop-protection</span><br></pre></td></tr></table></figure>
+
+<p><strong>拓扑变更保护</strong></p>
+<blockquote>
+<p>一旦网络拓扑出现变更，TC 置位 BPDU 将会被泛洪全网，如果网络环境极端不稳定，导致 TC BPDU 频繁泛洪，那么交换机的性能将受到极大损耗。</p>
+</blockquote>
+<p>交换机使能拓扑变更保护后，将在单位时间内进行一定次数的 TC BPDU 处理。</p>
+<p>若超过所设上限，只按照规定次数进行处理，超出部分必须等待一段时间后进行处理。</p>
+<p>系统视图下执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp tc-protection</span><br></pre></td></tr></table></figure>
+
+<p>缺省单位时间为 HelloTimer</p>
+<p>缺省次数为一次</p>
+<p>修改缺省单位时间:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp tc-protection interval</span><br></pre></td></tr></table></figure>
+
+<p>修改缺省处理次数:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp tc-protection threshold</span><br></pre></td></tr></table></figure>
+
+<h3 id="RSTP-基础配置"><a href="#RSTP-基础配置" class="headerlink" title="RSTP 基础配置"></a>RSTP 基础配置</h3><p>SW1 为主根桥，SW2 为次根桥，要求阻塞 SW4 的 E0&#x2F;0&#x2F;2 接口。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/35.png"></p>
+<p>使所有交换机都运行 rstp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stp mode rstp </span><br><span class="line">stp enable</span><br></pre></td></tr></table></figure>
+
+<p>使 SW1 成为根桥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp root primary</span><br></pre></td></tr></table></figure>
+
+<p>使 SW2 成为次根桥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp root secondary</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下阻塞 SW4 的 E0&#x2F;0&#x2F;1 接口，因为 E0&#x2F;0&#x2F;2 接口接收的 BPDU 更优，其成为根接口，E0&#x2F;0&#x2F;1 成为替代接口。</p>
+<p>修改 E0&#x2F;0&#x2F;2 接口开销值，使其接口开销大于 e0&#x2F;0&#x2F;1</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> e0/<span class="number">0</span>/<span class="number">2</span> stp cost <span class="number">400000</span></span><br></pre></td></tr></table></figure>
+
+<p>此时查看 SW4 的 STP 摘要</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/36.png"></p>
+<p>查看其接口开销</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/37.png"></p>
+<h2 id="MSTP"><a href="#MSTP" class="headerlink" title="MSTP"></a>MSTP</h2><blockquote>
+<p>STP 和 RSTP 它们在部署在交换网络中时，所有的 VLAN 共用一棵生成树。这个短板使得网络中的流量无法在所有可用链路上实现负载分担，导致链路带宽利用率、设备资源利用率较低。</p>
+</blockquote>
+<p><img src="/2022/04/05/Network-Switch-STP-1/38.png"></p>
+<p><em>如果有一种基于 VLAN 的生成树协议，自然可以将生成树的可操控性发挥到极致。</em></p>
+<p>但如果网络中 VLAN 的数量十分庞大，交换机不得不给每个 VLAN 都计算一棵生成树，那设备资源消耗将十分巨大，整个网络中充斥着 BPDU 报文，影响业务流量。</p>
+<p><em>IEEE 发布的 801.1s 标准为上述一系列问题提供了解决方案。</em></p>
+<p><strong>MSTP（Multiple Instance Spanning Tree Protocol，多实例生成树协议）</strong></p>
+<p><em>MSTP 能够兼容 STP 及 RSTP。</em></p>
+<p><strong>MSTP 中，生成树不是基于 VLAN 运行的，而是基于 Instance 运行的，Instance 即一个或多个 VLAN 的集合。</strong></p>
+<p><em>基于 Instance 的生成树被称为 MSTI（Multiple Spanning Tree Instance，多生成树实例），MSTP 为每个 Instance 维护独立的 MSTI。</em></p>
+<p><strong>映射到同一个 Instance 的 VLAN 将共享同一棵生成树。</strong></p>
+<p><strong>一个 Instance 可以包含多个 VLAN，但是一个 VLAN 只能被映射到一个 Instance。</strong></p>
+<p><em>缺省时，交换机上所有 VLAN 都映射到 Instance 0</em></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/39.png"></p>
+<p><em>按照一定规律将 VLAN 映射到不同的 Instance，从而通过 MSTP 实现负载分担。</em></p>
+<p><em>MSTP 引入了域（Region）概念，一个 MST 域可包含一台或多台交换机，<strong>同属一个 MST 域交换机必须配置相同的域名（RegionName）、相同修订级别（RevisionLevel）、相同 VLAN 与 Instance 映射关系。</strong></em></p>
+<h3 id="MSTP-单实例"><a href="#MSTP-单实例" class="headerlink" title="MSTP 单实例"></a>MSTP 单实例</h3><p>三台交换机构成三角形二层环路，通过部署 MSTP 使网络无环化，部署单个 MST 域，所有 VLAN 均保持在缺省的 Instance 0 中。</p>
+<p>分别规划 SW1 为主根桥，SW2 为次根桥。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/40.png"></p>
+<p><em>每个 MST 域内都存在一棵 IST（ Internal Spanning Tree），交换机上的所有 vlan 都属于 Instance 0，而 IST 则是 MST 域内的交换机针对 Instance0，计算出的一棵生成树。</em></p>
+<p>SW1 关键配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#进入MST域视图</span></span><br><span class="line">[sw1] stp region-configuration</span><br><span class="line"><span class="comment">#配置域名，缺省时为主控板管理网口MAC地址</span></span><br><span class="line">[sw1-mst-region] region-name production</span><br><span class="line"><span class="comment">#指定修订级别为1，缺省为0</span></span><br><span class="line">[sw1-mst-region] revision-level <span class="number">1</span></span><br><span class="line">[sw1-mst-region] active region-configuration</span><br><span class="line"></span><br><span class="line">[sw1] stp root primary</span><br></pre></td></tr></table></figure>
+
+<p>SW2 MST域配置与SW1相同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[sw2] stp root secondary</span><br></pre></td></tr></table></figure>
+
+<p>SW3 配置 MST 即可；</p>
+<p>查看 SW3 接口状态:</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/41.png"></p>
+<p>查看当前生效的 MST 域配置信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dis stp region-configuration</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/05/Network-Switch-STP-1/42.png"></p>
+<h3 id="MSTP-多实例"><a href="#MSTP-多实例" class="headerlink" title="MSTP 多实例"></a>MSTP 多实例</h3><p>要求 vlan2 到 vlan10 的流量在 sw3-sw1 之间传输，vlan11 到 vlan20 的流量在 sw3-sw2 之间传输。</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/43.png"></p>
+<p>通用 MSTP 配置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">stp region-configuration</span><br><span class="line"> region-name <span class="built_in">format</span></span><br><span class="line"> revision-level <span class="number">1</span></span><br><span class="line"> instance <span class="number">1</span> vlan <span class="number">2</span> to <span class="number">10</span></span><br><span class="line"> instance <span class="number">2</span> vlan <span class="number">11</span> to <span class="number">20</span></span><br><span class="line"> active region-configuration</span><br></pre></td></tr></table></figure>
+
+<p>SW1 配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stp root instance 1 primary</span><br><span class="line">stp root instance 2 secondary</span><br></pre></td></tr></table></figure>
+
+<p>SW2 配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stp root instance 1 secondary</span><br><span class="line">stp root instance 2 primary</span><br></pre></td></tr></table></figure>
+
+<p>查看 SW3 的接口状态：</p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/44.png"></p>
+<h2 id="PVST-Cisco-私有的-STP-协议-操作"><a href="#PVST-Cisco-私有的-STP-协议-操作" class="headerlink" title="PVST (Cisco 私有的 STP 协议)操作"></a>PVST (Cisco 私有的 STP 协议)操作</h2><blockquote>
+<p>PVST 是基于 VLAN 的生成树协议，是 Cisco 对 802.1D STP 协议进行扩展提出的，每个VLAN都会拥有一个生成树实例。</p>
+</blockquote>
+<p><strong>PVST 的优点</strong></p>
+<ul>
+<li>当一条链路不可用时，不需要完全阻塞整个链路而构成生成树，提高了链路的利用效率</li>
+</ul>
+<p><strong>PVST 的缺点有：</strong></p>
+<ul>
+<li>(1) 由于 PVST 是 Cisco 私有协议而且只支持 Cisco 专有的 ISL 中继协议，不支持 802.1q 中继协议</li>
+<li>(2) PVST 无法兼容于其他厂商的设备</li>
+<li>(3) 由于每个 VLAN 都需要生成一棵树，PVST BPDU 的通信量将成倍增加，与 VLAN 数目成正比</li>
+<li>(4) 在 VLAN 个数比较多的时候，交换机需要维护更多的生成树的实例，而计算量和资源占用量将急剧增长</li>
+</ul>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p><img src="/2022/04/05/Network-Switch-STP-1/45.png"></p>
+<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p><strong>查看所有 VLAN 的生成树</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># show spanning-tree</span></span><br><span class="line">````</span><br><span class="line"></span><br><span class="line">![](<span class="number">46.</span>png)</span><br><span class="line"></span><br><span class="line">&lt;label style=<span class="string">&quot;color: red&quot;</span>&gt;**注： 看到 This bridge <span class="keyword">is</span> the root 说明这个是 根桥**&lt;/label&gt;</span><br><span class="line"></span><br><span class="line">**查看指定 VLAN 的生成树**</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"><span class="comment"># show spanning-tree vlan 1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>指定 VLAN 根桥或者次根桥</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 根桥</span><br><span class="line">(config)<span class="comment"># spanning-tree vlan 1 root primary </span></span><br><span class="line">// 次根桥</span><br><span class="line">(config)<span class="comment"># spanning-tree vlan 1 root secondary</span></span><br></pre></td></tr></table></figure>
+<p><label style="color: red"><strong>注：当没有 primary 时,secondary 为根桥</strong></label></p>
+<p><strong>当配置了主根后，其优先级的值缩小了</strong></p>
+<p><img src="/2022/04/05/Network-Switch-STP-1/47.png"></p>
+<p><strong>指定交换机 对应 VLAN 的优先级的值(也可以使对应的交换机为根桥)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(config)<span class="comment">#spanning-tree vlan 1 priority 0</span></span><br></pre></td></tr></table></figure>
+
+<p><label style="color: red"><strong>注：优先级的值 要为 4096 的整数倍</strong></label></p>
+<pre><code>0     4096  8192  12288 16384 20480 24576 28672
+32768 36864 40960 45056 49152 53248 57344 61440
+</code></pre>
+<p><strong>启用 Cisco 的生成树</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(config)<span class="comment"># spanning-tree mode pvst</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/05/Network-Switch-STP-1/48.png"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2022-04-05, 13:48:24</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2022/04/05/Network-Switch-STP-1/" title="Network-Switch-STP-1">http://yoursite.com/2022/04/05/Network-Switch-STP-1/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2022/04/05/Network-Switch-STP-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2022/04/05/Network-NAT-DHCP-PPP-1/">
+                    Network-NAT-DHCP-PPP-1
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2022/04/04/Network-Switch-VTP-1/">
+                    Network-Switch-VTP-1
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#STP-Spanning-Tree-Protocol-%E7%94%9F%E6%88%90%E6%A0%91%E5%8D%8F%E8%AE%AE-%E4%BB%A5%E5%8D%8E%E4%B8%BA%E4%B8%BA%E4%B8%BB%EF%BC%8CCisco-%E8%B4%B4%E5%87%BA%E9%83%A8%E5%88%86%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">STP - Spanning Tree Protocol 生成树协议 (以华为为主，Cisco 贴出部分命令)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#STP"><span class="toc-number">1.1.</span> <span class="toc-text">STP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#STP%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">STP基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%A5-ID"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">桥 ID</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B9%E6%A1%A5"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">根桥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E9%94%80%E4%B8%8E%E6%A0%B9%E8%B7%AF%E5%BE%84%E5%BC%80%E9%94%80-RPC"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">开销与根路径开销 RPC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3ID"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">接口ID</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.2.</span> <span class="toc-text">基本工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E4%BA%A4%E6%8D%A2%E7%BD%91%E7%BB%9C%E4%B8%AD%E9%80%89%E4%B8%BE%E4%B8%80%E4%B8%AA%E6%A0%B9%E6%A1%A5-RB"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">在交换网络中选举一个根桥 RB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E6%AF%8F%E4%B8%AA%E9%9D%9E%E6%A0%B9%E4%BA%A4%E6%8D%A2%E6%9C%BA%E4%B8%8A%E9%80%89%E4%B8%BE%E4%B8%80%E4%B8%AA%E6%A0%B9%E6%8E%A5%E5%8F%A3-RP"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">在每个非根交换机上选举一个根接口 RP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E4%B8%BE%E6%8C%87%E5%AE%9A%E6%8E%A5%E5%8F%A3-DP"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">选举指定接口 DP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E9%9D%9E%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3%E6%89%93%E7%A0%B4%E4%BA%8C%E5%B1%82%E7%8E%AF%E8%B7%AF"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">阻塞非指定端口打破二层环路</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#STP-%E6%8A%A5%E6%96%87"><span class="toc-number">1.1.3.</span> <span class="toc-text">STP 报文</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-BPDU"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">配置 BPDU</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCN-BPDU"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">TCN BPDU</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#STP%E6%97%B6%E9%97%B4%E5%8F%82%E6%95%B0"><span class="toc-number">1.1.4.</span> <span class="toc-text">STP时间参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BPDU-%E6%AF%94%E8%BE%83%E5%8E%9F%E5%88%99"><span class="toc-number">1.1.5.</span> <span class="toc-text">BPDU 比较原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BPDU-%E4%BA%A4%E4%BA%92%E4%B8%8E%E6%8B%93%E6%89%91%E8%AE%A1%E7%AE%97"><span class="toc-number">1.1.6.</span> <span class="toc-text">BPDU 交互与拓扑计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%8A%B6%E6%80%81"><span class="toc-number">1.1.7.</span> <span class="toc-text">接口状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#STP-%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.8.</span> <span class="toc-text">STP 基础配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSTP"><span class="toc-number">1.2.</span> <span class="toc-text">RSTP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E8%A7%92%E8%89%B2"><span class="toc-number">1.2.1.</span> <span class="toc-text">接口角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%8A%B6%E6%80%81-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">接口状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RST-BPDU"><span class="toc-number">1.2.3.</span> <span class="toc-text">RST BPDU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%B9%E7%BC%98%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.4.</span> <span class="toc-text">边缘接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P-x2F-A-%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.5.</span> <span class="toc-text">P&#x2F;A 机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E5%8A%9F%E8%83%BD"><span class="toc-number">1.2.6.</span> <span class="toc-text">保护功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RSTP-%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.7.</span> <span class="toc-text">RSTP 基础配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MSTP"><span class="toc-number">1.3.</span> <span class="toc-text">MSTP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MSTP-%E5%8D%95%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">MSTP 单实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MSTP-%E5%A4%9A%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">MSTP 多实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PVST-Cisco-%E7%A7%81%E6%9C%89%E7%9A%84-STP-%E5%8D%8F%E8%AE%AE-%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.</span> <span class="toc-text">PVST (Cisco 私有的 STP 协议)操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-number">1.4.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.4.2.</span> <span class="toc-text">基本命令</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Network-Switch-STP-1　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2022/04/05/Network-NAT-DHCP-PPP-1/" title="Pre: Network-NAT-DHCP-PPP-1">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2022/04/04/Network-Switch-VTP-1/" title="Next: Network-Switch-VTP-1">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="Oracle 11g R2 Rman备份备份的定义及分类：备份就是把数据库复制到转储设备的过程。其中，转储设备是指用于放置数据库副本的磁带或磁盘。通常也将存放于转储设备中的数据库的副本称为原数据库的备份或转储。备份是一份数据副本，从不同的角度分类如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle-Backup-RMAN">
+<meta property="og:url" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="Oracle 11g R2 Rman备份备份的定义及分类：备份就是把数据库复制到转储设备的过程。其中，转储设备是指用于放置数据库副本的磁带或磁盘。通常也将存放于转储设备中的数据库的副本称为原数据库的备份或转储。备份是一份数据副本，从不同的角度分类如下：">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/8.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/9.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/10.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/11.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/12.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/13.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/14.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/15.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/16.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/17.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/18.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/19.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/20.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/21.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/22.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/23.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/24.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/25.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/26.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/27.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/28.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/29.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/30.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/31.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/32.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/33.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/34.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/35.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/36.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/37.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/38.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/39.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/40.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/41.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/42.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/43.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/44.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/45.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/46.png">
+<meta property="article:published_time" content="2020-04-04T03:05:17.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:43.240Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Oracle">
+<meta property="article:tag" content="Backup">
+<meta property="article:tag" content="RMAN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Oracle-Backup-RMAN | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Oracle-Backup-RMAN" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/04/04/Oracle-Backup-RMAN/" class="article-date">
+      <time datetime="2020-04-04T03:05:17.000Z" itemprop="datePublished">2020-04-04</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Oracle-Backup-RMAN
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Database/">Database</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Oracle-11g-R2-Rman备份"><a href="#Oracle-11g-R2-Rman备份" class="headerlink" title="Oracle 11g R2 Rman备份"></a>Oracle 11g R2 Rman备份</h1><h2 id="备份的定义及分类："><a href="#备份的定义及分类：" class="headerlink" title="备份的定义及分类："></a>备份的定义及分类：</h2><p>备份就是把数据库复制到转储设备的过程。其中，转储设备是指用于放置数据库副本的磁带或磁盘。通常也将存放于转储设备中的数据库的副本称为原数据库的备份或转储。备份是一份数据副本，从不同的角度分类如下：</p>
+<span id="more"></span>
+
+<h2 id="从物理与逻辑的角度来分类："><a href="#从物理与逻辑的角度来分类：" class="headerlink" title="从物理与逻辑的角度来分类："></a>从物理与逻辑的角度来分类：</h2><p>从物理与逻辑的，备份可以分为物理备份和逻辑备份。</p>
+<p>物理备份：对数据库操作系统的物理文件（数据文件，控制文件和日志文件）的备份。物理备份又可以分为脱机备份（冷备份）和联机备份（热备份），前者是在关闭数据库的时候进行的，后者是以归档日志的方式对运行的数据库进行备份。可以使用oracle的恢复管理器（RMAN）或操作系统命令进行数据库的物理备份。</p>
+<p>逻辑备份：对数据库逻辑组件（如表和存储过程等数据库对象）的备份。逻辑备份的手段很多，如传统的EXP，数据泵（EXPDP），数据库闪回技术等第三方工具，都可以进行数据库的逻辑备份。</p>
+<h2 id="从数据库的备份角度分类："><a href="#从数据库的备份角度分类：" class="headerlink" title="从数据库的备份角度分类："></a>从数据库的备份角度分类：</h2><p>从数据库的备份角度，备份可以分为完全备份和增量备份和差异备份</p>
+<p>完全备份：每次对数据库进行完整备份，当发生数据丢失的灾难时，完全备份无需依赖其他信息即可实现100%的数据恢复，其恢复时间最短且操作最方便。</p>
+<p>增量备份：只有那些在上次完全备份或增量备份后被修改的文件才会被备份。优点是备份数据量小，需要的时间短，缺点是恢复的时候需要依赖以前备份记录，出问题的风险较大。</p>
+<p>差异备份：备份那些自从上次完全备份之后被修改过的文件。从差异备份中恢复数据的时间较短，因此只需要两份数据—最后一次完整备份和最后一次差异备份，缺点是每次备份需要的时间较长。</p>
+<h2 id="恢复的定义及分类"><a href="#恢复的定义及分类" class="headerlink" title="恢复的定义及分类"></a>恢复的定义及分类</h2><p>恢复就是发生故障后，利用已备份的数据文件或控制文件，重新建立一个完整的数据库，恢复分为以下两种类型：</p>
+<p>实例恢复：当oracle实例出现失败后，oracle自动进行的恢复</p>
+<p>介质恢复：当存放数据库的介质出现故障时所作的恢复。介质恢复又分为完全恢复和不完全恢复</p>
+<p>完全恢复：将数据库恢复到数据库失败时的状态。这种恢复是通过装载数据库备份并应用全部的重做日志做到的。</p>
+<p>不完全恢复：将数据库恢复到数据库失败前的某一时刻的状态。这种恢复是通过装载数据库备份并应用部分的重做日志做到的。进行不完全恢复后，必须在启动数据库时用resetlogs选项重设联机重做日志。</p>
+<p><strong>RMAN的存储类型有三种方式：</strong></p>
+<pre><code>1.备份集 默认类型
+2.压缩备份集
+3.镜像copy
+</code></pre>
+<p>组成每个备份集的每个文件称之为备份片</p>
+<p><strong>RMAN备份可以存放在两种位置：</strong></p>
+<pre><code>1.目标数据库的控制文件
+2.恢复目录中
+</code></pre>
+<p><strong>RMAN备份的优点：</strong></p>
+<pre><code>1.RMAN只备份有效数据
+2.RMAN可以实现增量备份
+</code></pre>
+<h2 id="使用RMAN工具"><a href="#使用RMAN工具" class="headerlink" title="使用RMAN工具"></a>使用RMAN工具</h2><p>RMAN是oracle的一个重要工具，用于备份和恢复数据文件，归档日志和控制文件，也可以用来执行完全或不完全的数据库恢复。RMAN有3种不同的用户接口，命令行方式，GUI方式（集成在OEM中的备份管理器），API方式（用于集成到第三方的备份软件中），它具有以下特点：</p>
+<pre><code>支持在线热备份
+支持多级增量备份
+支持并行备份、恢复
+减少所需要备份量
+备份、恢复使用简单
+</code></pre>
+<h2 id="RMAN的组件"><a href="#RMAN的组件" class="headerlink" title="RMAN的组件"></a>RMAN的组件</h2><p><strong>target database（目标数据库）</strong></p>
+<pre><code>目标数据库就是需要RMAN 对其进行备份与恢复的数据库，RMAN可以备份数据文件，控制文件，归档日志，spfile；
+</code></pre>
+<p><strong>service session（服务器会话）</strong></p>
+<pre><code>RMAN启动数据库上的oracle服务器进程，将建立一个与目标数据库的会话，有目标数据库上的服务器进程进行备份、还原、恢复的实际操作。
+</code></pre>
+<p><strong>RMAN Repository（RMAN资料库）</strong></p>
+<pre><code>RMAN使用过程中会用到的控制信息，是一些关于备份、归档日志及RMAN活动的元数据
+</code></pre>
+<p><strong>Recovery Catalog（恢复目录）</strong></p>
+<pre><code>恢复目录是建立在RMAN恢复目录数据库上的一种schema对象，用于保存RMAN资料库数据。恢复目录是一个可选的组件。RMAN会将资料数据记录在目标数据库的控制文件中，但这样不够安全，因为一旦目标数据库的控制文件损坏就意味着所有的RMAN备份失效。所以建议在单独的一个数据库中建立一个恢复目录另外保存一份资料库数据。
+</code></pre>
+<p><strong>MML（媒体管理库）</strong></p>
+<pre><code>MML是第三方工具或软件，用于管理对磁带的读写与文件的跟踪管理。如果你想直接通过RMAN备份到磁带上，就必须配置媒体管理层，媒体管理层的工具和RMAN共同配合完成备份与恢复。
+</code></pre>
+<p><strong>快闪恢复区</strong></p>
+<pre><code>快闪恢复区是oracle数据库用于保存所有与恢复相关的文件的默认磁盘位置。这些相关文件包括归档日志，RMAN备份，控制文件自动备份，复用的控制文件和重做日志副本及闪回日志文件。
+</code></pre>
+<p><strong>辅助数据库</strong></p>
+<pre><code>在正常使用时，RMAN会与目标数据库一起使用，如果创建了恢复目录数据库，那么也会与恢复目录数据库一起使用。在某些情况下，希望创建辅助数据库。辅助数据库时使用RMAN从目标数据库的备份中创建的新数据库。辅助数据库能够被创建作为备用数据库使用。在数据库发生灾难时，能够在不丢失任何数据及停机时间最短的情况下切换至备用数据库。
+</code></pre>
+<p><strong>创建恢复目录</strong></p>
+<p>恢复目录存在于RMAN的目录数据库中，类似于标准的数据库目录，主要包含如下几个部分信息：</p>
+<pre><code>备份恢复信息，可以是多个目标数据库
+RMAN脚本，可以存储重复使用
+关于数据文件和日志文件的备份信息
+关于目标数据库的表空间和数据文件信息
+RMAN资料库可以存放在目标数据库控制文件里，也可以存放在恢复目录中；
+</code></pre>
+<h2 id="创建恢复目录：用来存储RMAN资料库的。"><a href="#创建恢复目录：用来存储RMAN资料库的。" class="headerlink" title="创建恢复目录：用来存储RMAN资料库的。"></a>创建恢复目录：用来存储RMAN资料库的。</h2><pre><code>create tablespace rman_tbs datafile &#39;+ORCL/orcl/datafile/rman_tbs&#39; size 100m autoextend on next 5m maxsize unlimited;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/1.png"></p>
+<h2 id="在恢复目录数据库中创建RMAN用户并授权"><a href="#在恢复目录数据库中创建RMAN用户并授权" class="headerlink" title="在恢复目录数据库中创建RMAN用户并授权"></a>在恢复目录数据库中创建RMAN用户并授权</h2><pre><code>create user rman_lcy identified by rman_lcy default tablespace rman_tbs quota unlimited on rman_tbs;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/2.png"></p>
+<pre><code>grant connect,resource,recovery_catalog_owner to rman_lcy;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/3.png"></p>
+<p>连接到RMAN恢复目录数据库</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/4.png"></p>
+<p>创建恢复目录</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/5.png"></p>
+<p>提示已经连接到目标数据库、连接到恢复目录数据库</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/6.png"></p>
+<p>向恢复目录注册数据库ORCL，提示已经启动全部恢复目录的resync,已完成全部的resync。此时就可以使用RMAN的恢复目录对目标数据库进行备份和恢复操作。</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/7.png"></p>
+<h2 id="配置控制文件的备份路径和备份格式"><a href="#配置控制文件的备份路径和备份格式" class="headerlink" title="配置控制文件的备份路径和备份格式"></a>配置控制文件的备份路径和备份格式</h2><pre><code>CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO &#39;/backup/conf/conf_%d_%F&#39;;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/8.png"></p>
+<h3 id="配置备份数据文件的路径"><a href="#配置备份数据文件的路径" class="headerlink" title="配置备份数据文件的路径"></a>配置备份数据文件的路径</h3><pre><code>CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   &#39;/backup/data/%U.dbf&#39;;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/9.png"></p>
+<p><strong>通道的分配</strong></p>
+<pre><code>使用RMAN进行备份和恢复时，必须进行通道的分配，一个通道是RMAN和目标数据库之间的一个连接，通道指定了某种类型的设备用于备份和恢复，RMAN可以使用的通道设备包括磁盘与磁带两种。
+</code></pre>
+<h3 id="通道分配可以自动或手动进行"><a href="#通道分配可以自动或手动进行" class="headerlink" title="通道分配可以自动或手动进行"></a>通道分配可以自动或手动进行</h3><p>自动通道配置</p>
+<pre><code>RMAN&gt;configure device type disk paralielism 5;
+RMAN&gt;configure default device type to disk;
+</code></pre>
+<p>手动通道配置   </p>
+<p><strong>注意： oracle 标准版不能分配多通道</strong></p>
+<pre><code>run
+&#123;
+    allocate channel ch1 device type disk;
+    allocate channel ch2 device type disk;
+    allocate channel ch3 device type disk;
+&#125;
+</code></pre>
+<p>可以使用show all命令可以显示已经配置过的有默认值的参数，其中包括通道参数</p>
+<pre><code>RMAN&gt;show all;
+</code></pre>
+<h3 id="备份与恢复的概念与操作"><a href="#备份与恢复的概念与操作" class="headerlink" title="备份与恢复的概念与操作"></a>备份与恢复的概念与操作</h3><p><strong>备份集与备份片</strong></p>
+<p>备份集（backup set）</p>
+<pre><code>备份集是一次备份的集合，它包含本次备份的所有备份片，以oracle专有的格式保存，是一个逻辑数据的集合。
+</code></pre>
+<p>备份片：</p>
+<pre><code>一个备份集由若干个备份片组成。每个备份片是一个单独输出文件，一个备份片的大小是有限制的，他的大小不能大于文件系统所支持的文件长度的最大值。
+</code></pre>
+<h3 id="配置备份集文件的格式："><a href="#配置备份集文件的格式：" class="headerlink" title="配置备份集文件的格式："></a>配置备份集文件的格式：</h3><p>使用backup命令进行备份时，需要明确备份文件的存储路径及文件名称的格式。其路径和格式可以使用FORMAT参数进行统一设置。FORMAT格式由两部分组成：即存储路径和文件名称格式；</p>
+<p>如果没有使用FORMAT指定存储路径和文件名称格式，则默认情况下BACKUP所产生的备份集将存储在快闪恢复区中，RMAN自动使用%U来确定文件名称不会被重复。</p>
+<p><strong>FORMAT命令格式如下：</strong></p>
+<pre><code>FORMAT &#39;格式字符串&#39;
+</code></pre>
+<p>其中格式字符串的文件名称部分可以使用替换变量，例如FORMAT ‘&#x2F;BACKUP&#x2F;YY&#x2F;%U’.</p>
+<p><strong>常用的替换变量如下：</strong></p>
+<pre><code>%c : 备份片的拷贝数
+%d：数据库名称
+%D : 位于该月中的第几天（DD）
+%M : 位于该年中第几月（MM）
+%F : 一个基于DBID的唯一名称，它的形式为C-DBID-YYYYMMDD-QQ。其中DBID为数据库的DBID，YYYYMMDD为日志，QQ是一个1-256的序列
+%n：数据库名称，向右填补到最大8个字符
+%u：一个8个字符的名称，它是根据备份集个数与创建时间信息生成的。
+%p：该备份集中的备份片号，从1开始到创建的文件数。
+%U：系统生成的一个唯一文件名，对于备份片来说，它的含义相当于%u_%p_%c。
+%s：备份集的号
+%t：备份集时间戳
+%T：年月日格式（YYYYMMDD）
+</code></pre>
+<h2 id="备份与恢复命令"><a href="#备份与恢复命令" class="headerlink" title="备份与恢复命令"></a>备份与恢复命令</h2><p>backup命令用于备份数据库文件，可以将多个文件、表空间、整个数据库已备份集形式备份到磁盘或磁带上，在RUN命令外使用BACKUP命令，会自动使用自动通道。在RUN命令内使用BACKUP命令，如果定义了手动通道，则优先使用手动定义通道。</p>
+<p>使用RMAN备份的数据库也只能使用RMAN提供的恢复命令进行恢复。RMAN的恢复目录中存储了目标数据库的备份信息。RMAN根据恢复目录中的存储信息，自动将数据库同步到某一个数据一致的状态。</p>
+<p>RMAN恢复数据库时用到两个命令，即RESTORE和RECOVER。RESTORE命令将备份数据恢复到指定的目录，RECOVER命令对数据库进行同步恢复。</p>
+<p>RESTORE命令：由于备份集中的备份片是以专有的RMAN格式存储的，需要使用RESTORE命令进行重建。重建的结果是自动产生目标数据库的物理文件结构。</p>
+<p>RECOVER命令：负责把归档日志文件用于重建的数据文件，来完成数据库的同步恢复。在执行RECOVER命令时，RMAN需要读取归档日志。如果没有归档日志，或者数据库运行在非归档模式下，则恢复过程会报错。</p>
+<p>举例说明在归档模式下备份与恢复</p>
+<p>要用RMAN进行联机备份，数据库必须处于归档模式，恢复目录必须打开，目标数据库进程必须启动，数据库已加载或者打开。</p>
+<h3 id="查看数据库是否处于归档模式下："><a href="#查看数据库是否处于归档模式下：" class="headerlink" title="查看数据库是否处于归档模式下："></a>查看数据库是否处于归档模式下：</h3><pre><code>archive log list;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/10.png"></p>
+<h3 id="备份和恢复整个数据库"><a href="#备份和恢复整个数据库" class="headerlink" title="备份和恢复整个数据库"></a>备份和恢复整个数据库</h3><p>自动分配通道，FORMAT默认使用%U，备份集存储在数据库快闪恢复区内，备份文件包括数据文件，控制文件，重做日志文件和参数文件</p>
+<pre><code>backup database;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/11.png"></p>
+<h3 id="备份到了快闪恢复区"><a href="#备份到了快闪恢复区" class="headerlink" title="备份到了快闪恢复区"></a>备份到了快闪恢复区</h3><p><img src="/2020/04/04/Oracle-Backup-RMAN/12.png"></p>
+<p>如果备份整个数据库时要包含归档日志文件，则要加上plus archivelog关键字，delete input的意思是在备份完成后，删除archivelog文件</p>
+<pre><code>backup database plus archivelog delete input;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/13.png"></p>
+<h3 id="创建目录-x2F-backup-x2F-oradata"><a href="#创建目录-x2F-backup-x2F-oradata" class="headerlink" title="创建目录&#x2F;backup&#x2F;oradata"></a>创建目录&#x2F;backup&#x2F;oradata</h3><pre><code>mkdir -p /backup/oradata/rmanbak
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/14.png"></p>
+<h3 id="自动分配通道，通过FORMAT制定具体的路径和格式"><a href="#自动分配通道，通过FORMAT制定具体的路径和格式" class="headerlink" title="自动分配通道，通过FORMAT制定具体的路径和格式"></a>自动分配通道，通过FORMAT制定具体的路径和格式</h3><p>backup database FORMAT ‘&#x2F;backup&#x2F;oradata&#x2F;rmanbak&#x2F;%U’;</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/15.png"></p>
+<h3 id="备份文件存储的路径"><a href="#备份文件存储的路径" class="headerlink" title="备份文件存储的路径"></a>备份文件存储的路径</h3><p><img src="/2020/04/04/Oracle-Backup-RMAN/16.png"></p>
+<h3 id="使用手动分配通道，备份数据库的方法："><a href="#使用手动分配通道，备份数据库的方法：" class="headerlink" title="使用手动分配通道，备份数据库的方法："></a>使用手动分配通道，备份数据库的方法：</h3><pre><code>run
+&#123;
+    allocate channel ch1 device type disk;
+    backup database format &#39;/backup/oradata/rmanbak/%U&#39;;
+    release channel ch1;
+&#125;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/17.png"></p>
+<p>备份结果</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/18.png"></p>
+<h2 id="如何恢复数据库"><a href="#如何恢复数据库" class="headerlink" title="如何恢复数据库"></a>如何恢复数据库</h2><p>全库备份的恢复，数据库要在mount状态下执行，删除system表空间，使用RMAN恢复</p>
+<h3 id="关闭数据库"><a href="#关闭数据库" class="headerlink" title="关闭数据库"></a>关闭数据库</h3><p><img src="/2020/04/04/Oracle-Backup-RMAN/19.png"></p>
+<h3 id="删除system-表空间"><a href="#删除system-表空间" class="headerlink" title="删除system 表空间"></a>删除system 表空间</h3><p><img src="/2020/04/04/Oracle-Backup-RMAN/20.png"></p>
+<p>此时数据库无法启动了，因为删除了system表空间</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/21.png"></p>
+<h3 id="数据库的当前状态，连接RMAN"><a href="#数据库的当前状态，连接RMAN" class="headerlink" title="数据库的当前状态，连接RMAN"></a>数据库的当前状态，连接RMAN</h3><p><img src="/2020/04/04/Oracle-Backup-RMAN/22.png"></p>
+<h3 id="恢复数据库"><a href="#恢复数据库" class="headerlink" title="恢复数据库"></a>恢复数据库</h3><pre><code>restore database; 重建 数据库的物理文件
+recover database; 同步恢复
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/23.png"></p>
+<h3 id="打开数据库"><a href="#打开数据库" class="headerlink" title="打开数据库"></a>打开数据库</h3><pre><code>alter database open; 
+</code></pre>
+<p>注：可能是标准版的问题，我添加resetlogs就没有成功   atler database open resetlogs;</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/24.png"></p>
+<p>数据库已经处于OPEN状态了</p>
+<pre><code>select status from v$instance;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/25.png"></p>
+<p>system01.dbf表空间已经被恢复了</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/26.png"></p>
+<h2 id="备份和恢复表空间"><a href="#备份和恢复表空间" class="headerlink" title="备份和恢复表空间"></a>备份和恢复表空间</h2><h3 id="备份表空间"><a href="#备份表空间" class="headerlink" title="备份表空间"></a>备份表空间</h3><p><img src="/2020/04/04/Oracle-Backup-RMAN/27.png"></p>
+<h3 id="备份USERS表空间"><a href="#备份USERS表空间" class="headerlink" title="备份USERS表空间"></a>备份USERS表空间</h3><pre><code>backup tablespace users;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/28.png"></p>
+<h3 id="备份多个表空间"><a href="#备份多个表空间" class="headerlink" title="备份多个表空间"></a>备份多个表空间</h3><pre><code>backup filesperset=3 tablespace users,system,sysaux;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/29.png"></p>
+<h3 id="在RUN命令中备份表空间"><a href="#在RUN命令中备份表空间" class="headerlink" title="在RUN命令中备份表空间"></a>在RUN命令中备份表空间</h3><pre><code>run
+&#123;
+    allocate channel ch1 device type disk;
+    backup format &#39;/backup/oradata/rmanbak/%U&#39; (tablespace users,system,sysaux);
+    release channel ch1;
+&#125;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/30.png"></p>
+<p>如果只丢失了特定的表空间的数据文件，那么可以选择只恢复这个表空间，而不是恢复整个数据库，表空间恢复可以在不关闭数据库的情况下进行，只需要将需要恢复的表空间offline</p>
+<h3 id="模拟删除表空间"><a href="#模拟删除表空间" class="headerlink" title="模拟删除表空间"></a>模拟删除表空间</h3><pre><code>alter tablespace users offline;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/31.png"></p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/32.png"></p>
+<h3 id="恢复被删除的表空间"><a href="#恢复被删除的表空间" class="headerlink" title="恢复被删除的表空间"></a>恢复被删除的表空间</h3><pre><code>run
+&#123;
+    sql &#39;alter tablespace users offline immediate&#39;;
+    restore tablespace users;
+    recover tablespace users;
+    sql &#39;alter tablespace users online&#39;;
+&#125;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/33.png"></p>
+<p>已经恢复了users01.dbf</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/34.png"></p>
+<h2 id="备份数据文件2"><a href="#备份数据文件2" class="headerlink" title="备份数据文件2"></a>备份数据文件2</h2><pre><code>col file_name for a40
+col status for a10
+select file_id,file_name,status from dba_data_files;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/35.png"></p>
+<h3 id="备份sysaux01-dbf"><a href="#备份sysaux01-dbf" class="headerlink" title="备份sysaux01.dbf"></a>备份sysaux01.dbf</h3><pre><code>backup datafile 3;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/36.png"></p>
+<h3 id="查看当前系统中的数据文件"><a href="#查看当前系统中的数据文件" class="headerlink" title="查看当前系统中的数据文件"></a>查看当前系统中的数据文件</h3><pre><code>col file_name for a40
+select file_id,file_name,status from dba_data_files;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/37.png"></p>
+<pre><code>select file#,status from v$datafile;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/38.png"></p>
+<h3 id="删除数据文件sysaux01-dbf"><a href="#删除数据文件sysaux01-dbf" class="headerlink" title="删除数据文件sysaux01.dbf"></a>删除数据文件sysaux01.dbf</h3><pre><code>alter tablespace sysaux offline;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/39.png"></p>
+<pre><code>select file#,status from v$datafile;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/40.png"></p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/41.png"></p>
+<p>对数据文件或表空间做恢复的时候数据文件和表空间一定要处于offline状态, 数据文件丢失了，但数据库实例还可以用,</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/42.png"></p>
+<h3 id="此时数据文件sysaux01-dbf的状态为offline"><a href="#此时数据文件sysaux01-dbf的状态为offline" class="headerlink" title="此时数据文件sysaux01.dbf的状态为offline"></a>此时数据文件sysaux01.dbf的状态为offline</h3><pre><code>select file#,status from v$datafile;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/43.png"></p>
+<h3 id="恢复数据文件sysaux表空间"><a href="#恢复数据文件sysaux表空间" class="headerlink" title="恢复数据文件sysaux表空间"></a>恢复数据文件sysaux表空间</h3><pre><code>restore datafile 3;
+recover datafile 3;
+</code></pre>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/44.png"></p>
+<p>将数据文件datafile 3处于online状态</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/45.png"></p>
+<p>查看数据文件的状态，已经变成online状态了</p>
+<p><img src="/2020/04/04/Oracle-Backup-RMAN/46.png"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2020-04-04, 11:05:17</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2020/04/04/Oracle-Backup-RMAN/" title="Oracle-Backup-RMAN">http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2020/04/04/Oracle-Backup-RMAN/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/04/04/CentOS-Mail-Address/">
+                    CentOS-Mail-Address
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2020/04/04/Oracle-Backup-EXP/">
+                    Oracle-Backup-EXP
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle-11g-R2-Rman%E5%A4%87%E4%BB%BD"><span class="toc-number">1.</span> <span class="toc-text">Oracle 11g R2 Rman备份</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E7%9A%84%E5%AE%9A%E4%B9%89%E5%8F%8A%E5%88%86%E7%B1%BB%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">备份的定义及分类：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E7%89%A9%E7%90%86%E4%B8%8E%E9%80%BB%E8%BE%91%E7%9A%84%E8%A7%92%E5%BA%A6%E6%9D%A5%E5%88%86%E7%B1%BB%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">从物理与逻辑的角度来分类：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%A4%87%E4%BB%BD%E8%A7%92%E5%BA%A6%E5%88%86%E7%B1%BB%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text">从数据库的备份角度分类：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D%E7%9A%84%E5%AE%9A%E4%B9%89%E5%8F%8A%E5%88%86%E7%B1%BB"><span class="toc-number">1.4.</span> <span class="toc-text">恢复的定义及分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8RMAN%E5%B7%A5%E5%85%B7"><span class="toc-number">1.5.</span> <span class="toc-text">使用RMAN工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RMAN%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">RMAN的组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%81%A2%E5%A4%8D%E7%9B%AE%E5%BD%95%EF%BC%9A%E7%94%A8%E6%9D%A5%E5%AD%98%E5%82%A8RMAN%E8%B5%84%E6%96%99%E5%BA%93%E7%9A%84%E3%80%82"><span class="toc-number">1.7.</span> <span class="toc-text">创建恢复目录：用来存储RMAN资料库的。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E6%81%A2%E5%A4%8D%E7%9B%AE%E5%BD%95%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E5%88%9B%E5%BB%BARMAN%E7%94%A8%E6%88%B7%E5%B9%B6%E6%8E%88%E6%9D%83"><span class="toc-number">1.8.</span> <span class="toc-text">在恢复目录数据库中创建RMAN用户并授权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%8E%A7%E5%88%B6%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%87%E4%BB%BD%E8%B7%AF%E5%BE%84%E5%92%8C%E5%A4%87%E4%BB%BD%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.9.</span> <span class="toc-text">配置控制文件的备份路径和备份格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="toc-number">1.9.1.</span> <span class="toc-text">配置备份数据文件的路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E9%81%93%E5%88%86%E9%85%8D%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%8A%A8%E6%88%96%E6%89%8B%E5%8A%A8%E8%BF%9B%E8%A1%8C"><span class="toc-number">1.9.2.</span> <span class="toc-text">通道分配可以自动或手动进行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%93%8D%E4%BD%9C"><span class="toc-number">1.9.3.</span> <span class="toc-text">备份与恢复的概念与操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%A4%87%E4%BB%BD%E9%9B%86%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">1.9.4.</span> <span class="toc-text">配置备份集文件的格式：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E5%91%BD%E4%BB%A4"><span class="toc-number">1.10.</span> <span class="toc-text">备份与恢复命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E6%98%AF%E5%90%A6%E5%A4%84%E4%BA%8E%E5%BD%92%E6%A1%A3%E6%A8%A1%E5%BC%8F%E4%B8%8B%EF%BC%9A"><span class="toc-number">1.10.1.</span> <span class="toc-text">查看数据库是否处于归档模式下：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E5%92%8C%E6%81%A2%E5%A4%8D%E6%95%B4%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.10.2.</span> <span class="toc-text">备份和恢复整个数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E5%88%B0%E4%BA%86%E5%BF%AB%E9%97%AA%E6%81%A2%E5%A4%8D%E5%8C%BA"><span class="toc-number">1.10.3.</span> <span class="toc-text">备份到了快闪恢复区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95-x2F-backup-x2F-oradata"><span class="toc-number">1.10.4.</span> <span class="toc-text">创建目录&#x2F;backup&#x2F;oradata</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%88%86%E9%85%8D%E9%80%9A%E9%81%93%EF%BC%8C%E9%80%9A%E8%BF%87FORMAT%E5%88%B6%E5%AE%9A%E5%85%B7%E4%BD%93%E7%9A%84%E8%B7%AF%E5%BE%84%E5%92%8C%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.10.5.</span> <span class="toc-text">自动分配通道，通过FORMAT制定具体的路径和格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="toc-number">1.10.6.</span> <span class="toc-text">备份文件存储的路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%89%8B%E5%8A%A8%E5%88%86%E9%85%8D%E9%80%9A%E9%81%93%EF%BC%8C%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">1.10.7.</span> <span class="toc-text">使用手动分配通道，备份数据库的方法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.11.</span> <span class="toc-text">如何恢复数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.11.1.</span> <span class="toc-text">关闭数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4system-%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.11.2.</span> <span class="toc-text">删除system 表空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%BD%93%E5%89%8D%E7%8A%B6%E6%80%81%EF%BC%8C%E8%BF%9E%E6%8E%A5RMAN"><span class="toc-number">1.11.3.</span> <span class="toc-text">数据库的当前状态，连接RMAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.11.4.</span> <span class="toc-text">恢复数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.11.5.</span> <span class="toc-text">打开数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E5%92%8C%E6%81%A2%E5%A4%8D%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.12.</span> <span class="toc-text">备份和恢复表空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.12.1.</span> <span class="toc-text">备份表空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BDUSERS%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.12.2.</span> <span class="toc-text">备份USERS表空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E5%A4%9A%E4%B8%AA%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.12.3.</span> <span class="toc-text">备份多个表空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8RUN%E5%91%BD%E4%BB%A4%E4%B8%AD%E5%A4%87%E4%BB%BD%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.12.4.</span> <span class="toc-text">在RUN命令中备份表空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E5%88%A0%E9%99%A4%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.12.5.</span> <span class="toc-text">模拟删除表空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D%E8%A2%AB%E5%88%A0%E9%99%A4%E7%9A%84%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.12.6.</span> <span class="toc-text">恢复被删除的表空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B62"><span class="toc-number">1.13.</span> <span class="toc-text">备份数据文件2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BDsysaux01-dbf"><span class="toc-number">1.13.1.</span> <span class="toc-text">备份sysaux01.dbf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.13.2.</span> <span class="toc-text">查看当前系统中的数据文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6sysaux01-dbf"><span class="toc-number">1.13.3.</span> <span class="toc-text">删除数据文件sysaux01.dbf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A4%E6%97%B6%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6sysaux01-dbf%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%BAoffline"><span class="toc-number">1.13.4.</span> <span class="toc-text">此时数据文件sysaux01.dbf的状态为offline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6sysaux%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.13.5.</span> <span class="toc-text">恢复数据文件sysaux表空间</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Oracle-Backup-RMAN　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2020/04/04/CentOS-Mail-Address/" title="Pre: CentOS-Mail-Address">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2020/04/04/Oracle-Backup-EXP/" title="Next: Oracle-Backup-EXP">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

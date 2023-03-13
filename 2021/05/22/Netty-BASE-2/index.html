@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="Netty 基础 2转载：https:&#x2F;&#x2F;youthlql.gitee.io&#x2F; Netty 概述原生 NIO 存在的问题1.NIO 的类库和 API 繁杂，使用麻烦：需要熟练掌握 Selector、ServerSocketChannel、SocketChannel、ByteBuffer等。2.需要具备其他的额外技能：要熟悉 Java 多线程编程，因为 NIO 编程涉及到 Reactor 模式，你必">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty-BASE-2">
+<meta property="og:url" content="http://yoursite.com/2021/05/22/Netty-BASE-2/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="Netty 基础 2转载：https:&#x2F;&#x2F;youthlql.gitee.io&#x2F; Netty 概述原生 NIO 存在的问题1.NIO 的类库和 API 繁杂，使用麻烦：需要熟练掌握 Selector、ServerSocketChannel、SocketChannel、ByteBuffer等。2.需要具备其他的额外技能：要熟悉 Java 多线程编程，因为 NIO 编程涉及到 Reactor 模式，你必">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/1.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/2.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/3.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/4.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/5.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/6.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/7.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/8.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/9.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/10.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/11.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/12.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/13.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/14.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/15.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/16.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/17.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/18.png">
+<meta property="og:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/19.png">
+<meta property="article:published_time" content="2021-05-22T05:49:03.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:42.979Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Netty">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/05/22/Netty-BASE-2/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Netty-BASE-2 | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Netty-BASE-2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/22/Netty-BASE-2/" class="article-date">
+      <time datetime="2021-05-22T05:49:03.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Netty-BASE-2
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Netty-基础-2"><a href="#Netty-基础-2" class="headerlink" title="Netty 基础 2"></a>Netty 基础 2</h1><p>转载：<a target="_blank" rel="noopener" href="https://youthlql.gitee.io/">https://youthlql.gitee.io/</a></p>
+<h2 id="Netty-概述"><a href="#Netty-概述" class="headerlink" title="Netty 概述"></a>Netty 概述</h2><h3 id="原生-NIO-存在的问题"><a href="#原生-NIO-存在的问题" class="headerlink" title="原生 NIO 存在的问题"></a>原生 NIO 存在的问题</h3><p>1.NIO 的类库和 API 繁杂，使用麻烦：需要熟练掌握 Selector、ServerSocketChannel、SocketChannel、ByteBuffer等。<br>2.需要具备其他的额外技能：要熟悉 Java 多线程编程，因为 NIO 编程涉及到 Reactor 模式，你必须对多线程和网络编程非常熟悉，才能编写出高质量的 NIO 程序。<br>3.开发工作量和难度都非常大：例如客户端面临断连重连、网络闪断、半包读写、失败缓存、网络拥塞和异常流的处理等等。<br>4.JDK NIO 的 Bug：例如臭名昭著的 Epoll Bug，它会导致 Selector 空轮询，最终导致 CPU100%。直到 JDK1.7 版本该问题仍旧存在，没有被根本解决。</p>
+<h3 id="Netty-官网说明"><a href="#Netty-官网说明" class="headerlink" title="Netty 官网说明"></a>Netty 官网说明</h3><p>官网：<a target="_blank" rel="noopener" href="https://netty.io/">https://netty.io/</a></p>
+<p>Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers &amp; clients.</p>
+<p><img src="/2021/05/22/Netty-BASE-2/1.png"></p>
+<span id="more"></span>
+
+<h3 id="Netty-的优点"><a href="#Netty-的优点" class="headerlink" title="Netty 的优点"></a>Netty 的优点</h3><p>Netty 对 JDK 自带的 NIO 的 API 进行了封装，解决了上述问题。</p>
+<p>1.设计优雅：适用于各种传输类型的统一 API 阻塞和非阻塞 Socket；基于灵活且可扩展的事件模型，可以清晰地分离关注点；高度可定制的线程模型-单线程，一个或多个线程池。<br>2.使用方便：详细记录的 Javadoc，用户指南和示例；没有其他依赖项，JDK5（Netty3.x）或 6（Netty4.x）就足够了。<br>3.高性能、吞吐量更高：延迟更低；减少资源消耗；最小化不必要的内存复制。<br>4.安全：完整的 SSL&#x2F;TLS 和 StartTLS 支持。<br>5.社区活跃、不断更新：社区活跃，版本迭代周期短，发现的 Bug 可以被及时修复，同时，更多的新功能会被加入。</p>
+<h3 id="Netty-版本说明"><a href="#Netty-版本说明" class="headerlink" title="Netty 版本说明"></a>Netty 版本说明</h3><p>1.Netty 版本分为 Netty 3.x 和 Netty 4.x、Netty 5.x<br>2.因为 Netty 5 出现重大 bug，已经被官网废弃了，目前推荐使用的是 Netty 4.x的稳定版本<br>3.目前在官网可下载的版本 Netty 3.x、Netty 4.0.x 和 Netty 4.1.x<br>4.在本套课程中，我们讲解 Netty4.1.x 版本<br>5.Netty 下载地址：<a target="_blank" rel="noopener" href="https://bintray.com/netty/downloads/netty/">https://bintray.com/netty/downloads/netty/</a></p>
+<h2 id="Netty-高性能架构设计"><a href="#Netty-高性能架构设计" class="headerlink" title="Netty 高性能架构设计"></a>Netty 高性能架构设计</h2><h3 id="线程模型基本介绍"><a href="#线程模型基本介绍" class="headerlink" title="线程模型基本介绍"></a>线程模型基本介绍</h3><p>1.不同的线程模式，对程序的性能有很大影响，为了搞清 Netty 线程模式，我们来系统的讲解下各个线程模式，最后看看 Netty 线程模型有什么优越性。<br>2.目前存在的线程模型有：传统阻塞 I&#x2F;O 服务模型 和Reactor 模式<br>3.根据 Reactor 的数量和处理资源池线程的数量不同，有 3 种典型的实现<br>    1.单 Reactor 单线程；<br>    2.单 Reactor多线程；<br>    3.主从 Reactor多线程<br>4.Netty 线程模式（Netty 主要基于主从 Reactor 多线程模型做了一定的改进，其中主从 Reactor 多线程模型有多个 Reactor）</p>
+<h3 id="传统阻塞-I-x2F-O-服务模型"><a href="#传统阻塞-I-x2F-O-服务模型" class="headerlink" title="传统阻塞 I&#x2F;O 服务模型"></a>传统阻塞 I&#x2F;O 服务模型</h3><h4 id="工作原理图"><a href="#工作原理图" class="headerlink" title="工作原理图"></a>工作原理图</h4><pre><code>1.黄色的框表示对象，蓝色的框表示线程
+2.白色的框表示方法（API）
+</code></pre>
+<h4 id="模型特点"><a href="#模型特点" class="headerlink" title="模型特点"></a>模型特点</h4><pre><code>1.采用阻塞 IO 模式获取输入的数据
+2.每个连接都需要独立的线程完成数据的输入，业务处理，数据返回
+</code></pre>
+<h4 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h4><pre><code>1.当并发数很大，就会创建大量的线程，占用很大系统资源
+2.连接创建后，如果当前线程暂时没有数据可读，该线程会阻塞在 Handler对象中的read 操作，导致上面的处理线程资源浪费
+</code></pre>
+<p><img src="/2021/05/22/Netty-BASE-2/2.png"></p>
+<h2 id="Reactor-模式"><a href="#Reactor-模式" class="headerlink" title="Reactor 模式"></a>Reactor 模式</h2><h3 id="针对传统阻塞-I-x2F-O-服务模型的-2-个缺点，解决方案："><a href="#针对传统阻塞-I-x2F-O-服务模型的-2-个缺点，解决方案：" class="headerlink" title="针对传统阻塞 I&#x2F;O 服务模型的 2 个缺点，解决方案："></a>针对传统阻塞 I&#x2F;O 服务模型的 2 个缺点，解决方案：</h3><p>1.基于 I&#x2F;O 复用模型：多个连接共用一个阻塞对象ServiceHandler，应用程序只需要在一个阻塞对象等待，无需阻塞等待所有连接。当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理。</p>
+<p>Reactor 在不同书中的叫法</p>
+<pre><code>1.反应器模式
+2.分发者模式（Dispatcher）
+3.通知者模式（notifier）
+</code></pre>
+<p>2.基于线程池复用线程资源：不必再为每个连接创建线程，将连接完成后的业务处理任务分配给线程进行处理，一个线程可以处理多个连接的业务。（解决了当并发数很大时，会创建大量线程，占用很大系统资源）</p>
+<p>3.基于 I&#x2F;O 复用模型：多个客户端进行连接，先把连接请求给ServiceHandler。多个连接共用一个阻塞对象ServiceHandler。假设，当C1连接没有数据要处理时，C1客户端只需要阻塞于ServiceHandler，C1之前的处理线程便可以处理其他有数据的连接，不会造成线程资源的浪费。当C1连接再次有数据时，ServiceHandler根据线程池的空闲状态，将请求分发给空闲的线程来处理C1连接的任务。（解决了线程资源浪费的那个问题）</p>
+<p><img src="/2021/05/22/Netty-BASE-2/3.png"></p>
+<h3 id="I-x2F-O-复用结合线程池，就是-Reactor-模式基本设计思想，如图"><a href="#I-x2F-O-复用结合线程池，就是-Reactor-模式基本设计思想，如图" class="headerlink" title="I&#x2F;O 复用结合线程池，就是 Reactor 模式基本设计思想，如图"></a>I&#x2F;O 复用结合线程池，就是 Reactor 模式基本设计思想，如图</h3><p><img src="/2021/05/22/Netty-BASE-2/4.png"></p>
+<p><strong>对上图说明：</strong></p>
+<p>1.Reactor 模式，通过一个或多个输入同时传递给服务处理器（ServiceHandler）的模式（基于事件驱动）<br>服务器端程序处理传入的多个请求,并将它们同步分派到相应的处理线程，因此 Reactor 模式也叫 Dispatcher 模式</p>
+<p>2.Reactor 模式使用 IO 复用监听事件，收到事件后，分发给某个线程（进程），这点就是网络服务器高并发处理关键<br>原先有多个Handler阻塞，现在只用一个ServiceHandler阻塞</p>
+<h3 id="Reactor-模式中核心组成"><a href="#Reactor-模式中核心组成" class="headerlink" title="Reactor 模式中核心组成"></a>Reactor 模式中核心组成</h3><p>1.Reactor（也就是那个ServiceHandler）：Reactor 在一个单独的线程中运行，负责监听和分发事件，分发给适当的处理线程来对 IO 事件做出反应。它就像公司的电话接线员，它接听来自客户的电话并将线路转移到适当的联系人；</p>
+<p>2.Handlers（处理线程EventHandler）：处理线程执行 I&#x2F;O 事件要完成的实际事件，类似于客户想要与之交谈的公司中的实际官员。Reactor 通过调度适当的处理线程来响应 I&#x2F;O 事件，处理程序执行非阻塞操作。</p>
+<h3 id="Reactor-模式分类"><a href="#Reactor-模式分类" class="headerlink" title="Reactor 模式分类"></a>Reactor 模式分类</h3><p>根据 Reactor 的数量和处理资源池线程的数量不同，有 3 种典型的实现</p>
+<pre><code>单 Reactor 单线程
+单 Reactor 多线程
+主从 Reactor 多线程
+</code></pre>
+<h3 id="单-Reactor-单线程"><a href="#单-Reactor-单线程" class="headerlink" title="单 Reactor 单线程"></a>单 Reactor 单线程</h3><p>原理图，并使用 NIO 群聊系统验证</p>
+<p><img src="/2021/05/22/Netty-BASE-2/5.png"></p>
+<h3 id="方案说明"><a href="#方案说明" class="headerlink" title="方案说明"></a>方案说明</h3><p>1.Select 是前面 I&#x2F;O 复用模型介绍的标准网络编程 API，可以实现应用程序通过一个阻塞对象监听多路连接请求<br>2.Reactor 对象通过 Select 监控客户端请求事件，收到事件后通过 Dispatch 进行分发<br>3.如果是建立连接请求事件，则由 Acceptor 通过 Accept 处理连接请求，然后创建一个 Handler 对象处理连接完成后的后续业务处理<br>4.如果不是建立连接事件，则 Reactor 会分发调用连接对应的 Handler 来响应<br>5.Handler 会完成 Read → 业务处理 → Send 的完整业务流程</p>
+<p><strong>结合实例：</strong>服务器端用一个线程通过多路复用搞定所有的 IO 操作（包括连接，读、写等），编码简单，清晰明了，但是如果客户端连接数量较多，将无法支撑，前面的 NIO 案例就属于这种模型。</p>
+<h4 id="方案优缺点分析"><a href="#方案优缺点分析" class="headerlink" title="方案优缺点分析"></a>方案优缺点分析</h4><p>1.优点：模型简单，没有多线程、进程通信、竞争的问题，全部都在一个线程中完成</p>
+<p>2.缺点：性能问题，只有一个线程，无法完全发挥多核 CPU 的性能。Handler在处理某个连接上的业务时，整个进程无法处理其他连接事件，很容易导致性能瓶颈</p>
+<p>3.缺点：可靠性问题，线程意外终止，或者进入死循环，会导致整个系统通信模块不可用，不能接收和处理外部消息，造成节点故障</p>
+<p>4.使用场景：客户端的数量有限，业务处理非常快速，比如 Redis 在业务处理的时间复杂度 O(1) 的情况</p>
+<h3 id="单-Reactor-多线程"><a href="#单-Reactor-多线程" class="headerlink" title="单 Reactor 多线程"></a>单 Reactor 多线程</h3><h4 id="方案说明-1"><a href="#方案说明-1" class="headerlink" title="方案说明"></a>方案说明</h4><p><img src="/2021/05/22/Netty-BASE-2/6.png"></p>
+<p>1.Reactor 对象通过 Select 监控客户端请求事件，收到事件后，通过 Dispatch 进行分发<br>2.如果是建立连接请求，则由 Acceptor 通过 accept 处理连接请求，然后创建一个 Handler 对象处理完成连接后的各种事件<br>3.如果不是连接请求，则由 Reactor 分发调用连接对应的 handler 来处理（也就是说连接已经建立，后续客户端再来请求，那基本就是数据请求了，直接调用之前为这个连接创建好的handler来处理）<br>4.handler 只负责响应事件，不做具体的业务处理（这样不会使handler阻塞太久），通过 read 读取数据后，会分发给后面的 worker 线程池的某个线程处理业务。【业务处理是最费时的，所以将业务处理交给线程池去执行】<br>5.worker 线程池会分配独立线程完成真正的业务，并将结果返回给 handler<br>6.handler 收到响应后，通过 send 将结果返回给 client</p>
+<h4 id="方案优缺点分析-1"><a href="#方案优缺点分析-1" class="headerlink" title="方案优缺点分析"></a>方案优缺点分析</h4><p>1.优点：可以充分的利用多核 cpu 的处理能力</p>
+<p>2.缺点：多线程数据共享和访问比较复杂。Reactor 承担所有的事件的监听和响应，它是单线程运行，在高并发场景容易出现性能瓶颈。也就是说Reactor主线程承担了过多的事</p>
+<h3 id="主从-Reactor-多线程"><a href="#主从-Reactor-多线程" class="headerlink" title="主从 Reactor 多线程"></a>主从 Reactor 多线程</h3><h4 id="工作原理图-1"><a href="#工作原理图-1" class="headerlink" title="工作原理图"></a>工作原理图</h4><p>针对单 Reactor 多线程模型中，Reactor 在单线程中运行，高并发场景下容易成为性能瓶颈，可以让 Reactor 在多线程中运行</p>
+<p><img src="/2021/05/22/Netty-BASE-2/7.png"></p>
+<p>SubReactor是可以有多个的，如果只有一个SubReactor的话那和单 Reactor 多线程就没什么区别了。</p>
+<p>1.Reactor 主线程 MainReactor 对象通过 select 监听连接事件，收到事件后，通过 Acceptor 处理连接事件<br>2.当 Acceptor 处理连接事件后，MainReactor 将连接分配给 SubReactor<br>3.subreactor 将连接加入到连接队列进行监听，并创建 handler 进行各种事件处理<br>4.当有新事件发生时，subreactor 就会调用对应的 handler 处理<br>5.handler 通过 read 读取数据，分发给后面的 worker 线程处理<br>6.worker 线程池分配独立的 worker 线程进行业务处理，并返回结果<br>7.handler 收到响应的结果后，再通过 send 将结果返回给 client<br>8.Reactor 主线程可以对应多个 Reactor 子线程，即 MainRecator 可以关联多个 SubReactor</p>
+<h4 id="Scalable-IO-in-Java-对-Multiple-Reactors-的原理图解"><a href="#Scalable-IO-in-Java-对-Multiple-Reactors-的原理图解" class="headerlink" title="Scalable IO in Java 对 Multiple Reactors 的原理图解"></a>Scalable IO in Java 对 Multiple Reactors 的原理图解</h4><p><img src="/2021/05/22/Netty-BASE-2/8.png"></p>
+<h4 id="方案优缺点说明"><a href="#方案优缺点说明" class="headerlink" title="方案优缺点说明"></a>方案优缺点说明</h4><p>1.优点：父线程与子线程的数据交互简单职责明确，父线程只需要接收新连接，子线程完成后续的业务处理。</p>
+<p>2.优点：父线程与子线程的数据交互简单，Reactor 主线程只需要把新连接传给子线程，子线程无需返回数据。</p>
+<p>3.缺点：编程复杂度较高</p>
+<p><strong>结合实例：</strong>这种模型在许多项目中广泛使用，包括 Nginx 主从 Reactor 多进程模型，Memcached 主从多线程，Netty 主从多线程模型的支持</p>
+<h3 id="Reactor-模式小结"><a href="#Reactor-模式小结" class="headerlink" title="Reactor 模式小结"></a>Reactor 模式小结</h3><p>3 种模式用生活案例来理解</p>
+<p>1.单 Reactor 单线程，前台接待员和服务员是同一个人，全程为顾客服</p>
+<p>2.单 Reactor 多线程，1 个前台接待员，多个服务员，接待员只负责接待</p>
+<p>3.主从 Reactor 多线程，多个前台接待员，多个服务生</p>
+<h3 id="Reactor-模式具有如下的优点"><a href="#Reactor-模式具有如下的优点" class="headerlink" title="Reactor 模式具有如下的优点"></a>Reactor 模式具有如下的优点</h3><p>1.响应快，不必为单个同步时间所阻塞，虽然 Reactor 本身依然是同步的（比如你第一个SubReactor阻塞了，我可以调下一个 SubReactor为客户端服务）<br>2.可以最大程度的避免复杂的多线程及同步问题，并且避免了多线程&#x2F;进程的切换开销<br>3.扩展性好，可以方便的通过增加 Reactor 实例个数来充分利用 CPU 资源<br>4.复用性好，Reactor 模型本身与具体事件处理逻辑无关，具有很高的复用性</p>
+<h3 id="Netty-模型"><a href="#Netty-模型" class="headerlink" title="Netty 模型"></a>Netty 模型</h3><p>讲解netty的时候采用的是先写代码体验一下，再细讲里面的原理。前面看不懂的可以先不用纠结，先往后面看，后面基本都会讲清楚</p>
+<h3 id="工作原理示意图1-简单版"><a href="#工作原理示意图1-简单版" class="headerlink" title="工作原理示意图1 - 简单版"></a>工作原理示意图1 - 简单版</h3><p>Netty 主要基于主从 Reactors 多线程模型（如图）做了一定的改进，其中主从 Reactor 多线程模型有多个 Reactor</p>
+<p><img src="/2021/05/22/Netty-BASE-2/9.png"></p>
+<p><strong>对上图说明</strong></p>
+<p>1.BossGroup 线程维护 Selector，只关注 Accecpt<br>2.当接收到 Accept 事件，获取到对应的 SocketChannel，封装成 NIOScoketChannel 并注册到 Worker 线程（事件循环），并进行维护<br>3.当 Worker 线程监听到 Selector 中通道发生自己感兴趣的事件后，就进行处理（就由 handler），注意 handler 已经加入到通道</p>
+<h4 id="工作原理示意图2-进阶版"><a href="#工作原理示意图2-进阶版" class="headerlink" title="工作原理示意图2 - 进阶版"></a>工作原理示意图2 - 进阶版</h4><p><img src="/2021/05/22/Netty-BASE-2/10.png"></p>
+<p>BossGroup有点像主Reactor 可以有多个，WorkerGroup则像SubReactor一样可以有多个。</p>
+<p>工作原理示意图3 - 详细版</p>
+<p><img src="/2021/05/22/Netty-BASE-2/11.png"></p>
+<p>1.Netty 抽象出两组线程池 ，BossGroup 专门负责接收客户端的连接，WorkerGroup 专门负责网络的读写<br>2.BossGroup 和 WorkerGroup 类型都是 NioEventLoopGroup<br>3.NioEventLoopGroup 相当于一个事件循环组，这个组中含有多个事件循环，每一个事件循环是 NioEventLoop<br>4.NioEventLoop 表示一个不断循环的执行处理任务的线程，每个 NioEventLoop 都有一个 Selector，用于监听绑定在其上的 socket 的网络通讯<br>5.NioEventLoopGroup 可以有多个线程，即可以含有多个 NioEventLoop<br>6.每个 BossGroup下面的NioEventLoop 循环执行的步骤有 3 步<br>    轮询 accept 事件<br>    处理 accept 事件，与 client 建立连接，生成 NioScocketChannel,并将其注册到某个 workerGroup NIOEventLoop 上的 Selector<br>    继续处理任务队列的任务，即 runAllTasks<br>7.每个 WorkerGroup NIOEventLoop 循环执行的步骤<br>    轮询 read，write 事件<br>    处理 I&#x2F;O 事件，即 read，write 事件，在对应 NioScocketChannel 处理<br>    处理任务队列的任务，即 runAllTasks<br>8.每个 Worker NIOEventLoop 处理业务时，会使用 pipeline（管道），pipeline 中包含了 channel（通道），即通过 pipeline 可以获取到对应通道，管道中维护了很多的处理器。（这个点目前只是简单的讲，后面重点说）</p>
+<h3 id="Netty-快速入门实例-TCP-服务"><a href="#Netty-快速入门实例-TCP-服务" class="headerlink" title="Netty 快速入门实例 - TCP 服务"></a>Netty 快速入门实例 - TCP 服务</h3><p>实例要求：使用 IDEA 创建 Netty 项目</p>
+<p>1.Netty 服务器在 6668 端口监听，客户端能发送消息给服务器”hello,服务器<del>“<br>2.服务器可以回复消息给客户端”hello,客户端</del>“<br>3.目的：对 Netty 线程模型有一个初步认识，便于理解 Netty 模型理论<br>4.编写服务端<br>    1.编写客户端<br>    2.对 netty 程序进行分析，看看 netty 模型特点<br>    3.说明：创建 Maven 项目，并引入 Netty 包<br>5.代码如下</p>
+<p><strong>NettyServer</strong></p>
+<pre><code>package com.sevattal.netty.simple;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+public class NettyServer &#123;
+    public static void main(String[] args) throws Exception &#123;
+        //创建BossGroup 和 WorkerGroup
+        //说明
+        //1. 创建两个线程组 bossGroup 和 workerGroup
+        //2. bossGroup 只是处理连接请求 , 真正的和客户端业务处理，会交给 workerGroup完成
+        //3. 两个都是无限循环
+        //4. bossGroup 和 workerGroup 含有的子线程(NioEventLoop)的个数
+        //   默认实际 cpu核数 * 2
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(); //8
+        try &#123;
+            //创建服务器端的启动对象，配置参数
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            //使用链式编程来进行设置
+            bootstrap.group(bossGroup, workerGroup) //设置两个线程组
+                    .channel(NioServerSocketChannel.class) //使用NioSocketChannel 作为服务器的通道实现
+                    .option(ChannelOption.SO_BACKLOG, 128) // 设置线程队列等待连接个数
+                    .childOption(ChannelOption.SO_KEEPALIVE, true) //设置保持活动连接状态
+            //      .handler(null) // 该 handler对应 bossGroup , childHandler 对应 workerGroup
+                    .childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;//创建一个通道初始化对象(匿名对象)
+                        //给pipeline 设置处理器
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception &#123;
+                            System.out.println(&quot;客户socketchannel hashcode=&quot; + ch.hashCode()); //可以使用一个集合管理 SocketChannel， 再推送消息时，可以将业务加入到各个channel 对应的 NIOEventLoop 的 taskQueue 或者 scheduleTaskQueue
+                            ch.pipeline().addLast(new NettyServerHandler());
+                        &#125;
+                    &#125;); // 给我们的workerGroup 的 EventLoop 对应的管道设置处理器
+            System.out.println(&quot;.....服务器 is ready...&quot;);
+            //绑定一个端口并且同步生成了一个 ChannelFuture 对象（也就是立马返回这样一个对象）
+            //启动服务器(并绑定端口)
+            ChannelFuture cf = bootstrap.bind(6668).sync();
+            //给cf 注册监听器，监控我们关心的事件
+            cf.addListener(new ChannelFutureListener() &#123;
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception &#123;
+                    if (cf.isSuccess()) &#123;
+                        System.out.println(&quot;监听端口 6668 成功&quot;);
+                    &#125; else &#123;
+                        System.out.println(&quot;监听端口 6668 失败&quot;);
+                    &#125;
+                &#125;
+            &#125;);
+            //对关闭通道事件  进行监听
+            cf.channel().closeFuture().sync();
+        &#125;finally &#123;
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p><strong>NettyServerHandler</strong></p>
+<pre><code>package com.sevattal.netty.simple;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelPipeline;
+import io.netty.util.CharsetUtil;
+import java.util.concurrent.TimeUnit;
+/*
+说明
+1. 我们自定义一个Handler 需要继承netty 规定好的某个HandlerAdapter(规范)
+2. 这时我们自定义一个Handler , 才能称为一个handler
+ */
+public class NettyServerHandler extends ChannelInboundHandlerAdapter &#123;
+    //读取数据事件(这里我们可以读取客户端发送的消息)
+    /*
+    1. ChannelHandlerContext ctx:上下文对象, 含有 管道pipeline , 通道channel, 地址
+    2. Object msg: 就是客户端发送的数据 默认Object
+     */
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception &#123;
+        System.out.println(&quot;服务器读取线程 &quot; + Thread.currentThread().getName() + &quot; channle =&quot; + ctx.channel());
+        System.out.println(&quot;server ctx =&quot; + ctx);
+        System.out.println(&quot;看看channel 和 pipeline的关系&quot;);
+        Channel channel = ctx.channel();
+        ChannelPipeline pipeline = ctx.pipeline(); //本质是一个双向链表
+        //将 msg 转成一个 ByteBuf
+        //ByteBuf 是 Netty 提供的，不是 NIO 的 ByteBuffer.
+        ByteBuf buf = (ByteBuf) msg;
+        System.out.println(&quot;客户端发送消息是:&quot; + buf.toString(CharsetUtil.UTF_8));
+        System.out.println(&quot;客户端地址:&quot; + channel.remoteAddress());
+    &#125;
+    //数据读取完毕
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception &#123;
+        //writeAndFlush 是 write + flush
+        //将数据写入到缓存，并刷新
+        //一般讲，我们对这个发送的数据进行编码
+        ctx.writeAndFlush(Unpooled.copiedBuffer(&quot;hello, 客户端~(&gt;^ω^&lt;)喵1&quot;, CharsetUtil.UTF_8));
+    &#125;
+    //发生异常后, 一般是需要关闭通道
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception &#123;
+        ctx.close();
+    &#125;
+&#125;
+</code></pre>
+<p><strong>NettyClient</strong></p>
+<pre><code>package com.sevattal.netty.simple;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+public class NettyClient &#123;
+    public static void main(String[] args) throws Exception &#123;
+        //客户端需要一个事件循环组
+        EventLoopGroup group = new NioEventLoopGroup();
+        try &#123;
+            //创建客户端启动对象
+            //注意客户端使用的不是 ServerBootstrap 而是 Bootstrap
+            Bootstrap bootstrap = new Bootstrap();
+            //设置相关参数
+            bootstrap.group(group) //设置线程组
+                    .channel(NioSocketChannel.class) // 设置客户端通道的实现类(反射)
+                    .handler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception &#123;
+                            ch.pipeline().addLast(new NettyClientHandler()); //加入自己的处理器
+                        &#125;
+                    &#125;);
+            System.out.println(&quot;客户端 ok..&quot;);
+            //启动客户端去连接服务器端
+            //关于 ChannelFuture 要分析，涉及到netty的异步模型
+            ChannelFuture channelFuture = bootstrap.connect(&quot;127.0.0.1&quot;, 6668).sync();
+            //对关闭通道事件  进行监听
+            channelFuture.channel().closeFuture().sync();
+        &#125;finally &#123;
+            group.shutdownGracefully();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p><strong>NettyClientHandler</strong></p>
+<pre><code>package com.sevattal.netty.simple;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
+public class NettyClientHandler extends ChannelInboundHandlerAdapter &#123;
+    //当通道就绪就会触发该方法
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception &#123;
+        System.out.println(&quot;client &quot; + ctx);
+        ctx.writeAndFlush(Unpooled.copiedBuffer(&quot;hello, server: (&gt;^ω^&lt;)喵&quot;, CharsetUtil.UTF_8));
+    &#125;
+    //当通道有读取事件时，会触发
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception &#123;
+        ByteBuf buf = (ByteBuf) msg;
+        System.out.println(&quot;服务器回复的消息:&quot; + buf.toString(CharsetUtil.UTF_8));
+        System.out.println(&quot;服务器的地址： &quot;+ ctx.channel().remoteAddress());
+    &#125;
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception &#123;
+        cause.printStackTrace();
+        ctx.close();
+    &#125;
+&#125;
+</code></pre>
+<h3 id="任务队列中的-Task-有-3-种典型使用场景"><a href="#任务队列中的-Task-有-3-种典型使用场景" class="headerlink" title="任务队列中的 Task 有 3 种典型使用场景"></a>任务队列中的 Task 有 3 种典型使用场景</h3><p>1.用户程序自定义的普通任务【举例说明】<br>2.用户自定义定时任务<br>3.非当前 Reactor 线程调用 Channel 的各种方法</p>
+<pre><code>例如在推送系统的业务线程里面，根据用户的标识，找到对应的 Channel 引用，然后调用 Write 类方法向该用户推送消息，就会进入到这种场景。最终的 Write 会提交到任务队列中后被异步消费
+</code></pre>
+<p><strong>前两种的代码举例：</strong></p>
+<pre><code>package com.sevattal.netty.simple;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
+import java.util.concurrent.TimeUnit;
+/**
+ * 说明
+ * 1. 我们自定义一个Handler 需要继续netty 规定好的某个HandlerAdapter(规范)
+ * 2. 这时我们自定义一个Handler , 才能称为一个handler
+ */
+public class NettyServerHandler extends ChannelInboundHandlerAdapter &#123;
+    //读取数据实际(这里我们可以读取客户端发送的消息)
+    /**
+     * 1. ChannelHandlerContext ctx:上下文对象, 含有 管道pipeline , 通道channel, 地址
+     * 2. Object msg: 就是客户端发送的数据 默认Object
+     */
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception &#123;
+        // 比如这里我们有一个非常耗时长的业务-&gt; 异步执行 -&gt; 提交该channel 对应的
+        // NIOEventLoop 的 taskQueue中,
+        // 解决方案1 用户程序自定义的普通任务
+        ctx.channel().eventLoop().execute(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                try &#123;
+                    Thread.sleep(5 * 1000);
+                    ctx.writeAndFlush(Unpooled.copiedBuffer(&quot;hello, 客户端~(&gt;^ω^&lt;)喵2&quot;, CharsetUtil.UTF_8));
+                    System.out.println(&quot;channel code=&quot; + ctx.channel().hashCode());
+                &#125; catch (Exception ex) &#123;
+                    System.out.println(&quot;发生异常&quot; + ex.getMessage());
+                &#125;
+            &#125;
+        &#125;);
+        ctx.channel().eventLoop().execute(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                try &#123;
+                    Thread.sleep(5 * 1000);
+                    ctx.writeAndFlush(Unpooled.copiedBuffer(&quot;hello, 客户端~(&gt;^ω^&lt;)喵3&quot;, CharsetUtil.UTF_8));
+                    System.out.println(&quot;channel code=&quot; + ctx.channel().hashCode());
+                &#125; catch (Exception ex) &#123;
+                    System.out.println(&quot;发生异常&quot; + ex.getMessage());
+                &#125;
+            &#125;
+        &#125;);
+        // 解决方案2 : 用户自定义定时任务 -》 该任务是提交到 scheduleTaskQueue中
+        ctx.channel().eventLoop().schedule(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                try &#123;
+                    Thread.sleep(5 * 1000);
+                    ctx.writeAndFlush(Unpooled.copiedBuffer(&quot;hello, 客户端~(&gt;^ω^&lt;)喵4&quot;, CharsetUtil.UTF_8));
+                    System.out.println(&quot;channel code=&quot; + ctx.channel().hashCode());
+                &#125; catch (Exception ex) &#123;
+                    System.out.println(&quot;发生异常&quot; + ex.getMessage());
+                &#125;
+            &#125;
+        &#125;, 5, TimeUnit.SECONDS);
+        System.out.println(&quot;go on ...&quot;);
+//        System.out.println(&quot;服务器读取线程 &quot; + Thread.currentThread().getName() + &quot; channle =&quot; + ctx.channel());
+//        System.out.println(&quot;server ctx =&quot; + ctx);
+//        System.out.println(&quot;看看channel 和 pipeline的关系&quot;);
+//        Channel channel = ctx.channel();
+//        ChannelPipeline pipeline = ctx.pipeline(); //本质是一个双向链接, 出站入站
+//        
+//        //将 msg 转成一个 ByteBuf
+//        //ByteBuf 是 Netty 提供的，不是 NIO 的 ByteBuffer.
+//        ByteBuf buf = (ByteBuf) msg;
+//        System.out.println(&quot;客户端发送消息是:&quot; + buf.toString(CharsetUtil.UTF_8));
+//        System.out.println(&quot;客户端地址:&quot; + channel.remoteAddress());
+    &#125;
+    //数据读取完毕
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception &#123;
+        //writeAndFlush 是 write + flush
+        //将数据写入到缓存，并刷新
+        //一般讲，我们对这个发送的数据进行编码
+        ctx.writeAndFlush(Unpooled.copiedBuffer(&quot;hello, 客户端~(&gt;^ω^&lt;)喵1&quot;, CharsetUtil.UTF_8));
+    &#125;
+    //处理异常, 一般是需要关闭通道
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception &#123;
+        ctx.close();
+    &#125;
+&#125;
+</code></pre>
+<h3 id="方案再说明"><a href="#方案再说明" class="headerlink" title="方案再说明"></a>方案再说明</h3><p>1.Netty 抽象出两组线程池，BossGroup 专门负责接收客户端连接，WorkerGroup 专门负责网络读写操作。<br>2.NioEventLoop 表示一个不断循环执行处理任务的线程，每个 NioEventLoop 都有一个 Selector，用于监听绑定在其上的 socket网络通道。<br>3.NioEventLoop 内部采用串行化设计，从消息的 读取-&gt;解码-&gt;处理-&gt;编码-&gt;发送，始终由 IO 线程 NioEventLoop 负责</p>
+<p><strong>NioEventLoopGroup 下包含多个 NioEventLoop</strong></p>
+<pre><code>每个 NioEventLoop 中包含有一个 Selector，一个 taskQueue
+每个 NioEventLoop 的 Selector 上可以注册监听多个 NioChannel
+每个 NioChannel 只会绑定在唯一的 NioEventLoop 上
+每个 NioChannel 都绑定有一个自己的 ChannelPipeline
+</code></pre>
+<h3 id="异步模型"><a href="#异步模型" class="headerlink" title="异步模型"></a>异步模型</h3><h4 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h4><p>1.异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的组件在完成后，通过状态、通知和回调来通知调用者。<br>2.Netty 中的 I&#x2F;O 操作是异步的，包括 Bind、Write、Connect 等操作会首先简单的返回一个 ChannelFuture。<br>3.调用者并不能立刻获得结果，而是通过 Future-Listener 机制，用户可以方便的主动获取或者通过通知机制获得 IO 操作结果。<br>4.Netty 的异步模型是建立在 future 和 callback 的之上的。callback 就是回调。重点说 Future，它的核心思想是：假设一个方法 fun，计算过程可能非常耗时，等待 fun 返回显然不合适。那么可以在调用 fun 的时候，立马返回一个 Future，后续可以通过 Future 去监控方法 fun 的处理过程（即：Future-Listener 机制）</p>
+<h4 id="Future-说明"><a href="#Future-说明" class="headerlink" title="Future 说明"></a>Future 说明</h4><p>1.表示异步的执行结果,可以通过它提供的方法来检测执行是否完成，比如检索计算等等。<br>2.ChannelFuture 是一个接口：public interface ChannelFuture extends Future<Void> 我们可以添加监听器，当监听的事件发生时，就会通知到监听器。</Void></p>
+<h4 id="工作原理示意图"><a href="#工作原理示意图" class="headerlink" title="工作原理示意图"></a>工作原理示意图</h4><p>下面第一张图就是管道，中间会经过多个handler</p>
+<p><img src="/2021/05/22/Netty-BASE-2/12.png"></p>
+<p><img src="/2021/05/22/Netty-BASE-2/13.png"></p>
+<p><strong>说明：</strong></p>
+<p>1.在使用 Netty 进行编程时，拦截操作和转换出入站数据只需要您提供 callback 或利用 future 即可。这使得链式操作简单、高效，并有利于编写可重用的、通用的代码。<br>2.Netty 框架的目标就是让你的业务逻辑从网络基础应用编码中分离出来、解脱出来。</p>
+<h4 id="Future-Listener-机制"><a href="#Future-Listener-机制" class="headerlink" title="Future-Listener 机制"></a>Future-Listener 机制</h4><p>1.当 Future 对象刚刚创建时，处于非完成状态，调用者可以通过返回的 ChannelFuture 来获取操作执行的状态，注册监听函数来执行完成后的操作。</p>
+<p>2.常见有如下操作</p>
+<pre><code>通过 isDone 方法来判断当前操作是否完成；
+通过 isSuccess 方法来判断已完成的当前操作是否成功；
+通过 getCause 方法来获取已完成的当前操作失败的原因；
+通过 isCancelled 方法来判断已完成的当前操作是否被取消；
+通过 addListener 方法来注册监听器，当操作已完成（isDone方法返回完成），将会通知指定的监听器；如果 Future 对象已完成，则通知指定的监听器
+</code></pre>
+<p><strong>举例说明</strong><br>演示：绑定端口是异步操作，当绑定操作处理完，将会调用相应的监听器处理逻辑</p>
+<pre><code>//绑定一个端口并且同步,生成了一个ChannelFuture对象
+//启动服务器(并绑定端口)
+ChannelFuture cf = bootstrap.bind(6668).sync();
+//给cf注册监听器，监控我们关心的事件
+cf.addListener(new ChannelFutureListener() &#123;
+   @Override
+   public void operationComplete (ChannelFuture future) throws Exception &#123;
+      if (cf.isSuccess()) &#123;
+         System.out.println(&quot;监听端口6668成功&quot;);
+      &#125; else &#123;
+         System.out.println(&quot;监听端口6668失败&quot;);
+      &#125;
+   &#125;
+&#125;);
+</code></pre>
+<p><strong>小结</strong></p>
+<p>相比传统阻塞I&#x2F;O,执行I&#x2F;O操作后线程会被阻塞住,直到操作完成;异步处理的好处是不会造成线程阻塞,线程在I&#x2F;O操作期间可以执行别的程序,在高并发情形下会更稳定和更高的吞吐量。</p>
+<h3 id="快速入门实例-HTTP服务"><a href="#快速入门实例-HTTP服务" class="headerlink" title="快速入门实例 - HTTP服务"></a>快速入门实例 - HTTP服务</h3><p>1.实例要求：使用 IDEA 创建 Netty 项目<br>2.Netty 服务器在 6668 端口监听，浏览器发出请求 <a target="_blank" rel="noopener" href="http://localhost:6668/">http://localhost:6668/</a><br>3.服务器可以回复消息给客户端”Hello!我是服务器5”,并对特定请求资源进行过滤。<br>4.目的：Netty 可以做 Http 服务开发，并且理解 Handler 实例和客户端及其请求的关系。<br>5.看老师代码演示</p>
+<p><strong>TestServer</strong></p>
+<pre><code>package com.sevattal.netty.http;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+public class TestServer &#123;
+    public static void main(String[] args) throws Exception &#123;
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        try &#123;
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+            serverBootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new TestServerInitializer());
+            ChannelFuture channelFuture = serverBootstrap.bind(6668).sync();     
+            channelFuture.channel().closeFuture().sync();
+        &#125;finally &#123;
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p><strong>TestServerInitializer</strong></p>
+<pre><code>package com.sevattal.netty.http;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.http.HttpServerCodec;
+public class TestServerInitializer extends ChannelInitializer&lt;SocketChannel&gt; &#123;
+    @Override
+    protected void initChannel(SocketChannel ch) throws Exception &#123;
+        //向管道加入处理器
+        //得到管道
+        ChannelPipeline pipeline = ch.pipeline();
+        //加入一个netty 提供的httpServerCodec codec =&gt;[coder - decoder]
+        //HttpServerCodec 说明
+        //1. HttpServerCodec 是netty 提供的处理http的 编-解码器
+        pipeline.addLast(&quot;MyHttpServerCodec&quot;,new HttpServerCodec());
+        //2. 增加一个自定义的handler
+        pipeline.addLast(&quot;MyTestHttpServerHandler&quot;, new TestHttpServerHandler());
+        System.out.println(&quot;ok~~~~&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p><strong>TestHttpServerHandler</strong></p>
+<pre><code>package com.sevattal.netty.http;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.*;
+import io.netty.util.CharsetUtil;
+import java.net.URI;
+/*
+说明
+1. SimpleChannelInboundHandler 是 ChannelInboundHandlerAdapter
+2. HttpObject 客户端和服务器端相互通讯的数据被封装成 HttpObject
+ */
+public class TestHttpServerHandler extends SimpleChannelInboundHandler&lt;HttpObject&gt; &#123;
+    //channelRead0 读取客户端数据
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception &#123;
+        System.out.println(&quot;对应的channel=&quot; + ctx.channel() + &quot; pipeline=&quot; + ctx
+        .pipeline() + &quot; 通过pipeline获取channel&quot; + ctx.pipeline().channel());
+        System.out.println(&quot;当前ctx的handler=&quot; + ctx.handler());
+        //判断 msg 是不是 httprequest请求
+        if(msg instanceof HttpRequest) &#123;
+            System.out.println(&quot;ctx 类型=&quot;+ctx.getClass());
+            System.out.println(&quot;pipeline hashcode&quot; + ctx.pipeline().hashCode() + &quot; TestHttpServerHandler hash=&quot; + this.hashCode());
+            System.out.println(&quot;msg 类型=&quot; + msg.getClass());
+            System.out.println(&quot;客户端地址&quot; + ctx.channel().remoteAddress());
+            //获取到
+            HttpRequest httpRequest = (HttpRequest) msg;
+            //获取uri, 过滤指定的资源
+            URI uri = new URI(httpRequest.uri());
+            if(&quot;/favicon.ico&quot;.equals(uri.getPath())) &#123;
+                System.out.println(&quot;请求了 favicon.ico, 不做响应&quot;);
+                return;
+            &#125;
+            //回复信息给浏览器 [http协议]
+            ByteBuf content = Unpooled.copiedBuffer(&quot;hello, 我是服务器&quot;, CharsetUtil.UTF_8);
+            //构造一个http的相应，即 httpresponse
+            FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
+            response.headers().set(HttpHeaderNames.CONTENT_TYPE, &quot;text/plain&quot;);
+            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
+            //将构建好 response返回
+            ctx.writeAndFlush(response);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="Netty-核心模块组件"><a href="#Netty-核心模块组件" class="headerlink" title="Netty 核心模块组件"></a>Netty 核心模块组件</h3><h4 id="Bootstrap、ServerBootstrap"><a href="#Bootstrap、ServerBootstrap" class="headerlink" title="Bootstrap、ServerBootstrap"></a>Bootstrap、ServerBootstrap</h4><p>1.Bootstrap 意思是引导，一个 Netty 应用通常由一个 Bootstrap 开始，主要作用是配置整个 Netty 程序，串联各个组件，Netty 中 Bootstrap 类是客户端程序的启动引导类，ServerBootstrap 是服务端启动引导类。</p>
+<p>2.常见的方法有</p>
+<pre><code>public ServerBootstrap group(EventLoopGroup parentGroup, EventLoopGroup childGroup)，该方法用于服务器端，用来设置两个 EventLoop
+public B group(EventLoopGroup group)，该方法用于客户端，用来设置一个 EventLoop
+public B channel(Class&lt;? extends C&gt; channelClass)，该方法用来设置一个服务器端的通道实现
+public &lt;T&gt; B option(ChannelOption&lt;T&gt; option, T value)，用来给 ServerChannel 添加配置
+public &lt;T&gt; ServerBootstrap childOption(ChannelOption&lt;T&gt; childOption, T value)，用来给接收到的通道添加配置
+public ServerBootstrap childHandler(ChannelHandler childHandler)，该方法用来设置业务处理类（自定义的handler）
+public ChannelFuture bind(int inetPort)，该方法用于服务器端，用来设置占用的端口号
+public ChannelFuture connect(String inetHost, int inetPort)，该方法用于客户端，用来连接服务器端
+</code></pre>
+<h4 id="Future、ChannelFuture"><a href="#Future、ChannelFuture" class="headerlink" title="Future、ChannelFuture"></a>Future、ChannelFuture</h4><p>Netty 中所有的 IO 操作都是异步的，不能立刻得知消息是否被正确处理。但是可以过一会等它执行完成或者直接注册一个监听，具体的实现就是通过 Future 和 ChannelFutures，他们可以注册一个监听，当操作执行成功或失败时监听会自动触发注册的监听事件</p>
+<p><strong>常见的方法有</strong></p>
+<p>1.Channel channel()，返回当前正在进行 IO 操作的通道<br>2.ChannelFuture sync()，等待异步操作执行完毕</p>
+<h4 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h4><p>1.Netty 网络通信的组件，能够用于执行网络 I&#x2F;O 操作。<br>2.通过 Channel 可获得当前网络连接的通道的状态<br>3.通过 Channel 可获得网络连接的配置参数（例如接收缓冲区大小）<br>4.Channel 提供异步的网络 I&#x2F;O 操作(如建立连接，读写，绑定端口)，异步调用意味着任何 I&#x2F;O 调用都将立即返回，并且不保证在调用结束时所请求的 I&#x2F;O 操作已完成<br>5.调用立即返回一个 ChannelFuture 实例，通过注册监听器到 ChannelFuture 上，可以 I&#x2F;O 操作成功、失败或取消时回调通知调用方<br>6.支持关联 I&#x2F;O 操作与对应的处理程序<br>7.不同协议、不同的阻塞类型的连接都有不同的 Channel 类型与之对应，常用的 Channel 类型：</p>
+<pre><code>NioSocketChannel，异步的客户端 TCP Socket 连接。
+NioServerSocketChannel，异步的服务器端 TCP Socket 连接。
+NioDatagramChannel，异步的 UDP 连接。
+NioSctpChannel，异步的客户端 Sctp 连接。
+NioSctpServerChannel，异步的 Sctp 服务器端连接，这些通道涵盖了 UDP 和 TCP 网络 IO 以及文件 IO。
+</code></pre>
+<h4 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h4><p>1.Netty 基于 Selector 对象实现 I&#x2F;O 多路复用，通过 Selector 一个线程可以监听多个连接的 Channel 事件。<br>2.当向一个 Selector 中注册 Channel 后，Selector 内部的机制就可以自动不断地查询（Select）这些注册的 Channel 是否有已就绪的 I&#x2F;O 事件（例如可读，可写，网络连接完成等），这样程序就可以很简单地使用一个线程高效地管理多个 Channel</p>
+<h4 id="ChannelHandler-及其实现类"><a href="#ChannelHandler-及其实现类" class="headerlink" title="ChannelHandler 及其实现类"></a>ChannelHandler 及其实现类</h4><pre><code>ChannelHandler 是一个接口，处理 I/O 事件或拦截 I/O 操作，并将其转发到其 ChannelPipeline（业务处理链）中的下一个处理程序。
+ChannelHandler 本身并没有提供很多方法，因为这个接口有许多的方法需要实现，方便使用期间，可以继承它的子类
+ChannelHandler 及其实现类一览图（后）
+</code></pre>
+<p><img src="/2021/05/22/Netty-BASE-2/14.png"></p>
+<pre><code>ChannelInboundHandler 用于处理入站I/O事件
+ChannelOutboundHandler 用于处理出站I/O操作
+ChannelInboundHandlerAdapter 用于处理入栈I/O事件
+ChannelOutBoundHandlerAdapter 用于处理出站I/O操作
+ChannelDuplexHandler 用于处理入站和出站事件
+</code></pre>
+<p>我们经常需要自定义一个 Handler 类去继承 ChannelInboundHandlerAdapter，然后通过重写相应方法实现业务逻辑，我们接下来看看一般都需要重写哪些方法</p>
+<p><img src="/2021/05/22/Netty-BASE-2/15.png"></p>
+<pre><code>channelActive(ChannelHandlerContext ctx) 通道就绪事件
+channelRead(ChannelHandlerContext ctx, Object msg) 通道读取数据事件
+channelReadComplete(ChannelHandlerContext ctx) 数据读取完毕事件
+exceptionCaught(ChannelHandlerContext ctx, Throwable cause) 通道发生异常事件
+</code></pre>
+<h4 id="Pipeline-和-ChannelPipeline"><a href="#Pipeline-和-ChannelPipeline" class="headerlink" title="Pipeline 和 ChannelPipeline"></a>Pipeline 和 ChannelPipeline</h4><p>ChannelPipeline 是一个重点：</p>
+<p>1.ChannelPipeline 是一个 Handler 的集合，它负责处理和拦截 inbound 或者 outbound 的事件和操作，相当于一个贯穿 Netty 的链。（也可以这样理解：ChannelPipeline 是保存 ChannelHandler 的 List，用于处理或拦截 Channel 的入站事件和出站操作）<br>2.ChannelPipeline 实现了一种高级形式的拦截过滤器模式，使用户可以完全控制事件的处理方式，以及 Channel 中各个的 ChannelHandler 如何相互交互<br>3.在 Netty 中每个 Channel 都有且仅有一个 ChannelPipeline 与之对应，它们的组成关系如下</p>
+<p><img src="/2021/05/22/Netty-BASE-2/16.png"></p>
+<pre><code>一个Channel包含了一个ChannelPipline，而ChannelPipline 中又维护了一个由ChannelHandlerContext组成的双向链表，并且每个ChannelHandlerContext中又关联着一个ChannelHandler
+入站事件和出站事件在一个双向链表中，入站事件会从链表head往后传递到最后一个入站的handler,出站事件会从链表tail往前传递到最前一个出站的handler，两种类型的handler互不干扰
+</code></pre>
+<p><strong>常用方法</strong></p>
+<pre><code>ChannelPipeline addFirst(ChannelHandler... handlers)，把一个业务处理类（handler）添加到链中的第一个位置ChannelPipeline addLast(ChannelHandler... handlers)，把一个业务处理类（handler）添加到链中的最后一个位置
+</code></pre>
+<p>想要更清楚的了解pipeline，可以对之前的代码进行debug，看一下pipeline里究竟有什么东西。</p>
+<p>从head看一下debug</p>
+<p><img src="/2021/05/22/Netty-BASE-2/17.png"></p>
+<p>TestServerInitializer和HttpServerCodec这些东西本身也是handler<br>一般来说事件从客户端往服务器走我们称为出站，反之则是入站。</p>
+<h4 id="ChannelHandlerContext"><a href="#ChannelHandlerContext" class="headerlink" title="ChannelHandlerContext"></a>ChannelHandlerContext</h4><p>1.保存 Channel 相关的所有上下文信息，同时关联一个 ChannelHandler 对象<br>2.即 ChannelHandlerContext 中包含一个具体的事件处理器 ChannelHandler，同时 ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler 进行调用。</p>
+<p><img src="/2021/05/22/Netty-BASE-2/18.png"></p>
+<p><strong>常用方法</strong></p>
+<pre><code>ChannelFuture close()，关闭通道
+ChannelOutboundInvoker flush()，刷新
+ChannelFuture writeAndFlush(Object msg)，将数据写到ChannelPipeline 中当前 ChannelHandler 的下一个 ChannelHandler 开始处理（出站）
+</code></pre>
+<h4 id="ChannelOption"><a href="#ChannelOption" class="headerlink" title="ChannelOption"></a>ChannelOption</h4><p>1.Netty 在创建 Channel 实例后，一般都需要设置 ChannelOption 参数。<br>2.ChannelOption 参数如下：</p>
+<p><strong>ChannelOption.SO_BACKLOG</strong></p>
+<p>对应TCP&#x2F;IP协议listen函数中的backlog参数，用来初始化服务器可连接队列大小。服务端处理客户端连接请求是顺序处理的，所以同一事件只能处理一个客户端连接。多个客户端来的时候，服务端将不能处理的客户端连接请求放在队列中等待处理，backlog参数指定了队列的大小。</p>
+<p><strong>ChannelOption.SO_KEEPALIVE</strong></p>
+<p>一直保持连接多动状态</p>
+<h4 id="EventLoopGroup-和其实现类-NioEventLoopGroup"><a href="#EventLoopGroup-和其实现类-NioEventLoopGroup" class="headerlink" title="EventLoopGroup 和其实现类 NioEventLoopGroup"></a>EventLoopGroup 和其实现类 NioEventLoopGroup</h4><p>1.EventLoopGroup 是一组 EventLoop 的抽象，Netty 为了更好的利用多核 CPU 资源，一般会有多个 EventLoop 同时工作，每个 EventLoop 维护着一个 Selector 实例。<br>2.EventLoopGroup 提供 next 接口，可以从组里面按照一定规则获取其中一个 EventLoop 来处理任务。在 Netty 服务器端编程中，我们一般都需要提供两个 EventLoopGroup，例如：BossEventLoopGroup 和 WorkerEventLoopGroup。<br>3.通常一个服务端口即一个 ServerSocketChannel 对应一个 Selector 和一个 EventLoop 线程。BossEventLoop 负责接收客户端的连接并将 SocketChannel 交给 WorkerEventLoopGroup 来进行 IO 处理，如下图所示</p>
+<p><img src="/2021/05/22/Netty-BASE-2/19.png"></p>
+<pre><code>BossEventLoopGroup通常是一个单线程的EventLoop,EventLoop维护着一个注册了ServerSocketChannel的Selector实例BossEventLoop不断轮询Selector将连接事件分离出来
+通常是OP_ACCEPT事件，然后将接收到的SocketChannel交给WorkerEventLoopGroup
+WorkerEventLoopGroup 会由 next 选择其中一个 EventLoop 来将这个 SocketChannel 注册到其维护的 Selector 并对其后续的IO事件及逆行处理
+</code></pre>
+<p><strong>常用方法</strong></p>
+<pre><code>public NioEventLoopGroup()，构造方法
+public Future&lt;?&gt; shutdownGracefully()，断开连接，关闭线程
+</code></pre>
+<h4 id="Unpooled-类"><a href="#Unpooled-类" class="headerlink" title="Unpooled 类"></a>Unpooled 类</h4><p>1.Netty 提供一个专门用来操作缓冲区（即 Netty 的数据容器）的工具类<br>2.常用方法如下所示</p>
+<pre><code>//通过给定的数据和字符编码返回一个ByteBuf对象（类似于NIO中的ByteBuffer但有区别）
+public static ByteBuf copiedBuffer(CharSequence String, Charset charset)
+</code></pre>
+<p>举例说明 Unpooled 获取 Netty 的数据容器 ByteBuf 的基本使用</p>
+<p><strong>案例 1</strong></p>
+<pre><code>package com.sevattal.netty.buf;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+public class NettyByteBuf01 &#123;
+    public static void main(String[] args) &#123;	        
+        //创建一个ByteBuf
+        //说明
+        //1. 创建 对象，该对象包含一个数组arr , 是一个byte[10]
+        //2. 在netty 的buffer中，不需要使用 flip 进行反转
+        //   底层维护了 readerindex 和 writerIndex
+        //3. 通过 readerindex 和  writerIndex 和  capacity， 将buffer分成三个区域
+        // 0---readerindex 已经读取的区域
+        // readerindex---writerIndex ， 可读的区域
+        // writerIndex -- capacity, 可写的区域
+        ByteBuf buffer = Unpooled.buffer(10);
+        for (int i = 0; i &lt; 10; i++) &#123;
+            buffer.writeByte(i);
+        &#125;
+        System.out.println(&quot;capacity=&quot; + buffer.capacity());//10
+        // 输出
+        // for(int i = 0; i&lt;buffer.capacity(); i++) &#123;
+        // 这个方法readerindex不会变
+        // System.out.println(buffer.getByte(i));
+        // &#125;
+        for (int i = 0; i &lt; buffer.capacity(); i++) &#123;
+            //这个方法readerindex会变
+            System.out.println(buffer.readByte());
+        &#125;
+        System.out.println(&quot;执行完毕&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p><strong>案例 2</strong></p>
+<pre><code>package com.sevattal.netty.buf;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import java.nio.charset.Charset;
+public class NettyByteBuf02 &#123;
+    public static void main(String[] args) &#123;
+        //创建ByteBuf
+        ByteBuf byteBuf = Unpooled.copiedBuffer(&quot;hello,world!&quot;, Charset.forName(&quot;utf-8&quot;));
+        //使用相关的方法
+        if (byteBuf.hasArray()) &#123; // true
+            byte[] content = byteBuf.array();
+            //将 content 转成字符串
+            System.out.println(new String(content, Charset.forName(&quot;utf-8&quot;)));
+            System.out.println(&quot;byteBuf=&quot; + byteBuf);
+            System.out.println(byteBuf.arrayOffset()); // 0
+            System.out.println(byteBuf.readerIndex()); // 0
+            System.out.println(byteBuf.writerIndex()); // 12
+            System.out.println(byteBuf.capacity()); // 36
+            //System.out.println(byteBuf.readByte()); //
+            System.out.println(byteBuf.getByte(0)); // 104
+            int len = byteBuf.readableBytes(); //可读的字节数  12
+            System.out.println(&quot;len=&quot; + len);
+            //使用for取出各个字节
+            for (int i = 0; i &lt; len; i++) &#123;
+                System.out.println((char) byteBuf.getByte(i));
+            &#125;
+            //按照某个范围读取
+            System.out.println(byteBuf.getCharSequence(0, 4, Charset.forName(&quot;utf-8&quot;)));
+            System.out.println(byteBuf.getCharSequence(4, 6, Charset.forName(&quot;utf-8&quot;)));
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="Netty-应用实例-群聊系统"><a href="#Netty-应用实例-群聊系统" class="headerlink" title="Netty 应用实例-群聊系统"></a>Netty 应用实例-群聊系统</h2><p><strong>实例要求：</strong></p>
+<p>1.编写一个 Netty 群聊系统，实现服务器端和客户端之间的数据简单通讯（非阻塞）<br>2.实现多人群聊<br>3.服务器端：可以监测用户上线，离线，并实现消息转发功能<br>4.客户端：通过 channel 可以无阻塞发送消息给其它所有用户，同时可以接受其它用户发送的消息（有服务器转发得到）<br>5.目的：进一步理解 Netty 非阻塞网络编程机制</p>
+<p>代码如下：</p>
+<p><strong>GroupChatServer</strong></p>
+<pre><code>package com.sevattal.netty.groupchat;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
+public class GroupChatServer &#123;
+    private int port; //监听端口
+    public GroupChatServer(int port) &#123;
+        this.port = port;
+    &#125;
+    //编写run方法，处理客户端的请求
+    public void run() throws  Exception&#123;
+        //创建两个线程组
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(); //8个NioEventLoop
+        try &#123;
+            ServerBootstrap b = new ServerBootstrap();
+            b.group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .option(ChannelOption.SO_BACKLOG, 128)
+                    .childOption(ChannelOption.SO_KEEPALIVE, true)
+                    .childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception &#123;
+                            //获取到pipeline
+                            ChannelPipeline pipeline = ch.pipeline();
+                            //向pipeline加入解码器
+                            pipeline.addLast(&quot;decoder&quot;, new StringDecoder());
+                            //向pipeline加入编码器
+                            pipeline.addLast(&quot;encoder&quot;, new StringEncoder());
+                            //加入自己的业务处理handler
+                            pipeline.addLast(new GroupChatServerHandler());
+                        &#125;
+                    &#125;);
+            System.out.println(&quot;netty 服务器启动&quot;);
+            ChannelFuture channelFuture = b.bind(port).sync();
+            //监听关闭
+            channelFuture.channel().closeFuture().sync();
+        &#125;finally &#123;
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        &#125;
+    &#125;
+    public static void main(String[] args) throws Exception &#123;
+        new GroupChatServer(7000).run();
+    &#125;
+&#125;
+</code></pre>
+<p><strong>GroupChatServerHandler</strong></p>
+<pre><code>package com.sevattal.netty.groupchat;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.concurrent.GlobalEventExecutor;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+public class GroupChatServerHandler extends SimpleChannelInboundHandler&lt;String&gt; &#123;
+    //这样写还要自己遍历Channel
+    //public static List&lt;Channel&gt; channels = new ArrayList&lt;Channel&gt;();
+    //使用一个hashmap 管理私聊（私聊本案例并未实现，只是提供个思路）
+    //public static Map&lt;String, Channel&gt; channels = new HashMap&lt;String,Channel&gt;();
+    //定义一个channel 组，管理所有的channel
+    //GlobalEventExecutor.INSTANCE) 是全局的事件执行器，是一个单例
+    private static ChannelGroup  channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);
+    //handlerAdded 表示连接建立，一旦连接，第一个被执行
+    //将当前channel 加入到  channelGroup
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception &#123;
+        Channel channel = ctx.channel();
+        //将该客户加入聊天的信息推送给其它在线的客户端
+        //该方法会将 channelGroup 中所有的channel 遍历，并发送消息，我们不需要自己遍历
+        channelGroup.writeAndFlush(&quot;[客户端]&quot; + channel.remoteAddress() + &quot; 加入聊天&quot; + sdf.format(new java.util.Date()) + &quot; \n&quot;);
+        channelGroup.add(channel);
+        // 私聊如何实现
+        // channels.put（&quot;userid100&quot;,channel）;			
+    &#125;
+    //断开连接, 将xx客户离开信息推送给当前在线的客户
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception &#123;
+        Channel channel = ctx.channel();
+        channelGroup.writeAndFlush(&quot;[客户端]&quot; + channel.remoteAddress() + &quot; 离开了\n&quot;);
+        System.out.println(&quot;channelGroup size&quot; + channelGroup.size());
+    &#125;
+    //表示channel 处于活动状态, 提示 xx上线
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception &#123;
+        //这个是给服务端看的，客户端上面已经提示xxx加入群聊了
+        System.out.println(ctx.channel().remoteAddress() + &quot; 上线了~&quot;);
+    &#125;
+    //表示channel 处于不活动状态, 提示 xx离线了
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception &#123;
+        System.out.println(ctx.channel().remoteAddress() + &quot; 离线了~&quot;);
+    &#125;
+    //读取数据，转发给在线的每一个客户端
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception &#123;
+        //获取到当前channel
+        Channel channel = ctx.channel();
+        //这时我们遍历channelGroup, 根据不同的情况，回送不同的消息
+        channelGroup.forEach(ch -&gt; &#123;
+            if(channel != ch) &#123; //不是当前的channel,转发消息
+                ch.writeAndFlush(&quot;[客户]&quot; + channel.remoteAddress() + &quot; 发送了消息&quot; + msg + &quot;\n&quot;);
+            &#125;else &#123;//回显自己发送的消息给自己
+                ch.writeAndFlush(&quot;[自己]发送了消息&quot; + msg + &quot;\n&quot;);
+            &#125;
+        &#125;);
+    &#125;
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception &#123;
+        //关闭通道
+        ctx.close();
+    &#125;
+&#125;
+</code></pre>
+<p><strong>GroupChatClient</strong></p>
+<pre><code>package com.sevattal.netty.groupchat;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
+import java.util.Scanner;
+public class GroupChatClient &#123;
+    //属性
+    private final String host;
+    private final int port;
+    public GroupChatClient(String host, int port) &#123;
+        this.host = host;
+        this.port = port;
+    &#125;
+    public void run() throws Exception&#123;
+        EventLoopGroup group = new NioEventLoopGroup();
+        try &#123;
+        Bootstrap bootstrap = new Bootstrap()
+                .group(group)
+                .channel(NioSocketChannel.class)
+                .handler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception &#123;
+                        //得到pipeline
+                        ChannelPipeline pipeline = ch.pipeline();
+                        //加入相关handler
+                        pipeline.addLast(&quot;decoder&quot;, new StringDecoder());
+                        pipeline.addLast(&quot;encoder&quot;, new StringEncoder());
+                        //加入自定义的handler
+                        pipeline.addLast(new GroupChatClientHandler());
+                    &#125;
+                &#125;);
+        ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
+        //得到channel
+            Channel channel = channelFuture.channel();
+            System.out.println(&quot;-------&quot; + channel.localAddress()+ &quot;--------&quot;);
+            //客户端需要输入信息，创建一个扫描器
+            Scanner scanner = new Scanner(System.in);
+            while (scanner.hasNextLine()) &#123;
+                String msg = scanner.nextLine();
+                //通过channel 发送到服务器端
+                channel.writeAndFlush(msg + &quot;\r\n&quot;);
+            &#125;
+        &#125;finally &#123;
+            group.shutdownGracefully();
+        &#125;
+    &#125;
+    public static void main(String[] args) throws Exception &#123;
+        new GroupChatClient(&quot;127.0.0.1&quot;, 7000).run();
+    &#125;
+&#125;
+</code></pre>
+<p><strong>GroupChatClientHandler</strong></p>
+<pre><code>package com.sevattal.netty.groupchat;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+public class GroupChatClientHandler extends SimpleChannelInboundHandler&lt;String&gt; &#123;
+    //从服务器拿到的数据
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception &#123;
+        System.out.println(msg.trim());
+    &#125;
+&#125;
+</code></pre>
+<h3 id="Netty-心跳检测机制案例"><a href="#Netty-心跳检测机制案例" class="headerlink" title="Netty 心跳检测机制案例"></a>Netty 心跳检测机制案例</h3><p><strong>实例要求：</strong></p>
+<p>1.编写一个 Netty 心跳检测机制案例,当服务器超过 3 秒没有读时，就提示读空闲<br>2.当服务器超过 5 秒没有写操作时，就提示写空闲<br>3.实现当服务器超过 7 秒没有读或者写操作时，就提示读写空闲</p>
+<p>代码如下：</p>
+<p><strong>MyServer</strong></p>
+<pre><code>package com.sevattal.netty.heartbeat;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.IdleStateHandler;
+import java.util.concurrent.TimeUnit;
+public class MyServer &#123;
+    public static void main(String[] args) throws Exception&#123;
+        //创建两个线程组
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(); //8个NioEventLoop
+        try &#123;
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+            serverBootstrap.group(bossGroup, workerGroup);
+            serverBootstrap.channel(NioServerSocketChannel.class);
+            //在bossGroup增加一个日志处理器
+            serverBootstrap.handler(new LoggingHandler(LogLevel.INFO));
+            serverBootstrap.childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;
+                @Override
+                protected void initChannel(SocketChannel ch) throws Exception &#123;
+                    ChannelPipeline pipeline = ch.pipeline();
+                    //加入一个netty 提供 IdleStateHandler
+                    /*
+                    说明
+                    1. IdleStateHandler 是netty 提供的处理空闲状态的处理器
+                    2. long readerIdleTime : 表示多长时间没有读, 就会发送一个心跳检测包检测是否连接
+                    3. long writerIdleTime : 表示多长时间没有写, 就会发送一个心跳检测包检测是否连接
+                    4. long allIdleTime : 表示多长时间没有读写, 就会发送一个心跳检测包检测是否连接
+                    5. 文档说明
+                    triggers an &#123;@link IdleStateEvent&#125; when a &#123;@link Channel&#125; has not performed
+                   read, write, or both operation for a while.
+                    6. 当 IdleStateEvent 触发后 , 就会传递给管道 的下一个handler去处理，通过调用(触发)
+                   下一个handler 的 userEventTiggered , 在该方法中去处理 IdleStateEvent(读空闲，写空闲，读写空闲)
+                    7.handlerRemoved有时候是无法感知连接断掉，所以还是需要心跳包的检测来判断连接是否还有效
+                     */
+                    pipeline.addLast(new IdleStateHandler(3,5,7, TimeUnit.SECONDS));
+                    //加入一个对空闲检测进一步处理的handler(自定义)
+                    pipeline.addLast(new MyServerHandler());
+                &#125;
+            &#125;);
+            //启动服务器
+            ChannelFuture channelFuture = serverBootstrap.bind(7000).sync();
+            channelFuture.channel().closeFuture().sync();
+        &#125;finally &#123;
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p><strong>MyServerHandler</strong></p>
+<pre><code>package com.sevattal.netty.heartbeat;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.handler.timeout.IdleStateEvent;
+public class MyServerHandler extends ChannelInboundHandlerAdapter &#123;
+    /**
+     *
+     * @param ctx 上下文
+     * @param evt 事件
+     * @throws Exception
+     */
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception &#123;
+        if(evt instanceof IdleStateEvent) &#123;
+            //将  evt 向下转型 IdleStateEvent
+            IdleStateEvent event = (IdleStateEvent) evt;
+            String eventType = null;
+            switch (event.state()) &#123;
+                case READER_IDLE:
+                	eventType = &quot;读空闲&quot;;
+                	break;
+                case WRITER_IDLE:
+                    eventType = &quot;写空闲&quot;;
+                    break;
+                case ALL_IDLE:
+                    eventType = &quot;读写空闲&quot;;
+                    break;
+            &#125;
+            System.out.println(ctx.channel().remoteAddress() + &quot;--超时时间--&quot; + eventType);
+            System.out.println(&quot;服务器做相应处理..&quot;);
+            //如果发生空闲，我们关闭通道
+           // ctx.channel().close();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="Netty-通过-WebSocket-编程实现服务器和客户端长连接"><a href="#Netty-通过-WebSocket-编程实现服务器和客户端长连接" class="headerlink" title="Netty 通过 WebSocket 编程实现服务器和客户端长连接"></a>Netty 通过 WebSocket 编程实现服务器和客户端长连接</h3><p><strong>实例要求：</strong></p>
+<p>1.Http 协议是无状态的，浏览器和服务器间的请求响应一次，下一次会重新创建连接。<br>2.要求：实现基于 WebSocket 的长连接的全双工的交互<br>3.改变 Http 协议多次请求的约束，实现长连接了，服务器可以发送消息给浏览器<br>4.客户端浏览器和服务器端会相互感知，比如服务器关闭了，浏览器会感知，同样浏览器关闭了，服务器会感知<br>5.运行界面</p>
+<p><strong>MyServer</strong></p>
+<pre><code>package com.sevattal.netty.websocket;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleStateHandler;
+import java.util.concurrent.TimeUnit;
+public class MyServer &#123;
+    public static void main(String[] args) throws Exception&#123;
+        //创建两个线程组
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(); //8个NioEventLoop
+        try &#123;
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+            serverBootstrap.group(bossGroup, workerGroup);
+            serverBootstrap.channel(NioServerSocketChannel.class);
+            serverBootstrap.handler(new LoggingHandler(LogLevel.INFO));
+            serverBootstrap.childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;
+                @Override
+                protected void initChannel(SocketChannel ch) throws Exception &#123;
+                    ChannelPipeline pipeline = ch.pipeline();
+                    //因为基于http协议，使用http的编码和解码器
+                    pipeline.addLast(new HttpServerCodec());
+                    //http是以块方式写，添加ChunkedWriteHandler处理器
+                    pipeline.addLast(new ChunkedWriteHandler());
+                    /*
+                    说明
+                    1. http数据在传输过程中是分段, HttpObjectAggregator ，就是可以将多个段聚合
+                    2. 这就就是为什么，当浏览器发送大量数据时，就会发出多次http请求
+                     */
+                    pipeline.addLast(new HttpObjectAggregator(8192));
+                    /*
+                    说明
+                    1. 对应websocket ，它的数据是以 帧(frame) 形式传递
+                    2. 可以看到WebSocketFrame 下面有六个子类
+                    3. 浏览器请求时 ws://localhost:7000/hello 表示请求的uri
+                    4. WebSocketServerProtocolHandler 核心功能是将 http协议升级为 ws协议 , 保持长连接
+                    5. 是通过一个 状态码 101
+                     */
+                    pipeline.addLast(new WebSocketServerProtocolHandler(&quot;/hello&quot;));
+                    //自定义的handler ，处理业务逻辑
+                    pipeline.addLast(new MyTextWebSocketFrameHandler());
+                &#125;
+            &#125;);
+            //启动服务器
+            ChannelFuture channelFuture = serverBootstrap.bind(7000).sync();
+            channelFuture.channel().closeFuture().sync();
+        &#125;finally &#123;
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p><strong>MyTextWebSocketFrameHandler</strong></p>
+<pre><code>package com.sevattal.netty.websocket;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import java.time.LocalDateTime;
+//这里 TextWebSocketFrame 类型，表示一个文本帧(frame)
+public class MyTextWebSocketFrameHandler extends SimpleChannelInboundHandler&lt;TextWebSocketFrame&gt;&#123;
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception &#123;
+        System.out.println(&quot;服务器收到消息 &quot; + msg.text());
+        //回复消息
+        ctx.channel().writeAndFlush(new TextWebSocketFrame(&quot;服务器时间&quot; + LocalDateTime.now() + &quot; &quot; + msg.text()));
+    &#125;
+    //当web客户端连接后， 触发方法
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception &#123;
+        //id 表示唯一的值，LongText 是唯一的 ShortText 不是唯一
+        System.out.println(&quot;handlerAdded 被调用&quot; + ctx.channel().id().asLongText());
+        System.out.println(&quot;handlerAdded 被调用&quot; + ctx.channel().id().asShortText());
+    &#125;
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception &#123;
+        System.out.println(&quot;handlerRemoved 被调用&quot; + ctx.channel().id().asLongText());
+    &#125;
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception &#123;
+        System.out.println(&quot;异常发生 &quot; + cause.getMessage());
+        ctx.close(); //关闭连接
+    &#125;
+&#125;
+</code></pre>
+<p><strong>hello.html</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script&gt;
+    var socket;
+    // 判断当前浏览器是否支持websocket
+    if(window.WebSocket) &#123;
+        // go on
+        socket = new WebSocket(&quot;ws://localhost:7000/hello&quot;);
+        // 相当于channelReado, ev 收到服务器端回送的消息
+        socket.onmessage = function (ev) &#123;
+            var rt = document.getElementById(&quot;responseText&quot;);
+            rt.value = rt.value + &quot;\n&quot; + ev.data;
+        &#125;
+        //相当于连接开启(感知到连接开启)
+        socket.onopen = function (ev) &#123;
+            var rt = document.getElementById(&quot;responseText&quot;);
+            rt.value = &quot;连接开启了..&quot;
+        &#125;
+        // 相当于连接关闭(感知到连接关闭)
+        socket.onclose = function (ev) &#123;
+            var rt = document.getElementById(&quot;responseText&quot;);
+            rt.value = rt.value + &quot;\n&quot; + &quot;连接关闭了..&quot;
+        &#125;
+    &#125; else &#123;
+        alert(&quot;当前浏览器不支持websocket&quot;)
+    &#125;
+    // 发送消息到服务器
+    function send(message) &#123;
+        if(!window.socket) &#123; //先判断socket是否创建好
+            return;
+        &#125;
+        if(socket.readyState == WebSocket.OPEN) &#123;
+            //通过socket 发送消息
+            socket.send(message)
+        &#125; else &#123;
+            alert(&quot;连接没有开启&quot;);
+        &#125;
+    &#125;
+&lt;/script&gt;
+    &lt;form onsubmit=&quot;return false&quot;&gt;
+        &lt;textarea name=&quot;message&quot; style=&quot;height: 300px; width: 300px&quot;&gt;&lt;/textarea&gt;
+        &lt;input type=&quot;button&quot; value=&quot;发生消息&quot; onclick=&quot;send(this.form.message.value)&quot;&gt;
+        &lt;textarea id=&quot;responseText&quot; style=&quot;height: 300px; width: 300px&quot;&gt;&lt;/textarea&gt;
+        &lt;input type=&quot;button&quot; value=&quot;清空内容&quot; onclick=&quot;document.getElementById(&#39;responseText&#39;).value=&#39;&#39;&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>可以看到并不是发一次数据，连接就关闭了，而是可以继续发送。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2021-05-22, 13:49:03</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:42</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2021/05/22/Netty-BASE-2/" title="Netty-BASE-2">http://yoursite.com/2021/05/22/Netty-BASE-2/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/05/22/Netty-BASE-2/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/05/24/Netty-BASE-3/">
+                    Netty-BASE-3
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/05/20/Netty-BASE-1/">
+                    Netty-BASE-1
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Netty-%E5%9F%BA%E7%A1%80-2"><span class="toc-number">1.</span> <span class="toc-text">Netty 基础 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">Netty 概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F-NIO-%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.1.</span> <span class="toc-text">原生 NIO 存在的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netty-%E5%AE%98%E7%BD%91%E8%AF%B4%E6%98%8E"><span class="toc-number">1.1.2.</span> <span class="toc-text">Netty 官网说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netty-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">1.1.3.</span> <span class="toc-text">Netty 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netty-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E"><span class="toc-number">1.1.4.</span> <span class="toc-text">Netty 版本说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty-%E9%AB%98%E6%80%A7%E8%83%BD%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.2.</span> <span class="toc-text">Netty 高性能架构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">线程模型基本介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E9%98%BB%E5%A1%9E-I-x2F-O-%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.2.</span> <span class="toc-text">传统阻塞 I&#x2F;O 服务模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">工作原理图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%89%B9%E7%82%B9"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">模型特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">问题分析</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reactor-%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">Reactor 模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E4%BC%A0%E7%BB%9F%E9%98%BB%E5%A1%9E-I-x2F-O-%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B%E7%9A%84-2-%E4%B8%AA%E7%BC%BA%E7%82%B9%EF%BC%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="toc-number">1.3.1.</span> <span class="toc-text">针对传统阻塞 I&#x2F;O 服务模型的 2 个缺点，解决方案：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I-x2F-O-%E5%A4%8D%E7%94%A8%E7%BB%93%E5%90%88%E7%BA%BF%E7%A8%8B%E6%B1%A0%EF%BC%8C%E5%B0%B1%E6%98%AF-Reactor-%E6%A8%A1%E5%BC%8F%E5%9F%BA%E6%9C%AC%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3%EF%BC%8C%E5%A6%82%E5%9B%BE"><span class="toc-number">1.3.2.</span> <span class="toc-text">I&#x2F;O 复用结合线程池，就是 Reactor 模式基本设计思想，如图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reactor-%E6%A8%A1%E5%BC%8F%E4%B8%AD%E6%A0%B8%E5%BF%83%E7%BB%84%E6%88%90"><span class="toc-number">1.3.3.</span> <span class="toc-text">Reactor 模式中核心组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reactor-%E6%A8%A1%E5%BC%8F%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.4.</span> <span class="toc-text">Reactor 模式分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95-Reactor-%E5%8D%95%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.3.5.</span> <span class="toc-text">单 Reactor 单线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%AF%B4%E6%98%8E"><span class="toc-number">1.3.6.</span> <span class="toc-text">方案说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BC%98%E7%BC%BA%E7%82%B9%E5%88%86%E6%9E%90"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">方案优缺点分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95-Reactor-%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.3.7.</span> <span class="toc-text">单 Reactor 多线程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%AF%B4%E6%98%8E-1"><span class="toc-number">1.3.7.1.</span> <span class="toc-text">方案说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BC%98%E7%BC%BA%E7%82%B9%E5%88%86%E6%9E%90-1"><span class="toc-number">1.3.7.2.</span> <span class="toc-text">方案优缺点分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E-Reactor-%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.3.8.</span> <span class="toc-text">主从 Reactor 多线程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE-1"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">工作原理图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Scalable-IO-in-Java-%E5%AF%B9-Multiple-Reactors-%E7%9A%84%E5%8E%9F%E7%90%86%E5%9B%BE%E8%A7%A3"><span class="toc-number">1.3.8.2.</span> <span class="toc-text">Scalable IO in Java 对 Multiple Reactors 的原理图解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BC%98%E7%BC%BA%E7%82%B9%E8%AF%B4%E6%98%8E"><span class="toc-number">1.3.8.3.</span> <span class="toc-text">方案优缺点说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reactor-%E6%A8%A1%E5%BC%8F%E5%B0%8F%E7%BB%93"><span class="toc-number">1.3.9.</span> <span class="toc-text">Reactor 模式小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reactor-%E6%A8%A1%E5%BC%8F%E5%85%B7%E6%9C%89%E5%A6%82%E4%B8%8B%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">1.3.10.</span> <span class="toc-text">Reactor 模式具有如下的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netty-%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.11.</span> <span class="toc-text">Netty 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E7%A4%BA%E6%84%8F%E5%9B%BE1-%E7%AE%80%E5%8D%95%E7%89%88"><span class="toc-number">1.3.12.</span> <span class="toc-text">工作原理示意图1 - 简单版</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E7%A4%BA%E6%84%8F%E5%9B%BE2-%E8%BF%9B%E9%98%B6%E7%89%88"><span class="toc-number">1.3.12.1.</span> <span class="toc-text">工作原理示意图2 - 进阶版</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netty-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E5%AE%9E%E4%BE%8B-TCP-%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.3.13.</span> <span class="toc-text">Netty 快速入门实例 - TCP 服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%E4%B8%AD%E7%9A%84-Task-%E6%9C%89-3-%E7%A7%8D%E5%85%B8%E5%9E%8B%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.3.14.</span> <span class="toc-text">任务队列中的 Task 有 3 种典型使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E5%86%8D%E8%AF%B4%E6%98%8E"><span class="toc-number">1.3.15.</span> <span class="toc-text">方案再说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.16.</span> <span class="toc-text">异步模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.3.16.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future-%E8%AF%B4%E6%98%8E"><span class="toc-number">1.3.16.2.</span> <span class="toc-text">Future 说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-number">1.3.16.3.</span> <span class="toc-text">工作原理示意图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future-Listener-%E6%9C%BA%E5%88%B6"><span class="toc-number">1.3.16.4.</span> <span class="toc-text">Future-Listener 机制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E5%AE%9E%E4%BE%8B-HTTP%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.3.17.</span> <span class="toc-text">快速入门实例 - HTTP服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netty-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.18.</span> <span class="toc-text">Netty 核心模块组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bootstrap%E3%80%81ServerBootstrap"><span class="toc-number">1.3.18.1.</span> <span class="toc-text">Bootstrap、ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future%E3%80%81ChannelFuture"><span class="toc-number">1.3.18.2.</span> <span class="toc-text">Future、ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-number">1.3.18.3.</span> <span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-number">1.3.18.4.</span> <span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler-%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-number">1.3.18.5.</span> <span class="toc-text">ChannelHandler 及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline-%E5%92%8C-ChannelPipeline"><span class="toc-number">1.3.18.6.</span> <span class="toc-text">Pipeline 和 ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandlerContext"><span class="toc-number">1.3.18.7.</span> <span class="toc-text">ChannelHandlerContext</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelOption"><span class="toc-number">1.3.18.8.</span> <span class="toc-text">ChannelOption</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup-%E5%92%8C%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB-NioEventLoopGroup"><span class="toc-number">1.3.18.9.</span> <span class="toc-text">EventLoopGroup 和其实现类 NioEventLoopGroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Unpooled-%E7%B1%BB"><span class="toc-number">1.3.18.10.</span> <span class="toc-text">Unpooled 类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty-%E5%BA%94%E7%94%A8%E5%AE%9E%E4%BE%8B-%E7%BE%A4%E8%81%8A%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.4.</span> <span class="toc-text">Netty 应用实例-群聊系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Netty-%E5%BF%83%E8%B7%B3%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6%E6%A1%88%E4%BE%8B"><span class="toc-number">1.4.1.</span> <span class="toc-text">Netty 心跳检测机制案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netty-%E9%80%9A%E8%BF%87-WebSocket-%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%95%BF%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.4.2.</span> <span class="toc-text">Netty 通过 WebSocket 编程实现服务器和客户端长连接</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Netty-BASE-2　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/05/24/Netty-BASE-3/" title="Pre: Netty-BASE-3">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/05/20/Netty-BASE-1/" title="Next: Netty-BASE-1">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

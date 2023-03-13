@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sevattal" />
+
+
+
+<meta name="description" content="Oracle DML 语句 34 个性能注意事项转自：http:&#x2F;&#x2F;www.2cto.com&#x2F;database&#x2F;201301&#x2F;181269.html 支持原创">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle-DML-Performance-1">
+<meta property="og:url" content="http://yoursite.com/2022/02/28/Oracle-DML-Performance-1/index.html">
+<meta property="og:site_name" content="Sevattal">
+<meta property="og:description" content="Oracle DML 语句 34 个性能注意事项转自：http:&#x2F;&#x2F;www.2cto.com&#x2F;database&#x2F;201301&#x2F;181269.html 支持原创">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-28T05:58:51.000Z">
+<meta property="article:modified_time" content="2022-11-18T01:11:43.322Z">
+<meta property="article:author" content="Sevattal">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sevattal" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Oracle-DML-Performance-1 | Sevattal</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/my_img1.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about_me/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRM/" rel="tag">CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cisco/" rel="tag">Cisco</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Config/" rel="tag">Config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Consul/" rel="tag">Consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Corosync-Pacemaker-CRM/" rel="tag">Corosync-Pacemaker-CRM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crontab/" rel="tag">Crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DG/" rel="tag">DG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRBD/" rel="tag">DRBD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/" rel="tag">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EXP/" rel="tag">EXP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eureka/" rel="tag">Eureka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/" rel="tag">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask-SQLalchemy/" rel="tag">Flask-SQLalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCC/" rel="tag">GCC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GateWay/" rel="tag">GateWay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HUAWEI/" rel="tag">HUAWEI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/" rel="tag">Hystrix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JMeter/" rel="tag">JMeter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Job/" rel="tag">Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVM/" rel="tag">LVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lightroom/" rel="tag">Lightroom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mail/" rel="tag">Mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongDB/" rel="tag">MongDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql-Lock/" rel="tag">Mysql-Lock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NAT/" rel="tag">NAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTP/" rel="tag">NTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetworkCard/" rel="tag">NetworkCard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/" rel="tag">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/" rel="tag">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSH/" rel="tag">OpenSSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-RAC/" rel="tag">Oracle RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Inspection/" rel="tag">Oracle-Inspection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oracle-Name/" rel="tag">Oracle-Name</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PGPool-II/" rel="tag">PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-PGPool-II/" rel="tag">Postgres+PGPool-II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres-Copy/" rel="tag">Postgres-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAC/" rel="tag">RAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RMAN/" rel="tag">RMAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rancher/" rel="tag">Rancher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-AOF/" rel="tag">Redis-AOF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Cluster/" rel="tag">Redis-Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Copy/" rel="tag">Redis-Copy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Memory/" rel="tag">Redis-Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-RDB/" rel="tag">Redis-RDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis-Sentinel/" rel="tag">Redis-Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regedit/" rel="tag">Regedit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Restore/" rel="tag">Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ribbon/" rel="tag">Ribbon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Route/" rel="tag">Route</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SNMP/" rel="tag">SNMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/" rel="tag">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STP/" rel="tag">STP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/" rel="tag">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ShareDisk/" rel="tag">ShareDisk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sleuth/" rel="tag">Sleuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Supervisor/" rel="tag">Supervisor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swap/" rel="tag">Swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Switch/" rel="tag">Switch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TinyProxy/" rel="tag">TinyProxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trigger/" rel="tag">Trigger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USB/" rel="tag">USB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLAN/" rel="tag">VLAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMware/" rel="tag">VMware</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VTP/" rel="tag">VTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video-Clip/" rel="tag">Video-Clip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://sevattal.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">乌拉乌拉乌拉乌拉乌拉乌拉</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/my_img1.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about_me/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:923762269@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://sevattal.github.io" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Oracle-DML-Performance-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/02/28/Oracle-DML-Performance-1/" class="article-date">
+      <time datetime="2022-02-28T05:58:51.000Z" itemprop="datePublished">2022-02-28</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Oracle-DML-Performance-1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="Oracle-DML-语句-34-个性能注意事项"><a href="#Oracle-DML-语句-34-个性能注意事项" class="headerlink" title="Oracle DML 语句 34 个性能注意事项"></a>Oracle DML 语句 34 个性能注意事项</h1><p>转自：<a target="_blank" rel="noopener" href="http://www.2cto.com/database/201301/181269.html">http://www.2cto.com/database/201301/181269.html</a> 支持原创</p>
+<span id="more"></span>
+
+<h2 id="1、选择最有效率的表名顺序"><a href="#1、选择最有效率的表名顺序" class="headerlink" title="1、选择最有效率的表名顺序"></a>1、选择最有效率的表名顺序</h2><p>(只在基于规则的优化器中有效)：<br>ORACLE 的解析器按照从右到左的顺序处理 FROM 子句中的表名，FROM 子句中写在最后的表 (基础表 driving table) 将被最先处理，在 FROM 子句中包含多个表的情况下,你必须选择记录条数最少的表作为基础表。如果有3个以上的表连接查询, 那就需要选择交叉表 (intersection table) 作为基础表, 交叉表是指那个被其他表所引用的表.</p>
+<h2 id="2、WHERE-子句中的连接顺序"><a href="#2、WHERE-子句中的连接顺序" class="headerlink" title="2、WHERE 子句中的连接顺序"></a>2、WHERE 子句中的连接顺序</h2><p>ORACLE 采用自下而上的顺序解析 WHERE 子句,根据这个原理,表之间的连接必须写在其他 WHERE 条件之前, 那些可以过滤掉最大数量记录的条件必须写在 WHERE 子句的末尾.</p>
+<h2 id="3、SELECT-子句中避免使用-“-“"><a href="#3、SELECT-子句中避免使用-“-“" class="headerlink" title="3、SELECT 子句中避免使用 “ * “"></a>3、SELECT 子句中避免使用 “ * “</h2><p>ORACLE 在解析的过程中, 会将 “ * “ 依次转换成所有的列名, 这个工作是通过查询数据字典完成的, 这意味着将耗费更多的时间</p>
+<h2 id="4、减少访问数据库的次数"><a href="#4、减少访问数据库的次数" class="headerlink" title="4、减少访问数据库的次数"></a>4、减少访问数据库的次数</h2><p>ORACLE 在内部执行了许多工作: 解析 SQL 语句, 估算索引的利用率, 绑定变量, 读数据块等;</p>
+<h2 id="5、在-SQL-Plus-SQL-Forms-和-Pro-C-中重新设置-ARRAYSIZE-参数"><a href="#5、在-SQL-Plus-SQL-Forms-和-Pro-C-中重新设置-ARRAYSIZE-参数" class="headerlink" title="5、在 SQL * Plus , SQL * Forms 和 Pro * C 中重新设置 ARRAYSIZE 参数"></a>5、在 SQL * Plus , SQL * Forms 和 Pro * C 中重新设置 ARRAYSIZE 参数</h2><p>可以增加每次数据库访问的检索数据量 ,建议值为 200</p>
+<h2 id="6、使用-DECODE-函数来减少处理时间"><a href="#6、使用-DECODE-函数来减少处理时间" class="headerlink" title="6、使用 DECODE 函数来减少处理时间"></a>6、使用 DECODE 函数来减少处理时间</h2><p>使用 DECODE 函数可以避免重复扫描相同记录或重复连接相同的表.</p>
+<h2 id="7、整合简单、无关联的数据库访问"><a href="#7、整合简单、无关联的数据库访问" class="headerlink" title="7、整合简单、无关联的数据库访问"></a>7、整合简单、无关联的数据库访问</h2><p>如果你有几个简单的数据库查询语句,你可以把它们整合到一个查询中(即使它们之间没有关系)</p>
+<h2 id="8、删除重复记录"><a href="#8、删除重复记录" class="headerlink" title="8、删除重复记录"></a>8、删除重复记录</h2><p>最高效的删除重复记录方法 ( 因为使用了 ROWID)例子：</p>
+<pre><code>DELETE FROM EMP E WHERE E.ROWID &gt; (SELECT MIN(X.ROWID)  FROM EMP X WHERE X.EMP_NO = E.EMP_NO);
+</code></pre>
+<h2 id="9、用-TRUNCATE-替代-DELETE"><a href="#9、用-TRUNCATE-替代-DELETE" class="headerlink" title="9、用 TRUNCATE 替代 DELETE"></a>9、用 TRUNCATE 替代 DELETE</h2><p>当删除表中的记录时,在通常情况下, 回滚段(rollback segments ) 用来存放可以被恢复的信息。如果你没有 COMMIT 事务, ORACLE 会将数据恢复到删除之前的状态(准确地说是恢复到执行删除命令之前的状况) 而当运用 TRUNCATE 时, 回滚段不再存放任何可被恢复的信息.当命令运行后,数据不能被恢复.因此很少的资源被调用,执行时间也会很短.</p>
+<h2 id="10、尽量多使用-COMMIT"><a href="#10、尽量多使用-COMMIT" class="headerlink" title="10、尽量多使用 COMMIT"></a>10、尽量多使用 COMMIT</h2><p>只要有可能,在程序中尽量多使用 COMMIT, 这样程序的性能得到提高,需求也会因为 COMMIT 所释放的资源而减少。COMMIT 所释放的资源有下列几种:<br>　　<br>    ① 回滚段上用于恢复数据的信息.<br>    ② 被程序语句获得的锁<br>    ③ redo log buffer 中的空间<br>    ④ ORACLE为管理上述3种资源中的内部花费</p>
+<h2 id="11、用-Where-子句替换-HAVING-子句"><a href="#11、用-Where-子句替换-HAVING-子句" class="headerlink" title="11、用 Where 子句替换 HAVING 子句"></a>11、用 Where 子句替换 HAVING 子句</h2><p>避免使用 HAVING 子句, HAVING 只会在检索出所有记录之后才对结果集进行过滤。这个处理需要排序,总计等操作。 如果能通过 WHERE 子句限制记录的数目,那就能减少这方面的开销. (非oracle中)on、where、having 这三个都可以加条件的子句中，on 是最先执行，where 次之，having最后，因为on是先把不符合条件的记录过滤后才进行统计，它就可以减少中间运算要处理的数据，按理说应该速度是最快的，where 也应该比 having 快点的，因为它过滤数据后才进行 sum，在两个表联接时才用 on 的，所以在一个表的时候，就剩下 where 跟 having 比较了。在这单表查询统计的情况下，如果要过滤的条件没有涉及到要计算字段，那它们的结果是一样的，只是 where 可以使用 rushmore 技术，而 having 就不能，在速度上后者要慢如果要涉及到计算的字段，就表示在没计算之前，这个字段的值是不确定的，根据上篇写的工作流程，where 的作用时间是在计算之前就完成的，而 having 就是在计算后才起作用的，所以在这种情况下，两者的结果会不同。在多表联接查询时，on 比 where 更早起作用。系统首先根据各个表之间的联接条件，把多个表合成一个临时表后，再由 where 进行过滤，然后再计算，计算完后再由 having 进行过滤。由此可见，要想过滤条件起到正确的作用，首先要明白这个条件应该在什么时候起作用，然后再决定放在那里</p>
+<h2 id="12、减少对表的查询"><a href="#12、减少对表的查询" class="headerlink" title="12、减少对表的查询"></a>12、减少对表的查询</h2><p>在含有子查询的 SQL 语句中,要特别注意减少对表的查询.例子：</p>
+<pre><code>SELECT TAB_NAME FROM TABLES WHERE (TAB_NAME,DB_VER) = ( SELECT  TAB_NAME,DB_VER FROM TAB_COLUMNS WHERE VERSION = 604)
+</code></pre>
+<h2 id="13、通过内部函数提高SQL效率"><a href="#13、通过内部函数提高SQL效率" class="headerlink" title="13、通过内部函数提高SQL效率"></a>13、通过内部函数提高SQL效率</h2><p>复杂的 SQL 往往牺牲了执行效率. 能够掌握上面的运用函数解决问题的方法在实际工作中是非常有意义的</p>
+<h2 id="14、使用表的别名-Alias"><a href="#14、使用表的别名-Alias" class="headerlink" title="14、使用表的别名 (Alias)"></a>14、使用表的别名 (Alias)</h2><p>当在 SQL 语句中连接多个表时, 请使用表的别名并把别名前缀于每个 Column 上.这样一来,就可以减少解析的时间并减少那些由 Column 歧义引起的语法错误.</p>
+<h2 id="15、用-EXISTS-替代-IN、用-NOT-EXISTS替代NOT-IN"><a href="#15、用-EXISTS-替代-IN、用-NOT-EXISTS替代NOT-IN" class="headerlink" title="15、用 EXISTS 替代 IN、用 NOT EXISTS替代NOT IN"></a>15、用 EXISTS 替代 IN、用 NOT EXISTS替代NOT IN</h2><p>在许多基于基础表的查询中,为了满足一个条件,往往需要对另一个表进行联接.在这种情况下, 使用 EXISTS(或NOT EXISTS) 通常将提高查询的效率. 在子查询中,NOT IN 子句将执行一个内部的排序和合并. 无论在哪种情况下,NOT IN 都是最低效的 (因为它对子查询中的表执行了一个全表遍历). 为了避免使用 NOT IN ,我们可以把它改写成外连接(Outer Joins )或 NOT EXISTS.</p>
+<p><strong>例子：</strong></p>
+<pre><code>//(高效)
+SELECT * FROM EMP (基础表)
+WHERE EMPNO &gt; 0 AND EXISTS (SELECT &quot;X&quot; FROM DEPT WHERE DEPT.DEPTNO = EMP.DEPTNO AND LOC = &quot;MELB&quot;)
+
+//(低效)
+SELECT * FROM EMP (基础表)
+WHERE EMPNO &gt; 0 AND DEPTNO IN(SELECT DEPTNO FROM DEPT WHERE LOC = &quot;MELB&quot;)
+</code></pre>
+<h2 id="16、识别-“低效执行”-的-SQL-语句"><a href="#16、识别-“低效执行”-的-SQL-语句" class="headerlink" title="16、识别 “低效执行” 的 SQL 语句"></a>16、识别 “低效执行” 的 SQL 语句</h2><p>虽然目前各种关于 SQL 优化的图形化工具层出不穷,但是写出自己的 SQL 工具来解决问题始终是一个最好的方法：</p>
+<pre><code>SELECT EXECUTIONS , DISK_READS, BUFFER_GETS,
+ROUND((BUFFER_GETS-DISK_READS)/BUFFER_GETS,2) Hit_radio,
+ROUND(DISK_READS/EXECUTIONS,2) Reads_per_run,
+SQL_TEXT
+FROM V$SQLAREA
+WHERE EXECUTIONS&gt;0
+AND BUFFER_GETS &gt; 0
+AND (BUFFER_GETS-DISK_READS)/BUFFER_GETS 0.8
+ORDER BY 4 DESC;
+</code></pre>
+<h2 id="17、用索引提高效率"><a href="#17、用索引提高效率" class="headerlink" title="17、用索引提高效率"></a>17、用索引提高效率</h2><p>索引是表的一个概念部分,用来提高检索数据的效率，ORACLE 使用了一个复杂的自平衡 B-tree 结构。通常,通过索引查询数据比全表扫描要快. 当 ORACLE 找出执行查询和 Update 语句的最佳路径时, ORACLE 优化器将使用索引. 同样在联结多个表时使用索引也可以提高效率. 另一个使用索引的好处是,它提供了主键 (primary key) 的唯一性验证。那些 LONG 或 LONG RAW 数据类型, 你可以索引几乎所有的。通常, 在大型表中使用索引特别有效。 当然,你也会发现, 在扫描小表时,使用索引同样能提高效率。虽然使用索引能得到查询效率的提高,但是我们也必须注意到它的代价. 索引需要空间来存储,也需要定期维护, 每当有记录在表中增减或索引列被修改时, 索引本身也会被修改. 这意味着每条记录的 INSERT , DELETE , UPDATE 将为此多付出 4 , 5 次的磁盘 I&#x2F;O 。 因为索引需要额外的存储空间和处理,那些不必要的索引反而会使查询反应时间变慢。定期的重构索引是有必要的。</p>
+<pre><code>ALTER INDEX REBUILD
+</code></pre>
+<h2 id="18、用-EXISTS-替换-DISTINCT"><a href="#18、用-EXISTS-替换-DISTINCT" class="headerlink" title="18、用 EXISTS 替换 DISTINCT"></a>18、用 EXISTS 替换 DISTINCT</h2><p>当提交一个包含一对多表信息(比如部门表和雇员表)的查询时,避免在 SELECT 子句中使用 DISTINCT。 一般可以考虑用 EXIST 替换, EXISTS 使查询更为迅速,因为 RDBMS 核心模块将在子查询的条件一旦满足后,立刻返回结果. 例子：<br>　　<br>    &#x2F;&#x2F;(低效):<br>    SELECT DISTINCT DEPT_NO,DEPT_NAME<br>    FROM DEPT D , EMP E<br>    WHERE D.DEPT_NO &#x3D; E.DEPT_NO<br>    &#x2F;&#x2F;(高效):<br>    SELECT DEPT_NO,DEPT_NAME<br>    FROM DEPT D<br>    WHERE EXISTS ( SELECT “X”<br>    FROM EMP E WHERE E.DEPT_NO &#x3D; D.DEPT_NO);</p>
+<h2 id="19、sql-语句用大写的"><a href="#19、sql-语句用大写的" class="headerlink" title="19、sql 语句用大写的"></a>19、sql 语句用大写的</h2><p>因为oracle总是先解析sql语句，把小写的字母转换成大写的再执行</p>
+<h2 id="20、在-java-代码中尽量少用连接符-“-””-连接字符串"><a href="#20、在-java-代码中尽量少用连接符-“-””-连接字符串" class="headerlink" title="20、在 java 代码中尽量少用连接符 “+”” 连接字符串!"></a>20、在 java 代码中尽量少用连接符 “+”” 连接字符串!</h2><h2 id="21、避免在索引列上使用-NOT"><a href="#21、避免在索引列上使用-NOT" class="headerlink" title="21、避免在索引列上使用 NOT"></a>21、避免在索引列上使用 NOT</h2><p>通常，我们要避免在索引列上使用 NOT, NOT 会产生在和在索引列上使用函数相同的影响。当 ORACLE 遇到 “NOT”,他就会停止使用索引转而执行全表扫描.</p>
+<h2 id="22、避免在索引列上使用计算"><a href="#22、避免在索引列上使用计算" class="headerlink" title="22、避免在索引列上使用计算"></a>22、避免在索引列上使用计算</h2><p>WHERE子句中，如果索引列是函数的一部分.优化器将不使用索引而使用全表扫描.</p>
+<p><strong>举例:</strong></p>
+<pre><code>//低效：
+SELECT … FROM DEPT WHERE SAL * 12 &gt; 25000;
+//高效:
+SELECT … FROM DEPT WHERE SAL &gt; 25000/12;
+</code></pre>
+<h2 id="23、用-gt-x3D-替代-gt"><a href="#23、用-gt-x3D-替代-gt" class="headerlink" title="23、用 &gt;&#x3D; 替代 &gt;"></a>23、用 &gt;&#x3D; 替代 &gt;</h2><pre><code>//高效:
+SELECT * FROM EMP WHERE DEPTNO &gt;=4
+//低效:
+SELECT * FROM EMP WHERE DEPTNO &gt;3
+</code></pre>
+<p>两者的区别在于, 前者 DBMS 将直接跳到第一个 DEPT 等于 4 的记录而后者将首先定位到 DEPTNO&#x3D;3 的记录并且向前扫描到第一个 DEPT 大于 3 的记录.</p>
+<h2 id="24、用-UNION-替换-OR-适用于索引列"><a href="#24、用-UNION-替换-OR-适用于索引列" class="headerlink" title="24、用 UNION 替换 OR (适用于索引列)"></a>24、用 UNION 替换 OR (适用于索引列)</h2><p>通常情况下, 用 UNION 替换 WHERE 子句中的 OR 将会起到较好的效果。对索引列使用 OR 将造成全表扫描。</p>
+<p><label style="color:red"><strong>注意：以上规则只针对多个索引列有效。如果有 column 没有被索引, 查询效率可能会因为你没有选择OR而降低. 在下面的例子中, LOC_ID 和REGION上都建有索引。</strong></label></p>
+<pre><code>//高效:
+SELECT LOC_ID , LOC_DESC , REGION
+FROM LOCATION
+WHERE LOC_ID = 10
+UNION
+SELECT LOC_ID , LOC_DESC , REGION
+FROM LOCATION
+WHERE REGION = &quot;MELBOURNE&quot;
+//低效:
+SELECT LOC_ID , LOC_DESC , REGION
+FROM LOCATION
+WHERE LOC_ID = 10 OR REGION = &quot;MELBOURNE&quot;
+</code></pre>
+<p>如果你坚持要用 OR, 那就需要返回记录最少的索引列写在最前面.</p>
+<h2 id="25、用-IN-来替换-OR"><a href="#25、用-IN-来替换-OR" class="headerlink" title="25、用 IN 来替换 OR"></a>25、用 IN 来替换 OR</h2><p>这是一条简单易记的规则，但是实际的执行效果还须检验，在 ORACLE8i 下，两者的执行路径似乎是相同的。</p>
+<pre><code>//低效:
+SELECT…. FROM LOCATION WHERE LOC_ID = 10 OR LOC_ID = 20 OR LOC_ID = 30
+//高效:
+SELECT… FROM LOCATION WHERE LOC_IN IN (10,20,30);
+</code></pre>
+<h2 id="26、避免在索引列上使用-IS-NULL-和-IS-NOT-NULL"><a href="#26、避免在索引列上使用-IS-NULL-和-IS-NOT-NULL" class="headerlink" title="26、避免在索引列上使用 IS NULL 和 IS NOT NULL"></a>26、避免在索引列上使用 IS NULL 和 IS NOT NULL</h2><p>避免在索引中使用任何可以为空的列，ORACLE 将无法使用该索引。对于单列索引，如果列包含空值，索引中将不存在此记录. 对于复合索引，如果每个列都为空，索引中同样不存在此记录。如果至少有一个列不为空，则记录存在于索引中.举例: 如果唯一性索引建立在表的 A 列和 B 列上, 并且表中存在一条记录的 A, B 值为 (123,null) , ORACLE将不接受下一条具有相同 A,B 值 (123,null) 的记录(插入)。然而如果所有的索引列都为空，ORACLE 将认为整个键值为空而空不等于空. 因此你可以插入 1000 条具有相同键值的记录,当然它们都是空! 因为空值不存在于索引列中,所以 WHERE 子句中对索引列进行空值比较将使 ORACLE 停用该索引。</p>
+<pre><code>//低效: (索引失效)
+SELECT … FROM DEPARTMENT WHERE DEPT_CODE IS NOT NULL;
+//高效: (索引有效)
+SELECT … FROM DEPARTMENT WHERE DEPT_CODE &gt;=0;
+</code></pre>
+<h2 id="27、总是使用索引的第一个列"><a href="#27、总是使用索引的第一个列" class="headerlink" title="27、总是使用索引的第一个列"></a>27、总是使用索引的第一个列</h2><p>如果索引是建立在多个列上, 只有在它的第一个列 (leading column)被 where 子句引用时,优化器才会选择使用该索引。这也是一条简单而重要的规则，当仅引用索引的第二个列时,优化器使用了全表扫描而忽略了索引</p>
+<h2 id="28、-用-UNION-ALL-替换-UNION"><a href="#28、-用-UNION-ALL-替换-UNION" class="headerlink" title="28、 用 UNION-ALL 替换 UNION"></a>28、 用 UNION-ALL 替换 UNION</h2><p>( 如果有可能的话)<br>当 SQL 语句需要 UNION 两个查询结果集合时,这两个结果集合会以 UNION-ALL 的方式被合并, 然后在输出最终结果前进行排序. 如果用 UNION ALL 替代 UNION, 这样排序就不是必要了. 效率就会因此得到提高. 需要注意的是，UNION ALL 将重复输出两个结果集合中相同记录. 因此各位还是要从业务需求分析使用 UNION ALL 的可行性. UNION 将对结果集合排序,这个操作会使用到 SORT_AREA_SIZE 这块内存. 对于这块内存的优化也是相当重要的. 下面的SQL可以用来查询排序的消耗量</p>
+<pre><code>//低效：
+SELECT ACCT_NUM, BALANCE_AMT
+FROM DEBIT_TRANSACTIONS
+WHERE TRAN_DATE = &quot;31-DEC-95&quot;
+UNION 
+SELECT ACCT_NUM, BALANCE_AMT
+FROM DEBIT_TRANSACTIONS
+WHERE TRAN_DATE = &quot;31-DEC-95&quot;
+//高效:
+SELECT ACCT_NUM, BALANCE_AMT
+FROM DEBIT_TRANSACTIONS
+WHERE TRAN_DATE = &quot;31-DEC-95&quot;
+UNION ALL
+SELECT ACCT_NUM, BALANCE_AMT
+FROM DEBIT_TRANSACTIONS
+WHERE TRAN_DATE = &quot;31-DEC-95&quot;
+</code></pre>
+<h2 id="29、用WHERE替代ORDER-BY"><a href="#29、用WHERE替代ORDER-BY" class="headerlink" title="29、用WHERE替代ORDER BY"></a>29、用WHERE替代ORDER BY</h2><p>ORDER BY 子句只在两种严格的条件下使用索引; ORDER BY 中所有的列必须包含在相同的索引中并保持在索引中的排列顺序; ORDER BY 中所有的列必须定义为非空。WHERE 子句使用的索引和 ORDER BY子句中所使用的索引不能并列。</p>
+<p><strong>例如:</strong></p>
+<pre><code>//表DEPT包含以下列:
+DEPT_CODE PK NOT NULL
+DEPT_DESC NOT NULL
+DEPT_TYPE NULL
+//低效: (索引不被使用)
+SELECT DEPT_CODE FROM DEPT ORDER BY DEPT_TYPE
+//高效: (使用索引)
+SELECT DEPT_CODE FROM DEPT WHERE DEPT_TYPE &gt; 0
+</code></pre>
+<h2 id="30、避免改变索引列的类型"><a href="#30、避免改变索引列的类型" class="headerlink" title="30、避免改变索引列的类型"></a>30、避免改变索引列的类型</h2><p>当比较不同数据类型的数据时, ORACLE 自动对列进行简单的类型转换<br>假设 EMPNO。是一个数值类型的索引列。</p>
+<pre><code>SELECT … FROM EMP WHERE EMPNO = &quot;123&quot;
+</code></pre>
+<p>实际上,经过ORACLE类型转换, 语句转化为:</p>
+<pre><code>SELECT … FROM EMP WHERE EMPNO = TO_NUMBER(&quot;123&quot;)
+</code></pre>
+<p>幸运的是,类型转换没有发生在索引列上,索引的用途没有被改变<br>现在,假设 EMP_TYPE 是一个字符类型的索引列</p>
+<pre><code>SELECT … FROM EMP WHERE EMP_TYPE = 123
+</code></pre>
+<p>这个语句被 ORACLE 转换为:</p>
+<pre><code>SELECT … FROM EMP NUMBER(EMP_TYPE)=123
+</code></pre>
+<p>因为内部发生的类型转换, 这个索引将不会被用到! 为了避免 ORACLE 对你的 SQL 进行隐式的类型转换, 最好把类型转换用显式表现出来. 注意当字符和数值比较时, ORACLE 会优先转换数值类型到字符类型</p>
+<h2 id="31、需要当心的-WHERE-子句"><a href="#31、需要当心的-WHERE-子句" class="headerlink" title="31、需要当心的 WHERE 子句"></a>31、需要当心的 WHERE 子句</h2><p>某些 SELECT 语句中的 WHERE 子句不使用索引。这里有一些例子。</p>
+<pre><code>&quot;!=&quot; 将不使用索引. 记住, 索引只能告诉你什么存在于表中, 而不能告诉你什么不存在于表中。
+&quot;||&quot;是字符连接函数. 就象其他函数那样, 停用了索引。
+&quot;+&quot;是数学函数. 就象其他数学函数那样, 停用了索引。
+</code></pre>
+<p>相同的索引列不能互相比较,这将会启用全表扫描。</p>
+<h2 id="32、如果检索数据量超过-30-的表中记录数-使用索引将没有显著的效率提高"><a href="#32、如果检索数据量超过-30-的表中记录数-使用索引将没有显著的效率提高" class="headerlink" title="32、如果检索数据量超过 30% 的表中记录数.使用索引将没有显著的效率提高."></a>32、如果检索数据量超过 30% 的表中记录数.使用索引将没有显著的效率提高.</h2><p>在特定情况下, 使用索引也许会比全表扫描慢, 但这是同一个数量级上的区别. 而通常情况下,使用索引比全表扫描要块几倍乃至几千倍!</p>
+<h2 id="33、避免使用耗费资源的操作"><a href="#33、避免使用耗费资源的操作" class="headerlink" title="33、避免使用耗费资源的操作"></a>33、避免使用耗费资源的操作</h2><p>带有 DISTINCT,UNION,MINUS,INTERSECT,ORDER BY 的 SQL 语句会启动 SQL 引擎,执行耗费资源的排序 (SORT)功能. DISTINCT 需要一次排序操作, 而其他的至少需要执行两次排序。通常, 带有 UNION, MINUS , INTERSECT 的 SQL 语句都可以用其他方式重写. 如果你的数据库的 SORT_AREA_SIZE 调配得好, 使用 UNION , MINUS, INTERSECT 也是可以考虑的, 毕竟它们的可读性很强。</p>
+<h2 id="34、优化-GROUP-BY"><a href="#34、优化-GROUP-BY" class="headerlink" title="34、优化 GROUP BY"></a>34、优化 GROUP BY</h2><p>提高 GROUP BY 语句的效率, 可以通过将不需要的记录在 GROUP BY 之前过滤掉。下面两个查询返回相同结果但第二个明显就快了许多。</p>
+<pre><code>//低效: 
+SELECT JOB , AVG(SAL)
+FROM EMP
+GROUP JOB
+HAVING JOB = &quot;PRESIDENT&quot;
+OR JOB = &quot;MANAGER&quot;
+//高效:
+SELECT JOB , AVG(SAL)
+FROM EMP
+WHERE JOB = &quot;PRESIDENT&quot;
+OR JOB = &quot;MANAGER&quot;
+GROUP JOB
+</code></pre>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
+        <p><span>Created:</span>2022-02-28, 13:58:51</p>
+        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2022/02/28/Oracle-DML-Performance-1/" title="Oracle-DML-Performance-1">http://yoursite.com/2022/02/28/Oracle-DML-Performance-1/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2022/02/28/Oracle-DML-Performance-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2022/03/19/Oracle-Flashback-1/">
+                    Oracle-Flashback-1
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2022/02/28/Oracle-Trigger-System-1/">
+                    Oracle-Trigger-System-1
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle-DML-%E8%AF%AD%E5%8F%A5-34-%E4%B8%AA%E6%80%A7%E8%83%BD%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text">Oracle DML 语句 34 个性能注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E9%80%89%E6%8B%A9%E6%9C%80%E6%9C%89%E6%95%88%E7%8E%87%E7%9A%84%E8%A1%A8%E5%90%8D%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">1、选择最有效率的表名顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81WHERE-%E5%AD%90%E5%8F%A5%E4%B8%AD%E7%9A%84%E8%BF%9E%E6%8E%A5%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">2、WHERE 子句中的连接顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81SELECT-%E5%AD%90%E5%8F%A5%E4%B8%AD%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8-%E2%80%9C-%E2%80%9C"><span class="toc-number">1.3.</span> <span class="toc-text">3、SELECT 子句中避免使用 “ * “</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E5%87%8F%E5%B0%91%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%AC%A1%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">4、减少访问数据库的次数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E5%9C%A8-SQL-Plus-SQL-Forms-%E5%92%8C-Pro-C-%E4%B8%AD%E9%87%8D%E6%96%B0%E8%AE%BE%E7%BD%AE-ARRAYSIZE-%E5%8F%82%E6%95%B0"><span class="toc-number">1.5.</span> <span class="toc-text">5、在 SQL * Plus , SQL * Forms 和 Pro * C 中重新设置 ARRAYSIZE 参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E4%BD%BF%E7%94%A8-DECODE-%E5%87%BD%E6%95%B0%E6%9D%A5%E5%87%8F%E5%B0%91%E5%A4%84%E7%90%86%E6%97%B6%E9%97%B4"><span class="toc-number">1.6.</span> <span class="toc-text">6、使用 DECODE 函数来减少处理时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81%E6%95%B4%E5%90%88%E7%AE%80%E5%8D%95%E3%80%81%E6%97%A0%E5%85%B3%E8%81%94%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BF%E9%97%AE"><span class="toc-number">1.7.</span> <span class="toc-text">7、整合简单、无关联的数据库访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%E3%80%81%E5%88%A0%E9%99%A4%E9%87%8D%E5%A4%8D%E8%AE%B0%E5%BD%95"><span class="toc-number">1.8.</span> <span class="toc-text">8、删除重复记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9%E3%80%81%E7%94%A8-TRUNCATE-%E6%9B%BF%E4%BB%A3-DELETE"><span class="toc-number">1.9.</span> <span class="toc-text">9、用 TRUNCATE 替代 DELETE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10%E3%80%81%E5%B0%BD%E9%87%8F%E5%A4%9A%E4%BD%BF%E7%94%A8-COMMIT"><span class="toc-number">1.10.</span> <span class="toc-text">10、尽量多使用 COMMIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11%E3%80%81%E7%94%A8-Where-%E5%AD%90%E5%8F%A5%E6%9B%BF%E6%8D%A2-HAVING-%E5%AD%90%E5%8F%A5"><span class="toc-number">1.11.</span> <span class="toc-text">11、用 Where 子句替换 HAVING 子句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12%E3%80%81%E5%87%8F%E5%B0%91%E5%AF%B9%E8%A1%A8%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.12.</span> <span class="toc-text">12、减少对表的查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13%E3%80%81%E9%80%9A%E8%BF%87%E5%86%85%E9%83%A8%E5%87%BD%E6%95%B0%E6%8F%90%E9%AB%98SQL%E6%95%88%E7%8E%87"><span class="toc-number">1.13.</span> <span class="toc-text">13、通过内部函数提高SQL效率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14%E3%80%81%E4%BD%BF%E7%94%A8%E8%A1%A8%E7%9A%84%E5%88%AB%E5%90%8D-Alias"><span class="toc-number">1.14.</span> <span class="toc-text">14、使用表的别名 (Alias)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15%E3%80%81%E7%94%A8-EXISTS-%E6%9B%BF%E4%BB%A3-IN%E3%80%81%E7%94%A8-NOT-EXISTS%E6%9B%BF%E4%BB%A3NOT-IN"><span class="toc-number">1.15.</span> <span class="toc-text">15、用 EXISTS 替代 IN、用 NOT EXISTS替代NOT IN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16%E3%80%81%E8%AF%86%E5%88%AB-%E2%80%9C%E4%BD%8E%E6%95%88%E6%89%A7%E8%A1%8C%E2%80%9D-%E7%9A%84-SQL-%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.16.</span> <span class="toc-text">16、识别 “低效执行” 的 SQL 语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17%E3%80%81%E7%94%A8%E7%B4%A2%E5%BC%95%E6%8F%90%E9%AB%98%E6%95%88%E7%8E%87"><span class="toc-number">1.17.</span> <span class="toc-text">17、用索引提高效率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18%E3%80%81%E7%94%A8-EXISTS-%E6%9B%BF%E6%8D%A2-DISTINCT"><span class="toc-number">1.18.</span> <span class="toc-text">18、用 EXISTS 替换 DISTINCT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19%E3%80%81sql-%E8%AF%AD%E5%8F%A5%E7%94%A8%E5%A4%A7%E5%86%99%E7%9A%84"><span class="toc-number">1.19.</span> <span class="toc-text">19、sql 语句用大写的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20%E3%80%81%E5%9C%A8-java-%E4%BB%A3%E7%A0%81%E4%B8%AD%E5%B0%BD%E9%87%8F%E5%B0%91%E7%94%A8%E8%BF%9E%E6%8E%A5%E7%AC%A6-%E2%80%9C-%E2%80%9D%E2%80%9D-%E8%BF%9E%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.20.</span> <span class="toc-text">20、在 java 代码中尽量少用连接符 “+”” 连接字符串!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21%E3%80%81%E9%81%BF%E5%85%8D%E5%9C%A8%E7%B4%A2%E5%BC%95%E5%88%97%E4%B8%8A%E4%BD%BF%E7%94%A8-NOT"><span class="toc-number">1.21.</span> <span class="toc-text">21、避免在索引列上使用 NOT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22%E3%80%81%E9%81%BF%E5%85%8D%E5%9C%A8%E7%B4%A2%E5%BC%95%E5%88%97%E4%B8%8A%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97"><span class="toc-number">1.22.</span> <span class="toc-text">22、避免在索引列上使用计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23%E3%80%81%E7%94%A8-gt-x3D-%E6%9B%BF%E4%BB%A3-gt"><span class="toc-number">1.23.</span> <span class="toc-text">23、用 &gt;&#x3D; 替代 &gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#24%E3%80%81%E7%94%A8-UNION-%E6%9B%BF%E6%8D%A2-OR-%E9%80%82%E7%94%A8%E4%BA%8E%E7%B4%A2%E5%BC%95%E5%88%97"><span class="toc-number">1.24.</span> <span class="toc-text">24、用 UNION 替换 OR (适用于索引列)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#25%E3%80%81%E7%94%A8-IN-%E6%9D%A5%E6%9B%BF%E6%8D%A2-OR"><span class="toc-number">1.25.</span> <span class="toc-text">25、用 IN 来替换 OR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#26%E3%80%81%E9%81%BF%E5%85%8D%E5%9C%A8%E7%B4%A2%E5%BC%95%E5%88%97%E4%B8%8A%E4%BD%BF%E7%94%A8-IS-NULL-%E5%92%8C-IS-NOT-NULL"><span class="toc-number">1.26.</span> <span class="toc-text">26、避免在索引列上使用 IS NULL 和 IS NOT NULL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#27%E3%80%81%E6%80%BB%E6%98%AF%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%88%97"><span class="toc-number">1.27.</span> <span class="toc-text">27、总是使用索引的第一个列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#28%E3%80%81-%E7%94%A8-UNION-ALL-%E6%9B%BF%E6%8D%A2-UNION"><span class="toc-number">1.28.</span> <span class="toc-text">28、 用 UNION-ALL 替换 UNION</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#29%E3%80%81%E7%94%A8WHERE%E6%9B%BF%E4%BB%A3ORDER-BY"><span class="toc-number">1.29.</span> <span class="toc-text">29、用WHERE替代ORDER BY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#30%E3%80%81%E9%81%BF%E5%85%8D%E6%94%B9%E5%8F%98%E7%B4%A2%E5%BC%95%E5%88%97%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.30.</span> <span class="toc-text">30、避免改变索引列的类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#31%E3%80%81%E9%9C%80%E8%A6%81%E5%BD%93%E5%BF%83%E7%9A%84-WHERE-%E5%AD%90%E5%8F%A5"><span class="toc-number">1.31.</span> <span class="toc-text">31、需要当心的 WHERE 子句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#32%E3%80%81%E5%A6%82%E6%9E%9C%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE%E9%87%8F%E8%B6%85%E8%BF%87-30-%E7%9A%84%E8%A1%A8%E4%B8%AD%E8%AE%B0%E5%BD%95%E6%95%B0-%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E5%B0%86%E6%B2%A1%E6%9C%89%E6%98%BE%E8%91%97%E7%9A%84%E6%95%88%E7%8E%87%E6%8F%90%E9%AB%98"><span class="toc-number">1.32.</span> <span class="toc-text">32、如果检索数据量超过 30% 的表中记录数.使用索引将没有显著的效率提高.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#33%E3%80%81%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E8%80%97%E8%B4%B9%E8%B5%84%E6%BA%90%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.33.</span> <span class="toc-text">33、避免使用耗费资源的操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#34%E3%80%81%E4%BC%98%E5%8C%96-GROUP-BY"><span class="toc-number">1.34.</span> <span class="toc-text">34、优化 GROUP BY</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Oracle-DML-Performance-1　| Sevattal　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2022/03/19/Oracle-Flashback-1/" title="Pre: Oracle-Flashback-1">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2022/02/28/Oracle-Trigger-System-1/" title="Next: Oracle-Trigger-System-1">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Copy-Module-1/">Ansible-Base-Copy-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Module-1/">Ansible-Base-Module-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-Variable-1/">Ansible-Base-Variable-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/13/Ansible-Base-1/">Ansible-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/Materialized-View-1/">Materialized-View-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/03/10/BigLogFile-Cut-1/">BigLogFile-Cut-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/01/05/Snmp-Base-1/">Snmp-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Linux-Disable-IPV6/">Linux-Disable-IPV6</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-11-Cypher-Function/">Neo4j-11-Cypher-Function</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-10-Update-Data/">Neo4j-10-Update-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-9-Match-Data/">Neo4j-9-Match-Data</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-8-Projection-Filtering/">Neo4j-8-Projection-Filtering</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-7-Pattern/">Neo4j-7-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-6-Cypher-Base/">Neo4j-6-Cypher-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-4-Net-Driver/">Neo4j-4-Net-Driver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Neo4j-1-Window-Install/">Neo4j-1-Window-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/Window-Regedit/">Window-Regedit</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/14/CentOS-9-NetworkManger-1/">CentOS-9-NetworkManger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/23/Hacking-Tool-Base-1/">Hacking-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/18/Metasploit-Base-1/">Metasploit-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Script-Kiddies-Base-1/">Script-Kiddies-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-2/">Wireshark-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/PE-Base-1/">PE-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Dos-Debug-Base-1/">Dos-Debug-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/Linux-Clean-Log-1/">Linux-Clean-Log-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/17/WebSocket-Front-Code-1/">WebSocket-Front-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Differ-1/">Nasm-Masm-Differ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Oracle-Linux-SqlPlus-Garbled-Code-1/">Oracle-Linux-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/11/16/Nasm-Masm-Base-1/">Nasm-Masm-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/Window-Cmd-Garbled-Code-Resolution-1/">Window-Cmd-Garbled-Code-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Sys-Guid-Func-1/">Oracle-Sys_Guid-Func-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Achive-ORA-00257/">Oracle-Achive-ORA-00257</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-User-Progress-1/">Oracle-User-Progress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Container-Base-1/">Oracle-Container-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/26/Oracle-Control-File-1/">Oracle-Control-File-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-Openssl-1/">Linux-K8S-Openssl-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-K8S-CFSSL-1/">Linux-K8S-CFSSL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Flannel-1/">Linux-Flannel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Calico-1/">Linux-Calico-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-Nginx-Ingress-1/">Linux-Nginx-Ingress-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-DNAT-SNAT-1/">Linux-ipatables-DNAT-SNAT-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Linux-ipatables-1/">Linux-ipatables-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Oracle-Rman-Parameter-1/">Oracle-Rman-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/07/Sublime-Markdown-1/">Sublime-Markdown-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Parameter-1/">Jaspersoft-Parameter-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/06/Jaspersoft-Element-Details-1/">Jaspersoft-Element-Details-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/WeiBo-Batch-Delete-1/">WeiBo-Batch-Delete-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Jaspersoft-Char-Trunc-1/">Jaspersoft-Char-Trunc-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/29/Oracle-RedoLog-Restore-1/">Oracle-RedoLog-Restore-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Bind-Delay-Resolution-1/">Vue-Bind-Delay-Resolution-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Java-Generate-Password-Dict-1/">Java-Generate-Password-Dict-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/23/Vue-Convert-10-To-34-Example-1/">Vue-Convert-10-To-34-Example-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Java-Primordial-Text-File-Handle-1/">Java-Primordial-Text-File-Handle-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/15/Winget-Base-1/">Winget-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Kali-Brute-Force-Wifi-1/">Kali-Brute-Force-Wifi-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-Func-Table-1/">Oracle-Func-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/17/Oracle-ORA-03133-ERROR-1/">Oracle-ORA-03133-ERROR-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/14/Jasper-Reports-Server-Install-1/">Jasper-Reports-Server-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Stick-Point-Base-1/">Video-Clip-Stick-Point-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Lens-Length-Base-1/">Video-Clip-Lens-Length-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/30/Video-Clip-Structure-Base-1/">Video-Clip-Structure-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/FFmpeg-Base-1/">FFmpeg-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-NAT-DHCP-PPP-1/">Network-NAT-DHCP-PPP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/05/Network-Switch-STP-1/">Network-Switch-STP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VTP-1/">Network-Switch-VTP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/04/Network-Switch-VLAN-1/">Network-Switch-VLAN-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-ACL-1/">Network-Route-ACL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-EIGRP-1/">Network-Route-EIGRP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-2/">Network-Route-OSPF-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/Network-Route-OSPF-1/">Network-Route-OSPF-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Rip-1/">Network-Route-Rip-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/Network-Route-Base-1/">Network-Route-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/30/Oracle-Listener-1/">Oracle-Listener-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Google-Hacking-Base-1/">Google-Hacking-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/22/Oracle-Job-Base-1/">Oracle-Job-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Linux-Crontab-1/">Linux-Crontab-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Oracle-Window-SqlPlus-Garbled-Code-1/">Oracle-Window-SqlPlus-Garbled-Code-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/Docker-Run-Cmd-1/">Docker-Run-Cmd-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Supervisor-Base-1/">Linux-Supervisor-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Linux-Swap-Add-1/">Linux-Swap-Add-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Implementation-Plan-1/">Oracle-Implementation-Plan-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Nmap-Tool-Base-1/">Nmap-Tool-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Sublime3-Case-Switch-1/">Sublime3-Case-Switch-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-NULL-Value-1/">Oracle-NULL-Value-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-DML-Performance-1/">Oracle-DML-Performance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-System-1/">Oracle-Trigger-System-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DDL-1/">Oracle-Trigger-DDL-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-DML-1/">Oracle-Trigger-DML-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/28/Oracle-Trigger-1/">Oracle-Trigger-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/VIEW-TRANSFER-PARAMETERS-1/">VIEW-TRANSFER-PARAMETERS-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Start-With-Connect-By-1/">Oracle-Start-With-Connect-By-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/Oracle-Date-Case-1/">Oracle-Date-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Cmd-Line-1/">Jboss-Cmd-Line-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/14/Jboss-Standalone-Config-1/">Jboss-Standalone-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Oracle-Table-Information-1/">Oracle-Table-Information-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/Git-Server-Supplement-3/">Git-Server-Supplement-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/13/AirTest-Introduction-Config-1/">AirTest-Introduction-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/Window-Nirsoft-Tools-1/">Window-Nirsoft-Tools-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/10/SQLite-Introduction-1/">SQLite-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Git-Server-Supplement-2/">Git-Server-Supplement-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/07/Report-Data-Type-Conversion-Error-1/">Report-Data-Type-Conversion-Error-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/06/Oracle-ROWNUM-1/">Oracle-ROWNUM-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Jaspersoft-Studio-Hidden-1/">Jaspersoft-Studio-Hidden-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Java-Jboss-EJB-Project-Deploy-1/">Java-Jboss-EJB-Project-Deploy-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Create-Table-Case-1/">Oracle-Create-Table-Case-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Decode-1/">Oracle-Decode-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Git-Server-Supplement-1/">Git-Server-Supplement-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Oracle-Table-Connection-1/">Oracle-Table-Connection-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/Window-Kill-Process-1/">Window-Kill-Process-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/05/JavaSourceCode-SearchMethod-1/">JavaSourceCode-SearchMethod-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-3/">Lightroom-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-2/">Lightroom-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/Lightroom-Base-1/">Lightroom-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Scrapy-Basics-1/">Scrapy-Basics-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Ireport-Install-1/">Ireport-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-2/">Jaspersoft-Studio-Master-Child-Table-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Master-Child-Table-1/">Jaspersoft-Studio-Master-Child-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Jaspersoft-Studio-Install-1/">Jaspersoft-Studio-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Type-Table-1/">Oracle-Type-Table-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/04/Oracle-Exists-And-In-1/">Oracle-Exists-And-In-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-Kali-Install-1/">Linux-Kali-Install-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Oracle-19c-Debain-Install/">Oracle-19c-Debain-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/Linux-DPKG-BUG-1/">Linux-DPKG-BUG-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Photography-Introduction-1/">Photography-Introduction-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Graduation-Thesis-Guidance-2/">Graduation-Thesis-Guidance-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/22/Graduation-Thesis-Guidance-1/">Graduation-Thesis-Guidance-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/Rogue-Software-Process/">Rogue-Software-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/13/House-Lease-Contract-Template/">House-Lease-Contract-Template</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/Linux-Start-Fail-1/">Linux-Start-Fail-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-8/">JAVA-Thread-Base-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-7/">JAVA-Thread-Base-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/JAVA-Thread-Base-6/">JAVA-Thread-Base-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-5/">JAVA-Thread-Base-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/JAVA-Thread-Base-4/">JAVA-Thread-Base-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-3/">JAVA-Thread-Base-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-2/">JAVA-Thread-Base-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/31/JAVA-Thread-Base-1/">JAVA-Thread-Base-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/30/JAVA-Actual-Combat-6/">JAVA-Actual-Combat-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-5/">JAVA-Actual-Combat-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-4/">JAVA-Actual-Combat-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-3/">JAVA-Actual-Combat-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-2/">JAVA-Actual-Combat-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/28/JAVA-Actual-Combat-1/">JAVA-Actual-Combat-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-3/">Spring-Security-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/27/Spring-Security-BASE-2/">Spring-Security-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Spring-Security-BASE-1/">Spring-Security-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/24/Netty-BASE-3/">Netty-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/Netty-BASE-2/">Netty-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-7/">SpringBoot2-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-6/">SpringBoot2-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-5/">SpringBoot2-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/20/SpringBoot2-BASE-3/">SpringBoot2-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-2/">SpringBoot2-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/19/SpringBoot2-BASE-1/">SpringBoot2-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-7/">Spring-BASE-7</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-4/">Spring-BASE-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-3/">Spring-BASE-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-2/">Spring-BASE-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Stack-1/">JAVA-Stack-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Linked-List-1/">JAVA-Linked-List-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Arrays-Queues-1/">JAVA-Arrays-Queues-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SE-1/">JAVA-SE-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/12/JAVA-SpringMVC-1/">JAVA-SpringMVC-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/JAVA-RabbitMQ-1/">JAVA-RabbitMQ-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/SpringCloud-Alibaba-Sentinel-1/">SpringCloud-Alibaba-Sentinel-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-Nacos-1/">SpringCloud-Alibaba-Nacos-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/09/SpringCloud-Alibaba-1/">SpringCloud-Alibaba-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Sleuth-1/">SpringCloud-Sleuth-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/SpringCloud-Config-1/">SpringCloud-Config-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-GateWay-1/">SpringCloud-GateWay-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/07/SpringCloud-Hystrix-1/">SpringCloud-Hystrix-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-RegistrySummary-1/">SpringCloud-RegistrySummary-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/Zookeeper-Command-1/">Zookeeper-Command-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/04/SpringCloud-Eureka-1/">SpringCloud-Eureka-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/03/Java-Interview-Questions/">Java-Interview-Questions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Maven-Import-NotOpenJar/">Maven-Import-NotOpenJar</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/OpenFeign-And-Sentinel/">OpenFeign-And-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Nacos-Install/">Nacos-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/21/Apache-JMeter-Simple-Use/">Apache-JMeter-Simple-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Start-Extension/">Spring-Boot-Start-Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Spring-Boot-Cycle1/">Spring-Boot-Cycle1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/07/Mysql-Usage-Habit/">Mysql-Usage-Habit</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Coredns-1/">K8S-Coredns-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/K8S-Flannel/">K8S-Flannel</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/27/Nginx-ShareFile/">Nginx-ShareFile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Mysql-Install/">Mysql-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/K8S-Kubectl-Command/">K8S-Kubectl-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-Apache-Maven/">Java-Apache-Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/21/Java-SprintBoot-Error1/">Java-SprintBoot-Error1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/18/K8S-Binary-Install/">K8S-Binary-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Docker-Compose/">Docker-Compose</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Yaml-Language/">Yaml_Language</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Docker-Network-Operation/">Docker-Network-Operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Add-New-Volume/">Docker-Add-New-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Auto-Start/">Docker-Auto-Start</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Registry/">Docker-Registry</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Dockerfile/">Docker-Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-NetworkMode/">Docker-NetworkMode</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Volume/">Docker-Volume</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/11/Docker-Command1/">Docker-Command1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Docker-Mirror-Acceleration/">Docker-Mirror-Acceleration</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/10/Linux-NetworkCard-Rename/">Linux-NetworkCard-Rename</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Rancher-Install/">Rancher-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Hexo-Blog-Character-Escape/">Hexo-Blog-Character-Escape</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-HTML/">Mysql-Procedure-HTML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/06/Mysql-Procedure-Leave/">Mysql-Procedure-Leave</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/17/UsbEAmHostsEditor/">UsbEAmHostsEditor</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Postgres-Command/">Postgres-Command</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Elasticsearch-Cluster-Node-Parameters/">Elasticsearch-Cluster-Node-Parameters</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Elasticsearch-Install/">Linux-Elasticsearch-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Linux-Python-File-Sync/">Linux-Python-File-Sync</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Window-Process/">Window-Process</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/02/Mysql-Lock-1205/">Mysql-Lock-1205</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Hexo-Blog-1/">Hexo-Blog-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Python-SQLalchemy1/">Python-SQLalchemy1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Linux-TinyProxy/">Linux-TinyProxy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure3/">Mysql-Procedure3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/26/Mysql-Procedure2/">Mysql-Procedure2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Server/">Git-Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Git-Local/">Git-Local</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/22/Mysql-History/">Mysql-History</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Procedure1/">Mysql-Procedure1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Mysql-Log-Restore/">Mysql-Log-Restore</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Tomcat-Configuration/">Tomcat-Configuration</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/21/Spring-Boot-Packing/">Spring-Boot-Packing</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/31/Spring-Boot-BestProject/">Spring-Boot-BestProject</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/06/Mysql-Windows-Install/">Mysql-Windows-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/MongoDB-Install/">MongoDB-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-Name-Explain/">Oracle-Name-Explain</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-LimitConnection/">Oracle-LimitConnection</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Oracle-ConnResource1/">Oracle-ConnResource1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Cluster/">Redis-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Sentinel/">Redis-Sentinel</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Part-Copy-Principle/">Redis-Part-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy-Principle/">Redis-Copy-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Copy/">Redis-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Memory-Mode/">Redis-Memory-Mode</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence-Principle/">Redis-Persistence-Principle</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Persistence/">Redis-Persistence</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/02/Redis-Install/">Redis-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-PGPool-II/">Postgres-PGPool-II</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Copy/">Postgres-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Backup/">Postgres-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Postgres-Install/">Postgres-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Linux-Update-GCC9-3-0/">Linux-Update-GCC9.3.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-XtraBackup/">Mysql-XtraBackup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/18/Mysql-MysqlDump/">Mysql-MysqlDump</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-USB-Disk/">Window-USB-Disk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/Window-NTP/">Window-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Backup/">MongDB-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/12/MongDB-Copy-Cluster/">MongDB-Copy-Cluster</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC-CmdSimple/">Oracle-RAC-CmdSimple</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-RAC1/">Oracle-RAC1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/11/Oracle-DG2/">Oracle-DG2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/Linux-OpenSSH-Update/">Linux-OpenSSH-Update</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Corosync-Pacemaker-CRM/">Corosync-Pacemaker-CRM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CRM-Parameter/">CRM-Parameter</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Client/">CentOS-Mail-Client</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/CentOS-Mail-Address/">CentOS-Mail-Address</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-RMAN/">Oracle-Backup-RMAN</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Backup-EXP/">Oracle-Backup-EXP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Zabbix-Install/">Zabbix-Install</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-NTP/">Linux-NTP</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Other/">Oracle-Patrol-Other</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Security/">Oracle-Patrol-Security</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-CPU-IO-MEM/">Oracle-Patrol-CPU-IO-MEM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Performance/">Oracle-Patrol-Performance</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Backup/">Oracle-Patrol-Backup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Use/">Oracle-Patrol-Use</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Patrol-Base/">Oracle-Patrol-Base</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-Fragment/">Oracle-Fragment</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-RAC-Summary/">Oracle-RAC-Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/VMware-ShareDisk/">VMware-ShareDisk</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Oracle-DG1/">Oracle-DG1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Mariadb-Copy/">Mariadb-Copy</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-SSH/">Linux-SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-DRBD/">Linux-DRBD</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/Linux-LVM/">Linux_LVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/MyFirstBlog/">MyFirstBlog</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2023 Sevattal
+            </div>
+            <!--<div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a[target=_blank]").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
