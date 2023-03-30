@@ -257,6 +257,148 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Neo4j-3-Cypher-Query" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/12/14/Neo4j-3-Cypher-Query/" class="article-date">
+      <time datetime="2022-12-14T05:29:52.000Z" itemprop="datePublished">2022-12-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Neo4j-第三篇：-Cypher-查询入门"><a href="#Neo4j-第三篇：-Cypher-查询入门" class="headerlink" title="Neo4j 第三篇： Cypher 查询入门"></a>Neo4j 第三篇： Cypher 查询入门</h1><p>转载：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljhdo/p/5516793.html">https://www.cnblogs.com/ljhdo/p/5516793.html</a></p>
+<p>Neo4j 使用 Cypher 查询图形数据，Cypher 是描述性的图形查询语言，语法简单，功能强大，由于 Neo4j 在图形数据库家族中处于绝对领先的地位，拥有众多的用户基数，使得 Cypher 成为图形查询语言的事实上的标准。本文作为入门级的教程，我不会试图分析 Cypher 语言的全部内容，本文的目标是循序渐进地使用Cypher语言执行简单的 CRUD 操作，为了便于演示，本文在 Neo4j Browser 中执行 Cypher 示例代码。以下图形包含三个节点和两个关系，本文会一步一步讲解如何利用 Cypher 语言创建以下图形。</p>
+<p><img src="/2022/12/14/Neo4j-3-Cypher-Query/1.png"></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Database/">Database</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2022/12/14/Neo4j-3-Cypher-Query/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Neo4j-2-Graph-Theory" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/12/14/Neo4j-2-Graph-Theory/" class="article-date">
+      <time datetime="2022-12-14T05:16:52.000Z" itemprop="datePublished">2022-12-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Neo4j-第二篇：图形数据库"><a href="#Neo4j-第二篇：图形数据库" class="headerlink" title="Neo4j 第二篇：图形数据库"></a>Neo4j 第二篇：图形数据库</h1><p>转载： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljhdo/p/5178225.html">https://www.cnblogs.com/ljhdo/p/5178225.html</a></p>
+<p>在深入学习图形数据库之前，首先理解属性图的基本概念。一个属性图是有向图，由顶点（Vertex），边（Edge），标签（Lable），关系类型（Relationship Type）和属性（Property）组成。</p>
+<p>在属性图形中，节点和关系是最重要的实体，顶点也称作节点（Node），边也称作关系（Relationship）。所有的节点是独立存在的，但是可以为节点设置标签，那么拥有相同标签的节点属于一个分组，也就是一个集合。关系通过关系类型来分组，类型相同的关系属于同一个集合。节点可以有0个、1个或多个标签，但是关系必须设置关系类型，并且只能设置一个关系类型。</p>
+<p>关系是有向的，关系的两端是起始节点和结束节点，通过有向的箭头来标识方向，节点之间的双向关系通过两个方向相反的关系来标识。</p>
+<p>Neo4j 图形数据库的查询语言是 Cypher，用于操作和查询属性图，它是图形数据库语言中事实上的标准。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Database/">Database</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2022/12/14/Neo4j-2-Graph-Theory/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Neo4j-1-Window-Install" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -775,139 +917,6 @@
       
         <p class="article-more-link">
           <a href="/2022/11/17/Wireshark-Base-2/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Wireshark-Base-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/11/17/Wireshark-Base-1/" class="article-date">
-      <time datetime="2022-11-17T04:26:57.000Z" itemprop="datePublished">2022-11-17</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/17/Wireshark-Base-1/">Wireshark-Base-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Wireshark-抓包基础-1"><a href="#Wireshark-抓包基础-1" class="headerlink" title="Wireshark 抓包基础 1"></a>Wireshark 抓包基础 1</h1><h2 id="抓取报文"><a href="#抓取报文" class="headerlink" title="抓取报文:"></a>抓取报文:</h2><p>　　下载和安装好Wireshark之后，启动Wireshark并且在接口列表中选择接口名，然后开始在此接口上抓包。例如，如果想要在无线网络上抓取流量，点击无线接口。点击 Capture Options 可以配置高级属性，但现在无此必要。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Network/">Network</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2022/11/17/Wireshark-Base-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-PE-Base-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/11/17/PE-Base-1/" class="article-date">
-      <time datetime="2022-11-17T02:16:20.000Z" itemprop="datePublished">2022-11-17</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/17/PE-Base-1/">PE-Base-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="初识-PE-文件"><a href="#初识-PE-文件" class="headerlink" title="初识 PE 文件"></a>初识 PE 文件</h1><p>注：本篇文章为转载，我报错为笔记时没有保存原文章链接。</p>
-<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>PE (Portable Executable)，即可移植的执行体。<br>Linux 平台：ELF（Executable and Linking Format）文件结构。<br>一般在Windows平台下，所有的可执行文件诸如：exe、dll、sys、ocx、com等均适用PE文件结构。这些使用PE文件结构也被称为PE文件。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Reverse/">Reverse</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ASM/" rel="tag">ASM</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2022/11/17/PE-Base-1/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

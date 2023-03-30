@@ -257,6 +257,137 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Linux-Firewalld-Cmd-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2023/03/30/Linux-Firewalld-Cmd-1/" class="article-date">
+      <time datetime="2023-03-30T02:01:01.000Z" itemprop="datePublished">2023-03-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/03/30/Linux-Firewalld-Cmd-1/">Linux-Firewalld-Cmd-1</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Firewalld-命令的指南"><a href="#Firewalld-命令的指南" class="headerlink" title="Firewalld 命令的指南"></a>Firewalld 命令的指南</h1><h2 id="一、centos7-版本对防火墙进行加强-不再使用原来的-iptables-启用-firewalld"><a href="#一、centos7-版本对防火墙进行加强-不再使用原来的-iptables-启用-firewalld" class="headerlink" title="一、centos7 版本对防火墙进行加强,不再使用原来的 iptables,启用 firewalld"></a>一、centos7 版本对防火墙进行加强,不再使用原来的 iptables,启用 firewalld</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2023/03/30/Linux-Firewalld-Cmd-1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux-Disk-And-Dmsetup-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2023/03/30/Linux-Disk-And-Dmsetup-1/" class="article-date">
+      <time datetime="2023-03-30T02:00:43.000Z" itemprop="datePublished">2023-03-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/03/30/Linux-Disk-And-Dmsetup-1/">Linux-Disk-And-Dmsetup-1</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="磁盘占用-与-dmsetup"><a href="#磁盘占用-与-dmsetup" class="headerlink" title="磁盘占用 与 dmsetup"></a>磁盘占用 与 dmsetup</h1><h2 id="如果你在挂载磁盘的过程中遇到以下内容"><a href="#如果你在挂载磁盘的过程中遇到以下内容" class="headerlink" title="如果你在挂载磁盘的过程中遇到以下内容"></a>如果你在挂载磁盘的过程中遇到以下内容</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/sdb is apparently in use by the system; will not make a filesystem here!</span><br></pre></td></tr></table></figure>
+
+<h2 id="dmsetup-命令-在处理问题前，需要理解-dmsetup"><a href="#dmsetup-命令-在处理问题前，需要理解-dmsetup" class="headerlink" title="dmsetup 命令 (在处理问题前，需要理解 dmsetup)"></a>dmsetup 命令 (在处理问题前，需要理解 dmsetup)</h2><p>原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42425141/article/details/123517764">https://blog.csdn.net/weixin_42425141/article/details/123517764</a></p>
+<h3 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">😊 Mapped Device 是一个逻辑抽象，可以理解成为内核向外提供的逻辑设备，它通过 Mapping Table 描述的映射关系和 Target Device 建立映射。Target device 表示的是 Mapped Device 所映射的物理空间段，对 Mapped Device 所表示逻辑设备来收，就是该逻辑设备映射到的一个物理设备。</span><br><span class="line"></span><br><span class="line">😊 Mapping Table 里有 Mapped Device 逻辑的起始地址、范围、和表示在 Target Device 所在物理设备的地址偏移量以及 Target 类型等信息（注：这些地址和偏移量都是以磁盘的扇区为单位的，即 512 个字节大小，所以，当你看到 128 的时候，其实表示的是 128*512 = 64K）。</span><br><span class="line"></span><br><span class="line">😊 DeviceMapper 中的逻辑设备 Mapped Device 不但可以映射一个或多个物理设备 Target Device，还可以映射另一个 Mapped Device，于是，就是构成了一个迭代或递归的情况，就像文件系统中的目录里除了文件还可以有目录，理论上可以无限嵌套下去。</span><br></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2023/03/30/Linux-Disk-And-Dmsetup-1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Ansible-Base-Copy-Module-1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -804,168 +935,6 @@
       
         <p class="article-more-link">
           <a href="/2022/12/14/Linux-Disable-IPV6/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-DmDB-Docker-Install" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/12/14/DmDB-Docker-Install/" class="article-date">
-      <time datetime="2022-12-14T07:40:08.000Z" itemprop="datePublished">2022-12-14</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Docker-安装-达梦数据库-DM-Database"><a href="#Docker-安装-达梦数据库-DM-Database" class="headerlink" title="Docker 安装 达梦数据库 (DM Database)"></a>Docker 安装 达梦数据库 (DM Database)</h1><h2 id="达梦数据库官方文档"><a href="#达梦数据库官方文档" class="headerlink" title="达梦数据库官方文档"></a>达梦数据库官方文档</h2><pre><code>https://eco.dameng.com/document/dm/zh-cn/pm/index.html
-</code></pre>
-<h2 id="个人对于达梦数据库的片面理解"><a href="#个人对于达梦数据库的片面理解" class="headerlink" title="个人对于达梦数据库的片面理解"></a>个人对于达梦数据库的片面理解</h2><pre><code>1. DM 数据库在很多方面很像 Oracle, ASM ,EXPDP,RMAN 等命令都存在, 但部分又有所不同
-2. DM 数据库在客户端方面不太友好，很多客户端只能依靠 JDBC 连接
-3. 如果是数据库管理员连接达梦数据库,建议使用 DM 官方的客户端软件
-4. DM 数据库的认证含金量很高，对比其他数据库证书 (Oracle OCP)
-5. DM 数据库官方文档比较齐全，全部是中文，如果学习过其他数据库很容易能够理解
-</code></pre>
-<h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><table>
-<thead>
-<tr>
-<th align="left">软硬件</th>
-<th align="left">版本</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">终端</td>
-<td align="left">X86-64</td>
-</tr>
-<tr>
-<td align="left">架构 Docker</td>
-<td align="left">2022 年 8 月版</td>
-</tr>
-</tbody></table>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Database/">Database</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2022/12/14/DmDB-Docker-Install/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Neo4j-12-Python-Driver" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/12/14/Neo4j-12-Python-Driver/" class="article-date">
-      <time datetime="2022-12-14T07:17:23.000Z" itemprop="datePublished">2022-12-14</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Neo4j-第十二篇：使用-Python-驱动访问-Neo4j"><a href="#Neo4j-第十二篇：使用-Python-驱动访问-Neo4j" class="headerlink" title="Neo4j 第十二篇：使用 Python 驱动访问 Neo4j"></a>Neo4j 第十二篇：使用 Python 驱动访问 Neo4j</h1><p>转载： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljhdo/p/10907941.html">https://www.cnblogs.com/ljhdo/p/10907941.html</a></p>
-<p>参考：<br>    <a target="_blank" rel="noopener" href="https://neo4j.com/docs/api/python-driver/1.4/">https://neo4j.com/docs/api/python-driver/1.4/</a><br>    <a target="_blank" rel="noopener" href="https://neo4j.com/docs/">https://neo4j.com/docs/</a></p>
-<p>neo4j 官方驱动支持 Python 语言，驱动程序主要包含 Driver 类型和 Session 类型。Driver 对象包含 Neo4j 数据库的详细信息，包括主机 url、安全验证等配置，还管理着连接池（Connection Pool）；Session对象是执行事务单元的逻辑上下文，事务是在Session的上下文中执行的。由于Session不是线程安全的，并能够从Driver对象管理的连接池中回收利用（Recycle）连接，因此，Session对象是轻量级的（lightweight），用完之后应立即销毁（disposable）。</p>
-<p>Driver对象和Session对象的关系是：Driver对象负责管理连接池，从连接池中分配连接创建Session对象；Session对象在单个线程中接收Cypher和启动事务，在事务执行完成之后，立即销毁Session对象；Driver对象负责回收连接，等待为下一个Session对象分配连接。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Database/">Database</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2022/12/14/Neo4j-12-Python-Driver/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

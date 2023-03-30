@@ -257,6 +257,168 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-DmDB-Docker-Install" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/12/14/DmDB-Docker-Install/" class="article-date">
+      <time datetime="2022-12-14T07:40:08.000Z" itemprop="datePublished">2022-12-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/14/DmDB-Docker-Install/">DmDB-Docker-Install</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Docker-安装-达梦数据库-DM-Database"><a href="#Docker-安装-达梦数据库-DM-Database" class="headerlink" title="Docker 安装 达梦数据库 (DM Database)"></a>Docker 安装 达梦数据库 (DM Database)</h1><h2 id="达梦数据库官方文档"><a href="#达梦数据库官方文档" class="headerlink" title="达梦数据库官方文档"></a>达梦数据库官方文档</h2><pre><code>https://eco.dameng.com/document/dm/zh-cn/pm/index.html
+</code></pre>
+<h2 id="个人对于达梦数据库的片面理解"><a href="#个人对于达梦数据库的片面理解" class="headerlink" title="个人对于达梦数据库的片面理解"></a>个人对于达梦数据库的片面理解</h2><pre><code>1. DM 数据库在很多方面很像 Oracle, ASM ,EXPDP,RMAN 等命令都存在, 但部分又有所不同
+2. DM 数据库在客户端方面不太友好，很多客户端只能依靠 JDBC 连接
+3. 如果是数据库管理员连接达梦数据库,建议使用 DM 官方的客户端软件
+4. DM 数据库的认证含金量很高，对比其他数据库证书 (Oracle OCP)
+5. DM 数据库官方文档比较齐全，全部是中文，如果学习过其他数据库很容易能够理解
+</code></pre>
+<h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><table>
+<thead>
+<tr>
+<th align="left">软硬件</th>
+<th align="left">版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">终端</td>
+<td align="left">X86-64</td>
+</tr>
+<tr>
+<td align="left">架构 Docker</td>
+<td align="left">2022 年 8 月版</td>
+</tr>
+</tbody></table>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Database/">Database</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DM-Database/" rel="tag">DM Database</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2022/12/14/DmDB-Docker-Install/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Neo4j-12-Python-Driver" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/12/14/Neo4j-12-Python-Driver/" class="article-date">
+      <time datetime="2022-12-14T07:17:23.000Z" itemprop="datePublished">2022-12-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/14/Neo4j-12-Python-Driver/">Neo4j-12-Python-Driver</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Neo4j-第十二篇：使用-Python-驱动访问-Neo4j"><a href="#Neo4j-第十二篇：使用-Python-驱动访问-Neo4j" class="headerlink" title="Neo4j 第十二篇：使用 Python 驱动访问 Neo4j"></a>Neo4j 第十二篇：使用 Python 驱动访问 Neo4j</h1><p>转载： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljhdo/p/10907941.html">https://www.cnblogs.com/ljhdo/p/10907941.html</a></p>
+<p>参考：<br>    <a target="_blank" rel="noopener" href="https://neo4j.com/docs/api/python-driver/1.4/">https://neo4j.com/docs/api/python-driver/1.4/</a><br>    <a target="_blank" rel="noopener" href="https://neo4j.com/docs/">https://neo4j.com/docs/</a></p>
+<p>neo4j 官方驱动支持 Python 语言，驱动程序主要包含 Driver 类型和 Session 类型。Driver 对象包含 Neo4j 数据库的详细信息，包括主机 url、安全验证等配置，还管理着连接池（Connection Pool）；Session对象是执行事务单元的逻辑上下文，事务是在Session的上下文中执行的。由于Session不是线程安全的，并能够从Driver对象管理的连接池中回收利用（Recycle）连接，因此，Session对象是轻量级的（lightweight），用完之后应立即销毁（disposable）。</p>
+<p>Driver对象和Session对象的关系是：Driver对象负责管理连接池，从连接池中分配连接创建Session对象；Session对象在单个线程中接收Cypher和启动事务，在事务执行完成之后，立即销毁Session对象；Driver对象负责回收连接，等待为下一个Session对象分配连接。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Database/">Database</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2022/12/14/Neo4j-12-Python-Driver/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Neo4j-11-Cypher-Function" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -798,148 +960,6 @@
       
         <p class="article-more-link">
           <a href="/2022/12/14/Neo4j-4-Net-Driver/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Neo4j-3-Cypher-Query" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/12/14/Neo4j-3-Cypher-Query/" class="article-date">
-      <time datetime="2022-12-14T05:29:52.000Z" itemprop="datePublished">2022-12-14</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/14/Neo4j-3-Cypher-Query/">Neo4j-3-Cypher-Query</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Neo4j-第三篇：-Cypher-查询入门"><a href="#Neo4j-第三篇：-Cypher-查询入门" class="headerlink" title="Neo4j 第三篇： Cypher 查询入门"></a>Neo4j 第三篇： Cypher 查询入门</h1><p>转载：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljhdo/p/5516793.html">https://www.cnblogs.com/ljhdo/p/5516793.html</a></p>
-<p>Neo4j 使用 Cypher 查询图形数据，Cypher 是描述性的图形查询语言，语法简单，功能强大，由于 Neo4j 在图形数据库家族中处于绝对领先的地位，拥有众多的用户基数，使得 Cypher 成为图形查询语言的事实上的标准。本文作为入门级的教程，我不会试图分析 Cypher 语言的全部内容，本文的目标是循序渐进地使用Cypher语言执行简单的 CRUD 操作，为了便于演示，本文在 Neo4j Browser 中执行 Cypher 示例代码。以下图形包含三个节点和两个关系，本文会一步一步讲解如何利用 Cypher 语言创建以下图形。</p>
-<p><img src="/2022/12/14/Neo4j-3-Cypher-Query/1.png"></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Database/">Database</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2022/12/14/Neo4j-3-Cypher-Query/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Neo4j-2-Graph-Theory" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/12/14/Neo4j-2-Graph-Theory/" class="article-date">
-      <time datetime="2022-12-14T05:16:52.000Z" itemprop="datePublished">2022-12-14</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/14/Neo4j-2-Graph-Theory/">Neo4j-2-Graph-Theory</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Neo4j-第二篇：图形数据库"><a href="#Neo4j-第二篇：图形数据库" class="headerlink" title="Neo4j 第二篇：图形数据库"></a>Neo4j 第二篇：图形数据库</h1><p>转载： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljhdo/p/5178225.html">https://www.cnblogs.com/ljhdo/p/5178225.html</a></p>
-<p>在深入学习图形数据库之前，首先理解属性图的基本概念。一个属性图是有向图，由顶点（Vertex），边（Edge），标签（Lable），关系类型（Relationship Type）和属性（Property）组成。</p>
-<p>在属性图形中，节点和关系是最重要的实体，顶点也称作节点（Node），边也称作关系（Relationship）。所有的节点是独立存在的，但是可以为节点设置标签，那么拥有相同标签的节点属于一个分组，也就是一个集合。关系通过关系类型来分组，类型相同的关系属于同一个集合。节点可以有0个、1个或多个标签，但是关系必须设置关系类型，并且只能设置一个关系类型。</p>
-<p>关系是有向的，关系的两端是起始节点和结束节点，通过有向的箭头来标识方向，节点之间的双向关系通过两个方向相反的关系来标识。</p>
-<p>Neo4j 图形数据库的查询语言是 Cypher，用于操作和查询属性图，它是图形数据库语言中事实上的标准。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Database/">Database</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2022/12/14/Neo4j-2-Graph-Theory/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
