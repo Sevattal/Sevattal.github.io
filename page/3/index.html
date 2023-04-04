@@ -257,6 +257,77 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Neo4j-5-BatchUpdate" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/12/14/Neo4j-5-BatchUpdate/" class="article-date">
+      <time datetime="2022-12-14T06:04:56.000Z" itemprop="datePublished">2022-12-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/14/Neo4j-5-BatchUpdate/">Neo4j-5-BatchUpdate</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Neo4j-第五篇：批量更新数据"><a href="#Neo4j-第五篇：批量更新数据" class="headerlink" title="Neo4j 第五篇：批量更新数据"></a>Neo4j 第五篇：批量更新数据</h1><p>转载：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljhdo/p/5554560.html">https://www.cnblogs.com/ljhdo/p/5554560.html</a></p>
+<p>参考：<br>    <a target="_blank" rel="noopener" href="https://neo4j.com/docs/cypher-manual/current/clauses/unwind/">https://neo4j.com/docs/cypher-manual/current/clauses/unwind/</a><br>    <a target="_blank" rel="noopener" href="https://www.tugberkugurlu.com/archive/getting-started-with-neo4j-in--net-with-neo4jclient-library">https://www.tugberkugurlu.com/archive/getting-started-with-neo4j-in--net-with-neo4jclient-library</a><br>    <a target="_blank" rel="noopener" href="https://neo4j.com/docs/cypher-manual/current/clauses/foreach/">https://neo4j.com/docs/cypher-manual/current/clauses/foreach/</a><br>    <a target="_blank" rel="noopener" href="https://blog.csdn.net/hwz2311245/article/details/60963383">https://blog.csdn.net/hwz2311245/article/details/60963383</a></p>
+<p>相比图形数据的查询，Neo4j 更新图形数据的速度较慢，通常情况下，Neo4j 更新数据的工作流程是：每次数据更新都会执行一次数据库连接，打开一个事务，在事务中更新数据。当数据量非常大时，这种做法非常耗时，大多数时间耗费在连接数据库和打开事务上，高效的做法是利用Neo4j提供的参数（Parameter）机制和UNWIND子句：在一次数据更新中，进行一次连接，打开一次事务，批量更新数据；参数用于提供列表格式的数据，UNWIND 子句是把列表数据展开成一行一行的数据，每行数据都会执行结构相同的 Cypher 语句。再批量更新图形数据之前，用户必须构造结构固定的、参数化的 Cypher 语句。当 Cypher 语句的结构相同时，Neo4j 数据库直接从缓存中复用已生成的执行计划，而不需要重新生成，这也能够提高查询性能。</p>
+<p>除了官方的 Neo4j Driver 之外，本文分享使用 Neo4jClient 对图形数据批量更新，Neo4jClient 提供的功能更强大，并支持参数和批量更新操作。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Database/">Database</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Neo4j/" rel="tag">Neo4j</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2022/12/14/Neo4j-5-BatchUpdate/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Neo4j-4-Net-Driver" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -876,73 +947,9 @@
 
 
   
-    <article id="post-Wireshark-Base-3" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/11/17/Wireshark-Base-3/" class="article-date">
-      <time datetime="2022-11-17T04:41:56.000Z" itemprop="datePublished">2022-11-17</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/17/Wireshark-Base-3/">Wireshark-Base-3</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Wireshark-过滤命令-3"><a href="#Wireshark-过滤命令-3" class="headerlink" title="Wireshark 过滤命令 3"></a>Wireshark 过滤命令 3</h1>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Network/">Network</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2022/11/17/Wireshark-Base-3/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
     </nav>
   
 </div>
