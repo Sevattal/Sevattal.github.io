@@ -23,7 +23,7 @@
 <meta property="og:description" content="Windows注册表内容详解（转载）链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;0cfcbba813ac (关于windows注册表的整理，来源网络)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-12-14T03:00:36.000Z">
-<meta property="article:modified_time" content="2022-12-14T03:32:27.096Z">
+<meta property="article:modified_time" content="2023-04-07T06:32:02.484Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Regedit">
 <meta name="twitter:card" content="summary">
@@ -341,18 +341,18 @@ StdExecute（stdfileediting)_PackageObjects:用于指定后打开AVI包对象的
 7、Shellex：包括了视频文件的外壳扩展
 </code></pre>
 <p><strong>HKEY_CURRENT_USER</strong></p>
-<p>此根键中保存的信息（当前用户的子项信息）与HKEY_USERS_DEFAULT下面的一模一样的。任何对 HKEY_CURRENT_USER 根键中的信息的修改都会导致对 HKEY_USERS_DEFAULT 中子项的修改</p>
+<p>此根键中保存的信息（当前用户的子项信息）与 HKEY_USERS_DEFAULT 下面的一模一样的。任何对 HKEY_CURRENT_USER 根键中的信息的修改都会导致对 HKEY_USERS_DEFAULT 中子项的修改</p>
 <p><strong>HKEY_LOCAL_MACHINE</strong></p>
 <p>此根键中存放的是用来控制系统和软件的设置，由于这些设置是针对那些使用 Windows 系统的用户而设置的，是一个公共配置信息，所以它与具体的用户没多大关系。</p>
-<pre><code>1、HARDWARE子项：该子项包括了系统使用的浮点处理器、串口等信息：
+<pre><code>1、HARDWARE 子项：该子项包括了系统使用的浮点处理器、串口等信息：
     ACPI:存放高级电源管理接口数据；
     DEVICEMAP：用于存放设备映射；
     DEscriptION：存放有关系统信息；
     RESOURCEMAP：用于存放资源列表
-2、SAM子项：哈哈，这部分被保护了，看不到
-3、SECURITY子项：该子项只是为将来的高级功能而预留的
-4、SOFTWARE子项：该子项中保留的是所有已安装的32位应用程序的信息，各个程序的控制信息分别安装在相应的子项中，由于不同的计算机安装的应用程序互不相同，因此这个子项下面的子项信息也不完全一样。
-5、SYSTEM子项：该子项是启动时所需的信息和修复系统时所需要的信息
+2、SAM 子项：哈哈，这部分被保护了，看不到
+3、SECURITY 子项：该子项只是为将来的高级功能而预留的
+4、SOFTWARE 子项：该子项中保留的是所有已安装的32位应用程序的信息，各个程序的控制信息分别安装在相应的子项中，由于不同的计算机安装的应用程序互不相同，因此这个子项下面的子项信息也不完全一样。
+5、SYSTEM 子项：该子项是启动时所需的信息和修复系统时所需要的信息
     currentcontrol:保存了当前驱动程序控制集中的所有信息
 </code></pre>
 <p><strong>HKEY_USERS</strong></p>
@@ -853,7 +853,7 @@ NTCurrentVersionWinlogon
         <p><span>Title:</span><a href="/2022/12/14/Window-Regedit/">Window-Regedit</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2022-12-14, 11:00:36</p>
-        <p><span>Updated:</span>2022-12-14, 11:32:27</p>
+        <p><span>Updated:</span>2023-04-07, 14:32:02</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2022/12/14/Window-Regedit/" title="Window-Regedit">http://yoursite.com/2022/12/14/Window-Regedit/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2022/12/14/Window-Regedit/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>

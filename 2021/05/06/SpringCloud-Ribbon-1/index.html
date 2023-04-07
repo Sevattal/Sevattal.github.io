@@ -15,16 +15,16 @@
 
 
 
-<meta name="description" content="构建微服务架构(Ribbon篇)该篇文档，前置环境条件为：构建微服务架构(eureka篇)该篇文档，前置代码下载：下载该篇文档，全部完成后的代码下载：下载 原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270GitHub地址：https:&#x2F;&#x2F;github.com&#x2F;Netflix&#x2F;ribbon Ribbon入门介绍Spring">
+<meta name="description" content="构建微服务架构(Ribbon篇)该篇文档，前置环境条件为：构建微服务架构(eureka篇)该篇文档，前置代码下载：下载该篇文档，全部完成后的代码下载：下载 原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270GitHub 地址：https:&#x2F;&#x2F;github.com&#x2F;Netflix&#x2F;ribbon Ribbon 入门介绍Spri">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringCloud-Ribbon-1">
 <meta property="og:url" content="http://yoursite.com/2021/05/06/SpringCloud-Ribbon-1/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="构建微服务架构(Ribbon篇)该篇文档，前置环境条件为：构建微服务架构(eureka篇)该篇文档，前置代码下载：下载该篇文档，全部完成后的代码下载：下载 原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270GitHub地址：https:&#x2F;&#x2F;github.com&#x2F;Netflix&#x2F;ribbon Ribbon入门介绍Spring">
+<meta property="og:description" content="构建微服务架构(Ribbon篇)该篇文档，前置环境条件为：构建微服务架构(eureka篇)该篇文档，前置代码下载：下载该篇文档，全部完成后的代码下载：下载 原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270GitHub 地址：https:&#x2F;&#x2F;github.com&#x2F;Netflix&#x2F;ribbon Ribbon 入门介绍Spri">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2021/05/06/SpringCloud-Ribbon-1/1.png">
 <meta property="article:published_time" content="2021-05-06T02:47:12.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:44.344Z">
+<meta property="article:modified_time" content="2023-04-07T07:17:53.541Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Ribbon">
 <meta name="twitter:card" content="summary">
@@ -302,87 +302,51 @@
       
           
         <h1 id="构建微服务架构-Ribbon篇"><a href="#构建微服务架构-Ribbon篇" class="headerlink" title="构建微服务架构(Ribbon篇)"></a>构建微服务架构(Ribbon篇)</h1><p>该篇文档，前置环境条件为：构建微服务架构(eureka篇)<br>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_ribbon.zip">下载</a></p>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub地址：<a target="_blank" rel="noopener" href="https://github.com/Netflix/ribbon">https://github.com/Netflix/ribbon</a></p>
-<h2 id="Ribbon入门介绍"><a href="#Ribbon入门介绍" class="headerlink" title="Ribbon入门介绍"></a>Ribbon入门介绍</h2><p>Spring Cloud Ribbon是基于Netflix Ribbon实现的一套客户端负载均衡的工具。</p>
-<p>简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供客户端的软件负载均衡算法和服务调用。Ribbon客户端组件提供一系列完善的配置项如连接超时，重试等。</p>
-<p>简单的说，就是在配置文件中列出Load Balancer(简称LB)后面所有的机器，Ribbon会自动的帮助你基于某种规则(如简单轮询，随机连接等）去连接这些机器。我们很容易使用Ribbon实现自定义的负载均衡算法。</p>
-<p>Ribbon目前也进入维护模式。</p>
-<p>Ribbon未来可能被Spring Cloud LoadBalacer替代。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub 地址：<a target="_blank" rel="noopener" href="https://github.com/Netflix/ribbon">https://github.com/Netflix/ribbon</a></p>
+<h2 id="Ribbon-入门介绍"><a href="#Ribbon-入门介绍" class="headerlink" title="Ribbon 入门介绍"></a>Ribbon 入门介绍</h2><p>Spring Cloud Ribbon 是基于 Netflix Ribbon 实现的一套客户端负载均衡的工具。</p>
+<p>简单的说，Ribbon 是 Netflix 发布的开源项目，主要功能是提供客户端的软件负载均衡算法和服务调用。Ribbon 客户端组件提供一系列完善的配置项如连接超时，重试等。</p>
+<p>简单的说，就是在配置文件中列出 Load Balancer (简称 LB )后面所有的机器，Ribbon 会自动的帮助你基于某种规则(如简单轮询，随机连接等）去连接这些机器。我们很容易使用 Ribbon 实现自定义的负载均衡算法。</p>
+<p>Ribbon 目前也进入维护模式。</p>
+<p>Ribbon 未来可能被 Spring Cloud LoadBalacer 替代。</p>
 <span id="more"></span>
 
-<h4 id="LB负载均衡-Load-Balance-是什么"><a href="#LB负载均衡-Load-Balance-是什么" class="headerlink" title="LB负载均衡(Load Balance)是什么"></a>LB负载均衡(Load Balance)是什么</h4><p>简单的说就是将用户的请求平摊的分配到多个服务上，从而达到系统的HA (高可用)。</p>
-<p>常见的负载均衡有软件Nginx，LVS，硬件F5等。</p>
-<h4 id="Ribbon本地负载均衡客户端VS-Nginx服务端负载均衡区别"><a href="#Ribbon本地负载均衡客户端VS-Nginx服务端负载均衡区别" class="headerlink" title="Ribbon本地负载均衡客户端VS Nginx服务端负载均衡区别"></a>Ribbon本地负载均衡客户端VS Nginx服务端负载均衡区别</h4><p>Nginx是服务器负载均衡，客户端所有请求都会交给nginx，然后由nginx实现转发请求。即负载均衡是由服务端实现的。<br>Ribbon本地负载均衡，在调用微服务接口时候，会在注册中心上获取注册信息服务列表之后缓存到JVM本地，从而在本地实现RPC远程服务调用技术。</p>
-<h4 id="集中式LB"><a href="#集中式LB" class="headerlink" title="集中式LB"></a>集中式LB</h4><p>即在服务的消费方和提供方之间使用独立的LB设施(可以是硬件，如F5, 也可以是软件，如nginx)，由该设施负责把访问请求通过某种策略转发至服务的提供方;</p>
-<h4 id="进程内LB"><a href="#进程内LB" class="headerlink" title="进程内LB"></a>进程内LB</h4><p>将LB逻辑集成到消费方，消费方从服务注册中心获知有哪些地址可用，然后自己再从这些地址中选择出一个合适的服务器。</p>
-<p>Ribbon就属于进程内LB，它只是一个类库，集成于消费方进程，消费方通过它来获取到服务提供方的地址。</p>
-<h4 id="一句话形容"><a href="#一句话形容" class="headerlink" title="一句话形容"></a>一句话形容</h4><p>负载均衡 + RestTemplate调用</p>
-<h2 id="Ribbon的负载均衡和Rest调用"><a href="#Ribbon的负载均衡和Rest调用" class="headerlink" title="Ribbon的负载均衡和Rest调用"></a>Ribbon的负载均衡和Rest调用</h2><h4 id="架构说明"><a href="#架构说明" class="headerlink" title="架构说明"></a>架构说明</h4><p>总结：Ribbon其实就是一个软负载均衡的客户端组件，它可以和其他所需请求的客户端结合使用，和Eureka结合只是其中的一个实例。</p>
+<h4 id="LB-负载均衡-Load-Balance-是什么"><a href="#LB-负载均衡-Load-Balance-是什么" class="headerlink" title="LB 负载均衡 (Load Balance) 是什么"></a>LB 负载均衡 (Load Balance) 是什么</h4><p>简单的说就是将用户的请求平摊的分配到多个服务上，从而达到系统的 HA (高可用)。</p>
+<p>常见的负载均衡有软件 Nginx，LVS，硬件 F5 等。</p>
+<h4 id="Ribbon-本地负载均衡客户端-VS-Nginx-服务端负载均衡区别"><a href="#Ribbon-本地负载均衡客户端-VS-Nginx-服务端负载均衡区别" class="headerlink" title="Ribbon 本地负载均衡客户端 VS Nginx 服务端负载均衡区别"></a>Ribbon 本地负载均衡客户端 VS Nginx 服务端负载均衡区别</h4><p>Nginx 是服务器负载均衡，客户端所有请求都会交给 nginx，然后由 nginx 实现转发请求。即负载均衡是由服务端实现的。<br>Ribbon 本地负载均衡，在调用微服务接口时候，会在注册中心上获取注册信息服务列表之后缓存到 JVM 本地，从而在本地实现 RPC 远程服务调用技术。</p>
+<h4 id="集中式-LB"><a href="#集中式-LB" class="headerlink" title="集中式 LB"></a>集中式 LB</h4><p>即在服务的消费方和提供方之间使用独立的 LB 设施(可以是硬件，如 F5, 也可以是软件，如 nginx)，由该设施负责把访问请求通过某种策略转发至服务的提供方;</p>
+<h4 id="进程内-LB"><a href="#进程内-LB" class="headerlink" title="进程内 LB"></a>进程内 LB</h4><p>将 LB 逻辑集成到消费方，消费方从服务注册中心获知有哪些地址可用，然后自己再从这些地址中选择出一个合适的服务器。</p>
+<p>Ribbon 就属于进程内 LB，它只是一个类库，集成于消费方进程，消费方通过它来获取到服务提供方的地址。</p>
+<h4 id="一句话形容"><a href="#一句话形容" class="headerlink" title="一句话形容"></a>一句话形容</h4><p>负载均衡 + RestTemplate 调用</p>
+<h2 id="Ribbon-的负载均衡和-Rest-调用"><a href="#Ribbon-的负载均衡和-Rest-调用" class="headerlink" title="Ribbon 的负载均衡和 Rest 调用"></a>Ribbon 的负载均衡和 Rest 调用</h2><h4 id="架构说明"><a href="#架构说明" class="headerlink" title="架构说明"></a>架构说明</h4><p>总结：Ribbon 其实就是一个软负载均衡的客户端组件，它可以和其他所需请求的客户端结合使用，和 Eureka 结合只是其中的一个实例。</p>
 <p><img src="/2021/05/06/SpringCloud-Ribbon-1/1.png"></p>
-<p>Ribbon在工作时分成两步：</p>
-<p>第一步先选择EurekaServer ,它优先选择在同一个区域内负载较少的server。</p>
-<p>第二步再根据用户指定的策略，在从server取到的服务注册列表中选择一个地址。</p>
-<p>其中Ribbon提供了多种策略：比如轮询、随机和根据响应时间加权。</p>
-<h4 id="POM"><a href="#POM" class="headerlink" title="POM"></a>POM</h4><p>先前工程项目没有引入spring-cloud-starter-ribbon也可以使用ribbon。</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupld&gt;org.springframework.cloud&lt;/groupld&gt;
-    &lt;artifactld&gt;spring-cloud-starter-netflix-ribbon&lt;/artifactid&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p>这是因为spring-cloud-starter-netflix-eureka-client自带了spring-cloud-starter-ribbon引用。</p>
-<h4 id="RestTemplate的使用"><a href="#RestTemplate的使用" class="headerlink" title="RestTemplate的使用"></a>RestTemplate的使用</h4><p>RestTemplate Java Doc</p>
-<p>getForObject() &#x2F; getForEntity() - GET请求方法</p>
-<p>getForObject()：返回对象为响应体中数据转化成的对象，基本上可以理解为Json。</p>
-<p>getForEntity()：返回对象为ResponseEntity对象，包含了响应中的一些重要信息，比如响应头、响应状态码、响应体等。</p>
-<pre><code>@GetMapping(&quot;/consumer/payment/getForEntity/&#123;id&#125;&quot;)
-public CommonResult&lt;Payment&gt; getPayment2(@PathVariable(&quot;id&quot;) Long id)
-&#123;
-    ResponseEntity&lt;CommonResult&gt; entity = restTemplate.getForEntity(PAYMENT_URL+&quot;/payment/get/&quot;+id,CommonResult.class);
-    if(entity.getStatusCode().is2xxSuccessful())&#123;
-        return entity.getBody();//getForObject()
-    &#125;else&#123;
-        return new CommonResult&lt;&gt;(444,&quot;操作失败&quot;);
-    &#125;
-&#125;
-</code></pre>
-<p>postForObject() &#x2F; postForEntity() - POST请求方法</p>
-<h3 id="Ribbon默认自带的负载规则"><a href="#Ribbon默认自带的负载规则" class="headerlink" title="Ribbon默认自带的负载规则"></a>Ribbon默认自带的负载规则</h3><p>RoundRobinRule 轮询<br>RandomRule 随机<br>RetryRule 先按照RoundRobinRule的策略获取服务，如果获取服务失败则在指定时间内会进行重<br>WeightedResponseTimeRule 对RoundRobinRule的扩展，响应速度越快的实例选择权重越大，越容易被选择<br>BestAvailableRule 会先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量最小的服务<br>AvailabilityFilteringRule 先过滤掉故障实例，再选择并发较小的实例<br>ZoneAvoidanceRule 默认规则,复合判断server所在区域的性能和server的可用性选择服务器</p>
-<h3 id="Ribbon负载规则替换"><a href="#Ribbon负载规则替换" class="headerlink" title="Ribbon负载规则替换"></a>Ribbon负载规则替换</h3><h4 id="1-修改cloud-consumer-order80"><a href="#1-修改cloud-consumer-order80" class="headerlink" title="1. 修改cloud-consumer-order80"></a>1. 修改cloud-consumer-order80</h4><h4 id="2-注意配置细节"><a href="#2-注意配置细节" class="headerlink" title="2. 注意配置细节"></a>2. 注意配置细节</h4><p>官方文档明确给出了警告:</p>
-<p>这个自定义配置类不能放在@ComponentScan所扫描的当前包下以及子包下，</p>
-<p>否则我们自定义的这个配置类就会被所有的Ribbon客户端所共享，达不到特殊化定制的目的了。</p>
-<p>（也就是说不要将Ribbon配置类与主启动类同包）</p>
-<h4 id="3-新建-package-com-sevattal-myrule"><a href="#3-新建-package-com-sevattal-myrule" class="headerlink" title="3. 新建 package - com.sevattal.myrule"></a>3. 新建 package - com.sevattal.myrule</h4><h4 id="4-在com-sevattal-myrule下新建-MySelfRule-规则类"><a href="#4-在com-sevattal-myrule下新建-MySelfRule-规则类" class="headerlink" title="4. 在com.sevattal.myrule下新建 MySelfRule 规则类"></a>4. 在com.sevattal.myrule下新建 MySelfRule 规则类</h4><pre><code>package com.sevattal.myrule;
-import com.netflix.loadbalancer.IRule;
-import com.netflix.loadbalancer.RandomRule;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-@Configuration
-public class MySelfRule &#123;
-    @Bean
-    public IRule myRule()&#123;
-        return new RandomRule();// 定义随机规则
-    &#125;
-&#125;
-</code></pre>
-<h4 id="5-主启动类添加-RibbonClient"><a href="#5-主启动类添加-RibbonClient" class="headerlink" title="5. 主启动类添加@RibbonClient"></a>5. 主启动类添加@RibbonClient</h4><pre><code>package com.sevattal.springcloud;
-import com.sevattal.myrule.MySelfRule;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.ribbon.RibbonClient;
-@SpringBootApplication
-@EnableEurekaClient
-@RibbonClient(name = &quot;CLOUD-PAYMENT-SERVICE&quot;, configuration = MySelfRule.class)
-public class OrderMain80 &#123;
-    public static void main(String[] args) &#123;
-        SpringApplication.run(OrderMain80.class, args);
-    &#125;
-&#125;
-</code></pre>
-<h4 id="6-测试"><a href="#6-测试" class="headerlink" title="6. 测试"></a>6. 测试</h4><p>开启cloud-eureka-server7001，cloud-consumer-order80，cloud-provider-payment8001，cloud-provider-payment8002</p>
-<p>浏览器-输入<a target="_blank" rel="noopener" href="http://localhost/consumer/payment/get/1">http://localhost/consumer/payment/get/1</a></p>
-<p>返回结果中的serverPort在8001与8002两种间反复横跳。</p>
-<h3 id="Ribbon默认负载轮询算法原理"><a href="#Ribbon默认负载轮询算法原理" class="headerlink" title="Ribbon默认负载轮询算法原理"></a>Ribbon默认负载轮询算法原理</h3><p>默认负载轮训算法: rest接口第几次请求数 % 服务器集群总数量 &#x3D; 实际调用服务器位置下标，每次服务重启动后rest接口计数从1开始。</p>
+<p>Ribbon 在工作时分成两步：</p>
+<p>第一步先选择 EurekaServer ,它优先选择在同一个区域内负载较少的 server。</p>
+<p>第二步再根据用户指定的策略，在从 server 取到的服务注册列表中选择一个地址。</p>
+<p>其中 Ribbon 提供了多种策略：比如轮询、随机和根据响应时间加权。</p>
+<h4 id="POM"><a href="#POM" class="headerlink" title="POM"></a>POM</h4><p>先前工程项目没有引入 spring-cloud-starter-ribbon 也可以使用 ribbon。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupld&gt;org.springframework.cloud&lt;/groupld&gt;</span><br><span class="line">    &lt;artifactld&gt;spring-cloud-starter-netflix-ribbon&lt;/artifactid&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这是因为 spring-cloud-starter-netflix-eureka-client 自带了 spring-cloud-starter-ribbon 引用。</p>
+<h4 id="RestTemplate-的使用"><a href="#RestTemplate-的使用" class="headerlink" title="RestTemplate 的使用"></a>RestTemplate 的使用</h4><p>RestTemplate Java Doc</p>
+<p>getForObject() &#x2F; getForEntity() - GET 请求方法</p>
+<p>getForObject()：返回对象为响应体中数据转化成的对象，基本上可以理解为 Json。</p>
+<p>getForEntity()：返回对象为 ResponseEntity 对象，包含了响应中的一些重要信息，比如响应头、响应状态码、响应体等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(&quot;/consumer/payment/getForEntity/&#123;id&#125;&quot;)</span><br><span class="line">public CommonResult&lt;Payment&gt; getPayment2(@PathVariable(&quot;id&quot;) Long id)</span><br><span class="line">&#123;</span><br><span class="line">    ResponseEntity&lt;CommonResult&gt; entity = restTemplate.getForEntity(PAYMENT_URL+&quot;/payment/get/&quot;+id,CommonResult.class);</span><br><span class="line">    if(entity.getStatusCode().is2xxSuccessful())&#123;</span><br><span class="line">        return entity.getBody();//getForObject()</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        return new CommonResult&lt;&gt;(444,&quot;操作失败&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>postForObject() &#x2F; postForEntity() - POST 请求方法</p>
+<h3 id="Ribbon-默认自带的负载规则"><a href="#Ribbon-默认自带的负载规则" class="headerlink" title="Ribbon 默认自带的负载规则"></a>Ribbon 默认自带的负载规则</h3><p>RoundRobinRule 轮询<br>RandomRule 随机<br>RetryRule 先按照RoundRobinRule的策略获取服务，如果获取服务失败则在指定时间内会进行重<br>WeightedResponseTimeRule 对RoundRobinRule的扩展，响应速度越快的实例选择权重越大，越容易被选择<br>BestAvailableRule 会先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量最小的服务<br>AvailabilityFilteringRule 先过滤掉故障实例，再选择并发较小的实例<br>ZoneAvoidanceRule 默认规则,复合判断server所在区域的性能和server的可用性选择服务器</p>
+<h3 id="Ribbon-负载规则替换"><a href="#Ribbon-负载规则替换" class="headerlink" title="Ribbon 负载规则替换"></a>Ribbon 负载规则替换</h3><h4 id="1-修改-cloud-consumer-order80"><a href="#1-修改-cloud-consumer-order80" class="headerlink" title="1. 修改 cloud-consumer-order80"></a>1. 修改 cloud-consumer-order80</h4><h4 id="2-注意配置细节"><a href="#2-注意配置细节" class="headerlink" title="2. 注意配置细节"></a>2. 注意配置细节</h4><p>官方文档明确给出了警告:</p>
+<p>这个自定义配置类不能放在 @ComponentScan 所扫描的当前包下以及子包下，</p>
+<p>否则我们自定义的这个配置类就会被所有的 Ribbon 客户端所共享，达不到特殊化定制的目的了。</p>
+<p>（也就是说不要将 Ribbon 配置类与主启动类同包）</p>
+<h4 id="3-新建-package-com-sevattal-myrule"><a href="#3-新建-package-com-sevattal-myrule" class="headerlink" title="3. 新建 package - com.sevattal.myrule"></a>3. 新建 package - com.sevattal.myrule</h4><h4 id="4-在-com-sevattal-myrule-下新建-MySelfRule-规则类"><a href="#4-在-com-sevattal-myrule-下新建-MySelfRule-规则类" class="headerlink" title="4. 在 com.sevattal.myrule 下新建 MySelfRule 规则类"></a>4. 在 com.sevattal.myrule 下新建 MySelfRule 规则类</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.myrule;</span><br><span class="line">import com.netflix.loadbalancer.IRule;</span><br><span class="line">import com.netflix.loadbalancer.RandomRule;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">@Configuration</span><br><span class="line">public class MySelfRule &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public IRule myRule()&#123;</span><br><span class="line">        return new RandomRule();// 定义随机规则</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-主启动类添加-RibbonClient"><a href="#5-主启动类添加-RibbonClient" class="headerlink" title="5. 主启动类添加 @RibbonClient"></a>5. 主启动类添加 @RibbonClient</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud;</span><br><span class="line">import com.sevattal.myrule.MySelfRule;</span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.netflix.eureka.EnableEurekaClient;</span><br><span class="line">import org.springframework.cloud.netflix.ribbon.RibbonClient;</span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaClient</span><br><span class="line">@RibbonClient(name = &quot;CLOUD-PAYMENT-SERVICE&quot;, configuration = MySelfRule.class)</span><br><span class="line">public class OrderMain80 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(OrderMain80.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-测试"><a href="#6-测试" class="headerlink" title="6. 测试"></a>6. 测试</h4><p>开启 cloud-eureka-server7001，cloud-consumer-order80，cloud-provider-payment8001，cloud-provider-payment8002</p>
+<p>浏览器-输入 <a target="_blank" rel="noopener" href="http://localhost/consumer/payment/get/1">http://localhost/consumer/payment/get/1</a></p>
+<p>返回结果中的 serverPort 在 8001 与 8002 两种间反复横跳。</p>
+<h3 id="Ribbon-默认负载轮询算法原理"><a href="#Ribbon-默认负载轮询算法原理" class="headerlink" title="Ribbon 默认负载轮询算法原理"></a>Ribbon 默认负载轮询算法原理</h3><p>默认负载轮训算法: rest 接口第几次请求数 % 服务器集群总数量 &#x3D; 实际调用服务器位置下标，每次服务重启动后 rest 接口计数从 1 开始。</p>
 <p>List<Servicelnstance> instances &#x3D; discoveryClient.getInstances(“CLOUD-PAYMENT-SERVICE”);</Servicelnstance></p>
 <p>如:</p>
 <pre><code>List [0] instances = 127.0.0.1:8002
@@ -395,201 +359,23 @@ List [1] instances = 127.0.0.1:8001
 当总请求数位4时:4%2=О对应下标位置为0，则获得服务地址为127.0.0.1:8002
 如此类推…
 </code></pre>
-<h3 id="RoundRobinRule源码分析"><a href="#RoundRobinRule源码分析" class="headerlink" title="RoundRobinRule源码分析"></a>RoundRobinRule源码分析</h3><pre><code>public interface IRule&#123;
-    /*
-     * choose one alive server from lb.allServers or
-     * lb.upServers according to key
-     * 
-     * @return choosen Server object. NULL is returned if none
-     *  server is available 
-     */
-    //重点关注这方法
-    public Server choose(Object key);
-    
-    public void setLoadBalancer(ILoadBalancer lb);
-    
-    public ILoadBalancer getLoadBalancer();    
-&#125;
+<h3 id="RoundRobinRule-源码分析"><a href="#RoundRobinRule-源码分析" class="headerlink" title="RoundRobinRule 源码分析"></a>RoundRobinRule 源码分析</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public interface IRule&#123;</span><br><span class="line">    /*</span><br><span class="line">     * choose one alive server from lb.allServers or</span><br><span class="line">     * lb.upServers according to key</span><br><span class="line">     * </span><br><span class="line">     * @return choosen Server object. NULL is returned if none</span><br><span class="line">     *  server is available </span><br><span class="line">     */</span><br><span class="line">    //重点关注这方法</span><br><span class="line">    public Server choose(Object key);</span><br><span class="line">    </span><br><span class="line">    public void setLoadBalancer(ILoadBalancer lb);</span><br><span class="line">    </span><br><span class="line">    public ILoadBalancer getLoadBalancer();    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-package com.netflix.loadbalancer;
-import com.netflix.client.config.IClientConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-/**
- * The most well known and basic load balancing strategy, i.e. Round Robin Rule.
- *
- * @author stonse
- * @author Nikos Michalakis &lt;nikos@netflix.com&gt;
- *
- */
-public class RoundRobinRule extends AbstractLoadBalancerRule &#123;
-    private AtomicInteger nextServerCyclicCounter;
-    private static final boolean AVAILABLE_ONLY_SERVERS = true;
-    private static final boolean ALL_SERVERS = false;
-    private static Logger log = LoggerFactory.getLogger(RoundRobinRule.class);
-    public RoundRobinRule() &#123;
-        nextServerCyclicCounter = new AtomicInteger(0);
-    &#125;
-    public RoundRobinRule(ILoadBalancer lb) &#123;
-        this();
-        setLoadBalancer(lb);
-    &#125;
-    //重点关注这方法。
-    public Server choose(ILoadBalancer lb, Object key) &#123;
-        if (lb == null) &#123;
-            log.warn(&quot;no load balancer&quot;);
-            return null;
-        &#125;
-        Server server = null;
-        int count = 0;
-        while (server == null &amp;&amp; count++ &lt; 10) &#123;
-            List&lt;Server&gt; reachableServers = lb.getReachableServers();
-            List&lt;Server&gt; allServers = lb.getAllServers();
-            int upCount = reachableServers.size();
-            int serverCount = allServers.size();
-            if ((upCount == 0) || (serverCount == 0)) &#123;
-                log.warn(&quot;No up servers available from load balancer: &quot; + lb);
-                return null;
-            &#125;
-            int nextServerIndex = incrementAndGetModulo(serverCount);
-            server = allServers.get(nextServerIndex);
-            if (server == null) &#123;
-                /* Transient. */
-                Thread.yield();
-                continue;
-            &#125;
-            if (server.isAlive() &amp;&amp; (server.isReadyToServe())) &#123;
-                return (server);
-            &#125;
-            // Next.
-            server = null;
-        &#125;
-        if (count &gt;= 10) &#123;
-            log.warn(&quot;No available alive servers after 10 tries from load balancer: &quot;
-                    + lb);
-        &#125;
-        return server;
-    &#125;
-    /**
-     * Inspired by the implementation of &#123;@link AtomicInteger#incrementAndGet()&#125;.
-     *
-     * @param modulo The modulo to bound the value of the counter.
-     * @return The next value.
-     */
-    private int incrementAndGetModulo(int modulo) &#123;
-        for (;;) &#123;
-            int current = nextServerCyclicCounter.get();
-            int next = (current + 1) % modulo;//求余法
-            if (nextServerCyclicCounter.compareAndSet(current, next))
-                return next;
-        &#125;
-    &#125;
-    @Override
-    public Server choose(Object key) &#123;
-        return choose(getLoadBalancer(), key);
-    &#125;
-    @Override
-    public void initWithNiwsConfig(IClientConfig clientConfig) &#123;
-    &#125;
-&#125;
-</code></pre>
-<h3 id="Ribbon之手写轮询算法"><a href="#Ribbon之手写轮询算法" class="headerlink" title="Ribbon之手写轮询算法"></a>Ribbon之手写轮询算法</h3><p>自己试着写一个类似RoundRobinRule的本地负载均衡器。</p>
-<p>7001&#x2F;7002集群启动</p>
-<h4 id="1-8001-x2F-8002微服务改造-controller"><a href="#1-8001-x2F-8002微服务改造-controller" class="headerlink" title="1. 8001&#x2F;8002微服务改造 - controller"></a>1. 8001&#x2F;8002微服务改造 - controller</h4><pre><code>@RestController
-@Slf4j
-public class PaymentController&#123;
-    ...
-    @GetMapping(value = &quot;/payment/lb&quot;)
-    public String getPaymentLB() &#123;
-        return serverPort;//返回服务接口
-    &#125;
-    ...
-&#125;
-</code></pre>
-<h4 id="2-80订单微服务改造"><a href="#2-80订单微服务改造" class="headerlink" title="2. 80订单微服务改造"></a>2. 80订单微服务改造</h4><h5 id="ApplicationContextConfig去掉注解-LoadBalanced，OrderMain80去掉注解-RibbonClient"><a href="#ApplicationContextConfig去掉注解-LoadBalanced，OrderMain80去掉注解-RibbonClient" class="headerlink" title="ApplicationContextConfig去掉注解@LoadBalanced，OrderMain80去掉注解@RibbonClient"></a>ApplicationContextConfig去掉注解@LoadBalanced，OrderMain80去掉注解@RibbonClient</h5><pre><code>import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
-@Configuration
-public class ApplicationContextConfig &#123;
-    @Bean
-    //@LoadBalanced
-    public RestTemplate getRestTemplate()&#123;
-        return new RestTemplate();
-    &#125;
-&#125;
-</code></pre>
-<h5 id="创建LoadBalancer接口"><a href="#创建LoadBalancer接口" class="headerlink" title="创建LoadBalancer接口"></a>创建LoadBalancer接口</h5><pre><code>package com.sevattal.springcloud.lb;
-import org.springframework.cloud.client.ServiceInstance;
-import java.util.List;
-/**
- */
-public interface LoadBalancer
-&#123;
-    ServiceInstance instances(List&lt;ServiceInstance&gt; serviceInstances);
-&#125;
-</code></pre>
-<h5 id="MyLB-实现LoadBalancer接口"><a href="#MyLB-实现LoadBalancer接口" class="headerlink" title="MyLB 实现LoadBalancer接口"></a>MyLB 实现LoadBalancer接口</h5><pre><code>package com.sevattal.springcloud.lb;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.stereotype.Component;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-/**
- */
-@Component//需要跟主启动类同包，或者在其子孙包下。
-public class MyLB implements LoadBalancer
-&#123;
-    private AtomicInteger atomicInteger = new AtomicInteger(0);
-    public final int getAndIncrement()
-    &#123;
-        int current;
-        int next;
-        do &#123;
-            current = this.atomicInteger.get();
-            next = current &gt;= 2147483647 ? 0 : current + 1;
-        &#125;while(!this.atomicInteger.compareAndSet(current,next));
-        System.out.println(&quot;*****第几次访问，次数next: &quot;+next);
-        return next;
-    &#125;
-    //负载均衡算法：rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标  ，每次服务重启动后rest接口计数从1开始。
-    @Override
-    public ServiceInstance instances(List&lt;ServiceInstance&gt; serviceInstances)
-    &#123;
-        int index = getAndIncrement() % serviceInstances.size();
-        return serviceInstances.get(index);
-    &#125;
-&#125;
-</code></pre>
-<h5 id="OrderController"><a href="#OrderController" class="headerlink" title="OrderController"></a>OrderController</h5><pre><code>import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import com.lun.springcloud.lb.LoadBalancer;
-@Slf4j
-@RestController
-public class OrderController &#123;
-    //public static final String PAYMENT_URL = &quot;http://localhost:8001&quot;;
-    public static final String PAYMENT_URL = &quot;http://CLOUD-PAYMENT-SERVICE&quot;;
-    ...
-    @Resource
-    private LoadBalancer loadBalancer;
-    @Resource
-    private DiscoveryClient discoveryClient;
-    ...
-    @GetMapping(value = &quot;/consumer/payment/lb&quot;)
-    public String getPaymentLB()
-    &#123;
-        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(&quot;CLOUD-PAYMENT-SERVICE&quot;);
-        if(instances == null || instances.size() &lt;= 0)&#123;
-            return null;
-        &#125;
-        ServiceInstance serviceInstance = loadBalancer.instances(instances);
-        URI uri = serviceInstance.getUri();
-        return restTemplate.getForObject(uri+&quot;/payment/lb&quot;,String.class);
-    &#125;
-&#125;
-</code></pre>
-<h4 id="3-测试"><a href="#3-测试" class="headerlink" title="3.测试"></a>3.测试</h4><p>不停地刷新<a target="_blank" rel="noopener" href="http://localhost/consumer/payment/lb%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B08001/8002%E4%BA%A4%E6%9B%BF%E5%87%BA%E7%8E%B0%E3%80%82">http://localhost/consumer/payment/lb，可以看到8001/8002交替出现。</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">package com.netflix.loadbalancer;</span><br><span class="line">import com.netflix.client.config.IClientConfig;</span><br><span class="line">import org.slf4j.Logger;</span><br><span class="line">import org.slf4j.LoggerFactory;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line">/**</span><br><span class="line"> * The most well known and basic load balancing strategy, i.e. Round Robin Rule.</span><br><span class="line"> *</span><br><span class="line"> * @author stonse</span><br><span class="line"> * @author Nikos Michalakis &lt;nikos@netflix.com&gt;</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class RoundRobinRule extends AbstractLoadBalancerRule &#123;</span><br><span class="line">    private AtomicInteger nextServerCyclicCounter;</span><br><span class="line">    private static final boolean AVAILABLE_ONLY_SERVERS = true;</span><br><span class="line">    private static final boolean ALL_SERVERS = false;</span><br><span class="line">    private static Logger log = LoggerFactory.getLogger(RoundRobinRule.class);</span><br><span class="line">    public RoundRobinRule() &#123;</span><br><span class="line">        nextServerCyclicCounter = new AtomicInteger(0);</span><br><span class="line">    &#125;</span><br><span class="line">    public RoundRobinRule(ILoadBalancer lb) &#123;</span><br><span class="line">        this();</span><br><span class="line">        setLoadBalancer(lb);</span><br><span class="line">    &#125;</span><br><span class="line">    //重点关注这方法。</span><br><span class="line">    public Server choose(ILoadBalancer lb, Object key) &#123;</span><br><span class="line">        if (lb == null) &#123;</span><br><span class="line">            log.warn(&quot;no load balancer&quot;);</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        Server server = null;</span><br><span class="line">        int count = 0;</span><br><span class="line">        while (server == null &amp;&amp; count++ &lt; 10) &#123;</span><br><span class="line">            List&lt;Server&gt; reachableServers = lb.getReachableServers();</span><br><span class="line">            List&lt;Server&gt; allServers = lb.getAllServers();</span><br><span class="line">            int upCount = reachableServers.size();</span><br><span class="line">            int serverCount = allServers.size();</span><br><span class="line">            if ((upCount == 0) || (serverCount == 0)) &#123;</span><br><span class="line">                log.warn(&quot;No up servers available from load balancer: &quot; + lb);</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">            int nextServerIndex = incrementAndGetModulo(serverCount);</span><br><span class="line">            server = allServers.get(nextServerIndex);</span><br><span class="line">            if (server == null) &#123;</span><br><span class="line">                /* Transient. */</span><br><span class="line">                Thread.yield();</span><br><span class="line">                continue;</span><br><span class="line">            &#125;</span><br><span class="line">            if (server.isAlive() &amp;&amp; (server.isReadyToServe())) &#123;</span><br><span class="line">                return (server);</span><br><span class="line">            &#125;</span><br><span class="line">            // Next.</span><br><span class="line">            server = null;</span><br><span class="line">        &#125;</span><br><span class="line">        if (count &gt;= 10) &#123;</span><br><span class="line">            log.warn(&quot;No available alive servers after 10 tries from load balancer: &quot;</span><br><span class="line">                    + lb);</span><br><span class="line">        &#125;</span><br><span class="line">        return server;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * Inspired by the implementation of &#123;@link AtomicInteger#incrementAndGet()&#125;.</span><br><span class="line">     *</span><br><span class="line">     * @param modulo The modulo to bound the value of the counter.</span><br><span class="line">     * @return The next value.</span><br><span class="line">     */</span><br><span class="line">    private int incrementAndGetModulo(int modulo) &#123;</span><br><span class="line">        for (;;) &#123;</span><br><span class="line">            int current = nextServerCyclicCounter.get();</span><br><span class="line">            int next = (current + 1) % modulo;//求余法</span><br><span class="line">            if (nextServerCyclicCounter.compareAndSet(current, next))</span><br><span class="line">                return next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public Server choose(Object key) &#123;</span><br><span class="line">        return choose(getLoadBalancer(), key);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void initWithNiwsConfig(IClientConfig clientConfig) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ribbon-之手写轮询算法"><a href="#Ribbon-之手写轮询算法" class="headerlink" title="Ribbon 之手写轮询算法"></a>Ribbon 之手写轮询算法</h3><p>自己试着写一个类似 RoundRobinRule 的本地负载均衡器。</p>
+<p>7001&#x2F;7002 集群启动</p>
+<h4 id="1-8001-x2F-8002-微服务改造-controller"><a href="#1-8001-x2F-8002-微服务改造-controller" class="headerlink" title="1. 8001&#x2F;8002 微服务改造 - controller"></a>1. 8001&#x2F;8002 微服务改造 - controller</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">@Slf4j</span><br><span class="line">public class PaymentController&#123;</span><br><span class="line">    ...</span><br><span class="line">	@GetMapping(value = &quot;/payment/lb&quot;)</span><br><span class="line">    public String getPaymentLB() &#123;</span><br><span class="line">        return serverPort;//返回服务接口</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-80订单微服务改造"><a href="#2-80订单微服务改造" class="headerlink" title="2. 80订单微服务改造"></a>2. 80订单微服务改造</h4><h5 id="ApplicationContextConfig-去掉注解-LoadBalanced，OrderMain80-去掉注解-RibbonClient"><a href="#ApplicationContextConfig-去掉注解-LoadBalanced，OrderMain80-去掉注解-RibbonClient" class="headerlink" title="ApplicationContextConfig 去掉注解 @LoadBalanced，OrderMain80 去掉注解 @RibbonClient"></a>ApplicationContextConfig 去掉注解 @LoadBalanced，OrderMain80 去掉注解 @RibbonClient</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line">@Configuration</span><br><span class="line">public class ApplicationContextConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    //@LoadBalanced</span><br><span class="line">    public RestTemplate getRestTemplate()&#123;</span><br><span class="line">        return new RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="创建-LoadBalancer-接口"><a href="#创建-LoadBalancer-接口" class="headerlink" title="创建 LoadBalancer 接口"></a>创建 LoadBalancer 接口</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.lb;</span><br><span class="line">import org.springframework.cloud.client.ServiceInstance;</span><br><span class="line">import java.util.List;</span><br><span class="line">/**</span><br><span class="line"> */</span><br><span class="line">public interface LoadBalancer</span><br><span class="line">&#123;</span><br><span class="line">    ServiceInstance instances(List&lt;ServiceInstance&gt; serviceInstances);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="MyLB-实现-LoadBalancer-接口"><a href="#MyLB-实现-LoadBalancer-接口" class="headerlink" title="MyLB 实现 LoadBalancer 接口"></a>MyLB 实现 LoadBalancer 接口</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.lb;</span><br><span class="line">import org.springframework.cloud.client.ServiceInstance;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line">/**</span><br><span class="line"> */</span><br><span class="line">@Component//需要跟主启动类同包，或者在其子孙包下。</span><br><span class="line">public class MyLB implements LoadBalancer</span><br><span class="line">&#123;</span><br><span class="line">    private AtomicInteger atomicInteger = new AtomicInteger(0);</span><br><span class="line">    public final int getAndIncrement()</span><br><span class="line">    &#123;</span><br><span class="line">        int current;</span><br><span class="line">        int next;</span><br><span class="line">        do &#123;</span><br><span class="line">            current = this.atomicInteger.get();</span><br><span class="line">            next = current &gt;= 2147483647 ? 0 : current + 1;</span><br><span class="line">        &#125;while(!this.atomicInteger.compareAndSet(current,next));</span><br><span class="line">        System.out.println(&quot;*****第几次访问，次数next: &quot;+next);</span><br><span class="line">        return next;</span><br><span class="line">    &#125;</span><br><span class="line">    //负载均衡算法：rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标  ，每次服务重启动后rest接口计数从1开始。</span><br><span class="line">    @Override</span><br><span class="line">    public ServiceInstance instances(List&lt;ServiceInstance&gt; serviceInstances)</span><br><span class="line">    &#123;</span><br><span class="line">        int index = getAndIncrement() % serviceInstances.size();</span><br><span class="line">        return serviceInstances.get(index);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="OrderController"><a href="#OrderController" class="headerlink" title="OrderController"></a>OrderController</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.cloud.client.ServiceInstance;</span><br><span class="line">import org.springframework.cloud.client.discovery.DiscoveryClient;</span><br><span class="line">import com.lun.springcloud.lb.LoadBalancer;</span><br><span class="line">@Slf4j</span><br><span class="line">@RestController</span><br><span class="line">public class OrderController &#123;</span><br><span class="line">    //public static final String PAYMENT_URL = &quot;http://localhost:8001&quot;;</span><br><span class="line">    public static final String PAYMENT_URL = &quot;http://CLOUD-PAYMENT-SERVICE&quot;;</span><br><span class="line">	...</span><br><span class="line">    @Resource</span><br><span class="line">    private LoadBalancer loadBalancer;</span><br><span class="line">    @Resource</span><br><span class="line">    private DiscoveryClient discoveryClient;</span><br><span class="line">	...</span><br><span class="line">    @GetMapping(value = &quot;/consumer/payment/lb&quot;)</span><br><span class="line">    public String getPaymentLB()</span><br><span class="line">    &#123;</span><br><span class="line">        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(&quot;CLOUD-PAYMENT-SERVICE&quot;);</span><br><span class="line">        if(instances == null || instances.size() &lt;= 0)&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        ServiceInstance serviceInstance = loadBalancer.instances(instances);</span><br><span class="line">        URI uri = serviceInstance.getUri();</span><br><span class="line">        return restTemplate.getForObject(uri+&quot;/payment/lb&quot;,String.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-测试"><a href="#3-测试" class="headerlink" title="3.测试"></a>3.测试</h4><p>不停地刷新 <a target="_blank" rel="noopener" href="http://localhost/consumer/payment/lb%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0">http://localhost/consumer/payment/lb，可以看到</a> 8001&#x2F;8002 交替出现。</p>
 
       
     </div>
@@ -601,7 +387,7 @@ public class OrderController &#123;
         <p><span>Title:</span><a href="/2021/05/06/SpringCloud-Ribbon-1/">SpringCloud-Ribbon-1</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2021-05-06, 10:47:12</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:44</p>
+        <p><span>Updated:</span>2023-04-07, 15:17:53</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2021/05/06/SpringCloud-Ribbon-1/" title="SpringCloud-Ribbon-1">http://yoursite.com/2021/05/06/SpringCloud-Ribbon-1/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/05/06/SpringCloud-Ribbon-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -637,7 +423,7 @@ public class OrderController &#123;
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-Ribbon%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">构建微服务架构(Ribbon篇)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ribbon%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">Ribbon入门介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#LB%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1-Load-Balance-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">LB负载均衡(Load Balance)是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ribbon%E6%9C%AC%E5%9C%B0%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%A2%E6%88%B7%E7%AB%AFVS-Nginx%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%8C%BA%E5%88%AB"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">Ribbon本地负载均衡客户端VS Nginx服务端负载均衡区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9B%86%E4%B8%AD%E5%BC%8FLB"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">集中式LB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%86%85LB"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">进程内LB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%BD%A2%E5%AE%B9"><span class="toc-number">1.1.0.5.</span> <span class="toc-text">一句话形容</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ribbon%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8CRest%E8%B0%83%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">Ribbon的负载均衡和Rest调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E8%AF%B4%E6%98%8E"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">架构说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#POM"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">POM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RestTemplate%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">RestTemplate的使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ribbon%E9%BB%98%E8%AE%A4%E8%87%AA%E5%B8%A6%E7%9A%84%E8%B4%9F%E8%BD%BD%E8%A7%84%E5%88%99"><span class="toc-number">1.2.1.</span> <span class="toc-text">Ribbon默认自带的负载规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ribbon%E8%B4%9F%E8%BD%BD%E8%A7%84%E5%88%99%E6%9B%BF%E6%8D%A2"><span class="toc-number">1.2.2.</span> <span class="toc-text">Ribbon负载规则替换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BF%AE%E6%94%B9cloud-consumer-order80"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1. 修改cloud-consumer-order80</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B3%A8%E6%84%8F%E9%85%8D%E7%BD%AE%E7%BB%86%E8%8A%82"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">2. 注意配置细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%96%B0%E5%BB%BA-package-com-sevattal-myrule"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">3. 新建 package - com.sevattal.myrule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%9C%A8com-sevattal-myrule%E4%B8%8B%E6%96%B0%E5%BB%BA-MySelfRule-%E8%A7%84%E5%88%99%E7%B1%BB"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">4. 在com.sevattal.myrule下新建 MySelfRule 规则类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB%E6%B7%BB%E5%8A%A0-RibbonClient"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">5. 主启动类添加@RibbonClient</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.2.6.</span> <span class="toc-text">6. 测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ribbon%E9%BB%98%E8%AE%A4%E8%B4%9F%E8%BD%BD%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.3.</span> <span class="toc-text">Ribbon默认负载轮询算法原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RoundRobinRule%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.2.4.</span> <span class="toc-text">RoundRobinRule源码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ribbon%E4%B9%8B%E6%89%8B%E5%86%99%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.5.</span> <span class="toc-text">Ribbon之手写轮询算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-8001-x2F-8002%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%94%B9%E9%80%A0-controller"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">1. 8001&#x2F;8002微服务改造 - controller</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-80%E8%AE%A2%E5%8D%95%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%94%B9%E9%80%A0"><span class="toc-number">1.2.5.2.</span> <span class="toc-text">2. 80订单微服务改造</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ApplicationContextConfig%E5%8E%BB%E6%8E%89%E6%B3%A8%E8%A7%A3-LoadBalanced%EF%BC%8COrderMain80%E5%8E%BB%E6%8E%89%E6%B3%A8%E8%A7%A3-RibbonClient"><span class="toc-number">1.2.5.2.1.</span> <span class="toc-text">ApplicationContextConfig去掉注解@LoadBalanced，OrderMain80去掉注解@RibbonClient</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9B%E5%BB%BALoadBalancer%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.5.2.2.</span> <span class="toc-text">创建LoadBalancer接口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MyLB-%E5%AE%9E%E7%8E%B0LoadBalancer%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.5.2.3.</span> <span class="toc-text">MyLB 实现LoadBalancer接口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#OrderController"><span class="toc-number">1.2.5.2.4.</span> <span class="toc-text">OrderController</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.5.3.</span> <span class="toc-text">3.测试</span></a></li></ol></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-Ribbon%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">构建微服务架构(Ribbon篇)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ribbon-%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">Ribbon 入门介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#LB-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1-Load-Balance-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">LB 负载均衡 (Load Balance) 是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ribbon-%E6%9C%AC%E5%9C%B0%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%A2%E6%88%B7%E7%AB%AF-VS-Nginx-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%8C%BA%E5%88%AB"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">Ribbon 本地负载均衡客户端 VS Nginx 服务端负载均衡区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9B%86%E4%B8%AD%E5%BC%8F-LB"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">集中式 LB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%86%85-LB"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">进程内 LB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%BD%A2%E5%AE%B9"><span class="toc-number">1.1.0.5.</span> <span class="toc-text">一句话形容</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ribbon-%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C-Rest-%E8%B0%83%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">Ribbon 的负载均衡和 Rest 调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E8%AF%B4%E6%98%8E"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">架构说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#POM"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">POM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RestTemplate-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">RestTemplate 的使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ribbon-%E9%BB%98%E8%AE%A4%E8%87%AA%E5%B8%A6%E7%9A%84%E8%B4%9F%E8%BD%BD%E8%A7%84%E5%88%99"><span class="toc-number">1.2.1.</span> <span class="toc-text">Ribbon 默认自带的负载规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ribbon-%E8%B4%9F%E8%BD%BD%E8%A7%84%E5%88%99%E6%9B%BF%E6%8D%A2"><span class="toc-number">1.2.2.</span> <span class="toc-text">Ribbon 负载规则替换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BF%AE%E6%94%B9-cloud-consumer-order80"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1. 修改 cloud-consumer-order80</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B3%A8%E6%84%8F%E9%85%8D%E7%BD%AE%E7%BB%86%E8%8A%82"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">2. 注意配置细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%96%B0%E5%BB%BA-package-com-sevattal-myrule"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">3. 新建 package - com.sevattal.myrule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%9C%A8-com-sevattal-myrule-%E4%B8%8B%E6%96%B0%E5%BB%BA-MySelfRule-%E8%A7%84%E5%88%99%E7%B1%BB"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">4. 在 com.sevattal.myrule 下新建 MySelfRule 规则类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB%E6%B7%BB%E5%8A%A0-RibbonClient"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">5. 主启动类添加 @RibbonClient</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.2.6.</span> <span class="toc-text">6. 测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ribbon-%E9%BB%98%E8%AE%A4%E8%B4%9F%E8%BD%BD%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.3.</span> <span class="toc-text">Ribbon 默认负载轮询算法原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RoundRobinRule-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.2.4.</span> <span class="toc-text">RoundRobinRule 源码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ribbon-%E4%B9%8B%E6%89%8B%E5%86%99%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.5.</span> <span class="toc-text">Ribbon 之手写轮询算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-8001-x2F-8002-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%94%B9%E9%80%A0-controller"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">1. 8001&#x2F;8002 微服务改造 - controller</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-80%E8%AE%A2%E5%8D%95%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%94%B9%E9%80%A0"><span class="toc-number">1.2.5.2.</span> <span class="toc-text">2. 80订单微服务改造</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ApplicationContextConfig-%E5%8E%BB%E6%8E%89%E6%B3%A8%E8%A7%A3-LoadBalanced%EF%BC%8COrderMain80-%E5%8E%BB%E6%8E%89%E6%B3%A8%E8%A7%A3-RibbonClient"><span class="toc-number">1.2.5.2.1.</span> <span class="toc-text">ApplicationContextConfig 去掉注解 @LoadBalanced，OrderMain80 去掉注解 @RibbonClient</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-LoadBalancer-%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.5.2.2.</span> <span class="toc-text">创建 LoadBalancer 接口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MyLB-%E5%AE%9E%E7%8E%B0-LoadBalancer-%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.5.2.3.</span> <span class="toc-text">MyLB 实现 LoadBalancer 接口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#OrderController"><span class="toc-number">1.2.5.2.4.</span> <span class="toc-text">OrderController</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.5.3.</span> <span class="toc-text">3.测试</span></a></li></ol></li></ol></li></ol></li></ol>
         
     </div>
     <style>

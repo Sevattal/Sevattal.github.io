@@ -15,19 +15,19 @@
 
 
 
-<meta name="description" content="Window打开ntp服务在学习各种服务搭建过程中，会使用到NTP服务。由于学习环境为自己电脑下的虚拟机，那么在自己电脑上开启ntp服务有时候省心省力。">
+<meta name="description" content="Window 打开 ntp 服务在学习各种服务搭建过程中，会使用到NTP服务。由于学习环境为自己电脑下的虚拟机，那么在自己电脑上开启ntp服务有时候省心省力。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Window-NTP">
 <meta property="og:url" content="http://yoursite.com/2020/07/12/Window-NTP/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="Window打开ntp服务在学习各种服务搭建过程中，会使用到NTP服务。由于学习环境为自己电脑下的虚拟机，那么在自己电脑上开启ntp服务有时候省心省力。">
+<meta property="og:description" content="Window 打开 ntp 服务在学习各种服务搭建过程中，会使用到NTP服务。由于学习环境为自己电脑下的虚拟机，那么在自己电脑上开启ntp服务有时候省心省力。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/07/12/Window-NTP/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/12/Window-NTP/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/12/Window-NTP/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/12/Window-NTP/4.png">
 <meta property="article:published_time" content="2020-07-12T07:24:55.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:44.439Z">
+<meta property="article:modified_time" content="2023-04-07T06:28:06.682Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="NTP">
 <meta name="twitter:card" content="summary">
@@ -304,18 +304,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="Window打开ntp服务"><a href="#Window打开ntp服务" class="headerlink" title="Window打开ntp服务"></a>Window打开ntp服务</h1><p>在学习各种服务搭建过程中，会使用到NTP服务。由于学习环境为自己电脑下的虚拟机，那么在自己电脑上开启ntp服务有时候省心省力。</p>
+        <h1 id="Window-打开-ntp-服务"><a href="#Window-打开-ntp-服务" class="headerlink" title="Window 打开 ntp 服务"></a>Window 打开 ntp 服务</h1><p>在学习各种服务搭建过程中，会使用到NTP服务。由于学习环境为自己电脑下的虚拟机，那么在自己电脑上开启ntp服务有时候省心省力。</p>
 <span id="more"></span>
 
-<p>1.进入到服务器，依次点击：windows+R弹出运行窗口—regedit—确定<br>然后点击确定。</p>
+<p>1.进入到服务器，依次点击：<code>windows + R</code> 弹出运行窗口—regedit—确定<br>然后点击确定。</p>
 <p><img src="/2020/07/12/Window-NTP/1.png"></p>
-<p>2.依次展开：HKEY_LOCAL_MACHINE、SYSTEM、CurrentControlSet、Services、W32Time、TimeProviders、NtpServer<br>在NtpServer项的右侧键值ENablied，将默认的0<br>改为1，1为启用NTP服务器。</p>
+<p>2.依次展开：HKEY_LOCAL_MACHINE、SYSTEM、CurrentControlSet、Services、W32Time、TimeProviders、NtpServer<br>在 NtpServer 项的右侧键值 ENablied，将默认的 0<br>改为1，1为启用 NTP 服务器。</p>
 <p><img src="/2020/07/12/Window-NTP/2.png"></p>
-<p>3.依次展开：HKEY_LOCAL_MACHINE、SYSTEM、CurrentControlSet、Services、W32Time、Config<br>找到Config项右侧的AnnounceFlags。<br>把默认的10改为5<br>5的意思就是自身为可靠的时间源</p>
+<p>3.依次展开：HKEY_LOCAL_MACHINE、SYSTEM、CurrentControlSet、Services、W32Time、Config<br>找到 Config 项右侧的 AnnounceFlags。<br>把默认的 10 改为 5<br>5 的意思就是自身为可靠的时间源</p>
 <p><img src="/2020/07/12/Window-NTP/3.png"></p>
-<p>4.修改完以上之后关闭注册表编辑器<br>再：windows+R弹出运行窗口—services—确定，找到Windows Time服务，启动并设置开机启动</p>
+<p>4.修改完以上之后关闭注册表编辑器<br>再：<code>windows + R</code> 弹出运行窗口—services—确定，找到 Windows Time 服务，启动并设置开机启动</p>
 <p><img src="/2020/07/12/Window-NTP/4.png"></p>
-<p>5.linux系统使用命令ntpdate -u $windows机器IP同步时间就可以了，windows在时间设置上设置该机器IP然后点同步更新<br>需要打卡端口udp 123</p>
+<p>5.linux 系统使用命令 <code>ntpdate -u $windows</code> 机器 IP 同步时间就可以了，windows 在时间设置上设置该机器 IP 然后点同步更新<br>需要打卡端口 <code>udp 123</code></p>
 
       
     </div>
@@ -327,7 +327,7 @@
         <p><span>Title:</span><a href="/2020/07/12/Window-NTP/">Window-NTP</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2020-07-12, 15:24:55</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:44</p>
+        <p><span>Updated:</span>2023-04-07, 14:28:06</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2020/07/12/Window-NTP/" title="Window-NTP">http://yoursite.com/2020/07/12/Window-NTP/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2020/07/12/Window-NTP/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -363,7 +363,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Window%E6%89%93%E5%BC%80ntp%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">Window打开ntp服务</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Window-%E6%89%93%E5%BC%80-ntp-%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">Window 打开 ntp 服务</span></a></li></ol>
         
     </div>
     <style>

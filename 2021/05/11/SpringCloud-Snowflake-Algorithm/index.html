@@ -15,16 +15,16 @@
 
 
 
-<meta name="description" content="雪花算法原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 为什么需要分布式全局唯一ID以及分布式ID的业务需求？集群高并发情况下如何保证分布式唯一全局Id生成？ 在复杂分布式系统中，往往需婴对大量的数据和消息进行唯一标识，如在美团点评的金融、支付、餐饮、酒店，猫眼电影等产品的系统中数据日渐增长，对数据分库分表后需要有一个">
+<meta name="description" content="雪花算法原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 为什么需要分布式全局唯一 ID 以及分布式 ID 的业务需求？集群高并发情况下如何保证分布式唯一全局 ID 生成？ 在复杂分布式系统中，往往需婴对大量的数据和消息进行唯一标识，如在美团点评的金融、支付、餐饮、酒店，猫眼电影等产品的系统中数据日渐增长，对数据分库分表">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringCloud-Snowflake-Algorithm">
 <meta property="og:url" content="http://yoursite.com/2021/05/11/SpringCloud-Snowflake-Algorithm/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="雪花算法原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 为什么需要分布式全局唯一ID以及分布式ID的业务需求？集群高并发情况下如何保证分布式唯一全局Id生成？ 在复杂分布式系统中，往往需婴对大量的数据和消息进行唯一标识，如在美团点评的金融、支付、餐饮、酒店，猫眼电影等产品的系统中数据日渐增长，对数据分库分表后需要有一个">
+<meta property="og:description" content="雪花算法原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 为什么需要分布式全局唯一 ID 以及分布式 ID 的业务需求？集群高并发情况下如何保证分布式唯一全局 ID 生成？ 在复杂分布式系统中，往往需婴对大量的数据和消息进行唯一标识，如在美团点评的金融、支付、餐饮、酒店，猫眼电影等产品的系统中数据日渐增长，对数据分库分表">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2021/05/11/SpringCloud-Snowflake-Algorithm/1.png">
 <meta property="article:published_time" content="2021-05-11T06:39:00.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:44.359Z">
+<meta property="article:modified_time" content="2023-04-07T07:11:57.000Z">
 <meta property="article:author" content="Sevattal">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2021/05/11/SpringCloud-Snowflake-Algorithm/1.png">
@@ -297,289 +297,125 @@
       
           
         <h1 id="雪花算法"><a href="#雪花算法" class="headerlink" title="雪花算法"></a>雪花算法</h1><p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
-<p><strong>为什么需要分布式全局唯一ID以及分布式ID的业务需求？集群高并发情况下如何保证分布式唯一全局Id生成？</strong></p>
-<p>在复杂分布式系统中，往往需婴对大量的数据和消息进行唯一标识，如在美团点评的金融、支付、餐饮、酒店，猫眼电影等产品的系统中数据日渐增长，对数据分库分表后需要有一个唯一ID来标识一条数据或消息。特别一点的如订单、骑手、优惠券也都雷要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。</p>
-<p><strong>ID生成规则部分硬性要求</strong></p>
-<pre><code>全局唯一：不能出现重复的ID号，既然是唯一-标识，这是最基本的要求
+<p><strong>为什么需要分布式全局唯一 ID 以及分布式 ID 的业务需求？集群高并发情况下如何保证分布式唯一全局 ID 生成？</strong></p>
+<p>在复杂分布式系统中，往往需婴对大量的数据和消息进行唯一标识，如在美团点评的金融、支付、餐饮、酒店，猫眼电影等产品的系统中数据日渐增长，对数据分库分表后需要有一个唯一 ID 来标识一条数据或消息。特别一点的如订单、骑手、优惠券也都雷要有唯一 ID 做标识。此时一个能够生成全局唯一 ID 的系统是非常必要的。</p>
+<p><strong>ID 生成规则部分硬性要求</strong></p>
+<pre><code>全局唯一：不能出现重复的 ID 号，既然是唯一-标识，这是最基本的要求
 
-趋势递增：在MySQL的InnoDB引擎中使用的是聚集索引，由于多数RDBMS使用Btree的数据结构来存储索引数据，在主键的选择上面我们应该尽量使用有序的主键保证写入性能。
+趋势递增：在 MySQL 的 InnoDB 引擎中使用的是聚集索引，由于多数 RDBMS 使用 Btree 的数据结构来存储索引数据，在主键的选择上面我们应该尽量使用有序的主键保证写入性能。
 
-单调递增：保证下一个ID一定大于上一个ID，例如事务版本号、IM增量消息、排序等特殊需求
+单调递增：保证下一个 ID 一定大于上一个 ID，例如事务版本号、IM 增量消息、排序等特殊需求
 
-信息安全：如果ID是连续的，恶意用户的扒取工作就非常容易做了，直接按照顺序下载指定URL即可。如果是订单号就更危险了，竞对可以直接知道我们一天的单量。所以在一些应用场景下，需要ID无规则不规则，让竞争对手否好猜。
+信息安全：如果 ID 是连续的，恶意用户的扒取工作就非常容易做了，直接按照顺序下载指定URL即可。如果是订单号就更危险了，竞对可以直接知道我们一天的单量。所以在一些应用场景下，需要ID无规则不规则，让竞争对手否好猜。
 
 含时间戳：这样就能够在开发中快速了解这个分布式id的生成时间。
 </code></pre>
-<p><strong>ID号生成系统的可用性要求</strong></p>
-<pre><code>高可用：发一个获取分布式ID的请求，服务器就要保证99.999%的情况下给我创建一个唯一分布式ID。
+<p><strong>ID 号生成系统的可用性要求</strong></p>
+<pre><code>高可用：发一个获取分布式 ID 的请求，服务器就要保证 99.999% 的情况下给我创建一个唯一分布式 ID。
 
-低延迟：发一个获取分布式ID的请求，服务器就要快，极速。
+低延迟：发一个获取分布式 ID 的请求，服务器就要快，极速。
 
-高QPS：假如并发一口气10万个创建分布式ID请求同时杀过来，服务器要顶的住且一下子成功创建10万个分布式ID。
+高 QPS：假如并发一口气 10 万个创建分布式 ID 请求同时杀过来，服务器要顶的住且一下子成功创建 10 万个分布式 ID。
 </code></pre>
 <span id="more"></span>
 
 <p><strong>一般通用方案</strong></p>
 <p><strong>UUID</strong></p>
-<p>UUID(Universally Unique ldentifer)的标准型式包含32个16进制数字，以连了号分为五段，形式为8-4-4-4-12的36个字符， 示例：550e8400-e29b-41d4-a716-446655440000</p>
+<p>UUID(Universally Unique ldentifer) 的标准型式包含 32 个 16 进制数字，以连了号分为五段，形式为 8-4-4-4-12 的 36 个字符， 示例：550e8400-e29b-41d4-a716-446655440000</p>
 <p>性能非常高：本地生成，没有网络消耗</p>
 <p>如果只是考虑唯一性，那就选用它吧</p>
 <p>但是，入数据库性能差</p>
-<p><strong>为什么无序的UUID会导致入库性能变差呢？</strong></p>
-<pre><code>无序，无法预测他的生成顺序，不能生成递增有序的数字。首先分布式ID一般都会作为主键， 但是安装MySQL官方推荐主键要尽量越短越好，UUID每一个都很长，所以不是很推荐。
+<p><strong>为什么无序的 UUID 会导致入库性能变差呢？</strong></p>
+<pre><code>无序，无法预测他的生成顺序，不能生成递增有序的数字。首先分布式 ID 一般都会作为主键， 但是安装 MySQL 官方推荐主键要尽量越短越好，UUID 每一个都很长，所以不是很推荐。
 
-主键，ID作为主键时在特定的环境会存在一些问题。比如做DB主键的场景下，UUID就非常不适用MySQL官方有明确的建议主键要尽量越短越好36个字符长度的UUID不符合要求。
+主键，ID 作为主键时在特定的环境会存在一些问题。比如做 DB 主键的场景下，UUID 就非常不适用 MySQL 官方有明确的建议主键要尽量越短越好 36 个字符长度的 UUID 不符合要求。
 
-索引，既然分布式ID是主键，然后主键是包含索引的，然后MySQL的索引是通过B+树来实现的，每一次新的UUID数据的插入，为了查询的优化，都会对索引底层的B+树进行修改，因为UUID数据是无序的，所以每一次UUID数据的插入都会对主键地械的B+树进行很大的修改，这一点很不好。 插入完全无序，不但会导致一-些中间节点产生分裂，也会白白创造出很多不饱和的节点，这样大大降低了数据库插入的性能。
+索引，既然分布式 ID 是主键，然后主键是包含索引的，然后MySQL的索引是通过B+树来实现的，每一次新的 UUID 数据的插入，为了查询的优化，都会对索引底层的B+树进行修改，因为UUID数据是无序的，所以每一次 UUID 数据的插入都会对主键地械的B+树进行很大的修改，这一点很不好。 插入完全无序，不但会导致一-些中间节点产生分裂，也会白白创造出很多不饱和的节点，这样大大降低了数据库插入的性能。
 </code></pre>
 <p>All indexes other than the clustered index are known as secondary indexes. In InnoDB, each record in a secondary index contains the primary key columns for the row, as well as the columns specified for the secondary index. InnoDB uses this primary key value to search for the row in the clustered index.</p>
 <p>If the primary key is long, the secondary indexes use more space, so it is advantageous to have a short primary key.</p>
-<p>Mysql官网解释：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/innodb-index-types.html">https://dev.mysql.com/doc/refman/8.0/en/innodb-index-types.html</a></p>
+<p>Mysql 官网解释：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/innodb-index-types.html">https://dev.mysql.com/doc/refman/8.0/en/innodb-index-types.html</a></p>
 <p><strong>数据库自增主键</strong></p>
 <p><strong>单机</strong></p>
-<p>在单机里面，数据库的自增ID机制的主要原理是：数据库自增ID和MySQL数据库的replace into实现的。</p>
-<p>REPLACE INTO的含义是插入一条记录，如果表中唯一索引的值遇到冲突，则替换老数据。</p>
-<p>这里的replace into跟inset功能类似，不同点在于：replace into首先尝试插入数据列表中，如果发现表中已经有此行数据（根据主键或唯一索引判断）则先删除，再插入。否则直接插入新数据。</p>
-<pre><code>CREATE TABLE t_test(
-    id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    stub CHAR(1) NOT NULL DEFAULT &#39;&#39;,
-    UNIQUE KEY stub(stub)
-)
+<p>在单机里面，数据库的自增 ID 机制的主要原理是：数据库自增 ID 和 MySQL 数据库的 replace into 实现的。</p>
+<p>REPLACE INTO 的含义是插入一条记录，如果表中唯一索引的值遇到冲突，则替换老数据。</p>
+<p>这里的 replace into 跟 insert 功能类似，不同点在于：replace into 首先尝试插入数据列表中，如果发现表中已经有此行数据（根据主键或唯一索引判断）则先删除，再插入。否则直接插入新数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE t_test(</span><br><span class="line">	id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">	stub CHAR(1) NOT NULL DEFAULT &#x27;&#x27;,</span><br><span class="line">	UNIQUE KEY stub(stub)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">SELECT * FROMt_ test;</span><br><span class="line"></span><br><span class="line">REPLACE INTO t_test (stub) VALUES(&#x27;b&#x27;);</span><br><span class="line"></span><br><span class="line">SELECT LAST_INSERT_ID();</span><br></pre></td></tr></table></figure>
 
-SELECT * FROMt_ test;
-
-REPLACE INTO t_test (stub) VALUES(&#39;b&#39;);
-
-SELECT LAST_INSERT_ID();
-</code></pre>
 <p><strong>集群分布式</strong></p>
-<p>那数据库自增ID机制适合作分布式ID吗？答案是不太适合</p>
-<p>1：系统水平扩展比较困难，比如定义好了步长和机器台数之后，如果要添加机器该怎么做？假设现在只有一台机器发号是1，2，3，4，5（步长是1），这<br>个时候需要扩容机器一台。可以这样做：把第二台机器的初始值设置得比第一台超过很多，貌似还好，现在想象一下如果我们线上有100台机器，这<br>个时候要扩容该怎么做？简直是噩梦，所以系统水平扩展方案复杂难以实现。</p>
-<p>2：数据库压力还是很大，每次获取ID都得读写一次数据库， 非常影响性能，不符合分布式ID里面的延迟低和要高QPS的规则（在高并发下，如果都去数据库里面获取id，那是非常影响性能的）</p>
-<p>基于Redis生成全局ID策略</p>
-<p>因为Redis是单线的天生保证原子性，可以使用原子操作INCR和INCRBY来实现</p>
-<p>注意：在Redis集群情况下，同样和MySQL一样需要设置不同的增长步长，同时key一定要设置有效期可以使用Redis集群来获取更高的吞吐量。</p>
-<p>假如一个集群中有5台Redis。可以初始化每台Redis的值分别是1,2,3,4,5，然后步长都是5。</p>
-<p>各个Redis生成的ID为:</p>
+<p>那数据库自增 ID 机制适合作分布式 ID 吗？答案是不太适合</p>
+<p>1：系统水平扩展比较困难，比如定义好了步长和机器台数之后，如果要添加机器该怎么做？假设现在只有一台机器发号是 1，2，3，4，5（步长是1），这<br>个时候需要扩容机器一台。可以这样做：把第二台机器的初始值设置得比第一台超过很多，貌似还好，现在想象一下如果我们线上有 100 台机器，这<br>个时候要扩容该怎么做？简直是噩梦，所以系统水平扩展方案复杂难以实现。</p>
+<p>2：数据库压力还是很大，每次获取 ID 都得读写一次数据库， 非常影响性能，不符合分布式 ID 里面的延迟低和要高 QPS 的规则（在高并发下，如果都去数据库里面获取 id，那是非常影响性能的）</p>
+<p>基于 Redis 生成全局 ID 策略</p>
+<p>因为 Redis 是单线的天生保证原子性，可以使用原子操作INCR和INCRBY来实现</p>
+<p>注意：在 Redis 集群情况下，同样和 MySQL 一样需要设置不同的增长步长，同时 key 一定要设置有效期可以使用 Redis 集群来获取更高的吞吐量。</p>
+<p>假如一个集群中有 5 台 Redis。可以初始化每台 Redis 的值分别是 1,2,3,4,5，然后步长都是 5。</p>
+<p>各个 Redis 生成的 ID 为:</p>
 <p>A：1, 6, 11, 16, 21<br>B：2, 7 , 12, 17, 22<br>C：3, 8, 13, 18, 23<br>D：4, 9, 14, 19, 24<br>E：5, 10, 15, 20, 25</p>
-<h2 id="Twitter的分布式自增ID算法snowflake"><a href="#Twitter的分布式自增ID算法snowflake" class="headerlink" title="Twitter的分布式自增ID算法snowflake"></a>Twitter的分布式自增ID算法snowflake</h2><p><strong>概述</strong></p>
-<p>Twitter的snowflake解决了这种需求，最初Twitter把存储系统从MySQL迁移到Cassandra（由Facebook开发一套开源分布式NoSQL数据库系统）。因为Cassandra没有顺序ID生成机制，所以开发了这样一套全局唯一生成服务。</p>
-<p>Twitter的分布式雪花算法SnowFlake ，经测试snowflake 每秒能够产生26万个自增可排序的ID</p>
-<pre><code>Twitter的SnowFlake生成ID能够按照时间有序生成。
+<h2 id="Twitter-的分布式自增-ID-算法-snowflake"><a href="#Twitter-的分布式自增-ID-算法-snowflake" class="headerlink" title="Twitter 的分布式自增 ID 算法 snowflake"></a>Twitter 的分布式自增 ID 算法 snowflake</h2><p><strong>概述</strong></p>
+<p>Twitter 的 snowflake 解决了这种需求，最初 Twitter 把存储系统从 MySQL 迁移到 Cassandra（由 Facebook 开发一套开源分布式 NoSQL 数据库系统）。因为 Cassandra 没有顺序 ID 生成机制，所以开发了这样一套全局唯一生成服务。</p>
+<p>Twitter 的分布式雪花算法 SnowFlake ，经测试 snowflake 每秒能够产生 26 万个自增可排序的 ID</p>
+<pre><code>Twitter 的 SnowFlake 生成 ID 能够按照时间有序生成。
 
-SnowFlake算法生成ID的结果是一个64bit大小的整数， 为一个Long型（转换成字符串后长度最多19）。
+SnowFlake 算法生成 ID 的结果是一个 64bit 大小的整数， 为一个 Long 型（转换成字符串后长度最多 19）。
 
-分布式系统内不会产生ID碰撞（由datacenter和workerld作区分）并且效率较高。
+分布式系统内不会产生 ID 碰撞（由 datacenter 和 workerld 作区分）并且效率较高。
 </code></pre>
-<p>分布式系统中，有一些需要使用全局唯一ID的场景， 生成ID的基本要求：</p>
+<p>分布式系统中，有一些需要使用全局唯一 ID 的场景， 生成 ID 的基本要求：</p>
 <pre><code>在分布式的环境下必须全局且唯一 。
 
-一般都需要单调递增，因为一般唯一ID都会存到数据库，而Innodb的特性就是将内容存储在主键索引树上的叶子节点而且是从左往右，递增的，所以考虑到数据库性能，一般生成的ID也最好是单调递增。 为了防止ID冲突可以使用36位的UUID，但是UUID有一些缺点， 首先他相对比较长， 另外UUID一般是无序的。
+一般都需要单调递增，因为一般唯一 ID 都会存到数据库，而 Innodb 的特性就是将内容存储在主键索引树上的叶子节点而且是从左往右，递增的，所以考虑到数据库性能，一般生成的 ID 也最好是单调递增。 为了防止 ID 冲突可以使用 36 位的 UUID，但是 UUID 有一些缺点， 首先他相对比较长， 另外 UUID 一般是无序的。
 
-可能还会需要无规则，因为如果使用唯一ID作为订单号这种，为了不然别人知道一天的订单量是多少，就需要这个规则。
+可能还会需要无规则，因为如果使用唯一 ID 作为订单号这种，为了不然别人知道一天的订单量是多少，就需要这个规则。
 </code></pre>
 <p><strong>结构</strong></p>
 <p>雪花算法的几个核心组成部分：</p>
 <p><img src="/2021/05/11/SpringCloud-Snowflake-Algorithm/1.png"></p>
 <p><strong>号段解析：</strong></p>
 <p>1bit：</p>
-<pre><code>不用，因为二进制中最高位是符号位，1表示负数，0表示正数。生成的id一般都是用整数，所以最高位固定为0。
+<pre><code>不用，因为二进制中最高位是符号位，1 表示负数，0 表示正数。生成的 id 一般都是用整数，所以最高位固定为 0。
 </code></pre>
 <p>41bit - 时间戳，用来记录时间戳，毫秒级：</p>
-<pre><code>41位可以表示 2^41 -1 个数字。
+<pre><code>41 位可以表示 2^41 -1 个数字。
 
-如果只用来表示正整数（计算机中正数包含0），可以表示的数值范围是：0至2^41 -1, 减1是因为可表示的数值范围是从0开始算的，而不是1。
+如果只用来表示正整数（计算机中正数包含0），可以表示的数值范围是：0 至 2^41 -1, 减 1 是因为可表示的数值范围是从 0 开始算的，而不是 1。
 
-也就是说41位可以表示2^41−1个毫秒的值，转化成单位年则是 ( 2^41 − 1 ) / ( 1000 ∗ 60 ∗ 60 ∗ 24 ∗ 365 ) = 69年。
+也就是说 41 位可以表示 2^41−1 个毫秒的值，转化成单位年则是 ( 2^41 − 1 ) / ( 1000 x 60 x 60 x 24 x 365 ) = 69 年。
 </code></pre>
-<p>10bit - 工作机器ID，用来记录工作机器ID：</p>
-<pre><code>可以部署在2^10=1024个节点，包括5位DataCenterId和5位Workerld。
+<p>10bit - 工作机器 ID，用来记录工作机器 ID：</p>
+<pre><code>可以部署在 2^10=1024 个节点，包括 5 位 DataCenterId 和 5 位 Workerld。
 
-5位(bit) 可以表示的最大正整数是 2^5 −1=31,即可以用0、1、2、3、…31这32个数字，来表示不同的DataCenterld或Workerld。
+5 位(bit) 可以表示的最大正整数是 2^5 −1=31,即可以用 0、1、2、3、…31 这 32 个数字，来表示不同的 DataCenterld 或 Workerld。
 </code></pre>
-<p>12bit - 序列号，用来记录同毫秒内产生的不同id。</p>
-<pre><code>12位(bit) 可以表示的最大正整数是2^12 - 1 = 4095， 即可以用0、1、2、 3、…4094这4095个数字，来表示同一机器同一时间截(毫秒)内产生的4095个ID序号。
+<p>12bit - 序列号，用来记录同毫秒内产生的不同 id。</p>
+<pre><code>12 位(bit) 可以表示的最大正整数是 2^12 - 1 = 4095， 即可以用 0、1、2、 3、…4094 这 4095 个数字，来表示同一机器同一时间截(毫秒)内产生的 4095 个 ID 序号。
 </code></pre>
-<p>SnowFlake可以保证：</p>
-<pre><code>所有生成的ID按时间趋势递增。
-整个分布式系统内不会产生重复id（因为有DataCenterId和Workerld来做区分)
+<p>SnowFlake 可以保证：</p>
+<pre><code>所有生成的 ID 按时间趋势递增。
+整个分布式系统内不会产生重复 id（因为有 DataCenterId 和 Workerld 来做区分)
 </code></pre>
 <p><strong>源码</strong></p>
 <p>以下代码仅供学习：</p>
-<pre><code>/**
- * Twitter_Snowflake
- * SnowFlake的结构如下(每部分用-分开):
- * 0 - 0000000000 0000000000 0000000000 0000000000 0 - 00000 - 00000 - 000000000000
- * 1位标识，由于long基本类型在Java中是带符号的，最高位是符号位，正数是0，负数是1，所以id一般是正数，最高位是0
- * 41位时间戳(毫秒级)，注意，41位时间戳不是存储当前时间的时间戳，而是存储时间戳的差值（当前时间戳 - 开始时间戳)
- * 得到的值），这里的的开始时间戳，一般是我们的id生成器开始使用的时间，由我们程序来指定的（如下面程序SnowflakeIdWorker类的startTime属性）。41位的时间戳，可以使用69年，年T = (1L &lt;&lt; 41) / (1000L * 60 * 60 * 24 * 365) = 69
- * 10位的数据机器位，可以部署在1024个节点，包括5位datacenterId和5位workerId
- * 12位序列，毫秒内的计数，12位的计数顺序号支持每个节点每毫秒(同一机器，同一时间戳)产生4096个ID序号
- * 加起来刚好64位，为一个Long型。
- */
-public class SnowflakeIdWorker &#123;
-    /** 开始时间戳 (2015-01-01) */
-    private final long twepoch = 1420041600000L;
-    /** 机器id所占的位数 */
-    private final long workerIdBits = 5L;
-    /** 数据标识id所占的位数 */
-    private final long datacenterIdBits = 5L;
-    /** 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */
-    private final long maxWorkerId = -1L ^ (-1L &lt;&lt; workerIdBits);
-    /** 支持的最大数据标识id，结果是31 */
-    private final long maxDatacenterId = -1L ^ (-1L &lt;&lt; datacenterIdBits);
-    /** 序列在id中占的位数 */
-    private final long sequenceBits = 12L;
-    /** 机器ID向左移12位 */
-    private final long workerIdShift = sequenceBits;
-    /** 数据标识id向左移17位(12+5) */
-    private final long datacenterIdShift = sequenceBits + workerIdBits;
-    /** 时间戳向左移22位(5+5+12) */
-    private final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
-    /** 生成序列的掩码，这里为4095 (0b111111111111=0xfff=4095) */
-    private final long sequenceMask = -1L ^ (-1L &lt;&lt; sequenceBits);
-    /** 工作机器ID(0~31) */
-    private long workerId;
-    /** 数据中心ID(0~31) */
-    private long datacenterId;
-    /** 毫秒内序列(0~4095) */
-    private long sequence = 0L;
-    /** 上次生成ID的时间戳 */
-    private long lastTimestamp = -1L;
-    //==============================Constructors=====================================
-    /**
-     * 构造函数
-     * @param workerId 工作ID (0~31)
-     * @param datacenterId 数据中心ID (0~31)
-     */
-    public SnowflakeIdWorker(long workerId, long datacenterId) &#123;
-        if (workerId &gt; maxWorkerId || workerId &lt; 0) &#123;
-            throw new IllegalArgumentException(String.format(&quot;worker Id can&#39;t be greater than %d or less than 0&quot;, maxWorkerId));
-        &#125;
-        if (datacenterId &gt; maxDatacenterId || datacenterId &lt; 0) &#123;
-            throw new IllegalArgumentException(String.format(&quot;datacenter Id can&#39;t be greater than %d or less than 0&quot;, maxDatacenterId));
-        &#125;
-        this.workerId = workerId;
-        this.datacenterId = datacenterId;
-    &#125;
-    // ==============================Methods==========================================
-    /**
-     * 获得下一个ID (该方法是线程安全的)
-     * @return SnowflakeId
-     */
-    public synchronized long nextId() &#123;
-        long timestamp = timeGen();
-        //如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
-        if (timestamp &lt; lastTimestamp) &#123;
-            throw new RuntimeException(
-                    String.format(&quot;Clock moved backwards.  Refusing to generate id for %d milliseconds&quot;, lastTimestamp - timestamp));
-        &#125;
-        //如果是同一时间生成的，则进行毫秒内序列
-        if (lastTimestamp == timestamp) &#123;
-            sequence = (sequence + 1) &amp; sequenceMask;
-            //毫秒内序列溢出
-            if (sequence == 0) &#123;
-                //阻塞到下一个毫秒,获得新的时间戳
-                timestamp = tilNextMillis(lastTimestamp);
-            &#125;
-        &#125;
-        //时间戳改变，毫秒内序列重置
-        else &#123;
-            sequence = 0L;
-        &#125;
-        //上次生成ID的时间戳
-        lastTimestamp = timestamp;
-        //移位并通过或运算拼到一起组成64位的ID
-        return ((timestamp - twepoch) &lt;&lt; timestampLeftShift) //
-                | (datacenterId &lt;&lt; datacenterIdShift) //
-                | (workerId &lt;&lt; workerIdShift) //
-                | sequence;
-    &#125;
-    /**
-     * 阻塞到下一个毫秒，直到获得新的时间戳
-     * @param lastTimestamp 上次生成ID的时间戳
-     * @return 当前时间戳
-     */
-    protected long tilNextMillis(long lastTimestamp) &#123;
-        long timestamp = timeGen();
-        while (timestamp &lt;= lastTimestamp) &#123;
-            timestamp = timeGen();
-        &#125;
-        return timestamp;
-    &#125;
-    /**
-     * 返回以毫秒为单位的当前时间
-     * @return 当前时间(毫秒)
-     */
-    protected long timeGen() &#123;
-        return System.currentTimeMillis();
-    &#125;
-    /** 测试 */
-    public static void main(String[] args) &#123;
-        System.out.println(&quot;开始：&quot;+System.currentTimeMillis());
-        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
-        for (int i = 0; i &lt; 50; i++) &#123;
-            long id = idWorker.nextId();
-            System.out.println(id);
-//            System.out.println(Long.toBinaryString(id));
-        &#125;
-        System.out.println(&quot;结束：&quot;+System.currentTimeMillis());
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Twitter_Snowflake</span><br><span class="line"> * SnowFlake的结构如下(每部分用-分开):</span><br><span class="line"> * 0 - 0000000000 0000000000 0000000000 0000000000 0 - 00000 - 00000 - 000000000000</span><br><span class="line"> * 1位标识，由于long基本类型在Java中是带符号的，最高位是符号位，正数是0，负数是1，所以id一般是正数，最高位是0</span><br><span class="line"> * 41位时间戳(毫秒级)，注意，41位时间戳不是存储当前时间的时间戳，而是存储时间戳的差值（当前时间戳 - 开始时间戳)</span><br><span class="line"> * 得到的值），这里的的开始时间戳，一般是我们的id生成器开始使用的时间，由我们程序来指定的（如下面程序SnowflakeIdWorker类的startTime属性）。41位的时间戳，可以使用69年，年T = (1L &lt;&lt; 41) / (1000L * 60 * 60 * 24 * 365) = 69</span><br><span class="line"> * 10位的数据机器位，可以部署在1024个节点，包括5位datacenterId和5位workerId</span><br><span class="line"> * 12位序列，毫秒内的计数，12位的计数顺序号支持每个节点每毫秒(同一机器，同一时间戳)产生4096个ID序号</span><br><span class="line"> * 加起来刚好64位，为一个Long型。</span><br><span class="line"> */</span><br><span class="line">public class SnowflakeIdWorker &#123;</span><br><span class="line">    /** 开始时间戳 (2015-01-01) */</span><br><span class="line">    private final long twepoch = 1420041600000L;</span><br><span class="line">    /** 机器id所占的位数 */</span><br><span class="line">    private final long workerIdBits = 5L;</span><br><span class="line">    /** 数据标识id所占的位数 */</span><br><span class="line">    private final long datacenterIdBits = 5L;</span><br><span class="line">    /** 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */</span><br><span class="line">    private final long maxWorkerId = -1L ^ (-1L &lt;&lt; workerIdBits);</span><br><span class="line">    /** 支持的最大数据标识id，结果是31 */</span><br><span class="line">    private final long maxDatacenterId = -1L ^ (-1L &lt;&lt; datacenterIdBits);</span><br><span class="line">    /** 序列在id中占的位数 */</span><br><span class="line">    private final long sequenceBits = 12L;</span><br><span class="line">    /** 机器ID向左移12位 */</span><br><span class="line">    private final long workerIdShift = sequenceBits;</span><br><span class="line">    /** 数据标识id向左移17位(12+5) */</span><br><span class="line">    private final long datacenterIdShift = sequenceBits + workerIdBits;</span><br><span class="line">    /** 时间戳向左移22位(5+5+12) */</span><br><span class="line">    private final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;</span><br><span class="line">    /** 生成序列的掩码，这里为4095 (0b111111111111=0xfff=4095) */</span><br><span class="line">    private final long sequenceMask = -1L ^ (-1L &lt;&lt; sequenceBits);</span><br><span class="line">    /** 工作机器ID(0~31) */</span><br><span class="line">    private long workerId;</span><br><span class="line">    /** 数据中心ID(0~31) */</span><br><span class="line">    private long datacenterId;</span><br><span class="line">    /** 毫秒内序列(0~4095) */</span><br><span class="line">    private long sequence = 0L;</span><br><span class="line">    /** 上次生成ID的时间戳 */</span><br><span class="line">    private long lastTimestamp = -1L;</span><br><span class="line">    //==============================Constructors=====================================</span><br><span class="line">    /**</span><br><span class="line">     * 构造函数</span><br><span class="line">     * @param workerId 工作ID (0~31)</span><br><span class="line">     * @param datacenterId 数据中心ID (0~31)</span><br><span class="line">     */</span><br><span class="line">    public SnowflakeIdWorker(long workerId, long datacenterId) &#123;</span><br><span class="line">        if (workerId &gt; maxWorkerId || workerId &lt; 0) &#123;</span><br><span class="line">            throw new IllegalArgumentException(String.format(&quot;worker Id can&#x27;t be greater than %d or less than 0&quot;, maxWorkerId));</span><br><span class="line">        &#125;</span><br><span class="line">        if (datacenterId &gt; maxDatacenterId || datacenterId &lt; 0) &#123;</span><br><span class="line">            throw new IllegalArgumentException(String.format(&quot;datacenter Id can&#x27;t be greater than %d or less than 0&quot;, maxDatacenterId));</span><br><span class="line">        &#125;</span><br><span class="line">        this.workerId = workerId;</span><br><span class="line">        this.datacenterId = datacenterId;</span><br><span class="line">    &#125;</span><br><span class="line">    // ==============================Methods==========================================</span><br><span class="line">    /**</span><br><span class="line">     * 获得下一个ID (该方法是线程安全的)</span><br><span class="line">     * @return SnowflakeId</span><br><span class="line">     */</span><br><span class="line">    public synchronized long nextId() &#123;</span><br><span class="line">        long timestamp = timeGen();</span><br><span class="line">        //如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常</span><br><span class="line">        if (timestamp &lt; lastTimestamp) &#123;</span><br><span class="line">            throw new RuntimeException(</span><br><span class="line">                    String.format(&quot;Clock moved backwards.  Refusing to generate id for %d milliseconds&quot;, lastTimestamp - timestamp));</span><br><span class="line">        &#125;</span><br><span class="line">        //如果是同一时间生成的，则进行毫秒内序列</span><br><span class="line">        if (lastTimestamp == timestamp) &#123;</span><br><span class="line">            sequence = (sequence + 1) &amp; sequenceMask;</span><br><span class="line">            //毫秒内序列溢出</span><br><span class="line">            if (sequence == 0) &#123;</span><br><span class="line">                //阻塞到下一个毫秒,获得新的时间戳</span><br><span class="line">                timestamp = tilNextMillis(lastTimestamp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //时间戳改变，毫秒内序列重置</span><br><span class="line">        else &#123;</span><br><span class="line">            sequence = 0L;</span><br><span class="line">        &#125;</span><br><span class="line">        //上次生成ID的时间戳</span><br><span class="line">        lastTimestamp = timestamp;</span><br><span class="line">        //移位并通过或运算拼到一起组成64位的ID</span><br><span class="line">        return ((timestamp - twepoch) &lt;&lt; timestampLeftShift) //</span><br><span class="line">                | (datacenterId &lt;&lt; datacenterIdShift) //</span><br><span class="line">                | (workerId &lt;&lt; workerIdShift) //</span><br><span class="line">                | sequence;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * 阻塞到下一个毫秒，直到获得新的时间戳</span><br><span class="line">     * @param lastTimestamp 上次生成ID的时间戳</span><br><span class="line">     * @return 当前时间戳</span><br><span class="line">     */</span><br><span class="line">    protected long tilNextMillis(long lastTimestamp) &#123;</span><br><span class="line">        long timestamp = timeGen();</span><br><span class="line">        while (timestamp &lt;= lastTimestamp) &#123;</span><br><span class="line">            timestamp = timeGen();</span><br><span class="line">        &#125;</span><br><span class="line">        return timestamp;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * 返回以毫秒为单位的当前时间</span><br><span class="line">     * @return 当前时间(毫秒)</span><br><span class="line">     */</span><br><span class="line">    protected long timeGen() &#123;</span><br><span class="line">        return System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line">    /** 测试 */</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(&quot;开始：&quot;+System.currentTimeMillis());</span><br><span class="line">        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);</span><br><span class="line">        for (int i = 0; i &lt; 50; i++) &#123;</span><br><span class="line">            long id = idWorker.nextId();</span><br><span class="line">            System.out.println(id);</span><br><span class="line">//            System.out.println(Long.toBinaryString(id));</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;结束：&quot;+System.currentTimeMillis());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>工程落地经验</strong></p>
-<p>Hutool的Snowflake文档:<a target="_blank" rel="noopener" href="https://www.hutool.cn/docs/#/core/%E5%B7%A5%E5%85%B7%E7%B1%BB/%E5%94%AF%E4%B8%80ID%E5%B7%A5%E5%85%B7-IdUtil?id=snowflake">https://www.hutool.cn/docs/#/core/%E5%B7%A5%E5%85%B7%E7%B1%BB/%E5%94%AF%E4%B8%80ID%E5%B7%A5%E5%85%B7-IdUtil?id=snowflake</a></p>
+<p>Hutool 的 Snowflake 文档:</p>
+<p><a target="_blank" rel="noopener" href="https://www.hutool.cn/docs/#/core/%E5%B7%A5%E5%85%B7%E7%B1%BB/%E5%94%AF%E4%B8%80ID%E5%B7%A5%E5%85%B7-IdUtil?id=snowflake">https://www.hutool.cn/docs/#/core/%E5%B7%A5%E5%85%B7%E7%B1%BB/%E5%94%AF%E4%B8%80ID%E5%B7%A5%E5%85%B7-IdUtil?id=snowflake</a></p>
 <p>添加依赖</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;cn.hutool&lt;/groupId&gt;
-    &lt;artifactId&gt;hutool-captcha&lt;/artifactId&gt;
-    &lt;version&gt;4.6.8&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;cn.hutool&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;hutool-captcha&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;4.6.8&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
 <p>示例程序：</p>
-<pre><code>import cn.hutool.core.lang.Snowflake;
-import cn.hutool.core.net.NetUtil;
-import cn.hutool.core.util.IdUtil; 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-import javax.annotation.PostConstruct;
-@Slf4j
-@Component
-public class IdGeneratorSnowflake&#123;
-    private long workerId = 0;
-    private long datacenterId = 1;
-    private Snowflake snowflake = IdUtil.createSnowflake(workerId, datacenterId);
-    public synchronized long snowflakeId()&#123;
-        return snowflake.nextId();
-    &#125;
-    public synchronized long snowflakeId(long workerId, long datacenterId)&#123;
-        Snowflake snowflake = IdUtil.createSnowflake(workerId, datacenterId);
-        return snowflake.nextId();
-    &#125;
-    public static void main(String[] args)&#123;
-        IdGeneratorSnowflake idGenerator = new IdGeneratorSnowflake();
-        System.out.println(idGenerator.snowflakeId());
-        
-        ExecutorService threadPool = Executors.newFixedThreadPool(5);
-        for (int i = 1; i &lt;= 20; i++)&#123;
-            threadPool.submit(() -&gt; &#123;
-                System.out.print1n(idGenerator.snowflakeId());
-            &#125;);
-        &#125;
-        
-        threadPool.shutdown();
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import cn.hutool.core.lang.Snowflake;</span><br><span class="line">import cn.hutool.core.net.NetUtil;</span><br><span class="line">import cn.hutool.core.util.IdUtil; </span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import javax.annotation.PostConstruct;</span><br><span class="line">@Slf4j</span><br><span class="line">@Component</span><br><span class="line">public class IdGeneratorSnowflake&#123;</span><br><span class="line">	private long workerId = 0;</span><br><span class="line">	private long datacenterId = 1;</span><br><span class="line">	private Snowflake snowflake = IdUtil.createSnowflake(workerId, datacenterId);</span><br><span class="line">	public synchronized long snowflakeId()&#123;</span><br><span class="line">		return snowflake.nextId();</span><br><span class="line">	&#125;</span><br><span class="line">	public synchronized long snowflakeId(long workerId, long datacenterId)&#123;</span><br><span class="line">		Snowflake snowflake = IdUtil.createSnowflake(workerId, datacenterId);</span><br><span class="line">		return snowflake.nextId();</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">	    IdGeneratorSnowflake idGenerator = new IdGeneratorSnowflake();</span><br><span class="line">		System.out.println(idGenerator.snowflakeId());</span><br><span class="line">        </span><br><span class="line">        ExecutorService threadPool = Executors.newFixedThreadPool(5);</span><br><span class="line">		for (int i = 1; i &lt;= 20; i++)&#123;</span><br><span class="line">			threadPool.submit(() -&gt; &#123;</span><br><span class="line">				System.out.print1n(idGenerator.snowflakeId());</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">        </span><br><span class="line">		threadPool.shutdown();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>优缺点</strong></p>
 <p>优点：</p>
-<p>毫秒数在高位，自增序列在低位，整个ID都是趋势递增的。</p>
+<p>毫秒数在高位，自增序列在低位，整个 ID 都是趋势递增的。</p>
 <p>不依赖数据库等第三方系统，以服务的方式部署，稳定性更高，生成ID的性能也是非常高的。</p>
 <p>可以根据自身业务特性分配bit位，非常灵活。</p>
 <p>缺点：</p>
-<p>依赖机器时钟，如果机器时钟回拨，会导致重复ID生成。</p>
+<p>依赖机器时钟，如果机器时钟回拨，会导致重复 ID 生成。</p>
 <p>在单机上是递增的，但是由于设计到分布式环境，每台机器上的时钟不可能完全同步，有时候会出现不是全局递增的情况。</p>
-<p>（此缺点可以认为无所谓，一般分布式ID只要求趋势递增，并不会严格要求递增，90%的需求都只要求趋势递增）</p>
+<p>（此缺点可以认为无所谓，一般分布式 ID 只要求趋势递增，并不会严格要求递增，90% 的需求都只要求趋势递增）</p>
 
       
     </div>
@@ -591,7 +427,7 @@ public class IdGeneratorSnowflake&#123;
         <p><span>Title:</span><a href="/2021/05/11/SpringCloud-Snowflake-Algorithm/">SpringCloud-Snowflake-Algorithm</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2021-05-11, 14:39:00</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:44</p>
+        <p><span>Updated:</span>2023-04-07, 15:11:57</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2021/05/11/SpringCloud-Snowflake-Algorithm/" title="SpringCloud-Snowflake-Algorithm">http://yoursite.com/2021/05/11/SpringCloud-Snowflake-Algorithm/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/05/11/SpringCloud-Snowflake-Algorithm/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -627,7 +463,7 @@ public class IdGeneratorSnowflake&#123;
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">雪花算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Twitter%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E8%87%AA%E5%A2%9EID%E7%AE%97%E6%B3%95snowflake"><span class="toc-number">1.1.</span> <span class="toc-text">Twitter的分布式自增ID算法snowflake</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">雪花算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Twitter-%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E8%87%AA%E5%A2%9E-ID-%E7%AE%97%E6%B3%95-snowflake"><span class="toc-number">1.1.</span> <span class="toc-text">Twitter 的分布式自增 ID 算法 snowflake</span></a></li></ol></li></ol>
         
     </div>
     <style>

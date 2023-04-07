@@ -15,12 +15,12 @@
 
 
 
-<meta name="description" content="Window中将EXE文件注册成服务转载于百度经验：https:&#x2F;&#x2F;jingyan.baidu.com&#x2F;article&#x2F;59703552fee38f8fc107405c.html 1、所需工具Instsrv.exe  Srvany.exeInstsrv.exe 可以给系统安装和删除服务Srvany.exe可以让程序以服务的方式运行 安装包下载">
+<meta name="description" content="Window 中将 EXE 文件注册成服务转载于百度经验：https:&#x2F;&#x2F;jingyan.baidu.com&#x2F;article&#x2F;59703552fee38f8fc107405c.html 1、所需工具 Instsrv.exe  Srvany.exeInstsrv.exe 可以给系统安装和删除服务Srvany.exe 可以让程序以服务的方式运行 安装包下载">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Window-Regedit-Server">
 <meta property="og:url" content="http://yoursite.com/2020/12/26/Window-Regedit-Server/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="Window中将EXE文件注册成服务转载于百度经验：https:&#x2F;&#x2F;jingyan.baidu.com&#x2F;article&#x2F;59703552fee38f8fc107405c.html 1、所需工具Instsrv.exe  Srvany.exeInstsrv.exe 可以给系统安装和删除服务Srvany.exe可以让程序以服务的方式运行 安装包下载">
+<meta property="og:description" content="Window 中将 EXE 文件注册成服务转载于百度经验：https:&#x2F;&#x2F;jingyan.baidu.com&#x2F;article&#x2F;59703552fee38f8fc107405c.html 1、所需工具 Instsrv.exe  Srvany.exeInstsrv.exe 可以给系统安装和删除服务Srvany.exe 可以让程序以服务的方式运行 安装包下载">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/12/26/Window-Regedit-Server/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/12/26/Window-Regedit-Server/2.png">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/12/26/Window-Regedit-Server/5.png">
 <meta property="og:image" content="http://yoursite.com/2020/12/26/Window-Regedit-Server/6.png">
 <meta property="article:published_time" content="2020-12-26T04:15:46.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:44.449Z">
+<meta property="article:modified_time" content="2023-04-07T06:31:12.204Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Regedit">
 <meta name="twitter:card" content="summary">
@@ -306,21 +306,30 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="Window中将EXE文件注册成服务"><a href="#Window中将EXE文件注册成服务" class="headerlink" title="Window中将EXE文件注册成服务"></a>Window中将EXE文件注册成服务</h1><p>转载于百度经验：<a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/59703552fee38f8fc107405c.html">https://jingyan.baidu.com/article/59703552fee38f8fc107405c.html</a></p>
-<h2 id="1、所需工具Instsrv-exe-Srvany-exe"><a href="#1、所需工具Instsrv-exe-Srvany-exe" class="headerlink" title="1、所需工具Instsrv.exe  Srvany.exe"></a>1、所需工具Instsrv.exe  Srvany.exe</h2><p>Instsrv.exe 可以给系统安装和删除服务<br>Srvany.exe可以让程序以服务的方式运行</p>
+        <h1 id="Window-中将-EXE-文件注册成服务"><a href="#Window-中将-EXE-文件注册成服务" class="headerlink" title="Window 中将 EXE 文件注册成服务"></a>Window 中将 EXE 文件注册成服务</h1><p>转载于百度经验：<a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/59703552fee38f8fc107405c.html">https://jingyan.baidu.com/article/59703552fee38f8fc107405c.html</a></p>
+<h2 id="1、所需工具-Instsrv-exe-Srvany-exe"><a href="#1、所需工具-Instsrv-exe-Srvany-exe" class="headerlink" title="1、所需工具 Instsrv.exe  Srvany.exe"></a>1、所需工具 Instsrv.exe  Srvany.exe</h2><p>Instsrv.exe 可以给系统安装和删除服务<br>Srvany.exe 可以让程序以服务的方式运行</p>
 <p><a href="/download/InstsrvAndSrvany.zip">安装包下载</a></p>
 <span id="more"></span>
 
-<h2 id="2、将上述的工具文件放到同一个目录下，这边我放在D-x2F-ServiceTool目录下"><a href="#2、将上述的工具文件放到同一个目录下，这边我放在D-x2F-ServiceTool目录下" class="headerlink" title="2、将上述的工具文件放到同一个目录下，这边我放在D:&#x2F;ServiceTool目录下"></a>2、将上述的工具文件放到同一个目录下，这边我放在D:&#x2F;ServiceTool目录下</h2><p>（可以放在任意目录）<br><img src="/2020/12/26/Window-Regedit-Server/1.png"></p>
-<h2 id="3、以管理员权限进入cmd命令行"><a href="#3、以管理员权限进入cmd命令行" class="headerlink" title="3、以管理员权限进入cmd命令行"></a>3、以<strong>管理员权限</strong>进入cmd命令行</h2><p>d:\ServiceTool\instsrv.exe tjserver d:\ServiceTool\srvany.exe<br><strong>tjserver 为 服务名称</strong><br><img src="/2020/12/26/Window-Regedit-Server/2.png"></p>
-<p>注：这个命令是把srvany.exe这个程序注册成了系统服务</p>
-<h2 id="4、注册表的配置"><a href="#4、注册表的配置" class="headerlink" title="4、注册表的配置"></a>4、注册表的配置</h2><p>WIN+R regedit<br>进入注册表在HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services下找到刚刚注册的服务名tjserver<br><img src="/2020/12/26/Window-Regedit-Server/3.png"></p>
-<p>在tjserver新建一个项，名称为“Parameters”<br><img src="/2020/12/26/Window-Regedit-Server/4.png"></p>
-<p>单击选中它然后在右侧的窗口新建一个字符串值名称为”Application”，将其值设置为你针要做为服务运行的程序的路径，例如我的路径为”C:\satellite.exe”<br>注：程序路径一定要写得跟前面的例子一样，也是就是中间是用双斜杠隔开，不然服务没办法自动启动。<br><img src="/2020/12/26/Window-Regedit-Server/5.png"></p>
-<p>然后可以再建立一个AppDirectory指定程序运行的初始目录（可选）。<br>如果你需要把自己注册的服务做得看起来更专业也更好理解的话还可以继续新建一个字符串值名称为“Description”，在其值里面你可以输入你想显示的服务描述。</p>
-<h2 id="5、服务运行界面"><a href="#5、服务运行界面" class="headerlink" title="5、服务运行界面"></a>5、服务运行界面</h2><p>如果你要做为服务运行的程序是在运行后需要界面的，我们可以在控制面板里面找到管理工具然后打开服务或者直接运行“Services.msc”命令打开服务，找到刚刚创建的服务右键打开属性，选中登陆选项卡，登陆身份选中本地系统帐户并选中允许服务与桌面交互最后点确定，这样你的服务在启动后就可以看到界面了。</p>
+<h2 id="2、将上述的工具文件放到同一个目录下，这边我放在-D-ServiceTool-目录下"><a href="#2、将上述的工具文件放到同一个目录下，这边我放在-D-ServiceTool-目录下" class="headerlink" title="2、将上述的工具文件放到同一个目录下，这边我放在 D:/ServiceTool 目录下"></a>2、将上述的工具文件放到同一个目录下，这边我放在 <code>D:/ServiceTool</code> 目录下</h2><p>（可以放在任意目录）</p>
+<p><img src="/2020/12/26/Window-Regedit-Server/1.png"></p>
+<h2 id="3、以管理员权限进入-cmd-命令行"><a href="#3、以管理员权限进入-cmd-命令行" class="headerlink" title="3、以管理员权限进入 cmd 命令行"></a>3、以<strong>管理员权限</strong>进入 cmd 命令行</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d:\ServiceTool\instsrv.exe tjserver d:\ServiceTool\srvany.exe</span><br></pre></td></tr></table></figure>
+
+<p><strong>tjserver 为 服务名称</strong></p>
+<p><img src="/2020/12/26/Window-Regedit-Server/2.png"></p>
+<p>注：这个命令是把 srvany.exe 这个程序注册成了系统服务</p>
+<h2 id="4、注册表的配置"><a href="#4、注册表的配置" class="headerlink" title="4、注册表的配置"></a>4、注册表的配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WIN+R regedit </span><br></pre></td></tr></table></figure>
+
+<p>进入注册表在 <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services</code> 下找到刚刚注册的服务名 tjserver</p>
+<p><img src="/2020/12/26/Window-Regedit-Server/3.png"></p>
+<p>在 tjserver 新建一个项，名称为 “Parameters”</p>
+<p><img src="/2020/12/26/Window-Regedit-Server/4.png"></p>
+<p>单击选中它然后在右侧的窗口新建一个字符串值名称为 “Application”，将其值设置为你针要做为服务运行的程序的路径，例如我的路径为 <code>C:\\satellite.exe</code><br>注：程序路径一定要写得跟前面的例子一样，也是就是中间是用双斜杠隔开，不然服务没办法自动启动。</p>
+<p><img src="/2020/12/26/Window-Regedit-Server/5.png"></p>
+<p>然后可以再建立一个 AppDirectory 指定程序运行的初始目录（可选）。<br>如果你需要把自己注册的服务做得看起来更专业也更好理解的话还可以继续新建一个字符串值名称为 “Description”，在其值里面你可以输入你想显示的服务描述。</p>
+<h2 id="5、服务运行界面"><a href="#5、服务运行界面" class="headerlink" title="5、服务运行界面"></a>5、服务运行界面</h2><p>如果你要做为服务运行的程序是在运行后需要界面的，我们可以在控制面板里面找到管理工具然后打开服务或者直接运行 “Services.msc” 命令打开服务，找到刚刚创建的服务右键打开属性，选中登陆选项卡，登陆身份选中本地系统帐户并选中允许服务与桌面交互最后点确定，这样你的服务在启动后就可以看到界面了。</p>
 <p><img src="/2020/12/26/Window-Regedit-Server/6.png"></p>
-<h2 id="6、删除注册的服务"><a href="#6、删除注册的服务" class="headerlink" title="6、删除注册的服务"></a>6、删除注册的服务</h2><p>先停止服务，然后用命令“d:\ServiceTool\instsrv.exe tjserver remove”删除服务<br>网上还有一种和功能和instsrv.exe一样的界面操作的程序，名称为“srvinstw.exe”，只需要点点鼠标就可以完成上面的第一步，详细使用方法就不说了，很简单的。</p>
+<h2 id="6、删除注册的服务"><a href="#6、删除注册的服务" class="headerlink" title="6、删除注册的服务"></a>6、删除注册的服务</h2><p>先停止服务，然后用命令 <code>d:\ServiceTool\instsrv.exe tjserver remove</code> 删除服务<br>网上还有一种和功能和 instsrv.exe 一样的界面操作的程序，名称为 “srvinstw.exe” ，只需要点点鼠标就可以完成上面的第一步，详细使用方法就不说了，很简单的。</p>
 
       
     </div>
@@ -332,7 +341,7 @@
         <p><span>Title:</span><a href="/2020/12/26/Window-Regedit-Server/">Window-Regedit-Server</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2020-12-26, 12:15:46</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:44</p>
+        <p><span>Updated:</span>2023-04-07, 14:31:12</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2020/12/26/Window-Regedit-Server/" title="Window-Regedit-Server">http://yoursite.com/2020/12/26/Window-Regedit-Server/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2020/12/26/Window-Regedit-Server/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -368,7 +377,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Window%E4%B8%AD%E5%B0%86EXE%E6%96%87%E4%BB%B6%E6%B3%A8%E5%86%8C%E6%88%90%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">Window中将EXE文件注册成服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E6%89%80%E9%9C%80%E5%B7%A5%E5%85%B7Instsrv-exe-Srvany-exe"><span class="toc-number">1.1.</span> <span class="toc-text">1、所需工具Instsrv.exe  Srvany.exe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%B0%86%E4%B8%8A%E8%BF%B0%E7%9A%84%E5%B7%A5%E5%85%B7%E6%96%87%E4%BB%B6%E6%94%BE%E5%88%B0%E5%90%8C%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%8C%E8%BF%99%E8%BE%B9%E6%88%91%E6%94%BE%E5%9C%A8D-x2F-ServiceTool%E7%9B%AE%E5%BD%95%E4%B8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">2、将上述的工具文件放到同一个目录下，这边我放在D:&#x2F;ServiceTool目录下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E4%BB%A5%E7%AE%A1%E7%90%86%E5%91%98%E6%9D%83%E9%99%90%E8%BF%9B%E5%85%A5cmd%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">3、以管理员权限进入cmd命令行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E6%B3%A8%E5%86%8C%E8%A1%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">1.4.</span> <span class="toc-text">4、注册表的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E6%9C%8D%E5%8A%A1%E8%BF%90%E8%A1%8C%E7%95%8C%E9%9D%A2"><span class="toc-number">1.5.</span> <span class="toc-text">5、服务运行界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E5%88%A0%E9%99%A4%E6%B3%A8%E5%86%8C%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.6.</span> <span class="toc-text">6、删除注册的服务</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Window-%E4%B8%AD%E5%B0%86-EXE-%E6%96%87%E4%BB%B6%E6%B3%A8%E5%86%8C%E6%88%90%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">Window 中将 EXE 文件注册成服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E6%89%80%E9%9C%80%E5%B7%A5%E5%85%B7-Instsrv-exe-Srvany-exe"><span class="toc-number">1.1.</span> <span class="toc-text">1、所需工具 Instsrv.exe  Srvany.exe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%B0%86%E4%B8%8A%E8%BF%B0%E7%9A%84%E5%B7%A5%E5%85%B7%E6%96%87%E4%BB%B6%E6%94%BE%E5%88%B0%E5%90%8C%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%8C%E8%BF%99%E8%BE%B9%E6%88%91%E6%94%BE%E5%9C%A8-D-ServiceTool-%E7%9B%AE%E5%BD%95%E4%B8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">2、将上述的工具文件放到同一个目录下，这边我放在 D:&#x2F;ServiceTool 目录下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E4%BB%A5%E7%AE%A1%E7%90%86%E5%91%98%E6%9D%83%E9%99%90%E8%BF%9B%E5%85%A5-cmd-%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">3、以管理员权限进入 cmd 命令行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E6%B3%A8%E5%86%8C%E8%A1%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">1.4.</span> <span class="toc-text">4、注册表的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E6%9C%8D%E5%8A%A1%E8%BF%90%E8%A1%8C%E7%95%8C%E9%9D%A2"><span class="toc-number">1.5.</span> <span class="toc-text">5、服务运行界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E5%88%A0%E9%99%A4%E6%B3%A8%E5%86%8C%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.6.</span> <span class="toc-text">6、删除注册的服务</span></a></li></ol></li></ol>
         
     </div>
     <style>

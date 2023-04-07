@@ -628,7 +628,7 @@
           
               <h1 id="构建微服务架构-Sleuth-篇"><a href="#构建微服务架构-Sleuth-篇" class="headerlink" title="构建微服务架构(Sleuth 篇)"></a>构建微服务架构(Sleuth 篇)</h1><p>该篇文档，参考代码：<a href="/download/springcloud_project_stream.zip">下载</a></p>
 <p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
-<h2 id="Sleuth是什么"><a href="#Sleuth是什么" class="headerlink" title="Sleuth是什么"></a>Sleuth是什么</h2><p><strong>为什么会出现这个技术？要解决哪些问题？</strong></p>
+<h2 id="Sleuth-是什么"><a href="#Sleuth-是什么" class="headerlink" title="Sleuth 是什么"></a>Sleuth 是什么</h2><p><strong>为什么会出现这个技术？要解决哪些问题？</strong></p>
 <p>在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的的服务节点调用来协同产生最后的请求结果，每一个前段请求都会形成一条复杂的分布式服务调用链路，链路中的任何一环出现高延时或错误都会引起整个请求最后的失败。</p>
           
       
@@ -699,14 +699,14 @@
           
               <h1 id="构建微服务架构-Stream-消息驱动-篇"><a href="#构建微服务架构-Stream-消息驱动-篇" class="headerlink" title="构建微服务架构(Stream 消息驱动 篇)"></a>构建微服务架构(Stream 消息驱动 篇)</h1><p>该篇文档，前置代码下载：<a href="/download/springcloud_project_bus.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_stream.zip">下载</a></p>
 <p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
-<h2 id="Stream为什么被引入"><a href="#Stream为什么被引入" class="headerlink" title="Stream为什么被引入"></a>Stream为什么被引入</h2><p><strong>常见MQ(消息中间件)：</strong></p>
+<h2 id="Stream-为什么被引入"><a href="#Stream-为什么被引入" class="headerlink" title="Stream 为什么被引入"></a>Stream 为什么被引入</h2><p><strong>常见 MQ(消息中间件)：</strong></p>
 <pre><code>ActiveMQ
 RabbitMQ
 RocketMQ
 Kafka
 </code></pre>
 <p>有没有一种新的技术诞生，让我们不再关注具体MQ的细节，我们只需要用一种适配绑定的方式，自动的给我们在各种MQ内切换。（类似于Hibernate）</p>
-<p><strong>Cloud Stream是什么？</strong></p>
+<p><strong>Cloud Stream 是什么？</strong></p>
 <p>屏蔽底层消息中间件的差异，降低切换成本，统一消息的编程模型。</p>
           
       
@@ -850,7 +850,7 @@ Kafka
               <h1 id="构建微服务架构-Config-篇"><a href="#构建微服务架构-Config-篇" class="headerlink" title="构建微服务架构(Config 篇)"></a>构建微服务架构(Config 篇)</h1><p>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka_alone.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_config.zip">下载</a></p>
 <p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>SpringCloud: <a target="_blank" rel="noopener" href="https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.2.1.RELEASE/reference/html/">https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.2.1.RELEASE/reference/html/</a></p>
 <h2 id="Config分布式配置中心介绍"><a href="#Config分布式配置中心介绍" class="headerlink" title="Config分布式配置中心介绍"></a>Config分布式配置中心介绍</h2><h3 id="分布式系统面临的配置问题"><a href="#分布式系统面临的配置问题" class="headerlink" title="分布式系统面临的配置问题"></a>分布式系统面临的配置问题</h3><p>微服务意味着要将单体应用中的业务拆分成一个个子服务，每个服务的粒度相对较小，因此系统中会出现大量的服务。由于每个服务都需要必要的配置信息才能运行，所以一套集中式的、动态的配置管理设施是必不可少的。</p>
-<p>SpringCloud提供了ConfigServer来解决这个问题，我们每一个微服务自己带着一个application.yml，上百个配置文件的管理.……</p>
+<p>SpringCloud 提供了 ConfigServer 来解决这个问题，我们每一个微服务自己带着一个 application.yml，上百个配置文件的管理.……</p>
           
       
     </div>
@@ -996,10 +996,10 @@ Kafka
       
           
               <h1 id="构建微服务架构-Hystrix-豪猪哥-篇"><a href="#构建微服务架构-Hystrix-豪猪哥-篇" class="headerlink" title="构建微服务架构(Hystrix 豪猪哥 篇)"></a>构建微服务架构(Hystrix 豪猪哥 篇)</h1><p>该篇文档，前置环境条件为：构建微服务架构(eureka篇)，需要单机版本eureka环境<br>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka_alone.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_hystrix.zip">下载</a></p>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub地址：<a target="_blank" rel="noopener" href="https://github.com/Netflix/Hystrix/wiki/How-To-Use">https://github.com/Netflix/Hystrix/wiki/How-To-Use</a></p>
-<h2 id="Hystrix是什么"><a href="#Hystrix是什么" class="headerlink" title="Hystrix是什么"></a>Hystrix是什么</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>分布式系统面临的问题</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub 地址：<a target="_blank" rel="noopener" href="https://github.com/Netflix/Hystrix/wiki/How-To-Use">https://github.com/Netflix/Hystrix/wiki/How-To-Use</a></p>
+<h2 id="Hystrix-是什么"><a href="#Hystrix-是什么" class="headerlink" title="Hystrix 是什么"></a>Hystrix 是什么</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>分布式系统面临的问题</p>
 <p>复杂分布式体系结构中的应用程序有数十个依赖关系，每个依赖关系在某些时候将不可避免地失败。</p>
-<h3 id="服务雪崩"><a href="#服务雪崩" class="headerlink" title="服务雪崩"></a>服务雪崩</h3><p>多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其它的微服务，这就是所谓的“扇出”。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”.<br>对于高流量的应用来说，单一的后避依赖可能会导致所有服务器上的所有资源都在几秒钟内饱和。比失败更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，备份队列，线程和其他系统资源紧张，导致整个系统发生更多的级联故障。这些都表示需要对故障和延迟进行隔离和管理，以便单个依赖关系的失败，不能取消整个应用程序或系统。</p>
+<h3 id="服务雪崩"><a href="#服务雪崩" class="headerlink" title="服务雪崩"></a>服务雪崩</h3><p>多个微服务之间调用的时候，假设微服务A调用微服务 B 和微服务 C，微服务 B 和微服务 C 又调用其它的微服务，这就是所谓的 “扇出”。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的 “雪崩效应”.<br>对于高流量的应用来说，单一的后避依赖可能会导致所有服务器上的所有资源都在几秒钟内饱和。比失败更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，备份队列，线程和其他系统资源紧张，导致整个系统发生更多的级联故障。这些都表示需要对故障和延迟进行隔离和管理，以便单个依赖关系的失败，不能取消整个应用程序或系统。</p>
 <p>所以，通常当你发现一个模块下的某个实例失败后，这时候这个模块依然还会接收流量，然后这个有问题的模块还调用了其他的模块，这样就会发生级联故障，或者叫雪崩。</p>
           
       

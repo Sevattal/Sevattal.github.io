@@ -23,7 +23,7 @@
 <meta property="og:description" content="2021年11月 上海美维电子有限公司 SQL面试题">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-12T08:57:20.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:43.781Z">
+<meta property="article:modified_time" content="2023-04-07T06:55:17.320Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Interview">
 <meta name="twitter:card" content="summary">
@@ -303,56 +303,12 @@
 
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><strong>1、 数据库环境为 Oralce</strong></p>
 <p><strong>2、 测试用表及数据环境如下</strong></p>
-<pre><code>--分析结果
-CREATE TABLE MTG_CHEMLAB_MAINTAIN_NEW(
-   TDATE DATE , --取样日期
-    PROCESS VARCHAR2(30), --工序
-    BZYL  NUMBER(18, 4), --标液量
-    CALCULATION_COEFF NUMBER(18,4), --计算系数
-    ALAYSIS_RESULT NUMBER(18,4),--分析结果
-    FORMULA VARCHAR2(100) --分析结果公式
-);
-INSERT INTO  MTG_CHEMLAB_MAINTAIN_NEW
-select  to_date(&#39;2021-11-09&#39;,&#39;yyyy-mm-dd&#39;) TDATE ,&#39;内层IF&#39; PROCESS,0.1089 BZYL,0.366 CALCULATION_COEFF ,null ALAYSIS_RESULT ,&#39;BZYL*CALCULATION_COEFF*AD_VALUE*2.55&#39; FORMULA from dual
-union all
-select  to_date(&#39;2021-11-10&#39;,&#39;yyyy-mm-dd&#39;) TDATE ,&#39;内层IF&#39; PROCESS,0.1064 BZYL,0.275 CALCULATION_COEFF ,null ALAYSIS_RESULT ,&#39;BZYL*CALCULATION_COEFF*AD_VALUE&#39; FORMULA from dual
-union all
-select  to_date(&#39;2021-11-08&#39;,&#39;yyyy-mm-dd&#39;) TDATE ,&#39;SM&#39; PROCESS,0.1064 BZYL,0.275 CALCULATION_COEFF ,null ALAYSIS_RESULT ,&#39;BZYL*CALCULATION_COEFF*AD_VALUE-100&#39; FORMULA from dual;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">--分析结果</span><br><span class="line">CREATE TABLE MTG_CHEMLAB_MAINTAIN_NEW(</span><br><span class="line">   TDATE DATE , --取样日期</span><br><span class="line">    PROCESS VARCHAR2(30), --工序</span><br><span class="line">    BZYL  NUMBER(18, 4), --标液量</span><br><span class="line">    CALCULATION_COEFF NUMBER(18,4), --计算系数</span><br><span class="line">    ALAYSIS_RESULT NUMBER(18,4),--分析结果</span><br><span class="line">    FORMULA VARCHAR2(100) --分析结果公式</span><br><span class="line">);</span><br><span class="line">INSERT INTO  MTG_CHEMLAB_MAINTAIN_NEW</span><br><span class="line">select  to_date(&#x27;2021-11-09&#x27;,&#x27;yyyy-mm-dd&#x27;) TDATE ,&#x27;内层IF&#x27; PROCESS,0.1089 BZYL,0.366 CALCULATION_COEFF ,null ALAYSIS_RESULT ,&#x27;BZYL*CALCULATION_COEFF*AD_VALUE*2.55&#x27; FORMULA from dual</span><br><span class="line">union all</span><br><span class="line">select  to_date(&#x27;2021-11-10&#x27;,&#x27;yyyy-mm-dd&#x27;) TDATE ,&#x27;内层IF&#x27; PROCESS,0.1064 BZYL,0.275 CALCULATION_COEFF ,null ALAYSIS_RESULT ,&#x27;BZYL*CALCULATION_COEFF*AD_VALUE&#x27; FORMULA from dual</span><br><span class="line">union all</span><br><span class="line">select  to_date(&#x27;2021-11-08&#x27;,&#x27;yyyy-mm-dd&#x27;) TDATE ,&#x27;SM&#x27; PROCESS,0.1064 BZYL,0.275 CALCULATION_COEFF ,null ALAYSIS_RESULT ,&#x27;BZYL*CALCULATION_COEFF*AD_VALUE-100&#x27; FORMULA from dual;</span><br><span class="line"></span><br><span class="line">--每天的调整系数</span><br><span class="line">CREATE TABLE MTG_CHEMLAB_SHIFT_VALUE_NEW(</span><br><span class="line">    TDATE DATE , --日期</span><br><span class="line">    AD_VALUE NUMBER(18,4) --调整系数</span><br><span class="line">  );</span><br><span class="line">INSERT INTO  MTG_CHEMLAB_SHIFT_VALUE_NEW</span><br><span class="line">select  to_date(&#x27;2021-11-08&#x27;,&#x27;yyyy-mm-dd&#x27;) TDATE,1.0377  AD_VALUE from dual</span><br><span class="line">union all</span><br><span class="line">select  to_date(&#x27;2021-11-09&#x27;,&#x27;yyyy-mm-dd&#x27;) TDATE,1.0018  AD_VALUE from dual;</span><br></pre></td></tr></table></figure>
 
---每天的调整系数
-CREATE TABLE MTG_CHEMLAB_SHIFT_VALUE_NEW(
-    TDATE DATE , --日期
-    AD_VALUE NUMBER(18,4) --调整系数
-  );
-INSERT INTO  MTG_CHEMLAB_SHIFT_VALUE_NEW
-select  to_date(&#39;2021-11-08&#39;,&#39;yyyy-mm-dd&#39;) TDATE,1.0377  AD_VALUE from dual
-union all
-select  to_date(&#39;2021-11-09&#39;,&#39;yyyy-mm-dd&#39;) TDATE,1.0018  AD_VALUE from dual;
-</code></pre>
 <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><h3 id="1-写一个存储，要求："><a href="#1-写一个存储，要求：" class="headerlink" title="1.写一个存储，要求："></a>1.写一个存储，要求：</h3><p>输入参数：1).取样日期，2).工序；<br>输出参数：1).分析结果，2).提示消息。</p>
 <p><strong>答案</strong></p>
-<pre><code>CREATE OR REPLACE
-PROCEDURE learn_1 ( 
-    IN_TDATE IN VARCHAR2,
-    IN_PROCESS IN  VARCHAR2,
-    OUT_ALARYSIS_RESULT OUT NUMBER,
-    OUT_TITLE OUT VARCHAR2)
-IS
-    V_RESULT_COUNT NUMBER;
-BEGIN
-    SELECT COUNT(ALAYSIS_RESULT) INTO V_RESULT_COUNT  FROM MTG_CHEMLAB_MAINTAIN_NEW 
-    WHERE TO_CHAR(TDATE,&#39;yyyy-mm-dd&#39;)= IN_TDATE AND  PROCESS = IN_PROCESS;
-    IF (V_RESULT_COUNT &gt; 1) THEN
-      OUT_TITLE := &#39;获取数据失败--错误代码****&#39;;
-    ELSE
-        SELECT ALAYSIS_RESULT INTO OUT_ALARYSIS_RESULT FROM MTG_CHEMLAB_MAINTAIN_NEW 
-        WHERE TO_CHAR(TDATE,&#39;yyyy-mm-dd&#39;)= IN_TDATE AND  PROCESS = IN_PROCESS;
-        OUT_TITLE := &#39;获取数据成功&#39;;
-        DBMS_OUTPUT.put_line(&#39;分析结果：&#39; || OUT_ALARYSIS_RESULT);
-    END IF;
-    DBMS_OUTPUT.put_line(OUT_TITLE);
-END;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE</span><br><span class="line">PROCEDURE learn_1 ( </span><br><span class="line">	IN_TDATE IN VARCHAR2,</span><br><span class="line">	IN_PROCESS IN  VARCHAR2,</span><br><span class="line">	OUT_ALARYSIS_RESULT OUT NUMBER,</span><br><span class="line">	OUT_TITLE OUT VARCHAR2)</span><br><span class="line">IS</span><br><span class="line">	V_RESULT_COUNT NUMBER;</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT COUNT(ALAYSIS_RESULT) INTO V_RESULT_COUNT  FROM MTG_CHEMLAB_MAINTAIN_NEW </span><br><span class="line">	WHERE TO_CHAR(TDATE,&#x27;yyyy-mm-dd&#x27;)= IN_TDATE AND  PROCESS = IN_PROCESS;</span><br><span class="line">	IF (V_RESULT_COUNT &gt; 1) THEN</span><br><span class="line">	  OUT_TITLE := &#x27;获取数据失败--错误代码****&#x27;;</span><br><span class="line">	ELSE</span><br><span class="line">		SELECT ALAYSIS_RESULT INTO OUT_ALARYSIS_RESULT FROM MTG_CHEMLAB_MAINTAIN_NEW </span><br><span class="line">		WHERE TO_CHAR(TDATE,&#x27;yyyy-mm-dd&#x27;)= IN_TDATE AND  PROCESS = IN_PROCESS;</span><br><span class="line">		OUT_TITLE := &#x27;获取数据成功&#x27;;</span><br><span class="line">		DBMS_OUTPUT.put_line(&#x27;分析结果：&#x27; || OUT_ALARYSIS_RESULT);</span><br><span class="line">	END IF;</span><br><span class="line">	DBMS_OUTPUT.put_line(OUT_TITLE);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+
 <h3 id="2-写一个存储，要求："><a href="#2-写一个存储，要求：" class="headerlink" title="2.写一个存储，要求："></a>2.写一个存储，要求：</h3><p>1).分析结果<br>计算分析结果的值是MTG_CHEMLAB_MAINTAIN_NEW表中分析结果公式计算出的，<br>公式表达式里<br>1).BZYL：MTG_CHEMLAB_MAINTAIN_NEW.BZYL；<br>2).CALCULATION_COEFF： MTG_CHEMLAB_MAINTAIN_NEW.CALCULATION_COEFF；<br>3).AD_VALUE： MTG_CHEMLAB_SHIFT_VALUE_NEW.AD_VALUE.<br>2).提示消息:</p>
 <ol>
 <li>如果分析结果公式里有每天的调整系数， 表MTG_CHEMLAB_SHIFT_VALUE_NEW中没有此日的调整系数数据，则提示”请维护此取样日期的调整系数！”;</li>
@@ -360,74 +316,14 @@ END;
 <li>如果能成功计算出分析结果，则提示“OK”.</li>
 </ol>
 <p><strong>答案</strong></p>
-<pre><code>CREATE OR REPLACE
-PROCEDURE learn_2 ( 
-    IN_TDATE IN VARCHAR2,
-    IN_PROCESS IN  VARCHAR2,
-    OUT_ALARYSIS_RESULT OUT NUMBER,
-    OUT_TITLE OUT VARCHAR2)
-IS
-    V_RESULT_COUNT NUMBER;
-    V_FORMULA VARCHAR2(50);
-    V_AD_VALUE NUMBER(18,4);
-    V_SQL VARCHAR2(200);
-BEGIN
-    -- 获取公式及系数
-    SELECT m1.FORMULA,m2.AD_VALUE INTO V_FORMULA, V_AD_VALUE
-    FROM  MTG_CHEMLAB_MAINTAIN_NEW m1 LEFT JOIN MTG_CHEMLAB_SHIFT_VALUE_NEW m2 ON m1.TDATE = m2.TDATE 
-    WHERE TO_CHAR(m1.TDATE,&#39;yyyy-mm-dd&#39;) = IN_TDATE AND  m1.PROCESS = IN_PROCESS;
-    
-    IF V_AD_VALUE IS NULL OR V_AD_VALUE = &#39;&#39; THEN
-        OUT_TITLE := &#39;请维护此取样日期的调整系数！&#39;;
-        DBMS_OUTPUT.put_line(OUT_TITLE);
-        RETURN;
-    END IF;
-    
-    IF V_FORMULA IS NULL OR V_FORMULA = &#39;&#39; THEN
-        OUT_TITLE := &#39;此取样日期的取样工序没设公式，请确认！&#39;;
-        DBMS_OUTPUT.put_line(OUT_TITLE);
-        RETURN;
-    END IF;
-    
-    V_FORMULA := REPLACE(V_FORMULA,&#39;AD_VALUE&#39;,V_AD_VALUE);
-    
-    V_SQL := &#39;UPDATE MTG_CHEMLAB_MAINTAIN_NEW SET ALAYSIS_RESULT = &#39;|| V_FORMULA ||
-    &#39; WHERE TO_CHAR(TDATE,&#39;&#39;yyyy-mm-dd&#39;&#39;) = &#39; || &#39;&#39;&#39;&#39; || IN_TDATE || &#39;&#39;&#39;&#39; || &#39; AND  PROCESS = &#39; || &#39;&#39;&#39;&#39; || IN_PROCESS || &#39;&#39;&#39;&#39;;
-    DBMS_OUTPUT.put_line(V_SQL);
-    EXECUTE IMMEDIATE V_SQL;
-    
-    SELECT ALAYSIS_RESULT INTO OUT_ALARYSIS_RESULT FROM MTG_CHEMLAB_MAINTAIN_NEW 
-    WHERE TO_CHAR(TDATE,&#39;yyyy-mm-dd&#39;)= IN_TDATE AND  PROCESS = IN_PROCESS;
-    IF OUT_ALARYSIS_RESULT IS NOT NULL THEN
-        OUT_TITLE := &#39;OK&#39;;
-        DBMS_OUTPUT.put_line(OUT_TITLE);
-        COMMIT;
-    ELSE
-        ROLLBACK;
-    END IF;
-END;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE</span><br><span class="line">PROCEDURE learn_2 ( </span><br><span class="line">	IN_TDATE IN VARCHAR2,</span><br><span class="line">	IN_PROCESS IN  VARCHAR2,</span><br><span class="line">	OUT_ALARYSIS_RESULT OUT NUMBER,</span><br><span class="line">	OUT_TITLE OUT VARCHAR2)</span><br><span class="line">IS</span><br><span class="line">	V_RESULT_COUNT NUMBER;</span><br><span class="line">	V_FORMULA VARCHAR2(50);</span><br><span class="line">	V_AD_VALUE NUMBER(18,4);</span><br><span class="line">	V_SQL VARCHAR2(200);</span><br><span class="line">BEGIN</span><br><span class="line">	-- 获取公式及系数</span><br><span class="line">	SELECT m1.FORMULA,m2.AD_VALUE INTO V_FORMULA, V_AD_VALUE</span><br><span class="line">	FROM  MTG_CHEMLAB_MAINTAIN_NEW m1 LEFT JOIN MTG_CHEMLAB_SHIFT_VALUE_NEW m2 ON m1.TDATE = m2.TDATE </span><br><span class="line">	WHERE TO_CHAR(m1.TDATE,&#x27;yyyy-mm-dd&#x27;) = IN_TDATE AND  m1.PROCESS = IN_PROCESS;</span><br><span class="line">	</span><br><span class="line">	IF V_AD_VALUE IS NULL OR V_AD_VALUE = &#x27;&#x27; THEN</span><br><span class="line">		OUT_TITLE := &#x27;请维护此取样日期的调整系数！&#x27;;</span><br><span class="line">		DBMS_OUTPUT.put_line(OUT_TITLE);</span><br><span class="line">		RETURN;</span><br><span class="line">	END IF;</span><br><span class="line">	</span><br><span class="line">	IF V_FORMULA IS NULL OR V_FORMULA = &#x27;&#x27; THEN</span><br><span class="line">		OUT_TITLE := &#x27;此取样日期的取样工序没设公式，请确认！&#x27;;</span><br><span class="line">		DBMS_OUTPUT.put_line(OUT_TITLE);</span><br><span class="line">		RETURN;</span><br><span class="line">	END IF;</span><br><span class="line">	</span><br><span class="line">	V_FORMULA := REPLACE(V_FORMULA,&#x27;AD_VALUE&#x27;,V_AD_VALUE);</span><br><span class="line">	</span><br><span class="line">	V_SQL := &#x27;UPDATE MTG_CHEMLAB_MAINTAIN_NEW SET ALAYSIS_RESULT = &#x27;|| V_FORMULA ||</span><br><span class="line">	&#x27; WHERE TO_CHAR(TDATE,&#x27;&#x27;yyyy-mm-dd&#x27;&#x27;) = &#x27; || &#x27;&#x27;&#x27;&#x27; || IN_TDATE || &#x27;&#x27;&#x27;&#x27; || &#x27; AND  PROCESS = &#x27; || &#x27;&#x27;&#x27;&#x27; || IN_PROCESS || &#x27;&#x27;&#x27;&#x27;;</span><br><span class="line">	DBMS_OUTPUT.put_line(V_SQL);</span><br><span class="line">	EXECUTE IMMEDIATE V_SQL;</span><br><span class="line">	</span><br><span class="line">	SELECT ALAYSIS_RESULT INTO OUT_ALARYSIS_RESULT FROM MTG_CHEMLAB_MAINTAIN_NEW </span><br><span class="line">	WHERE TO_CHAR(TDATE,&#x27;yyyy-mm-dd&#x27;)= IN_TDATE AND  PROCESS = IN_PROCESS;</span><br><span class="line">	IF OUT_ALARYSIS_RESULT IS NOT NULL THEN</span><br><span class="line">		OUT_TITLE := &#x27;OK&#x27;;</span><br><span class="line">		DBMS_OUTPUT.put_line(OUT_TITLE);</span><br><span class="line">		COMMIT;</span><br><span class="line">	ELSE</span><br><span class="line">		ROLLBACK;</span><br><span class="line">	END IF;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+
 <h3 id="3-对MTG-CHEMLAB-MAINTAIN-NEW表中记录写一个动态日期横向的查询报表，要求格式："><a href="#3-对MTG-CHEMLAB-MAINTAIN-NEW表中记录写一个动态日期横向的查询报表，要求格式：" class="headerlink" title="3.对MTG_CHEMLAB_MAINTAIN_NEW表中记录写一个动态日期横向的查询报表，要求格式："></a>3.对MTG_CHEMLAB_MAINTAIN_NEW表中记录写一个动态日期横向的查询报表，要求格式：</h3><pre><code>工序     20211108    20211109    20211110    ...   
 内层IF                分析结果     分析结果       
 SM       分析结果 
 </code></pre>
 <p><strong>答案</strong></p>
-<pre><code>CREATE OR REPLACE
-PROCEDURE learn_3 
-IS
-    V_SQL VARCHAR2(2000);
-    V_TDATE VARCHAR2(2000);
-BEGIN
-    SELECT LISTAGG(CONCAT(CONCAT(&#39;&#39;&#39;&#39;,TO_CHAR(TDATE,&#39;yyyy-mm-dd&#39;)),&#39;&#39;&#39;&#39;),&#39;,&#39;) INTO V_TDATE   FROM MTG_CHEMLAB_MAINTAIN_NEW;
-    V_SQL := &#39;SELECT * FROM (SELECT PROCESS &quot;工序&quot;,TO_CHAR(TDATE,&#39;&#39;yyyy-mm-dd&#39;&#39;) TDATE ,ALAYSIS_RESULT FROM MTG_CHEMLAB_MAINTAIN_NEW) 
-    PIVOT(
-        SUM(ALAYSIS_RESULT)
-        FOR TDATE IN (&#39; || V_TDATE || &#39;)
-    )&#39;;
-    V_SQL := &#39;CREATE OR REPLACE VIEW RCC_RESULT AS &#39; || V_SQL;
-    EXECUTE IMMEDIATE V_SQL;
-END;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE</span><br><span class="line">PROCEDURE learn_3 </span><br><span class="line">IS</span><br><span class="line">	V_SQL VARCHAR2(2000);</span><br><span class="line">	V_TDATE VARCHAR2(2000);</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT LISTAGG(CONCAT(CONCAT(&#x27;&#x27;&#x27;&#x27;,TO_CHAR(TDATE,&#x27;yyyy-mm-dd&#x27;)),&#x27;&#x27;&#x27;&#x27;),&#x27;,&#x27;) INTO V_TDATE   FROM MTG_CHEMLAB_MAINTAIN_NEW;</span><br><span class="line">	V_SQL := &#x27;SELECT * FROM (SELECT PROCESS &quot;工序&quot;,TO_CHAR(TDATE,&#x27;&#x27;yyyy-mm-dd&#x27;&#x27;) TDATE ,ALAYSIS_RESULT FROM MTG_CHEMLAB_MAINTAIN_NEW) </span><br><span class="line">	PIVOT(</span><br><span class="line">		SUM(ALAYSIS_RESULT)</span><br><span class="line">		FOR TDATE IN (&#x27; || V_TDATE || &#x27;)</span><br><span class="line">	)&#x27;;</span><br><span class="line">	V_SQL := &#x27;CREATE OR REPLACE VIEW RCC_RESULT AS &#x27; || V_SQL;</span><br><span class="line">	EXECUTE IMMEDIATE V_SQL;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -439,7 +335,7 @@ END;
         <p><span>Title:</span><a href="/2021/11/12/SQL-Interview-Questions2/">SQL-Interview-Questions2</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2021-11-12, 16:57:20</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p><span>Updated:</span>2023-04-07, 14:55:17</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2021/11/12/SQL-Interview-Questions2/" title="SQL-Interview-Questions2">http://yoursite.com/2021/11/12/SQL-Interview-Questions2/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/11/12/SQL-Interview-Questions2/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>

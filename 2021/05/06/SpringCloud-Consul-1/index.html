@@ -15,12 +15,12 @@
 
 
 
-<meta name="description" content="构建微服务架构(Consul篇)B站视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV18E411x7eT?from&#x3D;search&amp;seid&#x3D;13583080742381804215原Blog笔记文档：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270本篇文章大部分图片用到了参考的blog笔记中的图片。">
+<meta name="description" content="构建微服务架构(Consul篇)B 站视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV18E411x7eT?from&#x3D;search&amp;seid&#x3D;13583080742381804215原 Blog 笔记文档：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 本篇文章大部分图片用到了参考的 blog 笔">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringCloud-Consul-1">
 <meta property="og:url" content="http://yoursite.com/2021/05/06/SpringCloud-Consul-1/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="构建微服务架构(Consul篇)B站视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV18E411x7eT?from&#x3D;search&amp;seid&#x3D;13583080742381804215原Blog笔记文档：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270本篇文章大部分图片用到了参考的blog笔记中的图片。">
+<meta property="og:description" content="构建微服务架构(Consul篇)B 站视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV18E411x7eT?from&#x3D;search&amp;seid&#x3D;13583080742381804215原 Blog 笔记文档：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 本篇文章大部分图片用到了参考的 blog 笔">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2021/05/06/SpringCloud-Consul-1/1.png">
 <meta property="og:image" content="http://yoursite.com/2021/05/06/SpringCloud-Consul-1/2.png">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/05/06/SpringCloud-Consul-1/4.png">
 <meta property="og:image" content="http://yoursite.com/2021/05/06/SpringCloud-Consul-1/5.png">
 <meta property="article:published_time" content="2021-05-06T00:00:08.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:44.227Z">
+<meta property="article:modified_time" content="2023-04-07T06:48:47.696Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="Consul">
@@ -306,343 +306,45 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="构建微服务架构-Consul篇"><a href="#构建微服务架构-Consul篇" class="headerlink" title="构建微服务架构(Consul篇)"></a>构建微服务架构(Consul篇)</h1><p>B站视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215">https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215</a><br>原Blog笔记文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>本篇文章大部分图片用到了参考的blog笔记中的图片。<br>本人代码下载：<a href="/download/springcloud_project_consul.zip">下载</a></p>
-<h2 id="Consul-简介"><a href="#Consul-简介" class="headerlink" title="Consul 简介"></a>Consul 简介</h2><p>Consul是一个服务网格解决方案，它提供了一个功能齐全的控制平面，具有服务发现、配置和分段功能。这些特性中的每一个都可以根据需要单独使用，也可以一起用于构建全服务网格。Consul需要一个数据平面，并支持代理和本机集成模型。Consul船与一个简单的内置代理，使一切工作的开箱即用，但也支持第三方代理集成，如Envoy。</p>
-<p>Consul是一套开源的分布式服务发现和配置管理系统，由HashiCorp 公司用Go语言开发。</p>
-<p>提供了微服务系统中的服务治理、配置中心、控制总线等功能。这些功能中的每一个都可以根据需要单独使用，也可以一起使用以构建全方位的服务网格，总之Consul提供了一种完整的服务网格解决方案。</p>
-<p>它具有很多优点。包括：基于raft协议，比较简洁；支持健康检查，同时支持HTTP和DNS协议支持跨数据中心的WAN集群提供图形界面跨平台，支持Linux、Mac、Windows。</p>
+        <h1 id="构建微服务架构-Consul篇"><a href="#构建微服务架构-Consul篇" class="headerlink" title="构建微服务架构(Consul篇)"></a>构建微服务架构(Consul篇)</h1><p>B 站视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215">https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215</a><br>原 Blog 笔记文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
+<p>本篇文章大部分图片用到了参考的 blog 笔记中的图片。<br>本人代码下载：<a href="/download/springcloud_project_consul.zip">下载</a></p>
+<h2 id="Consul-简介"><a href="#Consul-简介" class="headerlink" title="Consul 简介"></a>Consul 简介</h2><p>Consul 是一个服务网格解决方案，它提供了一个功能齐全的控制平面，具有服务发现、配置和分段功能。这些特性中的每一个都可以根据需要单独使用，也可以一起用于构建全服务网格。Consul 需要一个数据平面，并支持代理和本机集成模型。Consul 与一个简单的内置代理，使一切工作的开箱即用，但也支持第三方代理集成，如 Envoy。</p>
+<p>Consul 是一套开源的分布式服务发现和配置管理系统，由 HashiCorp 公司用 Go 语言开发。</p>
+<p>提供了微服务系统中的服务治理、配置中心、控制总线等功能。这些功能中的每一个都可以根据需要单独使用，也可以一起使用以构建全方位的服务网格，总之 Consul 提供了一种完整的服务网格解决方案。</p>
+<p>它具有很多优点。包括：基于 raft 协议，比较简洁；支持健康检查，同时支持 HTTP 和 DNS 协议支持跨数据中心的 WAN 集群提供图形界面跨平台，支持 Linux、Mac、Windows。</p>
 <span id="more"></span>
 
-<h2 id="能干嘛？"><a href="#能干嘛？" class="headerlink" title="能干嘛？"></a>能干嘛？</h2><p>服务发现 - 提供HTTP和DNS两种发现方式。<br>健康监测 - 支持多种方式，HTTP、TCP、Docker、Shell脚本定制化<br>KV存储 - Key、Value的存储方式<br>多数据中心 - Consul支持多数据中心<br>可视化Web界面</p>
-<h2 id="1-安装并运行Consul"><a href="#1-安装并运行Consul" class="headerlink" title="1. 安装并运行Consul"></a>1. 安装并运行Consul</h2><h3 id="1-1-下载地址：https-www-consul-io-downloads"><a href="#1-1-下载地址：https-www-consul-io-downloads" class="headerlink" title="1.1. 下载地址：https://www.consul.io/downloads"></a>1.1. 下载地址：<a target="_blank" rel="noopener" href="https://www.consul.io/downloads">https://www.consul.io/downloads</a></h3><h3 id="1-2-安装Consul"><a href="#1-2-安装Consul" class="headerlink" title="1.2. 安装Consul"></a>1.2. 安装Consul</h3><p>Consul 下载下来后解压就一个 exe 可执行文件。</p>
-<h3 id="1-3-在CMD运行窗口运行Consul"><a href="#1-3-在CMD运行窗口运行Consul" class="headerlink" title="1.3. 在CMD运行窗口运行Consul"></a>1.3. 在CMD运行窗口运行Consul</h3><p>consul.exe agent -dev</p>
+<h2 id="能干嘛？"><a href="#能干嘛？" class="headerlink" title="能干嘛？"></a>能干嘛？</h2><p>服务发现 - 提供 HTTP 和 DNS 两种发现方式。<br>健康监测 - 支持多种方式，HTTP、TCP、Docker、Shell 脚本定制化<br>KV存储 - Key、Value 的存储方式<br>多数据中心 - Consul 支持多数据中心<br>可视化 Web 界面</p>
+<h2 id="1-安装并运行-Consul"><a href="#1-安装并运行-Consul" class="headerlink" title="1. 安装并运行 Consul"></a>1. 安装并运行 Consul</h2><h3 id="1-1-下载地址：https-www-consul-io-downloads"><a href="#1-1-下载地址：https-www-consul-io-downloads" class="headerlink" title="1.1. 下载地址：https://www.consul.io/downloads"></a>1.1. 下载地址：<a target="_blank" rel="noopener" href="https://www.consul.io/downloads">https://www.consul.io/downloads</a></h3><h3 id="1-2-安装-Consul"><a href="#1-2-安装-Consul" class="headerlink" title="1.2. 安装 Consul"></a>1.2. 安装 Consul</h3><p>Consul 下载下来后解压就一个 exe 可执行文件。</p>
+<h3 id="1-3-在-CMD-运行窗口运行-Consul"><a href="#1-3-在-CMD-运行窗口运行-Consul" class="headerlink" title="1.3. 在 CMD 运行窗口运行 Consul"></a>1.3. 在 CMD 运行窗口运行 Consul</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul.exe agent -dev</span><br></pre></td></tr></table></figure>
+
 <h3 id="1-4-运行成功后就可以在-http-localhost-8500"><a href="#1-4-运行成功后就可以在-http-localhost-8500" class="headerlink" title="1.4. 运行成功后就可以在 http://localhost:8500"></a>1.4. 运行成功后就可以在 <a target="_blank" rel="noopener" href="http://localhost:8500/">http://localhost:8500</a></h3><p><img src="/2021/05/06/SpringCloud-Consul-1/1.png"></p>
-<h2 id="2-支付微服务注册进Consul"><a href="#2-支付微服务注册进Consul" class="headerlink" title="2. 支付微服务注册进Consul"></a>2. 支付微服务注册进Consul</h2><h3 id="2-1-创建父工程-springcloud2021"><a href="#2-1-创建父工程-springcloud2021" class="headerlink" title="2.1 创建父工程 springcloud2021"></a>2.1 创建父工程 springcloud2021</h3><h3 id="2-2-springcloud2021-父工程-pom-xml代码如下"><a href="#2-2-springcloud2021-父工程-pom-xml代码如下" class="headerlink" title="2.2 springcloud2021 父工程 pom.xml代码如下"></a>2.2 springcloud2021 父工程 pom.xml代码如下</h3><pre><code>    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-    &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-      xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-      &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-      &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-      &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;
-      &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-      &lt;packaging&gt;pom&lt;/packaging&gt;
-      &lt;!--子模块继承之后，提供作用：锁定版本+ 子modlue不用写groupId 和 version--&gt;
-      &lt;!--dependencyManagement 里只声明依赖，并不实现引入，因此子项目需要显示声明需要的依赖--&gt;
-      &lt;!--统一管理jar包版本--&gt;
-      &lt;properties&gt;
-        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
-        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
-        &lt;junit.version&gt;4.12&lt;/junit.version&gt;
-        &lt;log4j.version&gt;1.2.17&lt;/log4j.version&gt;
-        &lt;lombok.version&gt;1.16.18&lt;/lombok.version&gt;
-        &lt;mysql.version&gt;5.1.47&lt;/mysql.version&gt;
-        &lt;druid.version&gt;1.1.16&lt;/druid.version&gt;
-        &lt;mybatis.spring.boot.version&gt;1.3.0&lt;/mybatis.spring.boot.version&gt;
-        &lt;spring.boot.devtools.version&gt;2.3.10.RELEASE&lt;/spring.boot.devtools.version&gt;
-      &lt;/properties&gt;
-      &lt;!--子模块继承之后，提供作用：锁定版本+子module不用groupId和version--&gt;
-      &lt;dependencyManagement&gt;
-        &lt;dependencies&gt;
-          &lt;!--spring boot 2.2.2--&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;
-            &lt;version&gt;2.2.2.RELEASE&lt;/version&gt;
-            &lt;type&gt;pom&lt;/type&gt;
-            &lt;scope&gt;import&lt;/scope&gt;
-          &lt;/dependency&gt;
-          &lt;!--spring cloud Hoxton.SR1--&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
-            &lt;version&gt;Hoxton.SR1&lt;/version&gt;
-            &lt;type&gt;pom&lt;/type&gt;
-            &lt;scope&gt;import&lt;/scope&gt;
-          &lt;/dependency&gt;
-          &lt;!--spring cloud alibaba 2.1.0.RELEASE--&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;
-            &lt;version&gt;2.1.0.RELEASE&lt;/version&gt;
-            &lt;type&gt;pom&lt;/type&gt;
-            &lt;scope&gt;import&lt;/scope&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;mysql&lt;/groupId&gt;
-            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;mysql.version&#125;&lt;/version&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-            &lt;artifactId&gt;druid&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;druid.version&#125;&lt;/version&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;mybatis.spring.boot.version&#125;&lt;/version&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;junit&lt;/groupId&gt;
-            &lt;artifactId&gt;junit&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;junit.version&#125;&lt;/version&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;lombok.version&#125;&lt;/version&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;spring.boot.devtools.version&#125;&lt;/version&gt;
-            &lt;scope&gt;runtime&lt;/scope&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-          &lt;/dependency&gt;
-        &lt;/dependencies&gt;
-      &lt;/dependencyManagement&gt;
-      &lt;build&gt;
-        &lt;plugins&gt;
-          &lt;plugin&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-            &lt;configuration&gt;
-              &lt;fork&gt;true&lt;/fork&gt;
-              &lt;addResources&gt;true&lt;/addResources&gt;
-            &lt;/configuration&gt;
-          &lt;/plugin&gt;
-        &lt;/plugins&gt;
-      &lt;/build&gt;
-    &lt;/project&gt;
-</code></pre>
-<h3 id="2-3-新建Module支付服务-cloud-provider-payment8006"><a href="#2-3-新建Module支付服务-cloud-provider-payment8006" class="headerlink" title="2.3 新建Module支付服务 cloud-provider-payment8006"></a>2.3 新建Module支付服务 cloud-provider-payment8006</h3><h3 id="2-4-cloud-provider-payment8006-项目-pom-xml-文件如下"><a href="#2-4-cloud-provider-payment8006-项目-pom-xml-文件如下" class="headerlink" title="2.4 cloud-provider-payment8006 项目 pom.xml 文件如下"></a>2.4 cloud-provider-payment8006 项目 pom.xml 文件如下</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
-         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-    &lt;parent&gt;
-        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;
-        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-    &lt;artifactId&gt;cloud-provider-payment8006&lt;/artifactId&gt;
-    &lt;dependencies&gt;
-        &lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-            &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;
-            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;!--SpringCloud consul-server --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;!-- SpringBoot整合Web组件 --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;!--日常通用jar包配置--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
-            &lt;scope&gt;runtime&lt;/scope&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;cn.hutool&lt;/groupId&gt;
-            &lt;artifactId&gt;hutool-all&lt;/artifactId&gt;
-            &lt;version&gt;RELEASE&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;cn.hutool&lt;/groupId&gt;
-            &lt;artifactId&gt;hutool-all&lt;/artifactId&gt;
-            &lt;version&gt;RELEASE&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-&lt;/project&gt;
-</code></pre>
-<h3 id="2-5-cloud-provider-payment8006-项目-application-yml-文件如下"><a href="#2-5-cloud-provider-payment8006-项目-application-yml-文件如下" class="headerlink" title="2.5 cloud-provider-payment8006 项目 application.yml 文件如下"></a>2.5 cloud-provider-payment8006 项目 application.yml 文件如下</h3><pre><code># consul服务端口号
-server:
-  port: 8006
-spring:
-  application:
-    name: consul-provider-payment
-  ####consul注册中心地址
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        #hostname: 127.0.0.1
-        service-name: $&#123;spring.application.name&#125;
-</code></pre>
-<h3 id="2-6-cloud-provider-payment8006-项目-主启动类-如下"><a href="#2-6-cloud-provider-payment8006-项目-主启动类-如下" class="headerlink" title="2.6 cloud-provider-payment8006 项目 主启动类 如下"></a>2.6 cloud-provider-payment8006 项目 主启动类 如下</h3><pre><code>package com.sevattal.springcloud;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-@SpringBootApplication
-@EnableDiscoveryClient
-public class PaymentMain8006
-&#123;
-    public static void main(String[] args) &#123;
-        SpringApplication.run(PaymentMain8006.class, args);
-    &#125;
-&#125;
-</code></pre>
-<h3 id="2-7-cloud-provider-payment8006-项目-业务类Controller"><a href="#2-7-cloud-provider-payment8006-项目-业务类Controller" class="headerlink" title="2.7 cloud-provider-payment8006 项目 业务类Controller"></a>2.7 cloud-provider-payment8006 项目 业务类Controller</h3><pre><code>package com.sevattal.springcloud.controller;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.UUID;
-@RestController
-@Slf4j
-public class PaymentController
-&#123;
-    @Value(&quot;$&#123;server.port&#125;&quot;)
-    private String serverPort;
-    @RequestMapping(value = &quot;/payment/consul&quot;)
-    public String paymentConsul()
-    &#123;
-        return &quot;springcloud with consul: &quot;+serverPort+&quot;\t   &quot;+ UUID.randomUUID().toString();
-    &#125;
-&#125;
-</code></pre>
+<h2 id="2-支付微服务注册进Consul"><a href="#2-支付微服务注册进Consul" class="headerlink" title="2. 支付微服务注册进Consul"></a>2. 支付微服务注册进Consul</h2><h3 id="2-1-创建父工程-springcloud2021"><a href="#2-1-创建父工程-springcloud2021" class="headerlink" title="2.1 创建父工程 springcloud2021"></a>2.1 创建父工程 springcloud2021</h3><h3 id="2-2-springcloud2021-父工程-pom-xml-代码如下"><a href="#2-2-springcloud2021-父工程-pom-xml-代码如下" class="headerlink" title="2.2 springcloud2021 父工程 pom.xml 代码如下"></a>2.2 springcloud2021 父工程 pom.xml 代码如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">  &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;pom&lt;/packaging&gt;</span><br><span class="line">  &lt;!--子模块继承之后，提供作用：锁定版本+ 子modlue不用写groupId 和 version--&gt;</span><br><span class="line">  &lt;!--dependencyManagement 里只声明依赖，并不实现引入，因此子项目需要显示声明需要的依赖--&gt;</span><br><span class="line">  &lt;!--统一管理jar包版本--&gt;</span><br><span class="line">  &lt;properties&gt;</span><br><span class="line">    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</span><br><span class="line">    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</span><br><span class="line">    &lt;junit.version&gt;4.12&lt;/junit.version&gt;</span><br><span class="line">    &lt;log4j.version&gt;1.2.17&lt;/log4j.version&gt;</span><br><span class="line">    &lt;lombok.version&gt;1.16.18&lt;/lombok.version&gt;</span><br><span class="line">    &lt;mysql.version&gt;5.1.47&lt;/mysql.version&gt;</span><br><span class="line">    &lt;druid.version&gt;1.1.16&lt;/druid.version&gt;</span><br><span class="line">    &lt;mybatis.spring.boot.version&gt;1.3.0&lt;/mybatis.spring.boot.version&gt;</span><br><span class="line">    &lt;spring.boot.devtools.version&gt;2.3.10.RELEASE&lt;/spring.boot.devtools.version&gt;</span><br><span class="line">  &lt;/properties&gt;</span><br><span class="line">  &lt;!--子模块继承之后，提供作用：锁定版本+子module不用groupId和version--&gt;</span><br><span class="line">  &lt;dependencyManagement&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">      &lt;!--spring boot 2.2.2--&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.2.RELEASE&lt;/version&gt;</span><br><span class="line">        &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">        &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;!--spring cloud Hoxton.SR1--&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;Hoxton.SR1&lt;/version&gt;</span><br><span class="line">        &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">        &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;!--spring cloud alibaba 2.1.0.RELEASE--&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.1.0.RELEASE&lt;/version&gt;</span><br><span class="line">        &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">        &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;mysql.version&#125;&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;druid&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;druid.version&#125;&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;mybatis.spring.boot.version&#125;&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;junit.version&#125;&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;lombok.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;spring.boot.devtools.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">        &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">  &lt;/dependencyManagement&gt;</span><br><span class="line">  &lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;configuration&gt;</span><br><span class="line">          &lt;fork&gt;true&lt;/fork&gt;</span><br><span class="line">          &lt;addResources&gt;true&lt;/addResources&gt;</span><br><span class="line">        &lt;/configuration&gt;</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">  &lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-新建-Module-支付服务-cloud-provider-payment8006"><a href="#2-3-新建-Module-支付服务-cloud-provider-payment8006" class="headerlink" title="2.3 新建 Module 支付服务 cloud-provider-payment8006"></a>2.3 新建 Module 支付服务 cloud-provider-payment8006</h3><h3 id="2-4-cloud-provider-payment8006-项目-pom-xml-文件如下"><a href="#2-4-cloud-provider-payment8006-项目-pom-xml-文件如下" class="headerlink" title="2.4 cloud-provider-payment8006 项目 pom.xml 文件如下"></a>2.4 cloud-provider-payment8006 项目 pom.xml 文件如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;</span><br><span class="line">        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;artifactId&gt;cloud-provider-payment8006&lt;/artifactId&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;!-- 引入自己定义的api通用包，可以使用Payment支付Entity --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--SpringCloud consul-server --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!-- SpringBoot整合Web组件 --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--日常通用jar包配置--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;cn.hutool&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;hutool-all&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;RELEASE&lt;/version&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;cn.hutool&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;hutool-all&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;RELEASE&lt;/version&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-cloud-provider-payment8006-项目-application-yml-文件如下"><a href="#2-5-cloud-provider-payment8006-项目-application-yml-文件如下" class="headerlink" title="2.5 cloud-provider-payment8006 项目 application.yml 文件如下"></a>2.5 cloud-provider-payment8006 项目 application.yml 文件如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># consul服务端口号</span><br><span class="line">server:</span><br><span class="line">  port: 8006</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: consul-provider-payment</span><br><span class="line">  ####consul注册中心地址</span><br><span class="line">  cloud:</span><br><span class="line">    consul:</span><br><span class="line">      host: localhost</span><br><span class="line">      port: 8500</span><br><span class="line">      discovery:</span><br><span class="line">        #hostname: 127.0.0.1</span><br><span class="line">        service-name: $&#123;spring.application.name&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-cloud-provider-payment8006-项目-主启动类-如下"><a href="#2-6-cloud-provider-payment8006-项目-主启动类-如下" class="headerlink" title="2.6 cloud-provider-payment8006 项目 主启动类 如下"></a>2.6 cloud-provider-payment8006 项目 主启动类 如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud;</span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableDiscoveryClient</span><br><span class="line">public class PaymentMain8006</span><br><span class="line">&#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(PaymentMain8006.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-cloud-provider-payment8006-项目-业务类Controller"><a href="#2-7-cloud-provider-payment8006-项目-业务类Controller" class="headerlink" title="2.7 cloud-provider-payment8006 项目 业务类Controller"></a>2.7 cloud-provider-payment8006 项目 业务类Controller</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.controller;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.beans.factory.annotation.Value;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import java.util.UUID;</span><br><span class="line">@RestController</span><br><span class="line">@Slf4j</span><br><span class="line">public class PaymentController</span><br><span class="line">&#123;</span><br><span class="line">    @Value(&quot;$&#123;server.port&#125;&quot;)</span><br><span class="line">    private String serverPort;</span><br><span class="line">    @RequestMapping(value = &quot;/payment/consul&quot;)</span><br><span class="line">    public String paymentConsul()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;springcloud with consul: &quot;+serverPort+&quot;\t   &quot;+ UUID.randomUUID().toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="2-8-验证测试"><a href="#2-8-验证测试" class="headerlink" title="2.8 验证测试"></a>2.8 验证测试</h3><p><a target="_blank" rel="noopener" href="http://localhost:8006/payment/consul">http://localhost:8006/payment/consul</a></p>
 <p><img src="/2021/05/06/SpringCloud-Consul-1/2.png"></p>
 <p><a target="_blank" rel="noopener" href="http://localhost:8500/">http://localhost:8500</a> - 会显示 consul-provider-payment</p>
 <p><img src="/2021/05/06/SpringCloud-Consul-1/3.png"></p>
-<h2 id="3-服务消费者注册进Consul"><a href="#3-服务消费者注册进Consul" class="headerlink" title="3. 服务消费者注册进Consul"></a>3. 服务消费者注册进Consul</h2><h3 id="3-1-新建Module消费服务order80-cloud-consumerconsul-order80"><a href="#3-1-新建Module消费服务order80-cloud-consumerconsul-order80" class="headerlink" title="3.1 新建Module消费服务order80 - cloud-consumerconsul-order80"></a>3.1 新建Module消费服务order80 - cloud-consumerconsul-order80</h3><h3 id="3-2-cloud-consumerconsul-order80-项目-pom-xml-文件如下"><a href="#3-2-cloud-consumerconsul-order80-项目-pom-xml-文件如下" class="headerlink" title="3.2 cloud-consumerconsul-order80 项目 pom.xml 文件如下"></a>3.2 cloud-consumerconsul-order80 项目 pom.xml 文件如下</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
-         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-    &lt;parent&gt;
-        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;
-        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-    &lt;artifactId&gt;cloud-consumerconsul-order80&lt;/artifactId&gt;
-    &lt;dependencies&gt;
-        &lt;!--SpringCloud consul-server --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;!-- SpringBoot整合Web组件 --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;!--日常通用jar包配置--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
-            &lt;scope&gt;runtime&lt;/scope&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-&lt;/project&gt;
-</code></pre>
-<h3 id="3-3-cloud-consumerconsul-order80-项目-application-yml-文件如下"><a href="#3-3-cloud-consumerconsul-order80-项目-application-yml-文件如下" class="headerlink" title="3.3 cloud-consumerconsul-order80 项目 application.yml 文件如下"></a>3.3 cloud-consumerconsul-order80 项目 application.yml 文件如下</h3><pre><code># consul服务端口号
-server:
-  port: 80
-spring:
-  application:
-    name: cloud-consumer-order
-## consul注册中心地址
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        #hostname: 127.0.0.1
-        service-name: $&#123;spring.application.name&#125;
-</code></pre>
-<h3 id="3-4-cloud-consumerconsul-order80-项目-主启动类-文件如下"><a href="#3-4-cloud-consumerconsul-order80-项目-主启动类-文件如下" class="headerlink" title="3.4 cloud-consumerconsul-order80 项目 主启动类 文件如下"></a>3.4 cloud-consumerconsul-order80 项目 主启动类 文件如下</h3><pre><code>import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-@SpringBootApplication
-@EnableDiscoveryClient //该注解用于向使用consul或者zookeeper作为注册中心时注册服务
-public class OrderConsulMain80
-&#123;
-    public static void main(String[] args) &#123;
-            SpringApplication.run(OrderConsulMain80.class, args);
-    &#125;
-&#125;
-</code></pre>
-<h3 id="3-5-cloud-consumerconsul-order80-项目-配置Bean"><a href="#3-5-cloud-consumerconsul-order80-项目-配置Bean" class="headerlink" title="3.5 cloud-consumerconsul-order80 项目 配置Bean"></a>3.5 cloud-consumerconsul-order80 项目 配置Bean</h3><pre><code>package com.sevattal.springcloud.config;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
-@Configuration
-public class ApplicationContextConfig
-&#123;
-    @Bean
-    @LoadBalanced
-    public RestTemplate getRestTemplate()
-    &#123;
-        return new RestTemplate();
-    &#125;
-&#125;
-</code></pre>
-<h3 id="3-6-cloud-consumerconsul-order80-项目-Controller"><a href="#3-6-cloud-consumerconsul-order80-项目-Controller" class="headerlink" title="3.6 cloud-consumerconsul-order80 项目 Controller"></a>3.6 cloud-consumerconsul-order80 项目 Controller</h3><pre><code>package com.sevattal.springcloud.controller;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-import javax.annotation.Resource;
-@RestController
-@Slf4j
-public class OrderConsulController
-&#123;
-    public static final String INVOKE_URL = &quot;http://consul-provider-payment&quot;;
-    @Resource
-    private RestTemplate restTemplate;
-    @GetMapping(value = &quot;/consumer/payment/consul&quot;)
-    public String paymentInfo()
-    &#123;
-        String result = restTemplate.getForObject(INVOKE_URL+&quot;/payment/consul&quot;,String.class);
-        return result;
-    &#125;
-&#125;
-</code></pre>
-<h3 id="3-7-验证测试"><a href="#3-7-验证测试" class="headerlink" title="3.7.验证测试"></a>3.7.验证测试</h3><p>运行consul，cloud-providerconsul-payment8006，cloud-consumerconsul-order80</p>
-<p><a target="_blank" rel="noopener" href="http://localhost:8500/">http://localhost:8500/</a> 主页会显示出consul，cloud-providerconsul-payment8006，cloud-consumerconsul-order80三服务。</p>
+<h2 id="3-服务消费者注册进Consul"><a href="#3-服务消费者注册进Consul" class="headerlink" title="3. 服务消费者注册进Consul"></a>3. 服务消费者注册进Consul</h2><h3 id="3-1-新建Module消费服务order80-cloud-consumerconsul-order80"><a href="#3-1-新建Module消费服务order80-cloud-consumerconsul-order80" class="headerlink" title="3.1 新建Module消费服务order80 - cloud-consumerconsul-order80"></a>3.1 新建Module消费服务order80 - cloud-consumerconsul-order80</h3><h3 id="3-2-cloud-consumerconsul-order80-项目-pom-xml-文件如下"><a href="#3-2-cloud-consumerconsul-order80-项目-pom-xml-文件如下" class="headerlink" title="3.2 cloud-consumerconsul-order80 项目 pom.xml 文件如下"></a>3.2 cloud-consumerconsul-order80 项目 pom.xml 文件如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;</span><br><span class="line">        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;artifactId&gt;cloud-consumerconsul-order80&lt;/artifactId&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;!--SpringCloud consul-server --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!-- SpringBoot整合Web组件 --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--日常通用jar包配置--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-cloud-consumerconsul-order80-项目-application-yml-文件如下"><a href="#3-3-cloud-consumerconsul-order80-项目-application-yml-文件如下" class="headerlink" title="3.3 cloud-consumerconsul-order80 项目 application.yml 文件如下"></a>3.3 cloud-consumerconsul-order80 项目 application.yml 文件如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># consul服务端口号</span><br><span class="line">server:</span><br><span class="line">  port: 80</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: cloud-consumer-order</span><br><span class="line">## consul注册中心地址</span><br><span class="line">  cloud:</span><br><span class="line">    consul:</span><br><span class="line">      host: localhost</span><br><span class="line">      port: 8500</span><br><span class="line">      discovery:</span><br><span class="line">        #hostname: 127.0.0.1</span><br><span class="line">        service-name: $&#123;spring.application.name&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-cloud-consumerconsul-order80-项目-主启动类-文件如下"><a href="#3-4-cloud-consumerconsul-order80-项目-主启动类-文件如下" class="headerlink" title="3.4 cloud-consumerconsul-order80 项目 主启动类 文件如下"></a>3.4 cloud-consumerconsul-order80 项目 主启动类 文件如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableDiscoveryClient //该注解用于向使用consul或者zookeeper作为注册中心时注册服务</span><br><span class="line">public class OrderConsulMain80</span><br><span class="line">&#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">            SpringApplication.run(OrderConsulMain80.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-cloud-consumerconsul-order80-项目-配置Bean"><a href="#3-5-cloud-consumerconsul-order80-项目-配置Bean" class="headerlink" title="3.5 cloud-consumerconsul-order80 项目 配置Bean"></a>3.5 cloud-consumerconsul-order80 项目 配置Bean</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.config;</span><br><span class="line">import org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line">@Configuration</span><br><span class="line">public class ApplicationContextConfig</span><br><span class="line">&#123;</span><br><span class="line">    @Bean</span><br><span class="line">    @LoadBalanced</span><br><span class="line">    public RestTemplate getRestTemplate()</span><br><span class="line">    &#123;</span><br><span class="line">        return new RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-cloud-consumerconsul-order80-项目-Controller"><a href="#3-6-cloud-consumerconsul-order80-项目-Controller" class="headerlink" title="3.6 cloud-consumerconsul-order80 项目 Controller"></a>3.6 cloud-consumerconsul-order80 项目 Controller</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.controller;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line">@RestController</span><br><span class="line">@Slf4j</span><br><span class="line">public class OrderConsulController</span><br><span class="line">&#123;</span><br><span class="line">    public static final String INVOKE_URL = &quot;http://consul-provider-payment&quot;;</span><br><span class="line">    @Resource</span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line">    @GetMapping(value = &quot;/consumer/payment/consul&quot;)</span><br><span class="line">    public String paymentInfo()</span><br><span class="line">    &#123;</span><br><span class="line">        String result = restTemplate.getForObject(INVOKE_URL+&quot;/payment/consul&quot;,String.class);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-验证测试"><a href="#3-7-验证测试" class="headerlink" title="3.7.验证测试"></a>3.7.验证测试</h3><p>运行 consul，cloud-providerconsul-payment8006，cloud-consumerconsul-order80</p>
+<p><a target="_blank" rel="noopener" href="http://localhost:8500/">http://localhost:8500/</a> 主页会显示出 consul，cloud-providerconsul-payment8006，cloud-consumerconsul-order80三服务。</p>
 <p><img src="/2021/05/06/SpringCloud-Consul-1/4.png"></p>
 <h3 id="8-访问测试地址-http-localhost-consumer-payment-consul"><a href="#8-访问测试地址-http-localhost-consumer-payment-consul" class="headerlink" title="8.访问测试地址 - http://localhost/consumer/payment/consul"></a>8.访问测试地址 - <a target="_blank" rel="noopener" href="http://localhost/consumer/payment/consul">http://localhost/consumer/payment/consul</a></h3><p><img src="/2021/05/06/SpringCloud-Consul-1/5.png"></p>
 
@@ -656,7 +358,7 @@ public class OrderConsulController
         <p><span>Title:</span><a href="/2021/05/06/SpringCloud-Consul-1/">SpringCloud-Consul-1</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2021-05-06, 08:00:08</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:44</p>
+        <p><span>Updated:</span>2023-04-07, 14:48:47</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2021/05/06/SpringCloud-Consul-1/" title="SpringCloud-Consul-1">http://yoursite.com/2021/05/06/SpringCloud-Consul-1/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/05/06/SpringCloud-Consul-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -692,7 +394,7 @@ public class OrderConsulController
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-Consul%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">构建微服务架构(Consul篇)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Consul-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">Consul 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%BD%E5%B9%B2%E5%98%9B%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">能干嘛？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8CConsul"><span class="toc-number">1.3.</span> <span class="toc-text">1. 安装并运行Consul</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80%EF%BC%9Ahttps-www-consul-io-downloads"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.1. 下载地址：https:&#x2F;&#x2F;www.consul.io&#x2F;downloads</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AE%89%E8%A3%85Consul"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.2. 安装Consul</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%9C%A8CMD%E8%BF%90%E8%A1%8C%E7%AA%97%E5%8F%A3%E8%BF%90%E8%A1%8CConsul"><span class="toc-number">1.3.3.</span> <span class="toc-text">1.3. 在CMD运行窗口运行Consul</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E8%BF%90%E8%A1%8C%E6%88%90%E5%8A%9F%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E5%9C%A8-http-localhost-8500"><span class="toc-number">1.3.4.</span> <span class="toc-text">1.4. 运行成功后就可以在 http:&#x2F;&#x2F;localhost:8500</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%94%AF%E4%BB%98%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E8%BF%9BConsul"><span class="toc-number">1.4.</span> <span class="toc-text">2. 支付微服务注册进Consul</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%88%9B%E5%BB%BA%E7%88%B6%E5%B7%A5%E7%A8%8B-springcloud2021"><span class="toc-number">1.4.1.</span> <span class="toc-text">2.1 创建父工程 springcloud2021</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-springcloud2021-%E7%88%B6%E5%B7%A5%E7%A8%8B-pom-xml%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.2 springcloud2021 父工程 pom.xml代码如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%96%B0%E5%BB%BAModule%E6%94%AF%E4%BB%98%E6%9C%8D%E5%8A%A1-cloud-provider-payment8006"><span class="toc-number">1.4.3.</span> <span class="toc-text">2.3 新建Module支付服务 cloud-provider-payment8006</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-cloud-provider-payment8006-%E9%A1%B9%E7%9B%AE-pom-xml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.4.</span> <span class="toc-text">2.4 cloud-provider-payment8006 项目 pom.xml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-cloud-provider-payment8006-%E9%A1%B9%E7%9B%AE-application-yml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.5.</span> <span class="toc-text">2.5 cloud-provider-payment8006 项目 application.yml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-cloud-provider-payment8006-%E9%A1%B9%E7%9B%AE-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB-%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.6.</span> <span class="toc-text">2.6 cloud-provider-payment8006 项目 主启动类 如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-cloud-provider-payment8006-%E9%A1%B9%E7%9B%AE-%E4%B8%9A%E5%8A%A1%E7%B1%BBController"><span class="toc-number">1.4.7.</span> <span class="toc-text">2.7 cloud-provider-payment8006 项目 业务类Controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.8.</span> <span class="toc-text">2.8 验证测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9%E8%80%85%E6%B3%A8%E5%86%8C%E8%BF%9BConsul"><span class="toc-number">1.5.</span> <span class="toc-text">3. 服务消费者注册进Consul</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%96%B0%E5%BB%BAModule%E6%B6%88%E8%B4%B9%E6%9C%8D%E5%8A%A1order80-cloud-consumerconsul-order80"><span class="toc-number">1.5.1.</span> <span class="toc-text">3.1 新建Module消费服务order80 - cloud-consumerconsul-order80</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-pom-xml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.5.2.</span> <span class="toc-text">3.2 cloud-consumerconsul-order80 项目 pom.xml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-application-yml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.5.3.</span> <span class="toc-text">3.3 cloud-consumerconsul-order80 项目 application.yml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.5.4.</span> <span class="toc-text">3.4 cloud-consumerconsul-order80 项目 主启动类 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-%E9%85%8D%E7%BD%AEBean"><span class="toc-number">1.5.5.</span> <span class="toc-text">3.5 cloud-consumerconsul-order80 项目 配置Bean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-Controller"><span class="toc-number">1.5.6.</span> <span class="toc-text">3.6 cloud-consumerconsul-order80 项目 Controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-number">1.5.7.</span> <span class="toc-text">3.7.验证测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E8%AE%BF%E9%97%AE%E6%B5%8B%E8%AF%95%E5%9C%B0%E5%9D%80-http-localhost-consumer-payment-consul"><span class="toc-number">1.5.8.</span> <span class="toc-text">8.访问测试地址 - http:&#x2F;&#x2F;localhost&#x2F;consumer&#x2F;payment&#x2F;consul</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-Consul%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">构建微服务架构(Consul篇)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Consul-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">Consul 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%BD%E5%B9%B2%E5%98%9B%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">能干嘛？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%90%E8%A1%8C-Consul"><span class="toc-number">1.3.</span> <span class="toc-text">1. 安装并运行 Consul</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80%EF%BC%9Ahttps-www-consul-io-downloads"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.1. 下载地址：https:&#x2F;&#x2F;www.consul.io&#x2F;downloads</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AE%89%E8%A3%85-Consul"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.2. 安装 Consul</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%9C%A8-CMD-%E8%BF%90%E8%A1%8C%E7%AA%97%E5%8F%A3%E8%BF%90%E8%A1%8C-Consul"><span class="toc-number">1.3.3.</span> <span class="toc-text">1.3. 在 CMD 运行窗口运行 Consul</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E8%BF%90%E8%A1%8C%E6%88%90%E5%8A%9F%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E5%9C%A8-http-localhost-8500"><span class="toc-number">1.3.4.</span> <span class="toc-text">1.4. 运行成功后就可以在 http:&#x2F;&#x2F;localhost:8500</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%94%AF%E4%BB%98%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E8%BF%9BConsul"><span class="toc-number">1.4.</span> <span class="toc-text">2. 支付微服务注册进Consul</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%88%9B%E5%BB%BA%E7%88%B6%E5%B7%A5%E7%A8%8B-springcloud2021"><span class="toc-number">1.4.1.</span> <span class="toc-text">2.1 创建父工程 springcloud2021</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-springcloud2021-%E7%88%B6%E5%B7%A5%E7%A8%8B-pom-xml-%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.2 springcloud2021 父工程 pom.xml 代码如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%96%B0%E5%BB%BA-Module-%E6%94%AF%E4%BB%98%E6%9C%8D%E5%8A%A1-cloud-provider-payment8006"><span class="toc-number">1.4.3.</span> <span class="toc-text">2.3 新建 Module 支付服务 cloud-provider-payment8006</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-cloud-provider-payment8006-%E9%A1%B9%E7%9B%AE-pom-xml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.4.</span> <span class="toc-text">2.4 cloud-provider-payment8006 项目 pom.xml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-cloud-provider-payment8006-%E9%A1%B9%E7%9B%AE-application-yml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.5.</span> <span class="toc-text">2.5 cloud-provider-payment8006 项目 application.yml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-cloud-provider-payment8006-%E9%A1%B9%E7%9B%AE-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB-%E5%A6%82%E4%B8%8B"><span class="toc-number">1.4.6.</span> <span class="toc-text">2.6 cloud-provider-payment8006 项目 主启动类 如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-cloud-provider-payment8006-%E9%A1%B9%E7%9B%AE-%E4%B8%9A%E5%8A%A1%E7%B1%BBController"><span class="toc-number">1.4.7.</span> <span class="toc-text">2.7 cloud-provider-payment8006 项目 业务类Controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.8.</span> <span class="toc-text">2.8 验证测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9%E8%80%85%E6%B3%A8%E5%86%8C%E8%BF%9BConsul"><span class="toc-number">1.5.</span> <span class="toc-text">3. 服务消费者注册进Consul</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%96%B0%E5%BB%BAModule%E6%B6%88%E8%B4%B9%E6%9C%8D%E5%8A%A1order80-cloud-consumerconsul-order80"><span class="toc-number">1.5.1.</span> <span class="toc-text">3.1 新建Module消费服务order80 - cloud-consumerconsul-order80</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-pom-xml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.5.2.</span> <span class="toc-text">3.2 cloud-consumerconsul-order80 项目 pom.xml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-application-yml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.5.3.</span> <span class="toc-text">3.3 cloud-consumerconsul-order80 项目 application.yml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.5.4.</span> <span class="toc-text">3.4 cloud-consumerconsul-order80 项目 主启动类 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-%E9%85%8D%E7%BD%AEBean"><span class="toc-number">1.5.5.</span> <span class="toc-text">3.5 cloud-consumerconsul-order80 项目 配置Bean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-cloud-consumerconsul-order80-%E9%A1%B9%E7%9B%AE-Controller"><span class="toc-number">1.5.6.</span> <span class="toc-text">3.6 cloud-consumerconsul-order80 项目 Controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-number">1.5.7.</span> <span class="toc-text">3.7.验证测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E8%AE%BF%E9%97%AE%E6%B5%8B%E8%AF%95%E5%9C%B0%E5%9D%80-http-localhost-consumer-payment-consul"><span class="toc-number">1.5.8.</span> <span class="toc-text">8.访问测试地址 - http:&#x2F;&#x2F;localhost&#x2F;consumer&#x2F;payment&#x2F;consul</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>

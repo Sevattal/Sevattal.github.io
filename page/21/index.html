@@ -288,7 +288,7 @@
           
               <h1 id="构建微服务架构-OpenFeign篇"><a href="#构建微服务架构-OpenFeign篇" class="headerlink" title="构建微服务架构(OpenFeign篇)"></a>构建微服务架构(OpenFeign篇)</h1><p>该篇文档，前置环境条件为：构建微服务架构(eureka篇)<br>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_openfeign.zip">下载</a></p>
 <p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub地址：<a target="_blank" rel="noopener" href="https://github.com/spring-cloud/spring-cloud-openfeign">https://github.com/spring-cloud/spring-cloud-openfeign</a><br>SpringCloud地址：<a target="_blank" rel="noopener" href="https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/#spring-cloud-openfeign">https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/#spring-cloud-openfeign</a></p>
-<h2 id="OpenFeign是什么"><a href="#OpenFeign是什么" class="headerlink" title="OpenFeign是什么"></a>OpenFeign是什么</h2><p>Feign是一个声明式WebService客户端。使用Feign能让编写Web Service客户端更加简单。它的使用方法是定义一个服务接口然后在上面添加注解。Feign也支持可拔插式的编码器和解码器。Spring Cloud对Feign进行了封装，使其支持了Spring MVC标准注解和HttpMessageConverters。Feign可以与Eureka和Ribbon组合使用以支持负载均衡。</p>
+<h2 id="OpenFeign-是什么"><a href="#OpenFeign-是什么" class="headerlink" title="OpenFeign 是什么"></a>OpenFeign 是什么</h2><p>Feign 是一个声明式 WebService 客户端。使用 Feign 能让编写 Web Service 客户端更加简单。它的使用方法是定义一个服务接口然后在上面添加注解。Feign也支持可拔插式的编码器和解码器。Spring Cloud 对 Feign 进行了封装，使其支持了 Spring MVC 标准注解和 HttpMessageConverters。Feign 可以与 Eureka 和 Ribbon 组合使用以支持负载均衡。</p>
           
       
     </div>
@@ -357,12 +357,12 @@
       
           
               <h1 id="构建微服务架构-Ribbon篇"><a href="#构建微服务架构-Ribbon篇" class="headerlink" title="构建微服务架构(Ribbon篇)"></a>构建微服务架构(Ribbon篇)</h1><p>该篇文档，前置环境条件为：构建微服务架构(eureka篇)<br>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_ribbon.zip">下载</a></p>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub地址：<a target="_blank" rel="noopener" href="https://github.com/Netflix/ribbon">https://github.com/Netflix/ribbon</a></p>
-<h2 id="Ribbon入门介绍"><a href="#Ribbon入门介绍" class="headerlink" title="Ribbon入门介绍"></a>Ribbon入门介绍</h2><p>Spring Cloud Ribbon是基于Netflix Ribbon实现的一套客户端负载均衡的工具。</p>
-<p>简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供客户端的软件负载均衡算法和服务调用。Ribbon客户端组件提供一系列完善的配置项如连接超时，重试等。</p>
-<p>简单的说，就是在配置文件中列出Load Balancer(简称LB)后面所有的机器，Ribbon会自动的帮助你基于某种规则(如简单轮询，随机连接等）去连接这些机器。我们很容易使用Ribbon实现自定义的负载均衡算法。</p>
-<p>Ribbon目前也进入维护模式。</p>
-<p>Ribbon未来可能被Spring Cloud LoadBalacer替代。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub 地址：<a target="_blank" rel="noopener" href="https://github.com/Netflix/ribbon">https://github.com/Netflix/ribbon</a></p>
+<h2 id="Ribbon-入门介绍"><a href="#Ribbon-入门介绍" class="headerlink" title="Ribbon 入门介绍"></a>Ribbon 入门介绍</h2><p>Spring Cloud Ribbon 是基于 Netflix Ribbon 实现的一套客户端负载均衡的工具。</p>
+<p>简单的说，Ribbon 是 Netflix 发布的开源项目，主要功能是提供客户端的软件负载均衡算法和服务调用。Ribbon 客户端组件提供一系列完善的配置项如连接超时，重试等。</p>
+<p>简单的说，就是在配置文件中列出 Load Balancer (简称 LB )后面所有的机器，Ribbon 会自动的帮助你基于某种规则(如简单轮询，随机连接等）去连接这些机器。我们很容易使用 Ribbon 实现自定义的负载均衡算法。</p>
+<p>Ribbon 目前也进入维护模式。</p>
+<p>Ribbon 未来可能被 Spring Cloud LoadBalacer 替代。</p>
           
       
     </div>
@@ -530,11 +530,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h1 id="构建微服务架构-Consul篇"><a href="#构建微服务架构-Consul篇" class="headerlink" title="构建微服务架构(Consul篇)"></a>构建微服务架构(Consul篇)</h1><p>B站视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215">https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215</a><br>原Blog笔记文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>本篇文章大部分图片用到了参考的blog笔记中的图片。<br>本人代码下载：<a href="/download/springcloud_project_consul.zip">下载</a></p>
-<h2 id="Consul-简介"><a href="#Consul-简介" class="headerlink" title="Consul 简介"></a>Consul 简介</h2><p>Consul是一个服务网格解决方案，它提供了一个功能齐全的控制平面，具有服务发现、配置和分段功能。这些特性中的每一个都可以根据需要单独使用，也可以一起用于构建全服务网格。Consul需要一个数据平面，并支持代理和本机集成模型。Consul船与一个简单的内置代理，使一切工作的开箱即用，但也支持第三方代理集成，如Envoy。</p>
-<p>Consul是一套开源的分布式服务发现和配置管理系统，由HashiCorp 公司用Go语言开发。</p>
-<p>提供了微服务系统中的服务治理、配置中心、控制总线等功能。这些功能中的每一个都可以根据需要单独使用，也可以一起使用以构建全方位的服务网格，总之Consul提供了一种完整的服务网格解决方案。</p>
-<p>它具有很多优点。包括：基于raft协议，比较简洁；支持健康检查，同时支持HTTP和DNS协议支持跨数据中心的WAN集群提供图形界面跨平台，支持Linux、Mac、Windows。</p>
+              <h1 id="构建微服务架构-Consul篇"><a href="#构建微服务架构-Consul篇" class="headerlink" title="构建微服务架构(Consul篇)"></a>构建微服务架构(Consul篇)</h1><p>B 站视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215">https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215</a><br>原 Blog 笔记文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
+<p>本篇文章大部分图片用到了参考的 blog 笔记中的图片。<br>本人代码下载：<a href="/download/springcloud_project_consul.zip">下载</a></p>
+<h2 id="Consul-简介"><a href="#Consul-简介" class="headerlink" title="Consul 简介"></a>Consul 简介</h2><p>Consul 是一个服务网格解决方案，它提供了一个功能齐全的控制平面，具有服务发现、配置和分段功能。这些特性中的每一个都可以根据需要单独使用，也可以一起用于构建全服务网格。Consul 需要一个数据平面，并支持代理和本机集成模型。Consul 与一个简单的内置代理，使一切工作的开箱即用，但也支持第三方代理集成，如 Envoy。</p>
+<p>Consul 是一套开源的分布式服务发现和配置管理系统，由 HashiCorp 公司用 Go 语言开发。</p>
+<p>提供了微服务系统中的服务治理、配置中心、控制总线等功能。这些功能中的每一个都可以根据需要单独使用，也可以一起使用以构建全方位的服务网格，总之 Consul 提供了一种完整的服务网格解决方案。</p>
+<p>它具有很多优点。包括：基于 raft 协议，比较简洁；支持健康检查，同时支持 HTTP 和 DNS 协议支持跨数据中心的 WAN 集群提供图形界面跨平台，支持 Linux、Mac、Windows。</p>
           
       
     </div>
@@ -747,7 +748,9 @@ Usage: ./zkServer.sh &#123;start|start-foreground|stop|restart|status|upgrade|pr
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h1 id="尚硅谷周阳构建分布式微服务架构-Eureka篇"><a href="#尚硅谷周阳构建分布式微服务架构-Eureka篇" class="headerlink" title="尚硅谷周阳构建分布式微服务架构(Eureka篇)"></a>尚硅谷周阳构建分布式微服务架构(Eureka篇)</h1><p>B站视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215">https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215</a><br>原Blog笔记文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41211642/article/details/104772140">https://blog.csdn.net/qq_41211642/article/details/104772140</a><br>本篇文章大部分图片用到了参考的blog笔记中的图片。<br>本人代码下载：<a href="/download/springcloud_project_eureka.zip">下载</a><br>本人代码Gitee仓库地址：<a target="_blank" rel="noopener" href="https://gitee.com/Sevattal/springcloud_project_eureka">https://gitee.com/Sevattal/springcloud_project_eureka</a></p>
+              <h1 id="尚硅谷周阳构建分布式微服务架构-Eureka篇"><a href="#尚硅谷周阳构建分布式微服务架构-Eureka篇" class="headerlink" title="尚硅谷周阳构建分布式微服务架构(Eureka篇)"></a>尚硅谷周阳构建分布式微服务架构(Eureka篇)</h1><p>B 站视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215">https://www.bilibili.com/video/BV18E411x7eT?from=search&amp;seid=13583080742381804215</a></p>
+<p>原 Blog 笔记文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41211642/article/details/104772140">https://blog.csdn.net/qq_41211642/article/details/104772140</a><br>本篇文章大部分图片用到了参考的 blog 笔记中的图片。</p>
+<p>本人代码下载：<a href="/download/springcloud_project_eureka.zip">下载</a><br>本人代码 Gitee 仓库地址：<a target="_blank" rel="noopener" href="https://gitee.com/Sevattal/springcloud_project_eureka">https://gitee.com/Sevattal/springcloud_project_eureka</a></p>
 <table>
 <thead>
 <tr>

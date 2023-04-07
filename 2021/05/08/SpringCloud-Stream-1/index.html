@@ -15,12 +15,12 @@
 
 
 
-<meta name="description" content="构建微服务架构(Stream 消息驱动 篇)该篇文档，前置代码下载：下载该篇文档，全部完成后的代码下载：下载 原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 Stream为什么被引入常见MQ(消息中间件)： ActiveMQ RabbitMQ RocketMQ Kafka  有没有一种新的技术诞生，让我们不再关注具体M">
+<meta name="description" content="构建微服务架构(Stream 消息驱动 篇)该篇文档，前置代码下载：下载该篇文档，全部完成后的代码下载：下载 原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 Stream 为什么被引入常见 MQ(消息中间件)： ActiveMQ RabbitMQ RocketMQ Kafka  有没有一种新的技术诞生，让我们不再关注具">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringCloud-Stream-1">
 <meta property="og:url" content="http://yoursite.com/2021/05/08/SpringCloud-Stream-1/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="构建微服务架构(Stream 消息驱动 篇)该篇文档，前置代码下载：下载该篇文档，全部完成后的代码下载：下载 原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 Stream为什么被引入常见MQ(消息中间件)： ActiveMQ RabbitMQ RocketMQ Kafka  有没有一种新的技术诞生，让我们不再关注具体M">
+<meta property="og:description" content="构建微服务架构(Stream 消息驱动 篇)该篇文档，前置代码下载：下载该篇文档，全部完成后的代码下载：下载 原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u011863024&#x2F;article&#x2F;details&#x2F;114298270 Stream 为什么被引入常见 MQ(消息中间件)： ActiveMQ RabbitMQ RocketMQ Kafka  有没有一种新的技术诞生，让我们不再关注具">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2021/05/08/SpringCloud-Stream-1/1.png">
 <meta property="og:image" content="http://yoursite.com/2021/05/08/SpringCloud-Stream-1/2.png">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/05/08/SpringCloud-Stream-1/5.png">
 <meta property="og:image" content="http://yoursite.com/2021/05/08/SpringCloud-Stream-1/6.png">
 <meta property="article:published_time" content="2021-05-08T05:37:53.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:44.361Z">
+<meta property="article:modified_time" content="2023-04-07T07:04:46.693Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="Stream">
@@ -309,56 +309,56 @@
           
         <h1 id="构建微服务架构-Stream-消息驱动-篇"><a href="#构建微服务架构-Stream-消息驱动-篇" class="headerlink" title="构建微服务架构(Stream 消息驱动 篇)"></a>构建微服务架构(Stream 消息驱动 篇)</h1><p>该篇文档，前置代码下载：<a href="/download/springcloud_project_bus.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_stream.zip">下载</a></p>
 <p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
-<h2 id="Stream为什么被引入"><a href="#Stream为什么被引入" class="headerlink" title="Stream为什么被引入"></a>Stream为什么被引入</h2><p><strong>常见MQ(消息中间件)：</strong></p>
+<h2 id="Stream-为什么被引入"><a href="#Stream-为什么被引入" class="headerlink" title="Stream 为什么被引入"></a>Stream 为什么被引入</h2><p><strong>常见 MQ(消息中间件)：</strong></p>
 <pre><code>ActiveMQ
 RabbitMQ
 RocketMQ
 Kafka
 </code></pre>
 <p>有没有一种新的技术诞生，让我们不再关注具体MQ的细节，我们只需要用一种适配绑定的方式，自动的给我们在各种MQ内切换。（类似于Hibernate）</p>
-<p><strong>Cloud Stream是什么？</strong></p>
+<p><strong>Cloud Stream 是什么？</strong></p>
 <p>屏蔽底层消息中间件的差异，降低切换成本，统一消息的编程模型。</p>
 <span id="more"></span>
 
 <h2 id="Stream是什么及Binder介绍"><a href="#Stream是什么及Binder介绍" class="headerlink" title="Stream是什么及Binder介绍"></a>Stream是什么及Binder介绍</h2><p>官方文档1：<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud-stream#overview">https://spring.io/projects/spring-cloud-stream#overview</a></p>
-<p>Cloud Stream中文指导手册：<a target="_blank" rel="noopener" href="https://m.wang1314.com/doc/webapp/topic/20971999.html">https://m.wang1314.com/doc/webapp/topic/20971999.html</a></p>
-<p><strong>什么是Spring Cloud Stream？</strong></p>
-<p>官方定义Spring Cloud Stream是一个构建消息驱动微服务的框架。</p>
-<p>应用程序通过inputs或者 outputs 来与Spring Cloud Stream中binder对象交互。</p>
-<p>通过我们配置来binding(绑定)，而Spring Cloud Stream 的binder对象负责与消息中间件交互。所以，我们只需要搞清楚如何与Spring Cloud Stream交互就可以方便使用消息驱动的方式。</p>
-<p>通过使用Spring Integration来连接消息代理中间件以实现消息事件驱动。<br>Spring Cloud Stream为一些供应商的消息中间件产品提供了个性化的自动化配置实现，引用了发布-订阅、消费组、分区的三个核心概念。</p>
-<p>目前仅支持RabbitMQ、 Kafka。</p>
-<h2 id="Stream的设计思想"><a href="#Stream的设计思想" class="headerlink" title="Stream的设计思想"></a>Stream的设计思想</h2><p><strong>标准MQ</strong></p>
+<p>Cloud Stream 中文指导手册：<a target="_blank" rel="noopener" href="https://m.wang1314.com/doc/webapp/topic/20971999.html">https://m.wang1314.com/doc/webapp/topic/20971999.html</a></p>
+<p><strong>什么是 Spring Cloud Stream？</strong></p>
+<p>官方定义 Spring Cloud Stream 是一个构建消息驱动微服务的框架。</p>
+<p>应用程序通过inputs或者 outputs 来与 Spring Cloud Stream 中 binder 对象交互。</p>
+<p>通过我们配置来 binding(绑定)，而 Spring Cloud Stream 的 binder 对象负责与消息中间件交互。所以，我们只需要搞清楚如何与 Spring Cloud Stream 交互就可以方便使用消息驱动的方式。</p>
+<p>通过使用 Spring Integration 来连接消息代理中间件以实现消息事件驱动。<br>Spring Cloud Stream 为一些供应商的消息中间件产品提供了个性化的自动化配置实现，引用了发布-订阅、消费组、分区的三个核心概念。</p>
+<p>目前仅支持 RabbitMQ、 Kafka。</p>
+<h2 id="Stream-的设计思想"><a href="#Stream-的设计思想" class="headerlink" title="Stream 的设计思想"></a>Stream 的设计思想</h2><p><strong>标准 MQ</strong></p>
 <p><img src="/2021/05/08/SpringCloud-Stream-1/1.png"></p>
 <pre><code>生产者/消费者之间靠消息媒介传递信息内容
 消息必须走特定的通道 - 消息通道 Message Channel
-消息通道里的消息如何被消费呢，谁负责收发处理 - 消息通道MessageChannel的子接口SubscribableChannel，由MessageHandler消息处理器所订阅。
+消息通道里的消息如何被消费呢，谁负责收发处理 - 消息通道 MessageChannel 的子接口 SubscribableChannel，由 MessageHandler 消息处理器所订阅。
 </code></pre>
-<p><strong>为什么用Cloud Stream？</strong></p>
-<p>比方说我们用到了RabbitMQ和Kafka，由于这两个消息中间件的架构上的不同，像RabbitMQ有exchange，kafka有Topic和Partitions分区。</p>
+<p><strong>为什么用 Cloud Stream？</strong></p>
+<p>比方说我们用到了 RabbitMQ 和 Kafka，由于这两个消息中间件的架构上的不同，像 RabbitMQ 有 exchange，kafka 有 Topic 和 Partitions 分区。</p>
 <p><img src="/2021/05/08/SpringCloud-Stream-1/2.png"></p>
-<p>这些中间件的差异性导致我们实际项目开发给我们造成了一定的困扰，我们如果用了两个消息队列的其中一种，后面的业务需求，我想往另外一种消息队列进行迁移，这时候无疑就是一个灾难性的，一大堆东西都要重新推倒重新做，因为它跟我们的系统耦合了，这时候Spring Cloud Stream给我们提供了—种解耦合的方式。</p>
-<p><strong>Stream凭什么可以统一底层差异？</strong></p>
+<p>这些中间件的差异性导致我们实际项目开发给我们造成了一定的困扰，我们如果用了两个消息队列的其中一种，后面的业务需求，我想往另外一种消息队列进行迁移，这时候无疑就是一个灾难性的，一大堆东西都要重新推倒重新做，因为它跟我们的系统耦合了，这时候 Spring Cloud Stream 给我们提供了—种解耦合的方式。</p>
+<p><strong>Stream 凭什么可以统一底层差异？</strong></p>
 <p>在没有绑定器这个概念的情况下，我们的SpringBoot应用要直接与消息中间件进行信息交互的时候，由于各消息中间件构建的初衷不同，它们的实现细节上会有较大的差异性通过定义绑定器作为中间层，完美地实现了应用程序与消息中间件细节之间的隔离。通过向应用程序暴露统一的Channel通道，使得应用程序不需要再考虑各种不同的消息中间件实现。</p>
-<p>通过定义绑定器Binder作为中间层，实现了应用程序与消息中间件细节之间的隔离。</p>
+<p>通过定义绑定器 Binder 作为中间层，实现了应用程序与消息中间件细节之间的隔离。</p>
 <p><strong>Binder：</strong></p>
-<pre><code>INPUT对应于消费者
+<pre><code>INPUT 对应于消费者
 
-OUTPUT对应于生产者
+OUTPUT 对应于生产者
 </code></pre>
 <p><img src="/2021/05/08/SpringCloud-Stream-1/3.png"></p>
-<p><strong>Stream中的消息通信方式遵循了发布-订阅模式</strong></p>
-<p>Topic主题进行广播</p>
-<pre><code>在RabbitMQ就是Exchange
-在Kakfa中就是Topic
+<p><strong>Stream 中的消息通信方式遵循了发布-订阅模式</strong></p>
+<p>Topic 主题进行广播</p>
+<pre><code>在 RabbitMQ 就是 Exchange
+在 Kakfa 中就是 Topic
 </code></pre>
-<p>Stream编码常用注解简介<br>Spring Cloud Stream标准流程套路</p>
+<p>Stream 编码常用注解简介<br>Spring Cloud Stream 标准流程套路</p>
 <p><img src="/2021/05/08/SpringCloud-Stream-1/4.png"></p>
 <p><img src="/2021/05/08/SpringCloud-Stream-1/5.png"></p>
 <p>Binder - 很方便的连接中间件，屏蔽差异。</p>
-<p>Channel - 通道，是队列Queue的一种抽象，在消息通讯系统中就是实现存储和转发的媒介，通过Channel对队列进行配置。</p>
-<p>Source和Sink - 简单的可理解为参照对象是Spring Cloud Stream自身，从Stream发布消息就是输出，接受消息就是输入。</p>
-<p><strong>编码API和常用注解</strong></p>
+<p>Channel - 通道，是队列 Queue 的一种抽象，在消息通讯系统中就是实现存储和转发的媒介，通过 Channel 对队列进行配置。</p>
+<p>Source 和 Sink - 简单的可理解为参照对象是 Spring Cloud Stream 自身，从 Stream 发布消息就是输出，接受消息就是输入。</p>
+<p><strong>编码 API 和常用注解</strong></p>
 <table>
 <thead>
 <tr>
@@ -368,11 +368,11 @@ OUTPUT对应于生产者
 </thead>
 <tbody><tr>
 <td align="left">Middleware</td>
-<td align="left">中间件，目前只支持RabbitMQ和Kafka</td>
+<td align="left">中间件，目前只支持 RabbitMQ 和 Kafka</td>
 </tr>
 <tr>
 <td align="left">Binder</td>
-<td align="left">Binder是应用与消息中间件之间的封装，目前实行了Kafka和RabbitMQ的Binder，通过Binder可以很方便的连接中间件，可以动态的改变消息类型(对应于Kafka的topic,RabbitMQ的exchange)，这些都可以通过配置文件来实现</td>
+<td align="left">Binder 是应用与消息中间件之间的封装，目前实行了 Kafka 和 RabbitMQ 的 Binder，通过 Binder 可以很方便的连接中间件，可以动态的改变消息类型(对应于 Kafka 的 topic,RabbitMQ 的 exchange)，这些都可以通过配置文件来实现</td>
 </tr>
 <tr>
 <td align="left">@Input</td>
@@ -388,262 +388,41 @@ OUTPUT对应于生产者
 </tr>
 <tr>
 <td align="left">@EnableBinding</td>
-<td align="left">指信道channel和exchange绑定在一起</td>
+<td align="left">指信道 channel 和 exchange 绑定在一起</td>
 </tr>
 </tbody></table>
-<h2 id="案例说明"><a href="#案例说明" class="headerlink" title="案例说明"></a>案例说明</h2><p>准备RabbitMQ环境</p>
+<h2 id="案例说明"><a href="#案例说明" class="headerlink" title="案例说明"></a>案例说明</h2><p>准备 RabbitMQ 环境</p>
 <p>工程中新建三个子模块</p>
 <p>cloud-stream-rabbitmq-provider8801，作为生产者进行发消息模块<br>cloud-stream-rabbitmq-consumer8802，作为消息接收模块<br>cloud-stream-rabbitmq-consumer8803，作为消息接收模块</p>
-<h3 id="1-Stream消息驱动之生产者（cloud-stream-rabbitmq-provider8801）"><a href="#1-Stream消息驱动之生产者（cloud-stream-rabbitmq-provider8801）" class="headerlink" title="1. Stream消息驱动之生产者（cloud-stream-rabbitmq-provider8801）"></a>1. Stream消息驱动之生产者（cloud-stream-rabbitmq-provider8801）</h3><h4 id="1-新建Module：cloud-stream-rabbitmq-provider8801"><a href="#1-新建Module：cloud-stream-rabbitmq-provider8801" class="headerlink" title="1. 新建Module：cloud-stream-rabbitmq-provider8801"></a>1. 新建Module：cloud-stream-rabbitmq-provider8801</h4><h4 id="2-cloud-stream-rabbitmq-provider8801-项目-pom-xml-文件"><a href="#2-cloud-stream-rabbitmq-provider8801-项目-pom-xml-文件" class="headerlink" title="2. cloud-stream-rabbitmq-provider8801 项目 pom.xml 文件"></a>2. cloud-stream-rabbitmq-provider8801 项目 pom.xml 文件</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
-         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-    &lt;parent&gt;
-        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;
-        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-    &lt;artifactId&gt;cloud-stream-rabbitmq-provider8801&lt;/artifactId&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-stream-rabbit&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;!--基础配置--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
-            &lt;scope&gt;runtime&lt;/scope&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-&lt;/project&gt;
-</code></pre>
-<h4 id="3-cloud-stream-rabbitmq-provider8801-项目-application-yml-文件"><a href="#3-cloud-stream-rabbitmq-provider8801-项目-application-yml-文件" class="headerlink" title="3. cloud-stream-rabbitmq-provider8801 项目 application.yml 文件"></a>3. cloud-stream-rabbitmq-provider8801 项目 application.yml 文件</h4><pre><code>server:
-  port: 8801
-spring:
-  application:
-    name: cloud-stream-provider
-  cloud:
-    stream:
-      binders: # 在此处配置要绑定的rabbitmq的服务信息；
-        defaultRabbit: # 表示定义的名称，用于于binding整合
-          type: rabbit # 消息组件类型
-          environment: # 设置rabbitmq的相关的环境配置
-            spring:
-              rabbitmq:
-                host: localhost
-                port: 5672
-                username: guest
-                password: guest
-      bindings:
-        output: # 这个名字是一个通道的名称
-          destination: studyExchange # 表示要使用的Exchange名称定义
-          content-type: application/json # 设置消息类型，本次为json，文本则设置“text/plain”
-eureka:
-  client: # 客户端进行Eureka注册的配置
-    service-url:
-      defaultZone: http://localhost:7001/eureka
-  instance:
-    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
-    lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
-    instance-id: send-8801.com  # 在信息列表时显示主机名称
-    prefer-ip-address: true     # 访问的路径变为IP地址
-</code></pre>
+<h3 id="1-Stream-消息驱动之生产者（cloud-stream-rabbitmq-provider8801）"><a href="#1-Stream-消息驱动之生产者（cloud-stream-rabbitmq-provider8801）" class="headerlink" title="1. Stream 消息驱动之生产者（cloud-stream-rabbitmq-provider8801）"></a>1. Stream 消息驱动之生产者（cloud-stream-rabbitmq-provider8801）</h3><h4 id="1-新建-Module：cloud-stream-rabbitmq-provider8801"><a href="#1-新建-Module：cloud-stream-rabbitmq-provider8801" class="headerlink" title="1. 新建 Module：cloud-stream-rabbitmq-provider8801"></a>1. 新建 Module：cloud-stream-rabbitmq-provider8801</h4><h4 id="2-cloud-stream-rabbitmq-provider8801-项目-pom-xml-文件"><a href="#2-cloud-stream-rabbitmq-provider8801-项目-pom-xml-文件" class="headerlink" title="2. cloud-stream-rabbitmq-provider8801 项目 pom.xml 文件"></a>2. cloud-stream-rabbitmq-provider8801 项目 pom.xml 文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;</span><br><span class="line">        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;artifactId&gt;cloud-stream-rabbitmq-provider8801&lt;/artifactId&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-stream-rabbit&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--基础配置--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-cloud-stream-rabbitmq-provider8801-项目-application-yml-文件"><a href="#3-cloud-stream-rabbitmq-provider8801-项目-application-yml-文件" class="headerlink" title="3. cloud-stream-rabbitmq-provider8801 项目 application.yml 文件"></a>3. cloud-stream-rabbitmq-provider8801 项目 application.yml 文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8801</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: cloud-stream-provider</span><br><span class="line">  cloud:</span><br><span class="line">    stream:</span><br><span class="line">      binders: # 在此处配置要绑定的rabbitmq的服务信息；</span><br><span class="line">        defaultRabbit: # 表示定义的名称，用于于binding整合</span><br><span class="line">          type: rabbit # 消息组件类型</span><br><span class="line">          environment: # 设置rabbitmq的相关的环境配置</span><br><span class="line">            spring:</span><br><span class="line">              rabbitmq:</span><br><span class="line">                host: localhost</span><br><span class="line">                port: 5672</span><br><span class="line">                username: guest</span><br><span class="line">                password: guest</span><br><span class="line">      bindings:</span><br><span class="line">        output: # 这个名字是一个通道的名称</span><br><span class="line">          destination: studyExchange # 表示要使用的Exchange名称定义</span><br><span class="line">          content-type: application/json # 设置消息类型，本次为json，文本则设置“text/plain”</span><br><span class="line">eureka:</span><br><span class="line">  client: # 客户端进行Eureka注册的配置</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:7001/eureka</span><br><span class="line">  instance:</span><br><span class="line">    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）</span><br><span class="line">    lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）</span><br><span class="line">    instance-id: send-8801.com  # 在信息列表时显示主机名称</span><br><span class="line">    prefer-ip-address: true     # 访问的路径变为IP地址</span><br></pre></td></tr></table></figure>
+
 <p>注： defaultRabbit 和 binders 在 stream 下。</p>
-<h4 id="4-cloud-stream-rabbitmq-provider8801-项目-主启动类-文件"><a href="#4-cloud-stream-rabbitmq-provider8801-项目-主启动类-文件" class="headerlink" title="4. cloud-stream-rabbitmq-provider8801 项目 主启动类 文件"></a>4. cloud-stream-rabbitmq-provider8801 项目 主启动类 文件</h4><pre><code>package com.sevattal.springcloud;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-@SpringBootApplication
-public class StreamMQMain8801 &#123;
-    public static void main(String[] args) &#123;
-        SpringApplication.run(StreamMQMain8801.class,args);
-    &#125;
-&#125;
-</code></pre>
-<h4 id="5-cloud-stream-rabbitmq-provider8801-项目-业务类消息接口-文件"><a href="#5-cloud-stream-rabbitmq-provider8801-项目-业务类消息接口-文件" class="headerlink" title="5. cloud-stream-rabbitmq-provider8801 项目 业务类消息接口  文件"></a>5. cloud-stream-rabbitmq-provider8801 项目 业务类消息接口  文件</h4><pre><code>package com.sevattal.springcloud.service;
-public interface IMessageProvider &#123;
-    public String send();
-&#125;
-</code></pre>
-<h4 id="6-cloud-stream-rabbitmq-provider8801-项目-发送消息接口实现类-文件"><a href="#6-cloud-stream-rabbitmq-provider8801-项目-发送消息接口实现类-文件" class="headerlink" title="6. cloud-stream-rabbitmq-provider8801 项目 发送消息接口实现类  文件"></a>6. cloud-stream-rabbitmq-provider8801 项目 发送消息接口实现类  文件</h4><pre><code>package com.sevattal.springcloud.service.impl;
-import com.sevattal.springcloud.service.IMessageProvider;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Source;
-import org.springframework.integration.support.MessageBuilder;
-import org.springframework.messaging.MessageChannel;
-import javax.annotation.Resource;
-import java.util.UUID;
-@EnableBinding(Source.class) //定义消息的推送管道
-public class MessageProviderImpl implements IMessageProvider &#123;
-    @Resource
-    private MessageChannel output; // 消息发送管道
-    @Override
-    public String send()
-    &#123;
-        String serial = UUID.randomUUID().toString();
-        output.send(MessageBuilder.withPayload(serial).build());
-        System.out.println(&quot;*****serial: &quot;+serial);
-        return null;
-    &#125;
-&#125;
-</code></pre>
-<h4 id="7-cloud-stream-rabbitmq-provider8801-项目-Controller"><a href="#7-cloud-stream-rabbitmq-provider8801-项目-Controller" class="headerlink" title="7. cloud-stream-rabbitmq-provider8801 项目 Controller"></a>7. cloud-stream-rabbitmq-provider8801 项目 Controller</h4><pre><code>package com.sevattal.springcloud.controller;
-import com.sevattal.springcloud.service.IMessageProvider;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import javax.annotation.Resource;
-@RestController
-public class SendMessageController
-&#123;
-    @Resource
-    private IMessageProvider messageProvider;
-    @GetMapping(value = &quot;/sendMessage&quot;)
-    public String sendMessage() &#123;
-        return messageProvider.send();
-    &#125;
-&#125;
-</code></pre>
+<h4 id="4-cloud-stream-rabbitmq-provider8801-项目-主启动类-文件"><a href="#4-cloud-stream-rabbitmq-provider8801-项目-主启动类-文件" class="headerlink" title="4. cloud-stream-rabbitmq-provider8801 项目 主启动类 文件"></a>4. cloud-stream-rabbitmq-provider8801 项目 主启动类 文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud;</span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class StreamMQMain8801 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(StreamMQMain8801.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-cloud-stream-rabbitmq-provider8801-项目-业务类消息接口-文件"><a href="#5-cloud-stream-rabbitmq-provider8801-项目-业务类消息接口-文件" class="headerlink" title="5. cloud-stream-rabbitmq-provider8801 项目 业务类消息接口  文件"></a>5. cloud-stream-rabbitmq-provider8801 项目 业务类消息接口  文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.service;</span><br><span class="line">public interface IMessageProvider &#123;</span><br><span class="line">    public String send();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-cloud-stream-rabbitmq-provider8801-项目-发送消息接口实现类-文件"><a href="#6-cloud-stream-rabbitmq-provider8801-项目-发送消息接口实现类-文件" class="headerlink" title="6. cloud-stream-rabbitmq-provider8801 项目 发送消息接口实现类  文件"></a>6. cloud-stream-rabbitmq-provider8801 项目 发送消息接口实现类  文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.service.impl;</span><br><span class="line">import com.sevattal.springcloud.service.IMessageProvider;</span><br><span class="line">import org.springframework.cloud.stream.annotation.EnableBinding;</span><br><span class="line">import org.springframework.cloud.stream.messaging.Source;</span><br><span class="line">import org.springframework.integration.support.MessageBuilder;</span><br><span class="line">import org.springframework.messaging.MessageChannel;</span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line">import java.util.UUID;</span><br><span class="line">@EnableBinding(Source.class) //定义消息的推送管道</span><br><span class="line">public class MessageProviderImpl implements IMessageProvider &#123;</span><br><span class="line">    @Resource</span><br><span class="line">    private MessageChannel output; // 消息发送管道</span><br><span class="line">    @Override</span><br><span class="line">    public String send()</span><br><span class="line">    &#123;</span><br><span class="line">        String serial = UUID.randomUUID().toString();</span><br><span class="line">        output.send(MessageBuilder.withPayload(serial).build());</span><br><span class="line">        System.out.println(&quot;*****serial: &quot;+serial);</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-cloud-stream-rabbitmq-provider8801-项目-Controller"><a href="#7-cloud-stream-rabbitmq-provider8801-项目-Controller" class="headerlink" title="7. cloud-stream-rabbitmq-provider8801 项目 Controller"></a>7. cloud-stream-rabbitmq-provider8801 项目 Controller</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.controller;</span><br><span class="line">import com.sevattal.springcloud.service.IMessageProvider;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line">@RestController</span><br><span class="line">public class SendMessageController</span><br><span class="line">&#123;</span><br><span class="line">    @Resource</span><br><span class="line">    private IMessageProvider messageProvider;</span><br><span class="line">    @GetMapping(value = &quot;/sendMessage&quot;)</span><br><span class="line">    public String sendMessage() &#123;</span><br><span class="line">        return messageProvider.send();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="8-测试"><a href="#8-测试" class="headerlink" title="8. 测试"></a>8. 测试</h4><p>启动 7001eureka<br>启动 RabpitMq（79_Bus之RabbitMQ环境配置）</p>
 <p>rabbitmq-plugins enable rabbitmq_management<br><a target="_blank" rel="noopener" href="http://localhost:15672/">http://localhost:15672/</a></p>
-<p>启动 8801<br>访问 - <a target="_blank" rel="noopener" href="http://localhost:8801/sendMessage">http://localhost:8801/sendMessage</a><br>后台将打印serial: UUID字符串</p>
-<h3 id="2-Stream消息驱动之消费者-cloud-stream-rabbitmq-consumer8802"><a href="#2-Stream消息驱动之消费者-cloud-stream-rabbitmq-consumer8802" class="headerlink" title="2. Stream消息驱动之消费者(cloud-stream-rabbitmq-consumer8802)"></a>2. Stream消息驱动之消费者(cloud-stream-rabbitmq-consumer8802)</h3><h4 id="1-新建Module：cloud-stream-rabbitmq-consumer8802"><a href="#1-新建Module：cloud-stream-rabbitmq-consumer8802" class="headerlink" title="1. 新建Module：cloud-stream-rabbitmq-consumer8802"></a>1. 新建Module：cloud-stream-rabbitmq-consumer8802</h4><h4 id="2-cloud-stream-rabbitmq-consumer8802-项目-pom-xml-文件"><a href="#2-cloud-stream-rabbitmq-consumer8802-项目-pom-xml-文件" class="headerlink" title="2. cloud-stream-rabbitmq-consumer8802 项目 pom.xml 文件"></a>2. cloud-stream-rabbitmq-consumer8802 项目 pom.xml 文件</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
-         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-    &lt;parent&gt;
-        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;
-        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-    &lt;artifactId&gt;cloud-stream-rabbitmq-consumer8802&lt;/artifactId&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-stream-rabbit&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;!--基础配置--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
-            &lt;scope&gt;runtime&lt;/scope&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-&lt;/project&gt;
-</code></pre>
-<h4 id="3-cloud-stream-rabbitmq-consumer8802-项目-application-yml-文件"><a href="#3-cloud-stream-rabbitmq-consumer8802-项目-application-yml-文件" class="headerlink" title="3. cloud-stream-rabbitmq-consumer8802 项目 application.yml 文件"></a>3. cloud-stream-rabbitmq-consumer8802 项目 application.yml 文件</h4><pre><code>server:
-  port: 8802
-spring:
-  application:
-    name: cloud-stream-consumer
-  cloud:
-    stream:
-      binders: # 在此处配置要绑定的rabbitmq的服务信息；
-        defaultRabbit: # 表示定义的名称，用于于binding整合
-          type: rabbit # 消息组件类型
-          environment: # 设置rabbitmq的相关的环境配置
-            spring:
-              rabbitmq:
-                host: localhost
-                port: 5672
-                username: guest
-                password: guest
-      bindings: # 服务的整合处理
-        input: # 这个名字是一个通道的名称
-          destination: studyExchange # 表示要使用的Exchange名称定义
-          content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
-eureka:
-  client: # 客户端进行Eureka注册的配置
-    service-url:
-      defaultZone: http://localhost:7001/eureka
-  instance:
-    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
-    lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
-    instance-id: receive-8802.com  # 在信息列表时显示主机名称
-    prefer-ip-address: true     # 访问的路径变为IP地址
-</code></pre>
-<h4 id="4-cloud-stream-rabbitmq-consumer8802-项目-主启动类-文件"><a href="#4-cloud-stream-rabbitmq-consumer8802-项目-主启动类-文件" class="headerlink" title="4. cloud-stream-rabbitmq-consumer8802 项目 主启动类 文件"></a>4. cloud-stream-rabbitmq-consumer8802 项目 主启动类 文件</h4><pre><code>package com.sevattal.springcloud;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-@SpringBootApplication
-public class StreamMQMain8802 &#123;
-    public static void main(String[] args) &#123;
-        SpringApplication.run(StreamMQMain8802.class,args);
-    &#125;
-&#125;
-</code></pre>
-<h4 id="5-cloud-stream-rabbitmq-consumer8802-项目-Controller-文件"><a href="#5-cloud-stream-rabbitmq-consumer8802-项目-Controller-文件" class="headerlink" title="5. cloud-stream-rabbitmq-consumer8802 项目 Controller 文件"></a>5. cloud-stream-rabbitmq-consumer8802 项目 Controller 文件</h4><pre><code>package com.sevattal.springcloud.controller;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
-import org.springframework.messaging.Message;
-import org.springframework.stereotype.Component;
-@Component
-@EnableBinding(Sink.class)
-public class ReceiveMessageListenerController
-&#123;
-    @Value(&quot;$&#123;server.port&#125;&quot;)
-    private String serverPort;
-    @StreamListener(Sink.INPUT)
-    public void input(Message&lt;String&gt; message)
-    &#123;
-        System.out.println(&quot;消费者1号,-----&gt;接受到的消息: &quot;+message.getPayload()+&quot;\t  port: &quot;+serverPort);
-    &#125;
-&#125;
-</code></pre>
-<h4 id="6-测试"><a href="#6-测试" class="headerlink" title="6. 测试"></a>6. 测试</h4><p>启动EurekaMain7001</p>
-<p>启动StreamMQMain8801</p>
-<p>启动StreamMQMain8802</p>
-<p>8801发送8802接收消息</p>
-<h3 id="3-Stream-之消息重复消费"><a href="#3-Stream-之消息重复消费" class="headerlink" title="3. Stream 之消息重复消费"></a>3. Stream 之消息重复消费</h3><p>依照8802，克隆出来一份运行8803 - cloud-stream-rabbitmq-consumer8803。</p>
+<p>启动 8801<br>访问 - <a target="_blank" rel="noopener" href="http://localhost:8801/sendMessage">http://localhost:8801/sendMessage</a><br>后台将打印 serial: UUID 字符串</p>
+<h3 id="2-Stream消息驱动之消费者-cloud-stream-rabbitmq-consumer8802"><a href="#2-Stream消息驱动之消费者-cloud-stream-rabbitmq-consumer8802" class="headerlink" title="2. Stream消息驱动之消费者(cloud-stream-rabbitmq-consumer8802)"></a>2. Stream消息驱动之消费者(cloud-stream-rabbitmq-consumer8802)</h3><h4 id="1-新建Module：cloud-stream-rabbitmq-consumer8802"><a href="#1-新建Module：cloud-stream-rabbitmq-consumer8802" class="headerlink" title="1. 新建Module：cloud-stream-rabbitmq-consumer8802"></a>1. 新建Module：cloud-stream-rabbitmq-consumer8802</h4><h4 id="2-cloud-stream-rabbitmq-consumer8802-项目-pom-xml-文件"><a href="#2-cloud-stream-rabbitmq-consumer8802-项目-pom-xml-文件" class="headerlink" title="2. cloud-stream-rabbitmq-consumer8802 项目 pom.xml 文件"></a>2. cloud-stream-rabbitmq-consumer8802 项目 pom.xml 文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;</span><br><span class="line">        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;artifactId&gt;cloud-stream-rabbitmq-consumer8802&lt;/artifactId&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-stream-rabbit&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--基础配置--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-cloud-stream-rabbitmq-consumer8802-项目-application-yml-文件"><a href="#3-cloud-stream-rabbitmq-consumer8802-项目-application-yml-文件" class="headerlink" title="3. cloud-stream-rabbitmq-consumer8802 项目 application.yml 文件"></a>3. cloud-stream-rabbitmq-consumer8802 项目 application.yml 文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8802</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: cloud-stream-consumer</span><br><span class="line">  cloud:</span><br><span class="line">    stream:</span><br><span class="line">      binders: # 在此处配置要绑定的rabbitmq的服务信息；</span><br><span class="line">        defaultRabbit: # 表示定义的名称，用于于binding整合</span><br><span class="line">          type: rabbit # 消息组件类型</span><br><span class="line">          environment: # 设置rabbitmq的相关的环境配置</span><br><span class="line">            spring:</span><br><span class="line">              rabbitmq:</span><br><span class="line">                host: localhost</span><br><span class="line">                port: 5672</span><br><span class="line">                username: guest</span><br><span class="line">                password: guest</span><br><span class="line">      bindings: # 服务的整合处理</span><br><span class="line">        input: # 这个名字是一个通道的名称</span><br><span class="line">          destination: studyExchange # 表示要使用的Exchange名称定义</span><br><span class="line">          content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”</span><br><span class="line">eureka:</span><br><span class="line">  client: # 客户端进行Eureka注册的配置</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:7001/eureka</span><br><span class="line">  instance:</span><br><span class="line">    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）</span><br><span class="line">    lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）</span><br><span class="line">    instance-id: receive-8802.com  # 在信息列表时显示主机名称</span><br><span class="line">    prefer-ip-address: true     # 访问的路径变为IP地址</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-cloud-stream-rabbitmq-consumer8802-项目-主启动类-文件"><a href="#4-cloud-stream-rabbitmq-consumer8802-项目-主启动类-文件" class="headerlink" title="4. cloud-stream-rabbitmq-consumer8802 项目 主启动类 文件"></a>4. cloud-stream-rabbitmq-consumer8802 项目 主启动类 文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud;</span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class StreamMQMain8802 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(StreamMQMain8802.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-cloud-stream-rabbitmq-consumer8802-项目-Controller-文件"><a href="#5-cloud-stream-rabbitmq-consumer8802-项目-Controller-文件" class="headerlink" title="5. cloud-stream-rabbitmq-consumer8802 项目 Controller 文件"></a>5. cloud-stream-rabbitmq-consumer8802 项目 Controller 文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.controller;</span><br><span class="line">import org.springframework.beans.factory.annotation.Value;</span><br><span class="line">import org.springframework.cloud.stream.annotation.EnableBinding;</span><br><span class="line">import org.springframework.cloud.stream.annotation.StreamListener;</span><br><span class="line">import org.springframework.cloud.stream.messaging.Sink;</span><br><span class="line">import org.springframework.messaging.Message;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">@Component</span><br><span class="line">@EnableBinding(Sink.class)</span><br><span class="line">public class ReceiveMessageListenerController</span><br><span class="line">&#123;</span><br><span class="line">    @Value(&quot;$&#123;server.port&#125;&quot;)</span><br><span class="line">    private String serverPort;</span><br><span class="line">    @StreamListener(Sink.INPUT)</span><br><span class="line">    public void input(Message&lt;String&gt; message)</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(&quot;消费者1号,-----&gt;接受到的消息: &quot;+message.getPayload()+&quot;\t  port: &quot;+serverPort);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-测试"><a href="#6-测试" class="headerlink" title="6. 测试"></a>6. 测试</h4><p>启动 EurekaMain7001</p>
+<p>启动 StreamMQMain8801</p>
+<p>启动 StreamMQMain8802</p>
+<p>8801 发送 8802 接收消息</p>
+<h3 id="3-Stream-之消息重复消费"><a href="#3-Stream-之消息重复消费" class="headerlink" title="3. Stream 之消息重复消费"></a>3. Stream 之消息重复消费</h3><p>依照 8802，克隆出来一份运行 8803 - cloud-stream-rabbitmq-consumer8803。</p>
 <p><strong>启动</strong></p>
 <pre><code>RabbitMQ
 服务注册 - 7001
@@ -657,54 +436,35 @@ public class ReceiveMessageListenerController
 </code></pre>
 <p><strong>消费</strong></p>
 <pre><code>http://localhost:8801/sendMessage
-目前是8802/8803同时都收到了，存在重复消费问题
-如何解决：分组和持久化属性group（重要）
+目前是 8802/8803 同时都收到了，存在重复消费问题
+如何解决：分组和持久化属性 group（重要）
 </code></pre>
 <p><strong>生产实际案例</strong></p>
-<pre><code>比如在如下场景中，订单系统我们做集群部署，都会从RabbitMQ中获取订单信息，那如果一个订单同时被两个服务获取到，那么就会造成数据错误，我们得避免这种情况。这时我们就可以使用Stream中的消息分组来解决。
+<pre><code>比如在如下场景中，订单系统我们做集群部署，都会从 RabbitMQ 中获取订单信息，那如果一个订单同时被两个服务获取到，那么就会造成数据错误，我们得避免这种情况。这时我们就可以使用 Stream 中的消息分组来解决。
 </code></pre>
 <p><img src="/2021/05/08/SpringCloud-Stream-1/6.png"></p>
-<p>注意在Stream中处于同一个group中的多个消费者是竞争关系，就能够保证消息只会被其中一个应用消费一次。不同组是可以全面消费的(重复消费)。</p>
-<h2 id="Stream之group解决消息重复消费"><a href="#Stream之group解决消息重复消费" class="headerlink" title="Stream之group解决消息重复消费"></a>Stream之group解决消息重复消费</h2><p><strong>原理</strong></p>
-<p>微服务应用放置于同一个group中，就能够保证消息只会被其中一个应用消费一次。</p>
+<p>注意在 Stream 中处于同一个 group 中的多个消费者是竞争关系，就能够保证消息只会被其中一个应用消费一次。不同组是可以全面消费的(重复消费)。</p>
+<h2 id="Stream-之-group-解决消息重复消费"><a href="#Stream-之-group-解决消息重复消费" class="headerlink" title="Stream 之 group 解决消息重复消费"></a>Stream 之 group 解决消息重复消费</h2><p><strong>原理</strong></p>
+<p>微服务应用放置于同一个 group 中，就能够保证消息只会被其中一个应用消费一次。</p>
 <p>不同的组是可以重复消费的，同一个组内会发生竞争关系，只有其中一个可以消费。</p>
-<p>8802&#x2F;8803都变成不同组，group两个不同</p>
+<p>8802&#x2F;8803 都变成不同组，group 两个不同</p>
 <p>group: A_Group、B_Group</p>
-<p><strong>8802修改YML</strong></p>
-<pre><code>spring:
-  application:
-    name: cloud-stream-provider
-  cloud:
-      stream:
-        binders: # 在此处配置要绑定的rabbitmq的服务信息；
-          defaultRabbit: # 表示定义的名称，用于于binding整合
-            type: rabbit # 消息组件类型
-            environment: # 设置rabbitmq的相关的环境配置
-              spring:
-                rabbitmq:
-                  host: localhost
-                  port: 5672
-                  username: guest
-                  password: guest
-        	bindings: # 服务的整合处理
-          output: # 这个名字是一个通道的名称
-            destination: studyExchange # 表示要使用的Exchange名称定义
-            content-type: application/json # 设置消息类型，本次为json，文本则设置“text/plain”
-            group: A_Group #&lt;----------------------------------------关键
-</code></pre>
-<p>8803修改YML（与8802的类似位置 group: B_Group）</p>
+<p><strong>8802 修改 YML</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: cloud-stream-provider</span><br><span class="line">  cloud:</span><br><span class="line">      stream:</span><br><span class="line">        binders: # 在此处配置要绑定的 rabbitmq 的服务信息；</span><br><span class="line">          defaultRabbit: # 表示定义的名称，用于于 binding 整合</span><br><span class="line">            type: rabbit # 消息组件类型</span><br><span class="line">            environment: # 设置 rabbitmq 的相关的环境配置</span><br><span class="line">              spring:</span><br><span class="line">                rabbitmq:</span><br><span class="line">                  host: localhost</span><br><span class="line">                  port: 5672</span><br><span class="line">                  username: guest</span><br><span class="line">                  password: guest</span><br><span class="line">        	bindings: # 服务的整合处理</span><br><span class="line">          output: # 这个名字是一个通道的名称</span><br><span class="line">            destination: studyExchange # 表示要使用的 Exchange 名称定义</span><br><span class="line">            content-type: application/json # 设置消息类型，本次为 json，文本则设置&quot;text/plain&quot;</span><br><span class="line">            group: A_Group # &lt;----------------------------------------关键</span><br></pre></td></tr></table></figure>
+
+<p>8803 修改 YML（与 8802 的类似位置 group: B_Group）</p>
 <p>结论：还是重复消费</p>
-<p>8802&#x2F;8803实现了轮询分组，每次只有一个消费者，8801模块的发的消息只能被8802或8803其中一个接收到，这样避免了重复消费。</p>
-<p>8802&#x2F;8803都变成相同组，group两个相同</p>
+<p>8802&#x2F;8803 实现了轮询分组，每次只有一个消费者，8801 模块的发的消息只能被 8802 或 8803 其中一个接收到，这样避免了重复消费。</p>
+<p>8802&#x2F;8803 都变成相同组，group 两个相同</p>
 <p>group: A_Group</p>
 <p>8802修改YMLgroup: A_Group</p>
 <p>8803修改YMLgroup: A_Group</p>
 <p>结论：同一个组的多个微服务实例，每次只会有一个拿到</p>
-<h2 id="Stream之消息持久化"><a href="#Stream之消息持久化" class="headerlink" title="Stream之消息持久化"></a>Stream之消息持久化</h2><p>通过上述，解决了重复消费问题，再看看持久化。</p>
-<p>停止8802&#x2F;8803, 并去除掉8802的分组group: A_Group, 8803的分组group: A_Group没有去掉。</p>
-<p>8801先发送4条消息到RabbitMq。</p>
-<p>先启动8802，无分组属性配置，后台没有打出来消息。</p>
-<p>再启动8803，有分组属性配置，后台打出来了MQ上的消息。(消息持久化体现)</p>
+<h2 id="Stream-之消息持久化"><a href="#Stream-之消息持久化" class="headerlink" title="Stream 之消息持久化"></a>Stream 之消息持久化</h2><p>通过上述，解决了重复消费问题，再看看持久化。</p>
+<p>停止 8802&#x2F;8803, 并去除掉 8802 的分组 group: A_Group, 8803 的分组 group: A_Group 没有去掉。</p>
+<p>8801 先发送 4 条消息到 RabbitMq。</p>
+<p>先启动 8802，无分组属性配置，后台没有打出来消息。</p>
+<p>再启动 8803，有分组属性配置，后台打出来了 MQ 上的消息。(消息持久化体现)</p>
 
       
     </div>
@@ -716,7 +476,7 @@ public class ReceiveMessageListenerController
         <p><span>Title:</span><a href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2021-05-08, 13:37:53</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:44</p>
+        <p><span>Updated:</span>2023-04-07, 15:04:46</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2021/05/08/SpringCloud-Stream-1/" title="SpringCloud-Stream-1">http://yoursite.com/2021/05/08/SpringCloud-Stream-1/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/05/08/SpringCloud-Stream-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -752,7 +512,7 @@ public class ReceiveMessageListenerController
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-Stream-%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8-%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">构建微服务架构(Stream 消息驱动 篇)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A2%AB%E5%BC%95%E5%85%A5"><span class="toc-number">1.1.</span> <span class="toc-text">Stream为什么被引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream%E6%98%AF%E4%BB%80%E4%B9%88%E5%8F%8ABinder%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">Stream是什么及Binder介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="toc-number">1.3.</span> <span class="toc-text">Stream的设计思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="toc-number">1.4.</span> <span class="toc-text">案例说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85%EF%BC%88cloud-stream-rabbitmq-provider8801%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. Stream消息驱动之生产者（cloud-stream-rabbitmq-provider8801）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%96%B0%E5%BB%BAModule%EF%BC%9Acloud-stream-rabbitmq-provider8801"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">1. 新建Module：cloud-stream-rabbitmq-provider8801</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-pom-xml-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">2. cloud-stream-rabbitmq-provider8801 项目 pom.xml 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-application-yml-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">3. cloud-stream-rabbitmq-provider8801 项目 application.yml 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.4.</span> <span class="toc-text">4. cloud-stream-rabbitmq-provider8801 项目 主启动类 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-%E4%B8%9A%E5%8A%A1%E7%B1%BB%E6%B6%88%E6%81%AF%E6%8E%A5%E5%8F%A3-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.5.</span> <span class="toc-text">5. cloud-stream-rabbitmq-provider8801 项目 业务类消息接口  文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0%E7%B1%BB-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.6.</span> <span class="toc-text">6. cloud-stream-rabbitmq-provider8801 项目 发送消息接口实现类  文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-Controller"><span class="toc-number">1.4.1.7.</span> <span class="toc-text">7. cloud-stream-rabbitmq-provider8801 项目 Controller</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.1.8.</span> <span class="toc-text">8. 测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8%E4%B9%8B%E6%B6%88%E8%B4%B9%E8%80%85-cloud-stream-rabbitmq-consumer8802"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. Stream消息驱动之消费者(cloud-stream-rabbitmq-consumer8802)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%96%B0%E5%BB%BAModule%EF%BC%9Acloud-stream-rabbitmq-consumer8802"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">1. 新建Module：cloud-stream-rabbitmq-consumer8802</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-cloud-stream-rabbitmq-consumer8802-%E9%A1%B9%E7%9B%AE-pom-xml-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">2. cloud-stream-rabbitmq-consumer8802 项目 pom.xml 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-cloud-stream-rabbitmq-consumer8802-%E9%A1%B9%E7%9B%AE-application-yml-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">3. cloud-stream-rabbitmq-consumer8802 项目 application.yml 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-cloud-stream-rabbitmq-consumer8802-%E9%A1%B9%E7%9B%AE-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.2.4.</span> <span class="toc-text">4. cloud-stream-rabbitmq-consumer8802 项目 主启动类 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-cloud-stream-rabbitmq-consumer8802-%E9%A1%B9%E7%9B%AE-Controller-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.2.5.</span> <span class="toc-text">5. cloud-stream-rabbitmq-consumer8802 项目 Controller 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.2.6.</span> <span class="toc-text">6. 测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Stream-%E4%B9%8B%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. Stream 之消息重复消费</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream%E4%B9%8Bgroup%E8%A7%A3%E5%86%B3%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9"><span class="toc-number">1.5.</span> <span class="toc-text">Stream之group解决消息重复消费</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream%E4%B9%8B%E6%B6%88%E6%81%AF%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">1.6.</span> <span class="toc-text">Stream之消息持久化</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-Stream-%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8-%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">构建微服务架构(Stream 消息驱动 篇)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A2%AB%E5%BC%95%E5%85%A5"><span class="toc-number">1.1.</span> <span class="toc-text">Stream 为什么被引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream%E6%98%AF%E4%BB%80%E4%B9%88%E5%8F%8ABinder%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">Stream是什么及Binder介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream-%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="toc-number">1.3.</span> <span class="toc-text">Stream 的设计思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="toc-number">1.4.</span> <span class="toc-text">案例说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Stream-%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85%EF%BC%88cloud-stream-rabbitmq-provider8801%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. Stream 消息驱动之生产者（cloud-stream-rabbitmq-provider8801）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%96%B0%E5%BB%BA-Module%EF%BC%9Acloud-stream-rabbitmq-provider8801"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">1. 新建 Module：cloud-stream-rabbitmq-provider8801</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-pom-xml-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">2. cloud-stream-rabbitmq-provider8801 项目 pom.xml 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-application-yml-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">3. cloud-stream-rabbitmq-provider8801 项目 application.yml 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.4.</span> <span class="toc-text">4. cloud-stream-rabbitmq-provider8801 项目 主启动类 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-%E4%B8%9A%E5%8A%A1%E7%B1%BB%E6%B6%88%E6%81%AF%E6%8E%A5%E5%8F%A3-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.5.</span> <span class="toc-text">5. cloud-stream-rabbitmq-provider8801 项目 业务类消息接口  文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0%E7%B1%BB-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.6.</span> <span class="toc-text">6. cloud-stream-rabbitmq-provider8801 项目 发送消息接口实现类  文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-cloud-stream-rabbitmq-provider8801-%E9%A1%B9%E7%9B%AE-Controller"><span class="toc-number">1.4.1.7.</span> <span class="toc-text">7. cloud-stream-rabbitmq-provider8801 项目 Controller</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.1.8.</span> <span class="toc-text">8. 测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8%E4%B9%8B%E6%B6%88%E8%B4%B9%E8%80%85-cloud-stream-rabbitmq-consumer8802"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. Stream消息驱动之消费者(cloud-stream-rabbitmq-consumer8802)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%96%B0%E5%BB%BAModule%EF%BC%9Acloud-stream-rabbitmq-consumer8802"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">1. 新建Module：cloud-stream-rabbitmq-consumer8802</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-cloud-stream-rabbitmq-consumer8802-%E9%A1%B9%E7%9B%AE-pom-xml-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">2. cloud-stream-rabbitmq-consumer8802 项目 pom.xml 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-cloud-stream-rabbitmq-consumer8802-%E9%A1%B9%E7%9B%AE-application-yml-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">3. cloud-stream-rabbitmq-consumer8802 项目 application.yml 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-cloud-stream-rabbitmq-consumer8802-%E9%A1%B9%E7%9B%AE-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.2.4.</span> <span class="toc-text">4. cloud-stream-rabbitmq-consumer8802 项目 主启动类 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-cloud-stream-rabbitmq-consumer8802-%E9%A1%B9%E7%9B%AE-Controller-%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.2.5.</span> <span class="toc-text">5. cloud-stream-rabbitmq-consumer8802 项目 Controller 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.2.6.</span> <span class="toc-text">6. 测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Stream-%E4%B9%8B%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. Stream 之消息重复消费</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream-%E4%B9%8B-group-%E8%A7%A3%E5%86%B3%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9"><span class="toc-number">1.5.</span> <span class="toc-text">Stream 之 group 解决消息重复消费</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream-%E4%B9%8B%E6%B6%88%E6%81%AF%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">1.6.</span> <span class="toc-text">Stream 之消息持久化</span></a></li></ol></li></ol>
         
     </div>
     <style>

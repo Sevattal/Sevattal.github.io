@@ -23,7 +23,7 @@
 <meta property="og:description" content="2020年7月 杭州晨科技术有限公司出给我的面试题">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-18T08:02:57.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:43.781Z">
+<meta property="article:modified_time" content="2023-04-07T06:54:44.351Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Interview">
 <meta name="twitter:card" content="summary">
@@ -301,79 +301,11 @@
           
         <h1 id="2020年7月-杭州晨科技术有限公司出给我的面试题"><a href="#2020年7月-杭州晨科技术有限公司出给我的面试题" class="headerlink" title="2020年7月 杭州晨科技术有限公司出给我的面试题"></a>2020年7月 杭州晨科技术有限公司出给我的面试题</h1><span id="more"></span>
 <h2 id="一、题目如下"><a href="#一、题目如下" class="headerlink" title="一、题目如下"></a>一、题目如下</h2><p>这有一个面试题，你看看能不能做出来。一个房产代理公司，同时代理了多个楼盘项目，其业务员可以同时负责任意楼盘的销售。现在该公司想核算每个楼盘每个月的人员工资成本，核算规则是：如果业务员当月未出单，则按所有楼盘数量平摊该业务员的工资；如果该业务员有出单，则按每个楼盘的出单数量均摊业务员的工资，未出单的楼盘不核算成本。请构建数据库模型，并用sql完成，不能用if逐条处理。<br>提示：需要用到group by，sum，count，一共五张表，楼盘表（id、楼盘名称），业务员表（id，姓名），销售业绩表（月份，业务员、楼盘、销售数量），工资表（月份，业务员、工资），成本核算表（月份，楼盘、工资成本），最终结果写入到成本核算表，有需要的话表里可以增加字段，可以用多条sql来实现<br>假设一共5个楼盘，如果业务员张三工资是5000，一个月没出一单，则每个楼盘摊1000的成本。如果业务员李四工资是6000，两个楼盘各出1单和2单，其他楼盘没出单，则出单的两个楼盘分别摊2000和4000的成本，其他三个楼盘摊的成本为0。这个面试题你要是能做出来，可以约个时间过来面试</p>
-<h2 id="二、我数据库前期准备"><a href="#二、我数据库前期准备" class="headerlink" title="二、我数据库前期准备"></a>二、我数据库前期准备</h2><pre><code>#楼盘表
-create table building (
-build_id int primary key,
-build_name VARCHAR(50));
-#业务员表
-create table salesman (
-salesman_id int primary key,
-salesman_name VARCHAR(50));
-#销售业绩表
-create table sales_performance(
-month_id int,
-salesman_id int,
-build_id int,
-sale int);
-#工资表
-create table salary(
-month_id int,
-salesman_id int,
-salary int);
-#成本核算表
-create table cost_accounting(
-month_id int,
-build_id int,
-salary_cost int);
-#插入测试数据
-插入5个楼盘的数据
-Insert into building values(1,&quot;build1&quot;);
-Insert into building values(2,&quot;build2&quot;);
-Insert into building values(3,&quot;build3&quot;);
-Insert into building values(4,&quot;build4&quot;);
-Insert into building values(5,&quot;build5&quot;);
-#插入业务人员数据
-insert into salesman values(1,&#39;zhangsan&#39;);
-insert into salesman values(2,&#39;lisi&#39;);
-#插入业务员的工资
-insert into salary values(202007,1,5000);
-insert into salary values(20200,2,5000);
-#楼盘销售
-insert into sales_performance values(202007,1,1,0);
-insert into sales_performance values(202007,1,2,0);
-insert into sales_performance values(202007,1,3,0);
-insert into sales_performance values(202007,1,4,0);
-insert into sales_performance values(202007,1,5,0);
-insert into sales_performance values(202007,2,1,2);
-insert into sales_performance values(202007,2,2,3);
-insert into sales_performance values(202007,2,3,0);
-insert into sales_performance values(202007,2,4,0);
-insert into sales_performance values(202007,2,5,0);
-</code></pre>
-<h2 id="三、我个人答案版本，使用一个sql语句完成操作，代码结构复杂"><a href="#三、我个人答案版本，使用一个sql语句完成操作，代码结构复杂" class="headerlink" title="三、我个人答案版本，使用一个sql语句完成操作，代码结构复杂"></a>三、我个人答案版本，使用一个sql语句完成操作，代码结构复杂</h2><pre><code>insert into cost_accounting 
-select month_id,build_id,
-# 计算开工人员的成本,使用case将除数为0取出掉
-sum(case salesman_sum_sale when &#39;0&#39; then &#39;0&#39; else salary/salesman_sum_sale*build_sum_sale end)+
-# 计算没有开工的人员的成本
-(select sum(salary)/(select count(*) from building) from salary where month_id=date_format(now(),&#39;%Y%m&#39;) and salesman_id in (
- Select salesman_id from (select salesman_id,sum(sale) as sale from sales_performance 
-where month_id= date_format(now(),&#39;%Y%m&#39;) group by salesman_id) as s where s.sale=0)) 
-from  (
-# 该查询获得，当月的编号、人员编号、楼盘编号、人员对应某一楼盘的销售单数build_sum_sale、人员工资salary、某一员工的总单数 salesman_sum_sale
-(select month_id ,salesman_id,build_id,sum(sale) as build_sum_sale  from sales_performance 
-where month_id= date_format(now(),&#39;%Y%m&#39;) group by salesman_id,build_id)  as a  
-left join (select salesman_id,salary from salary where month_id= date_format(now(),&#39;%Y%m&#39;))  as b
-on a.salesman_id=b.salesman_id 
-left join (select salesman_id,sum(sale) as salesman_sum_sale from sales_performance 
-where month_id= date_format(now(),&#39;%Y%m&#39;)  group by salesman_id) as c
-on a.salesman_id=c.salesman_id
-) group by build_id;
-</code></pre>
-<h2 id="四、其他面试人员版本，使用一个临时表和两个sql语句完成操作，代码结构较为清晰明了"><a href="#四、其他面试人员版本，使用一个临时表和两个sql语句完成操作，代码结构较为清晰明了" class="headerlink" title="四、其他面试人员版本，使用一个临时表和两个sql语句完成操作，代码结构较为清晰明了"></a>四、其他面试人员版本，使用一个临时表和两个sql语句完成操作，代码结构较为清晰明了</h2><pre><code>建临时表，字段包含月份，楼盘，业务员，工资成本  
-1.未开单人员 insert into 临时表 select d.月份,d.楼盘名称,b.业务员,a.工资/c.estate_num from 工资表 a inner join (select 月份，业务员，sum(销售数量) as sale_num from 销售业绩表 group by 月份，业务员 having sum(销售数量)=0)b  on a.月份=b.月份 and a.业务员=b.业务员 inner join  (select 月份,count(distinct id) as estate_num from 楼盘表 group by 月份)c on a.月份=b.月份 inner join 楼盘表 d on a.月份=d.月份  
-2.开单人员  insert into 临时表 select x.月份,x.楼盘名称,x.业务员,x.avg_salary*y.销售数量 from  (select c.月份,c.楼盘名称,b.业务员,a.工资/b.sale_num as avg_salary from 工资表 a inner join (select 月份，业务员，sum(销售数量) as sale_num from 销售业绩表 group by 月份，业务员 having sum(销售数量)&gt;0)b  on a.月份=b.月份 and a.业务员=b.业务员 inner join 楼盘表 c on a.月份=c.月份)x inner join 销售业绩表 y on x.月份=y.月份 and x.楼盘名称=y.楼盘名称 and x.业务员=y.业务员  
-3.汇总计算 insert into 成本核算表 select 月份,楼盘名称,sum(工资成本) from 临时表 group by 月份,楼盘名称
-</code></pre>
+<h2 id="二、我数据库前期准备"><a href="#二、我数据库前期准备" class="headerlink" title="二、我数据库前期准备"></a>二、我数据库前期准备</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#楼盘表</span><br><span class="line">create table building (</span><br><span class="line">build_id int primary key,</span><br><span class="line">build_name VARCHAR(50));</span><br><span class="line">#业务员表</span><br><span class="line">create table salesman (</span><br><span class="line">salesman_id int primary key,</span><br><span class="line">salesman_name VARCHAR(50));</span><br><span class="line">#销售业绩表</span><br><span class="line">create table sales_performance(</span><br><span class="line">month_id int,</span><br><span class="line">salesman_id int,</span><br><span class="line">build_id int,</span><br><span class="line">sale int);</span><br><span class="line">#工资表</span><br><span class="line">create table salary(</span><br><span class="line">month_id int,</span><br><span class="line">salesman_id int,</span><br><span class="line">salary int);</span><br><span class="line">#成本核算表</span><br><span class="line">create table cost_accounting(</span><br><span class="line">month_id int,</span><br><span class="line">build_id int,</span><br><span class="line">salary_cost int);</span><br><span class="line">#插入测试数据</span><br><span class="line">插入5个楼盘的数据</span><br><span class="line">Insert into building values(1,&quot;build1&quot;);</span><br><span class="line">Insert into building values(2,&quot;build2&quot;);</span><br><span class="line">Insert into building values(3,&quot;build3&quot;);</span><br><span class="line">Insert into building values(4,&quot;build4&quot;);</span><br><span class="line">Insert into building values(5,&quot;build5&quot;);</span><br><span class="line">#插入业务人员数据</span><br><span class="line">insert into salesman values(1,&#x27;zhangsan&#x27;);</span><br><span class="line">insert into salesman values(2,&#x27;lisi&#x27;);</span><br><span class="line">#插入业务员的工资</span><br><span class="line">insert into salary values(202007,1,5000);</span><br><span class="line">insert into salary values(20200,2,5000);</span><br><span class="line">#楼盘销售</span><br><span class="line">insert into sales_performance values(202007,1,1,0);</span><br><span class="line">insert into sales_performance values(202007,1,2,0);</span><br><span class="line">insert into sales_performance values(202007,1,3,0);</span><br><span class="line">insert into sales_performance values(202007,1,4,0);</span><br><span class="line">insert into sales_performance values(202007,1,5,0);</span><br><span class="line">insert into sales_performance values(202007,2,1,2);</span><br><span class="line">insert into sales_performance values(202007,2,2,3);</span><br><span class="line">insert into sales_performance values(202007,2,3,0);</span><br><span class="line">insert into sales_performance values(202007,2,4,0);</span><br><span class="line">insert into sales_performance values(202007,2,5,0);</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、我个人答案版本，使用一个-sql-语句完成操作，代码结构复杂"><a href="#三、我个人答案版本，使用一个-sql-语句完成操作，代码结构复杂" class="headerlink" title="三、我个人答案版本，使用一个 sql 语句完成操作，代码结构复杂"></a>三、我个人答案版本，使用一个 sql 语句完成操作，代码结构复杂</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">insert into cost_accounting </span><br><span class="line">select month_id,build_id,</span><br><span class="line"># 计算开工人员的成本,使用case将除数为0取出掉</span><br><span class="line">sum(case salesman_sum_sale when &#x27;0&#x27; then &#x27;0&#x27; else salary/salesman_sum_sale*build_sum_sale end)+</span><br><span class="line"># 计算没有开工的人员的成本</span><br><span class="line">(select sum(salary)/(select count(*) from building) from salary where month_id=date_format(now(),&#x27;%Y%m&#x27;) and salesman_id in (</span><br><span class="line"> Select salesman_id from (select salesman_id,sum(sale) as sale from sales_performance </span><br><span class="line">where month_id= date_format(now(),&#x27;%Y%m&#x27;) group by salesman_id) as s where s.sale=0)) </span><br><span class="line">from  (</span><br><span class="line"># 该查询获得，当月的编号、人员编号、楼盘编号、人员对应某一楼盘的销售单数build_sum_sale、人员工资salary、某一员工的总单数 salesman_sum_sale</span><br><span class="line">(select month_id ,salesman_id,build_id,sum(sale) as build_sum_sale  from sales_performance </span><br><span class="line">where month_id= date_format(now(),&#x27;%Y%m&#x27;) group by salesman_id,build_id)  as a  </span><br><span class="line">left join (select salesman_id,salary from salary where month_id= date_format(now(),&#x27;%Y%m&#x27;))  as b</span><br><span class="line">on a.salesman_id=b.salesman_id </span><br><span class="line">left join (select salesman_id,sum(sale) as salesman_sum_sale from sales_performance </span><br><span class="line">where month_id= date_format(now(),&#x27;%Y%m&#x27;)  group by salesman_id) as c</span><br><span class="line">on a.salesman_id=c.salesman_id</span><br><span class="line">) group by build_id;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、其他面试人员版本，使用一个临时表和两个-sql-语句完成操作，代码结构较为清晰明了"><a href="#四、其他面试人员版本，使用一个临时表和两个-sql-语句完成操作，代码结构较为清晰明了" class="headerlink" title="四、其他面试人员版本，使用一个临时表和两个 sql 语句完成操作，代码结构较为清晰明了"></a>四、其他面试人员版本，使用一个临时表和两个 sql 语句完成操作，代码结构较为清晰明了</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">建临时表，字段包含月份，楼盘，业务员，工资成本  </span><br><span class="line">1.未开单人员 insert into 临时表 select d.月份,d.楼盘名称,b.业务员,a.工资/c.estate_num from 工资表 a inner join (select 月份，业务员，sum(销售数量) as sale_num from 销售业绩表 group by 月份，业务员 having sum(销售数量)=0)b  on a.月份=b.月份 and a.业务员=b.业务员 inner join  (select 月份,count(distinct id) as estate_num from 楼盘表 group by 月份)c on a.月份=b.月份 inner join 楼盘表 d on a.月份=d.月份  </span><br><span class="line">2.开单人员  insert into 临时表 select x.月份,x.楼盘名称,x.业务员,x.avg_salary*y.销售数量 from  (select c.月份,c.楼盘名称,b.业务员,a.工资/b.sale_num as avg_salary from 工资表 a inner join (select 月份，业务员，sum(销售数量) as sale_num from 销售业绩表 group by 月份，业务员 having sum(销售数量)&gt;0)b  on a.月份=b.月份 and a.业务员=b.业务员 inner join 楼盘表 c on a.月份=c.月份)x inner join 销售业绩表 y on x.月份=y.月份 and x.楼盘名称=y.楼盘名称 and x.业务员=y.业务员  </span><br><span class="line">3.汇总计算 insert into 成本核算表 select 月份,楼盘名称,sum(工资成本) from 临时表 group by 月份,楼盘名称</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -385,7 +317,7 @@ on a.salesman_id=c.salesman_id
         <p><span>Title:</span><a href="/2020/07/18/SQL-Interview-Questions1/">SQL-Interview-Questions1</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2020-07-18, 16:02:57</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p><span>Updated:</span>2023-04-07, 14:54:44</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2020/07/18/SQL-Interview-Questions1/" title="SQL-Interview-Questions1">http://yoursite.com/2020/07/18/SQL-Interview-Questions1/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2020/07/18/SQL-Interview-Questions1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -421,7 +353,7 @@ on a.salesman_id=c.salesman_id
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2020%E5%B9%B47%E6%9C%88-%E6%9D%AD%E5%B7%9E%E6%99%A8%E7%A7%91%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E5%87%BA%E7%BB%99%E6%88%91%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">2020年7月 杭州晨科技术有限公司出给我的面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A2%98%E7%9B%AE%E5%A6%82%E4%B8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">一、题目如下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%88%91%E6%95%B0%E6%8D%AE%E5%BA%93%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="toc-number">1.2.</span> <span class="toc-text">二、我数据库前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%88%91%E4%B8%AA%E4%BA%BA%E7%AD%94%E6%A1%88%E7%89%88%E6%9C%AC%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AAsql%E8%AF%AD%E5%8F%A5%E5%AE%8C%E6%88%90%E6%93%8D%E4%BD%9C%EF%BC%8C%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E5%A4%8D%E6%9D%82"><span class="toc-number">1.3.</span> <span class="toc-text">三、我个人答案版本，使用一个sql语句完成操作，代码结构复杂</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%85%B6%E4%BB%96%E9%9D%A2%E8%AF%95%E4%BA%BA%E5%91%98%E7%89%88%E6%9C%AC%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%92%8C%E4%B8%A4%E4%B8%AAsql%E8%AF%AD%E5%8F%A5%E5%AE%8C%E6%88%90%E6%93%8D%E4%BD%9C%EF%BC%8C%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E8%BE%83%E4%B8%BA%E6%B8%85%E6%99%B0%E6%98%8E%E4%BA%86"><span class="toc-number">1.4.</span> <span class="toc-text">四、其他面试人员版本，使用一个临时表和两个sql语句完成操作，代码结构较为清晰明了</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2020%E5%B9%B47%E6%9C%88-%E6%9D%AD%E5%B7%9E%E6%99%A8%E7%A7%91%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E5%87%BA%E7%BB%99%E6%88%91%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">2020年7月 杭州晨科技术有限公司出给我的面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A2%98%E7%9B%AE%E5%A6%82%E4%B8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">一、题目如下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%88%91%E6%95%B0%E6%8D%AE%E5%BA%93%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="toc-number">1.2.</span> <span class="toc-text">二、我数据库前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%88%91%E4%B8%AA%E4%BA%BA%E7%AD%94%E6%A1%88%E7%89%88%E6%9C%AC%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA-sql-%E8%AF%AD%E5%8F%A5%E5%AE%8C%E6%88%90%E6%93%8D%E4%BD%9C%EF%BC%8C%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E5%A4%8D%E6%9D%82"><span class="toc-number">1.3.</span> <span class="toc-text">三、我个人答案版本，使用一个 sql 语句完成操作，代码结构复杂</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%85%B6%E4%BB%96%E9%9D%A2%E8%AF%95%E4%BA%BA%E5%91%98%E7%89%88%E6%9C%AC%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%92%8C%E4%B8%A4%E4%B8%AA-sql-%E8%AF%AD%E5%8F%A5%E5%AE%8C%E6%88%90%E6%93%8D%E4%BD%9C%EF%BC%8C%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E8%BE%83%E4%B8%BA%E6%B8%85%E6%99%B0%E6%98%8E%E4%BA%86"><span class="toc-number">1.4.</span> <span class="toc-text">四、其他面试人员版本，使用一个临时表和两个 sql 语句完成操作，代码结构较为清晰明了</span></a></li></ol></li></ol>
         
     </div>
     <style>

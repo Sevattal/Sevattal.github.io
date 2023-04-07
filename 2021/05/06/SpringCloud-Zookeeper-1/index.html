@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/05/06/SpringCloud-Zookeeper-1/5.png">
 <meta property="og:image" content="http://yoursite.com/2021/05/06/SpringCloud-Zookeeper-1/6.png">
 <meta property="article:published_time" content="2021-05-05T23:01:28.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:44.367Z">
+<meta property="article:modified_time" content="2023-04-07T06:58:39.712Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="Zookeeper">
@@ -313,453 +313,54 @@
 
 <h2 id="1-Zookeeper的安装"><a href="#1-Zookeeper的安装" class="headerlink" title="1. Zookeeper的安装"></a>1. Zookeeper的安装</h2><h3 id="1-1-Zookeeper-下载地址"><a href="#1-1-Zookeeper-下载地址" class="headerlink" title="1.1 Zookeeper 下载地址"></a>1.1 Zookeeper 下载地址</h3><p>下载地址：<a target="_blank" rel="noopener" href="https://zookeeper.apache.org/">https://zookeeper.apache.org/</a></p>
 <h3 id="1-2-Zookeeper-安装"><a href="#1-2-Zookeeper-安装" class="headerlink" title="1.2 Zookeeper 安装"></a>1.2 Zookeeper 安装</h3><p><strong>解压</strong></p>
-<pre><code>tar -vxf apache-zookeeper-3.7.0-bin.tar.gz
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -vxf apache-zookeeper-3.7.0-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
 <p><strong>移动至合适的安装目录</strong></p>
-<pre><code>mv apache-zookeeper-3.7.0-bin /apache-zookeeper/
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv apache-zookeeper-3.7.0-bin /apache-zookeeper/</span><br></pre></td></tr></table></figure>
+
 <p><strong>按照参考的配置文件创建配置文件</strong></p>
-<pre><code>cp /apache-zookeeper/conf/zoo_sample.cfg /apache-zookeeper/conf/zoo.cfg
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /apache-zookeeper/conf/zoo_sample.cfg /apache-zookeeper/conf/zoo.cfg</span><br></pre></td></tr></table></figure>
+
 <p><strong>配置文件参数如下图</strong></p>
 <p><img src="/2021/05/06/SpringCloud-Zookeeper-1/1.png"></p>
 <p><strong>启动zookeeper</strong></p>
-<pre><code>./zkServer.sh start
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./zkServer.sh start</span><br></pre></td></tr></table></figure>
+
 <p><strong>查看启动是否成功</strong></p>
 <p><img src="/2021/05/06/SpringCloud-Zookeeper-1/2.png"></p>
-<h2 id="2-支付微服务注册进zookeeper"><a href="#2-支付微服务注册进zookeeper" class="headerlink" title="2. 支付微服务注册进zookeeper"></a>2. 支付微服务注册进zookeeper</h2><h3 id="2-1-创建父工程-springcloud2021"><a href="#2-1-创建父工程-springcloud2021" class="headerlink" title="2.1 创建父工程 springcloud2021"></a>2.1 创建父工程 springcloud2021</h3><h3 id="2-2-springcloud2021-父工程-pom-xml代码如下"><a href="#2-2-springcloud2021-父工程-pom-xml代码如下" class="headerlink" title="2.2 springcloud2021 父工程 pom.xml代码如下"></a>2.2 springcloud2021 父工程 pom.xml代码如下</h3><pre><code>    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-    &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-      xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-      &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-      &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-      &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;
-      &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-      &lt;packaging&gt;pom&lt;/packaging&gt;
-      &lt;!--子模块继承之后，提供作用：锁定版本+ 子modlue不用写groupId 和 version--&gt;
-      &lt;!--dependencyManagement 里只声明依赖，并不实现引入，因此子项目需要显示声明需要的依赖--&gt;
-      &lt;!--统一管理jar包版本--&gt;
-      &lt;properties&gt;
-        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
-        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
-        &lt;junit.version&gt;4.12&lt;/junit.version&gt;
-        &lt;log4j.version&gt;1.2.17&lt;/log4j.version&gt;
-        &lt;lombok.version&gt;1.16.18&lt;/lombok.version&gt;
-        &lt;mysql.version&gt;5.1.47&lt;/mysql.version&gt;
-        &lt;druid.version&gt;1.1.16&lt;/druid.version&gt;
-        &lt;mybatis.spring.boot.version&gt;1.3.0&lt;/mybatis.spring.boot.version&gt;
-        &lt;spring.boot.devtools.version&gt;2.3.10.RELEASE&lt;/spring.boot.devtools.version&gt;
-      &lt;/properties&gt;
-      &lt;!--子模块继承之后，提供作用：锁定版本+子module不用groupId和version--&gt;
-      &lt;dependencyManagement&gt;
-        &lt;dependencies&gt;
-          &lt;!--spring boot 2.2.2--&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;
-            &lt;version&gt;2.2.2.RELEASE&lt;/version&gt;
-            &lt;type&gt;pom&lt;/type&gt;
-            &lt;scope&gt;import&lt;/scope&gt;
-          &lt;/dependency&gt;
-          &lt;!--spring cloud Hoxton.SR1--&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
-            &lt;version&gt;Hoxton.SR1&lt;/version&gt;
-            &lt;type&gt;pom&lt;/type&gt;
-            &lt;scope&gt;import&lt;/scope&gt;
-          &lt;/dependency&gt;
-          &lt;!--spring cloud alibaba 2.1.0.RELEASE--&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;
-            &lt;version&gt;2.1.0.RELEASE&lt;/version&gt;
-            &lt;type&gt;pom&lt;/type&gt;
-            &lt;scope&gt;import&lt;/scope&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;mysql&lt;/groupId&gt;
-            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;mysql.version&#125;&lt;/version&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-            &lt;artifactId&gt;druid&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;druid.version&#125;&lt;/version&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;mybatis.spring.boot.version&#125;&lt;/version&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;junit&lt;/groupId&gt;
-            &lt;artifactId&gt;junit&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;junit.version&#125;&lt;/version&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;lombok.version&#125;&lt;/version&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-          &lt;/dependency&gt;
-          &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
-            &lt;version&gt;$&#123;spring.boot.devtools.version&#125;&lt;/version&gt;
-            &lt;scope&gt;runtime&lt;/scope&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-          &lt;/dependency&gt;
-        &lt;/dependencies&gt;
-      &lt;/dependencyManagement&gt;
-      &lt;build&gt;
-        &lt;plugins&gt;
-          &lt;plugin&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-            &lt;configuration&gt;
-              &lt;fork&gt;true&lt;/fork&gt;
-              &lt;addResources&gt;true&lt;/addResources&gt;
-            &lt;/configuration&gt;
-          &lt;/plugin&gt;
-        &lt;/plugins&gt;
-      &lt;/build&gt;
-    &lt;/project&gt;
-</code></pre>
-<h3 id="2-3-创建cloud-provider-payment8004的Maven工程"><a href="#2-3-创建cloud-provider-payment8004的Maven工程" class="headerlink" title="2.3 创建cloud-provider-payment8004的Maven工程"></a>2.3 创建cloud-provider-payment8004的Maven工程</h3><h3 id="2-4-cloud-provider-payment8004工程-pom-xml-文件如下"><a href="#2-4-cloud-provider-payment8004工程-pom-xml-文件如下" class="headerlink" title="2.4 cloud-provider-payment8004工程 pom.xml 文件如下"></a>2.4 cloud-provider-payment8004工程 pom.xml 文件如下</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
-         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-    &lt;parent&gt;
-        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;
-        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-    &lt;artifactId&gt;cloud-provider-payment8004&lt;/artifactId&gt;
-    &lt;dependencies&gt;
-        &lt;!--引入自己定义的api通用包，--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-            &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;
-            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;!--SpringBoot 整合 zookeeper 客户端--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-zookeeper-discovery&lt;/artifactId&gt;
-            &lt;!--先排除自带的zookeeper 依赖--&gt;
-            &lt;exclusions&gt;
-                &lt;exclusion&gt;
-                    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;
-                    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;
-                &lt;/exclusion&gt;
-            &lt;/exclusions&gt;
-        &lt;/dependency&gt;
-        &lt;!--由于我这边后台装的zookeeper 版本是3.7.0 所以我这边配置的zookeeper为 3.7.0--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;
-            &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;
-            &lt;version&gt;3.7.0&lt;/version&gt;
-            &lt;!--排除 slf4j--&gt;
-            &lt;exclusions&gt;
-                &lt;exclusion&gt;
-                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
-                    &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
-                &lt;/exclusion&gt;
-                &lt;exclusion&gt;
-                    &lt;groupId&gt;log4j&lt;/groupId&gt;
-                    &lt;artifactId&gt;log4j&lt;/artifactId&gt;
-                &lt;/exclusion&gt;
-            &lt;/exclusions&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-            &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
-            &lt;version&gt;1.1.10&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;!--mysql-connector-java--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;mysql&lt;/groupId&gt;
-            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
-            &lt;scope&gt;runtime&lt;/scope&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-&lt;/project&gt;
-</code></pre>
-<p>注：如果需要指定的zookeeper的版本，请先将zookeeper的依赖去除掉，单独引入。</p>
-<h3 id="2-5-cloud-provider-payment8004工程-application-yml-文件如下"><a href="#2-5-cloud-provider-payment8004工程-application-yml-文件如下" class="headerlink" title="2.5 cloud-provider-payment8004工程 application.yml 文件如下"></a>2.5 cloud-provider-payment8004工程 application.yml 文件如下</h3><pre><code>#8004表示注册到zookeeper服务器的支付服务提供者端口号
-server:
-  port: 8004
-#服务别名----注册zookeeper到注册中心名称
-spring:
-  application:
-    name: cloud-provider-payment
-  cloud:
-    zookeeper:
-      connect-string: 192.168.10.30:2181
-      # 若是zookeeper集群环境，只需要改动connect-string如下
-      # connect-string: 192.168.10.30:2181, 192.168.10.31.2181....
-</code></pre>
-<h3 id="2-6-cloud-provider-payment8004工程-主启动类如下"><a href="#2-6-cloud-provider-payment8004工程-主启动类如下" class="headerlink" title="2.6 cloud-provider-payment8004工程 主启动类如下"></a>2.6 cloud-provider-payment8004工程 主启动类如下</h3><pre><code>package com.sevattal.springcloud;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-/*
-* @EnableDiscoveryClient
-* 该注解用于向使用consul或者zookeeper作为注册中心注册服务
-* */
-@SpringBootApplication
-@EnableDiscoveryClient
-public class PaymentMain8004 &#123;
-    public static void main(String[] args) &#123;
-        SpringApplication.run(PaymentMain8004.class, args);
-    &#125;
-&#125;
-</code></pre>
-<h3 id="2-7-cloud-provider-payment8004工程-Controller类如下"><a href="#2-7-cloud-provider-payment8004工程-Controller类如下" class="headerlink" title="2.7 cloud-provider-payment8004工程 Controller类如下"></a>2.7 cloud-provider-payment8004工程 Controller类如下</h3><pre><code>package com.sevattal.springcloud.controller;
-import com.sevattal.springcloud.service.PaymentService;
-import lombok.extern.slf4j.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
-import java.util.UUID;
-@RestController
-@Slf4j
-public class PaymentController &#123;
-    @Resource
-    private PaymentService paymentService;
-    @Value(&quot;$&#123;server.port&#125;&quot;)
-    private String serverPort;
-    @RequestMapping(value = &quot;/payment/zk&quot;)
-    public String paymentzk()&#123;
-        return &quot;springcloud with zookeeper: &quot; + serverPort + &quot;\t&quot; + UUID.randomUUID().toString();
-    &#125;
-&#125;
-</code></pre>
-<h3 id="2-8-启动8004注册进zookeeper（要先启动zookeeper的server）"><a href="#2-8-启动8004注册进zookeeper（要先启动zookeeper的server）" class="headerlink" title="2.8 启动8004注册进zookeeper（要先启动zookeeper的server）"></a>2.8 启动8004注册进zookeeper（要先启动zookeeper的server）</h3><p>验证测试：浏览器 <a target="_blank" rel="noopener" href="http://localhost:8004/payment/zk">http://localhost:8004/payment/zk</a></p>
+<h2 id="2-支付微服务注册进-zookeeper"><a href="#2-支付微服务注册进-zookeeper" class="headerlink" title="2. 支付微服务注册进 zookeeper"></a>2. 支付微服务注册进 zookeeper</h2><h3 id="2-1-创建父工程-springcloud2021"><a href="#2-1-创建父工程-springcloud2021" class="headerlink" title="2.1 创建父工程 springcloud2021"></a>2.1 创建父工程 springcloud2021</h3><h3 id="2-2-springcloud2021-父工程-pom-xml-代码如下"><a href="#2-2-springcloud2021-父工程-pom-xml-代码如下" class="headerlink" title="2.2 springcloud2021 父工程 pom.xml 代码如下"></a>2.2 springcloud2021 父工程 pom.xml 代码如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">  &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;packaging&gt;pom&lt;/packaging&gt;</span><br><span class="line">  &lt;!--子模块继承之后，提供作用：锁定版本+ 子modlue不用写groupId 和 version--&gt;</span><br><span class="line">  &lt;!--dependencyManagement 里只声明依赖，并不实现引入，因此子项目需要显示声明需要的依赖--&gt;</span><br><span class="line">  &lt;!--统一管理jar包版本--&gt;</span><br><span class="line">  &lt;properties&gt;</span><br><span class="line">    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</span><br><span class="line">    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</span><br><span class="line">    &lt;junit.version&gt;4.12&lt;/junit.version&gt;</span><br><span class="line">    &lt;log4j.version&gt;1.2.17&lt;/log4j.version&gt;</span><br><span class="line">    &lt;lombok.version&gt;1.16.18&lt;/lombok.version&gt;</span><br><span class="line">    &lt;mysql.version&gt;5.1.47&lt;/mysql.version&gt;</span><br><span class="line">    &lt;druid.version&gt;1.1.16&lt;/druid.version&gt;</span><br><span class="line">    &lt;mybatis.spring.boot.version&gt;1.3.0&lt;/mybatis.spring.boot.version&gt;</span><br><span class="line">    &lt;spring.boot.devtools.version&gt;2.3.10.RELEASE&lt;/spring.boot.devtools.version&gt;</span><br><span class="line">  &lt;/properties&gt;</span><br><span class="line">  &lt;!--子模块继承之后，提供作用：锁定版本+子module不用groupId和version--&gt;</span><br><span class="line">  &lt;dependencyManagement&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">      &lt;!--spring boot 2.2.2--&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.2.RELEASE&lt;/version&gt;</span><br><span class="line">        &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">        &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;!--spring cloud Hoxton.SR1--&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;Hoxton.SR1&lt;/version&gt;</span><br><span class="line">        &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">        &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;!--spring cloud alibaba 2.1.0.RELEASE--&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.1.0.RELEASE&lt;/version&gt;</span><br><span class="line">        &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">        &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;mysql.version&#125;&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;druid&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;druid.version&#125;&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;mybatis.spring.boot.version&#125;&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;junit.version&#125;&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;lombok.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;spring.boot.devtools.version&#125;&lt;/version&gt;</span><br><span class="line">        &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">        &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">  &lt;/dependencyManagement&gt;</span><br><span class="line">  &lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;configuration&gt;</span><br><span class="line">          &lt;fork&gt;true&lt;/fork&gt;</span><br><span class="line">          &lt;addResources&gt;true&lt;/addResources&gt;</span><br><span class="line">        &lt;/configuration&gt;</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">  &lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-创建cloud-provider-payment8004-的-Maven-工程"><a href="#2-3-创建cloud-provider-payment8004-的-Maven-工程" class="headerlink" title="2.3 创建cloud-provider-payment8004 的 Maven 工程"></a>2.3 创建cloud-provider-payment8004 的 Maven 工程</h3><h3 id="2-4-cloud-provider-payment8004-工程-pom-xml-文件如下"><a href="#2-4-cloud-provider-payment8004-工程-pom-xml-文件如下" class="headerlink" title="2.4 cloud-provider-payment8004 工程 pom.xml 文件如下"></a>2.4 cloud-provider-payment8004 工程 pom.xml 文件如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;</span><br><span class="line">        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;artifactId&gt;cloud-provider-payment8004&lt;/artifactId&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;!--引入自己定义的api通用包，--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--SpringBoot 整合 zookeeper 客户端--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-zookeeper-discovery&lt;/artifactId&gt;</span><br><span class="line">            &lt;!--先排除自带的zookeeper 依赖--&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--由于我这边后台装的zookeeper 版本是3.7.0 所以我这边配置的zookeeper为 3.7.0--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.7.0&lt;/version&gt;</span><br><span class="line">            &lt;!--排除 slf4j--&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;groupId&gt;log4j&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;log4j&lt;/artifactId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.1.10&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--mysql-connector-java--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注：如果需要指定的 zookeeper 的版本，请先将 zookeeper 的依赖去除掉，单独引入。</p>
+<h3 id="2-5-cloud-provider-payment8004-工程-application-yml-文件如下"><a href="#2-5-cloud-provider-payment8004-工程-application-yml-文件如下" class="headerlink" title="2.5 cloud-provider-payment8004 工程 application.yml 文件如下"></a>2.5 cloud-provider-payment8004 工程 application.yml 文件如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 8004表示注册到zookeeper服务器的支付服务提供者端口号</span><br><span class="line">server:</span><br><span class="line">  port: 8004</span><br><span class="line"># 服务别名----注册zookeeper到注册中心名称</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: cloud-provider-payment</span><br><span class="line">  cloud:</span><br><span class="line">    zookeeper:</span><br><span class="line">      connect-string: 192.168.10.30:2181</span><br><span class="line">      # 若是zookeeper集群环境，只需要改动connect-string如下</span><br><span class="line">      # connect-string: 192.168.10.30:2181, 192.168.10.31.2181....</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-cloud-provider-payment8004-工程-主启动类如下"><a href="#2-6-cloud-provider-payment8004-工程-主启动类如下" class="headerlink" title="2.6 cloud-provider-payment8004 工程 主启动类如下"></a>2.6 cloud-provider-payment8004 工程 主启动类如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud;</span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line">/*</span><br><span class="line">* @EnableDiscoveryClient</span><br><span class="line">* 该注解用于向使用consul或者zookeeper作为注册中心注册服务</span><br><span class="line">* */</span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableDiscoveryClient</span><br><span class="line">public class PaymentMain8004 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(PaymentMain8004.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-cloud-provider-payment8004-工程-Controller-类如下"><a href="#2-7-cloud-provider-payment8004-工程-Controller-类如下" class="headerlink" title="2.7 cloud-provider-payment8004 工程 Controller 类如下"></a>2.7 cloud-provider-payment8004 工程 Controller 类如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.controller;</span><br><span class="line">import com.sevattal.springcloud.service.PaymentService;</span><br><span class="line">import lombok.extern.slf4j.*;</span><br><span class="line">import org.springframework.beans.factory.annotation.Value;</span><br><span class="line">import org.springframework.web.bind.annotation.*;</span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line">import java.util.UUID;</span><br><span class="line">@RestController</span><br><span class="line">@Slf4j</span><br><span class="line">public class PaymentController &#123;</span><br><span class="line">    @Resource</span><br><span class="line">    private PaymentService paymentService;</span><br><span class="line">    @Value(&quot;$&#123;server.port&#125;&quot;)</span><br><span class="line">    private String serverPort;</span><br><span class="line">    @RequestMapping(value = &quot;/payment/zk&quot;)</span><br><span class="line">    public String paymentzk()&#123;</span><br><span class="line">        return &quot;springcloud with zookeeper: &quot; + serverPort + &quot;\t&quot; + UUID.randomUUID().toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-8-启动-8004-注册进-zookeeper（要先启动-zookeeper-的-server）"><a href="#2-8-启动-8004-注册进-zookeeper（要先启动-zookeeper-的-server）" class="headerlink" title="2.8 启动 8004 注册进 zookeeper（要先启动 zookeeper 的 server）"></a>2.8 启动 8004 注册进 zookeeper（要先启动 zookeeper 的 server）</h3><p>验证测试：浏览器 <a target="_blank" rel="noopener" href="http://localhost:8004/payment/zk">http://localhost:8004/payment/zk</a></p>
 <p><img src="/2021/05/06/SpringCloud-Zookeeper-1/3.png"></p>
-<p>验证测试2 ：接着用zookeeper客户端操作</p>
-<pre><code> ls /
- ls /services
- get /services/cloud-provider-payment/844c8da2-ba07-4a8a-9287-712748f681e6
-</code></pre>
+<p>验证测试2 ：接着用 zookeeper 客户端操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br><span class="line">ls /services</span><br><span class="line">get /services/cloud-provider-payment/844c8da2-ba07-4a8a-9287-712748f681e6</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2021/05/06/SpringCloud-Zookeeper-1/4.png"></p>
 <p>json 格式化 get &#x2F;services&#x2F;cloud-provider-payment&#x2F;844c8da2-ba07-4a8a-9287-712748f681e6</p>
-<pre><code>&#123;
-    &quot;name&quot;: &quot;cloud-provider-payment&quot;,
-    &quot;id&quot;: &quot;844c8da2-ba07-4a8a-9287-712748f681e6&quot;,
-    &quot;address&quot;: &quot;localhost&quot;,
-    &quot;port&quot;: 8004,
-    &quot;sslPort&quot;: null,
-    &quot;payload&quot;: &#123;
-        &quot;@class&quot;: &quot;org.springframework.cloud.zookeeper.discovery.ZookeeperInstance&quot;,
-        &quot;id&quot;: &quot;application-1&quot;,
-        &quot;name&quot;: &quot;cloud-provider-payment&quot;,
-        &quot;metadata&quot;: &#123;&#125;
-    &#125;,
-    &quot;registrationTimeUTC&quot;: 1620257954594,
-    &quot;serviceType&quot;: &quot;DYNAMIC&quot;,
-    &quot;uriSpec&quot;: &#123;
-        &quot;parts&quot;: [
-            &#123;
-                &quot;value&quot;: &quot;scheme&quot;,
-                &quot;variable&quot;: true
-            &#125;,
-            &#123;
-                &quot;value&quot;: &quot;://&quot;,
-                &quot;variable&quot;: false
-            &#125;,
-            &#123;
-                &quot;value&quot;: &quot;address&quot;,
-                &quot;variable&quot;: true
-            &#125;,
-            &#123;
-                &quot;value&quot;: &quot;:&quot;,
-                &quot;variable&quot;: false
-            &#125;,
-            &#123;
-                &quot;value&quot;: &quot;port&quot;,
-                &quot;variable&quot;: true
-            &#125;
-        ]
-    &#125;
-&#125;
-</code></pre>
-<h3 id="2-9-Zookeeper临时还是持久节点"><a href="#2-9-Zookeeper临时还是持久节点" class="headerlink" title="2.9 Zookeeper临时还是持久节点"></a>2.9 Zookeeper临时还是持久节点</h3><p>ZooKeeper的服务节点是临时节点，没有Eureka那含情脉脉。</p>
-<h2 id="3-订单服务注册进zookeeper"><a href="#3-订单服务注册进zookeeper" class="headerlink" title="3 订单服务注册进zookeeper"></a>3 订单服务注册进zookeeper</h2><h3 id="3-1-创建-cloud-consumerzk-order80-项目"><a href="#3-1-创建-cloud-consumerzk-order80-项目" class="headerlink" title="3.1 创建 cloud-consumerzk-order80 项目"></a>3.1 创建 cloud-consumerzk-order80 项目</h3><h3 id="3-2-cloud-consumerzk-order80-工程-pom-xml-文件如下"><a href="#3-2-cloud-consumerzk-order80-工程-pom-xml-文件如下" class="headerlink" title="3.2 cloud-consumerzk-order80 工程 pom.xml 文件如下"></a>3.2 cloud-consumerzk-order80 工程 pom.xml 文件如下</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
-         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-    &lt;parent&gt;
-        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;
-        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-    &lt;artifactId&gt;cloud-consumerzk-order80&lt;/artifactId&gt;
-    &lt;dependencies&gt;
-        &lt;!--引入自己定义的api通用包，--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;
-            &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;
-            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;!--SpringBoot 整合 zookeeper 客户端--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-zookeeper-discovery&lt;/artifactId&gt;
-            &lt;!--先排除自带的zookeeper 依赖--&gt;
-            &lt;exclusions&gt;
-                &lt;exclusion&gt;
-                    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;
-                    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;
-                &lt;/exclusion&gt;
-            &lt;/exclusions&gt;
-        &lt;/dependency&gt;
-        &lt;!--由于我这边后台装的zookeeper 版本是3.7.0 所以我这边配置的zookeeper为 3.7.0--&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;
-            &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;
-            &lt;version&gt;3.7.0&lt;/version&gt;
-            &lt;!--排除 slf4j--&gt;
-            &lt;exclusions&gt;
-                &lt;exclusion&gt;
-                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
-                    &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
-                &lt;/exclusion&gt;
-                &lt;exclusion&gt;
-                    &lt;groupId&gt;log4j&lt;/groupId&gt;
-                    &lt;artifactId&gt;log4j&lt;/artifactId&gt;
-                &lt;/exclusion&gt;
-            &lt;/exclusions&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
-            &lt;scope&gt;runtime&lt;/scope&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-&lt;/project&gt;
-</code></pre>
-<h3 id="3-3-cloud-consumerzk-order80-工程-application-yml-文件如下"><a href="#3-3-cloud-consumerzk-order80-工程-application-yml-文件如下" class="headerlink" title="3.3 cloud-consumerzk-order80 工程 application.yml 文件如下"></a>3.3 cloud-consumerzk-order80 工程 application.yml 文件如下</h3><pre><code>server:
-  port: 80
-#服务别名----注册zookeeper到注册中心名称
-spring:
-  application:
-    name: cloud-consumer-order
-  cloud:
-    zookeeper:
-      connect-string: 192.168.10.30:2181
-      # 若是zookeeper集群环境，只需要改动connect-string如下
-      # connect-string: 192.168.10.30:2181, 192.168.10.31.2181....
-</code></pre>
-<h3 id="3-4-cloud-consumerzk-order80-工程-启动类"><a href="#3-4-cloud-consumerzk-order80-工程-启动类" class="headerlink" title="3.4 cloud-consumerzk-order80 工程 启动类"></a>3.4 cloud-consumerzk-order80 工程 启动类</h3><pre><code>package com.sevattal.springcloud;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-@SpringBootApplication
-@EnableDiscoveryClient
-public class OrderZkMain80 &#123;
-    public static void main(String[] args) &#123;
-        SpringApplication.run(OrderZkMain80.class, args);
-    &#125;
-&#125;
-</code></pre>
-<h3 id="3-5-cloud-consumerzk-order80-工程-业务类"><a href="#3-5-cloud-consumerzk-order80-工程-业务类" class="headerlink" title="3.5 cloud-consumerzk-order80 工程 业务类"></a>3.5 cloud-consumerzk-order80 工程 业务类</h3><pre><code>package com.sevattal.springcloud.config;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
-@Configuration
-public class ApplicationContextConfig &#123;
-    /*
-    * 使用@LoadBalanced注解赋予RestTemplate负载均衡的能力
-    * 默认为轮询
-    * */
-    @Bean
-    @LoadBalanced
-    public RestTemplate getRestTemplate() &#123;
-        return new RestTemplate();
-    &#125;
-&#125;
-</code></pre>
-<h3 id="3-5-cloud-consumerzk-order80-工程-Controller类"><a href="#3-5-cloud-consumerzk-order80-工程-Controller类" class="headerlink" title="3.5 cloud-consumerzk-order80 工程  Controller类"></a>3.5 cloud-consumerzk-order80 工程  Controller类</h3><pre><code>package com.sevattal.springcloud.controller;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-import javax.annotation.Resource;
-@RestController
-@Slf4j
-public class OrderController &#123;
-    /*
-    *  中注册的微服务名称
-    * */
-    public static final String INVOKE_URL = &quot;http://cloud-provider-payment&quot;;
-    @Resource
-    private RestTemplate restTemplate;
-    @GetMapping(&quot;/consumer/payment/zk&quot;)
-    public String paymentInfo()&#123;
-        String result = restTemplate.getForObject(INVOKE_URL + &quot;/payment/zk&quot;,String.class);
-        return result;
-    &#125;
-&#125;
-</code></pre>
-<h3 id="3-6-验证测试"><a href="#3-6-验证测试" class="headerlink" title="3.6.验证测试"></a>3.6.验证测试</h3><p>运行ZooKeeper服务端，cloud-consumerzk-order80，cloud-provider-payment8004。</p>
-<p>打开ZooKeeper客户端：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;cloud-provider-payment&quot;,</span><br><span class="line">    &quot;id&quot;: &quot;844c8da2-ba07-4a8a-9287-712748f681e6&quot;,</span><br><span class="line">    &quot;address&quot;: &quot;localhost&quot;,</span><br><span class="line">    &quot;port&quot;: 8004,</span><br><span class="line">    &quot;sslPort&quot;: null,</span><br><span class="line">    &quot;payload&quot;: &#123;</span><br><span class="line">        &quot;@class&quot;: &quot;org.springframework.cloud.zookeeper.discovery.ZookeeperInstance&quot;,</span><br><span class="line">        &quot;id&quot;: &quot;application-1&quot;,</span><br><span class="line">        &quot;name&quot;: &quot;cloud-provider-payment&quot;,</span><br><span class="line">        &quot;metadata&quot;: &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;registrationTimeUTC&quot;: 1620257954594,</span><br><span class="line">    &quot;serviceType&quot;: &quot;DYNAMIC&quot;,</span><br><span class="line">    &quot;uriSpec&quot;: &#123;</span><br><span class="line">        &quot;parts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;value&quot;: &quot;scheme&quot;,</span><br><span class="line">                &quot;variable&quot;: true</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;value&quot;: &quot;://&quot;,</span><br><span class="line">                &quot;variable&quot;: false</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;value&quot;: &quot;address&quot;,</span><br><span class="line">                &quot;variable&quot;: true</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;value&quot;: &quot;:&quot;,</span><br><span class="line">                &quot;variable&quot;: false</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;value&quot;: &quot;port&quot;,</span><br><span class="line">                &quot;variable&quot;: true</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-9-Zookeeper-临时还是持久节点"><a href="#2-9-Zookeeper-临时还是持久节点" class="headerlink" title="2.9 Zookeeper 临时还是持久节点"></a>2.9 Zookeeper 临时还是持久节点</h3><p>ZooKeeper 的服务节点是临时节点，没有Eureka那含情脉脉。</p>
+<h2 id="3-订单服务注册进-zookeeper"><a href="#3-订单服务注册进-zookeeper" class="headerlink" title="3 订单服务注册进 zookeeper"></a>3 订单服务注册进 zookeeper</h2><h3 id="3-1-创建-cloud-consumerzk-order80-项目"><a href="#3-1-创建-cloud-consumerzk-order80-项目" class="headerlink" title="3.1 创建 cloud-consumerzk-order80 项目"></a>3.1 创建 cloud-consumerzk-order80 项目</h3><h3 id="3-2-cloud-consumerzk-order80-工程-pom-xml-文件如下"><a href="#3-2-cloud-consumerzk-order80-工程-pom-xml-文件如下" class="headerlink" title="3.2 cloud-consumerzk-order80 工程 pom.xml 文件如下"></a>3.2 cloud-consumerzk-order80 工程 pom.xml 文件如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;artifactId&gt;springcloud2021&lt;/artifactId&gt;</span><br><span class="line">        &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;artifactId&gt;cloud-consumerzk-order80&lt;/artifactId&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;!--引入自己定义的api通用包，--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.sevattal.springcloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--SpringBoot 整合 zookeeper 客户端--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-zookeeper-discovery&lt;/artifactId&gt;</span><br><span class="line">            &lt;!--先排除自带的zookeeper 依赖--&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--由于我这边后台装的zookeeper 版本是3.7.0 所以我这边配置的zookeeper为 3.7.0--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.7.0&lt;/version&gt;</span><br><span class="line">            &lt;!--排除 slf4j--&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;groupId&gt;log4j&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;log4j&lt;/artifactId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-cloud-consumerzk-order80-工程-application-yml-文件如下"><a href="#3-3-cloud-consumerzk-order80-工程-application-yml-文件如下" class="headerlink" title="3.3 cloud-consumerzk-order80 工程 application.yml 文件如下"></a>3.3 cloud-consumerzk-order80 工程 application.yml 文件如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 80</span><br><span class="line"># 服务别名----注册zookeeper到注册中心名称</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: cloud-consumer-order</span><br><span class="line">  cloud:</span><br><span class="line">    zookeeper:</span><br><span class="line">      connect-string: 192.168.10.30:2181</span><br><span class="line">      # 若是zookeeper集群环境，只需要改动connect-string如下</span><br><span class="line">      # connect-string: 192.168.10.30:2181, 192.168.10.31.2181....</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-cloud-consumerzk-order80-工程-启动类"><a href="#3-4-cloud-consumerzk-order80-工程-启动类" class="headerlink" title="3.4 cloud-consumerzk-order80 工程 启动类"></a>3.4 cloud-consumerzk-order80 工程 启动类</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud;</span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableDiscoveryClient</span><br><span class="line">public class OrderZkMain80 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(OrderZkMain80.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-cloud-consumerzk-order80-工程-业务类"><a href="#3-5-cloud-consumerzk-order80-工程-业务类" class="headerlink" title="3.5 cloud-consumerzk-order80 工程 业务类"></a>3.5 cloud-consumerzk-order80 工程 业务类</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.config;</span><br><span class="line">import org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line">@Configuration</span><br><span class="line">public class ApplicationContextConfig &#123;</span><br><span class="line">    /*</span><br><span class="line">    * 使用@LoadBalanced注解赋予RestTemplate负载均衡的能力</span><br><span class="line">    * 默认为轮询</span><br><span class="line">    * */</span><br><span class="line">    @Bean</span><br><span class="line">    @LoadBalanced</span><br><span class="line">    public RestTemplate getRestTemplate() &#123;</span><br><span class="line">        return new RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-cloud-consumerzk-order80-工程-Controller-类"><a href="#3-5-cloud-consumerzk-order80-工程-Controller-类" class="headerlink" title="3.5 cloud-consumerzk-order80 工程  Controller 类"></a>3.5 cloud-consumerzk-order80 工程  Controller 类</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package com.sevattal.springcloud.controller;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line">@RestController</span><br><span class="line">@Slf4j</span><br><span class="line">public class OrderController &#123;</span><br><span class="line">    /*</span><br><span class="line">    *  中注册的微服务名称</span><br><span class="line">    * */</span><br><span class="line">    public static final String INVOKE_URL = &quot;http://cloud-provider-payment&quot;;</span><br><span class="line">    @Resource</span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line">    @GetMapping(&quot;/consumer/payment/zk&quot;)</span><br><span class="line">    public String paymentInfo()&#123;</span><br><span class="line">        String result = restTemplate.getForObject(INVOKE_URL + &quot;/payment/zk&quot;,String.class);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-验证测试"><a href="#3-6-验证测试" class="headerlink" title="3.6.验证测试"></a>3.6.验证测试</h3><p>运行 ZooKeeper 服务端，cloud-consumerzk-order80，cloud-provider-payment8004。</p>
+<p>打开 ZooKeeper 客户端：</p>
 <p><img src="/2021/05/06/SpringCloud-Zookeeper-1/5.png"></p>
 <h3 id="3-7-访问测试地址-http-localhost-consumer-payment-zk"><a href="#3-7-访问测试地址-http-localhost-consumer-payment-zk" class="headerlink" title="3.7.访问测试地址 - http://localhost/consumer/payment/zk"></a>3.7.访问测试地址 - <a target="_blank" rel="noopener" href="http://localhost/consumer/payment/zk">http://localhost/consumer/payment/zk</a></h3><p><img src="/2021/05/06/SpringCloud-Zookeeper-1/6.png"></p>
 
@@ -773,7 +374,7 @@ public class OrderController &#123;
         <p><span>Title:</span><a href="/2021/05/06/SpringCloud-Zookeeper-1/">SpringCloud-Zookeeper-1</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2021-05-06, 07:01:28</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:44</p>
+        <p><span>Updated:</span>2023-04-07, 14:58:39</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2021/05/06/SpringCloud-Zookeeper-1/" title="SpringCloud-Zookeeper-1">http://yoursite.com/2021/05/06/SpringCloud-Zookeeper-1/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/05/06/SpringCloud-Zookeeper-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -809,7 +410,7 @@ public class OrderController &#123;
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-Zookeeper%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">构建微服务架构(Zookeeper篇)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Zookeeper%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">1. Zookeeper的安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Zookeeper-%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 Zookeeper 下载地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Zookeeper-%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 Zookeeper 安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%94%AF%E4%BB%98%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E8%BF%9Bzookeeper"><span class="toc-number">1.2.</span> <span class="toc-text">2. 支付微服务注册进zookeeper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%88%9B%E5%BB%BA%E7%88%B6%E5%B7%A5%E7%A8%8B-springcloud2021"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 创建父工程 springcloud2021</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-springcloud2021-%E7%88%B6%E5%B7%A5%E7%A8%8B-pom-xml%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 springcloud2021 父工程 pom.xml代码如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%88%9B%E5%BB%BAcloud-provider-payment8004%E7%9A%84Maven%E5%B7%A5%E7%A8%8B"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 创建cloud-provider-payment8004的Maven工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-cloud-provider-payment8004%E5%B7%A5%E7%A8%8B-pom-xml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 cloud-provider-payment8004工程 pom.xml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-cloud-provider-payment8004%E5%B7%A5%E7%A8%8B-application-yml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 cloud-provider-payment8004工程 application.yml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-cloud-provider-payment8004%E5%B7%A5%E7%A8%8B-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.6 cloud-provider-payment8004工程 主启动类如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-cloud-provider-payment8004%E5%B7%A5%E7%A8%8B-Controller%E7%B1%BB%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.7.</span> <span class="toc-text">2.7 cloud-provider-payment8004工程 Controller类如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-%E5%90%AF%E5%8A%A88004%E6%B3%A8%E5%86%8C%E8%BF%9Bzookeeper%EF%BC%88%E8%A6%81%E5%85%88%E5%90%AF%E5%8A%A8zookeeper%E7%9A%84server%EF%BC%89"><span class="toc-number">1.2.8.</span> <span class="toc-text">2.8 启动8004注册进zookeeper（要先启动zookeeper的server）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-9-Zookeeper%E4%B8%B4%E6%97%B6%E8%BF%98%E6%98%AF%E6%8C%81%E4%B9%85%E8%8A%82%E7%82%B9"><span class="toc-number">1.2.9.</span> <span class="toc-text">2.9 Zookeeper临时还是持久节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%AE%A2%E5%8D%95%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E8%BF%9Bzookeeper"><span class="toc-number">1.3.</span> <span class="toc-text">3 订单服务注册进zookeeper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%88%9B%E5%BB%BA-cloud-consumerzk-order80-%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 创建 cloud-consumerzk-order80 项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-pom-xml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 cloud-consumerzk-order80 工程 pom.xml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-application-yml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 cloud-consumerzk-order80 工程 application.yml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-%E5%90%AF%E5%8A%A8%E7%B1%BB"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 cloud-consumerzk-order80 工程 启动类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-%E4%B8%9A%E5%8A%A1%E7%B1%BB"><span class="toc-number">1.3.5.</span> <span class="toc-text">3.5 cloud-consumerzk-order80 工程 业务类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-Controller%E7%B1%BB"><span class="toc-number">1.3.6.</span> <span class="toc-text">3.5 cloud-consumerzk-order80 工程  Controller类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.7.</span> <span class="toc-text">3.6.验证测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-%E8%AE%BF%E9%97%AE%E6%B5%8B%E8%AF%95%E5%9C%B0%E5%9D%80-http-localhost-consumer-payment-zk"><span class="toc-number">1.3.8.</span> <span class="toc-text">3.7.访问测试地址 - http:&#x2F;&#x2F;localhost&#x2F;consumer&#x2F;payment&#x2F;zk</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-Zookeeper%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">构建微服务架构(Zookeeper篇)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Zookeeper%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">1. Zookeeper的安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Zookeeper-%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 Zookeeper 下载地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Zookeeper-%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 Zookeeper 安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%94%AF%E4%BB%98%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E8%BF%9B-zookeeper"><span class="toc-number">1.2.</span> <span class="toc-text">2. 支付微服务注册进 zookeeper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%88%9B%E5%BB%BA%E7%88%B6%E5%B7%A5%E7%A8%8B-springcloud2021"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 创建父工程 springcloud2021</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-springcloud2021-%E7%88%B6%E5%B7%A5%E7%A8%8B-pom-xml-%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 springcloud2021 父工程 pom.xml 代码如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%88%9B%E5%BB%BAcloud-provider-payment8004-%E7%9A%84-Maven-%E5%B7%A5%E7%A8%8B"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 创建cloud-provider-payment8004 的 Maven 工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-cloud-provider-payment8004-%E5%B7%A5%E7%A8%8B-pom-xml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 cloud-provider-payment8004 工程 pom.xml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-cloud-provider-payment8004-%E5%B7%A5%E7%A8%8B-application-yml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 cloud-provider-payment8004 工程 application.yml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-cloud-provider-payment8004-%E5%B7%A5%E7%A8%8B-%E4%B8%BB%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.6 cloud-provider-payment8004 工程 主启动类如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-cloud-provider-payment8004-%E5%B7%A5%E7%A8%8B-Controller-%E7%B1%BB%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.7.</span> <span class="toc-text">2.7 cloud-provider-payment8004 工程 Controller 类如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-%E5%90%AF%E5%8A%A8-8004-%E6%B3%A8%E5%86%8C%E8%BF%9B-zookeeper%EF%BC%88%E8%A6%81%E5%85%88%E5%90%AF%E5%8A%A8-zookeeper-%E7%9A%84-server%EF%BC%89"><span class="toc-number">1.2.8.</span> <span class="toc-text">2.8 启动 8004 注册进 zookeeper（要先启动 zookeeper 的 server）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-9-Zookeeper-%E4%B8%B4%E6%97%B6%E8%BF%98%E6%98%AF%E6%8C%81%E4%B9%85%E8%8A%82%E7%82%B9"><span class="toc-number">1.2.9.</span> <span class="toc-text">2.9 Zookeeper 临时还是持久节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%AE%A2%E5%8D%95%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E8%BF%9B-zookeeper"><span class="toc-number">1.3.</span> <span class="toc-text">3 订单服务注册进 zookeeper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%88%9B%E5%BB%BA-cloud-consumerzk-order80-%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 创建 cloud-consumerzk-order80 项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-pom-xml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 cloud-consumerzk-order80 工程 pom.xml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-application-yml-%E6%96%87%E4%BB%B6%E5%A6%82%E4%B8%8B"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 cloud-consumerzk-order80 工程 application.yml 文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-%E5%90%AF%E5%8A%A8%E7%B1%BB"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 cloud-consumerzk-order80 工程 启动类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-%E4%B8%9A%E5%8A%A1%E7%B1%BB"><span class="toc-number">1.3.5.</span> <span class="toc-text">3.5 cloud-consumerzk-order80 工程 业务类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-cloud-consumerzk-order80-%E5%B7%A5%E7%A8%8B-Controller-%E7%B1%BB"><span class="toc-number">1.3.6.</span> <span class="toc-text">3.5 cloud-consumerzk-order80 工程  Controller 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.7.</span> <span class="toc-text">3.6.验证测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-%E8%AE%BF%E9%97%AE%E6%B5%8B%E8%AF%95%E5%9C%B0%E5%9D%80-http-localhost-consumer-payment-zk"><span class="toc-number">1.3.8.</span> <span class="toc-text">3.7.访问测试地址 - http:&#x2F;&#x2F;localhost&#x2F;consumer&#x2F;payment&#x2F;zk</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
