@@ -23,7 +23,7 @@
 <meta property="og:description" content="DATA GUARD多节点搭建由于前面已经写了单节点如何搭建了，多节点的搭建主要是pfile参数文件有所改动，这边主要列出参数文件的格式。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-04T02:54:53.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:43.315Z">
+<meta property="article:modified_time" content="2023-04-07T05:44:11.550Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Oracle">
 <meta property="article:tag" content="DG">
@@ -320,64 +320,12 @@ dg2:
 archive1 –&gt; dg2(local)
 archive3 –&gt; orcl
 </code></pre>
-<h2 id="主库pfile文件"><a href="#主库pfile文件" class="headerlink" title="主库pfile文件"></a>主库pfile文件</h2><pre><code>*.audit_file_dest=’/u01/app/oracle/admin/orcl/adump’
-*.control_files=’/u01/app/oracle/oradata/orcl/control01.ctl’,’/u01/app/oracle/oradata/orcl/control02.ctl’
-*.db_file_name_convert=’/u01/app/oracle/oradata/orcl’,’/u01/app/oracle/oradata/orcl’
-*.db_name=’orcl’
-*.DB_UNIQUE_NAME=’orcl’
-*.diagnostic_dest=’/u01/app/oracle’
-*.dispatchers=’(PROTOCOL=TCP) (SERVICE=orclXDB)’
-*.FAL_CLIENT=’orcl’
-*.FAL_SERVER=’dg1’,’dg2’
-*.local_listener=’LOCAL_L1’
-*.LOG_ARCHIVE_CONFIG=’DG_CONFIG=(orcl,dg1,dg2)’
-*.LOG_ARCHIVE_DEST_1=’location=/u01/app/oracle/arch VALID_FOR=(ALL_LOGFILES,ALL_ROLES) DB_UNIQUE_NAME=orcl’
-*.LOG_ARCHIVE_DEST_2=’SERVICE=dg1 LGWR ASYNC VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE) DB_UNIQUE_NAME=dg1’
-*.LOG_ARCHIVE_DEST_3=’SERVICE=dg2 LGWR ASYNC VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE) DB_UNIQUE_NAME=dg2’
-*.LOG_ARCHIVE_DEST_STATE_1=’enable’
-*.LOG_ARCHIVE_DEST_STATE_2=’enable’
-*.LOG_ARCHIVE_DEST_STATE_3=’enable’
-*.log_file_name_convert=’/u01/app/oracle/oradata/orcl’,’/u01/app/oracle/oradata/orcl’
-*.STANDBY_FILE_MANAGEMENT=’AUTO’
-</code></pre>
-<p>注：log_archive_config_2 对应dg1节点的对应的log_archive_config_2，log_archive_config_3对应dg2中的log_archive_config_3，这非常重用</p>
-<h2 id="备库1-pfile文件"><a href="#备库1-pfile文件" class="headerlink" title="备库1 pfile文件"></a>备库1 pfile文件</h2><pre><code>*.audit_file_dest=’/u01/app/oracle/admin/orcl/adump’
-*.control_files=’/u01/app/oracle/oradata/orcl/control01.ctl’,’/u01/app/oracle/oradata/orcl/control02.ctl’#Restore Controlfile
-*.db_file_name_convert=’/u01/app/oracle/oradata/orcl’,’/u01/app/oracle/oradata/orcl’
-*.db_name=’orcl’
-*.DB_UNIQUE_NAME=’dg1’
-*.diagnostic_dest=’/u01/app/oracle’
-*.dispatchers=’(PROTOCOL=TCP) (SERVICE=orclXDB)’
-*.FAL_CLIENT=’dg1’
-*.FAL_SERVER=’orcl’
-*.local_listener=’LOCAL_L1’
-*.LOG_ARCHIVE_CONFIG=’DG_CONFIG=(orcl,dg1,dg2)’
-*.LOG_ARCHIVE_DEST_1=’location=/u01/app/oracle/arch VALID_FOR=(ALL_LOGFILES,ALL_ROLES) DB_UNIQUE_NAME=dg1’
-*.log_archive_dest_2=’service=orcl lgwr async valid_for=(online_logfiles,primary_role) db_unique_name=orcl’
-*.LOG_ARCHIVE_DEST_STATE_1=’ENABLE’
-*.LOG_ARCHIVE_DEST_STATE_2=’ENABLE’
-*.log_file_name_convert=’/u01/app/oracle/oradata/orcl’,’/u01/app/oracle/oradata/orcl’
-*.STANDBY_FILE_MANAGEMENT=’AUTO’
-</code></pre>
-<h2 id="备库2-pfile文件"><a href="#备库2-pfile文件" class="headerlink" title="备库2 pfile文件"></a>备库2 pfile文件</h2><pre><code>*.audit_file_dest=’/u01/app/oracle/admin/orcl/adump’
-*.control_files=’/u01/app/oracle/oradata/orcl/control01.ctl’,’/u01/app/oracle/oradata/orcl/control02.ctl’#Restore Controlfile
-*.db_file_name_convert=’/u01/app/oracle/oradata/orcl’,’/u01/app/oracle/oradata/orcl’
-*.db_name=’orcl’
-*.DB_UNIQUE_NAME=’dg2’
-*.diagnostic_dest=’/u01/app/oracle’
-*.dispatchers=’(PROTOCOL=TCP) (SERVICE=orclXDB)’
-*.FAL_CLIENT=’dg2’
-*.FAL_SERVER=’orcl’
-*.local_listener=’LOCAL_L1’
-*.LOG_ARCHIVE_CONFIG=’DG_CONFIG=(orcl,dg1,dg2)’
-*.LOG_ARCHIVE_DEST_1=’location=/u01/app/oracle/arch VALID_FOR=(ALL_LOGFILES,ALL_ROLES) DB_UNIQUE_NAME=dg2’
-*.log_archive_dest_3=’service=orcl lgwr async valid_for=(online_logfiles,primary_role) db_unique_name=orcl’
-*.LOG_ARCHIVE_DEST_STATE_1=’ENABLE’
-*.LOG_ARCHIVE_DEST_STATE_3=’ENABLE’
-*.log_file_name_convert=’/u01/app/oracle/oradata/orcl’,’/u01/app/oracle/oradata/orcl’
-*.STANDBY_FILE_MANAGEMENT=’AUTO’
-</code></pre>
+<h2 id="主库pfile文件"><a href="#主库pfile文件" class="headerlink" title="主库pfile文件"></a>主库pfile文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">*.audit_file_dest=&#x27;/u01/app/oracle/admin/orcl/adump&#x27;</span><br><span class="line">*.control_files=&#x27;/u01/app/oracle/oradata/orcl/control01.ctl&#x27;,&#x27;/u01/app/oracle/oradata/orcl/control02.ctl&#x27;</span><br><span class="line">*.db_file_name_convert=&#x27;/u01/app/oracle/oradata/orcl&#x27;,&#x27;/u01/app/oracle/oradata/orcl&#x27;</span><br><span class="line">*.db_name=&#x27;orcl&#x27;</span><br><span class="line">*.DB_UNIQUE_NAME=&#x27;orcl&#x27;</span><br><span class="line">*.diagnostic_dest=&#x27;/u01/app/oracle&#x27;</span><br><span class="line">*.dispatchers=&#x27;(PROTOCOL=TCP) (SERVICE=orclXDB)&#x27;</span><br><span class="line">*.FAL_CLIENT=&#x27;orcl&#x27;</span><br><span class="line">*.FAL_SERVER=&#x27;dg1&#x27;,&#x27;dg2&#x27;</span><br><span class="line">*.local_listener=&#x27;LOCAL_L1&#x27;</span><br><span class="line">*.LOG_ARCHIVE_CONFIG=&#x27;DG_CONFIG=(orcl,dg1,dg2)&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_1=&#x27;location=/u01/app/oracle/arch VALID_FOR=(ALL_LOGFILES,ALL_ROLES) DB_UNIQUE_NAME=orcl&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_2=&#x27;SERVICE=dg1 LGWR ASYNC VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE) DB_UNIQUE_NAME=dg1&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_3=&#x27;SERVICE=dg2 LGWR ASYNC VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE) DB_UNIQUE_NAME=dg2&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_STATE_1=&#x27;enable&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_STATE_2=&#x27;enable&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_STATE_3=&#x27;enable&#x27;</span><br><span class="line">*.log_file_name_convert=&#x27;/u01/app/oracle/oradata/orcl&#x27;,&#x27;/u01/app/oracle/oradata/orcl&#x27;</span><br><span class="line">*.STANDBY_FILE_MANAGEMENT=&#x27;AUTO&#x27;</span><br></pre></td></tr></table></figure>
 
+<p>注：<code>log_archive_config_2</code> 对应 dg1 节点的对应的 <code>log_archive_config_2</code>，<code>log_archive_config_3</code> 对应 dg2 中的 <code>log_archive_config_3</code> ，这非常重用</p>
+<h2 id="备库1-pfile文件"><a href="#备库1-pfile文件" class="headerlink" title="备库1 pfile文件"></a>备库1 pfile文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">*.audit_file_dest=&#x27;/u01/app/oracle/admin/orcl/adump&#x27;</span><br><span class="line">*.control_files=&#x27;/u01/app/oracle/oradata/orcl/control01.ctl&#x27;,&#x27;/u01/app/oracle/oradata/orcl/control02.ctl&#x27;#Restore Controlfile</span><br><span class="line">*.db_file_name_convert=&#x27;/u01/app/oracle/oradata/orcl&#x27;,&#x27;/u01/app/oracle/oradata/orcl&#x27;</span><br><span class="line">*.db_name=&#x27;orcl&#x27;</span><br><span class="line">*.DB_UNIQUE_NAME=&#x27;dg1&#x27;</span><br><span class="line">*.diagnostic_dest=&#x27;/u01/app/oracle&#x27;</span><br><span class="line">*.dispatchers=&#x27;(PROTOCOL=TCP) (SERVICE=orclXDB)&#x27;</span><br><span class="line">*.FAL_CLIENT=&#x27;dg1&#x27;</span><br><span class="line">*.FAL_SERVER=&#x27;orcl&#x27;</span><br><span class="line">*.local_listener=&#x27;LOCAL_L1&#x27;</span><br><span class="line">*.LOG_ARCHIVE_CONFIG=&#x27;DG_CONFIG=(orcl,dg1,dg2)&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_1=&#x27;location=/u01/app/oracle/arch VALID_FOR=(ALL_LOGFILES,ALL_ROLES) DB_UNIQUE_NAME=dg1&#x27;</span><br><span class="line">*.log_archive_dest_2=&#x27;service=orcl lgwr async valid_for=(online_logfiles,primary_role) db_unique_name=orcl&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_STATE_1=&#x27;ENABLE&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_STATE_2=&#x27;ENABLE&#x27;</span><br><span class="line">*.log_file_name_convert=&#x27;/u01/app/oracle/oradata/orcl&#x27;,&#x27;/u01/app/oracle/oradata/orcl&#x27;</span><br><span class="line">*.STANDBY_FILE_MANAGEMENT=&#x27;AUTO&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="备库2-pfile文件"><a href="#备库2-pfile文件" class="headerlink" title="备库2 pfile文件"></a>备库2 pfile文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">*.audit_file_dest=&#x27;/u01/app/oracle/admin/orcl/adump&#x27;</span><br><span class="line">*.control_files=&#x27;/u01/app/oracle/oradata/orcl/control01.ctl&#x27;,&#x27;/u01/app/oracle/oradata/orcl/control02.ctl&#x27;#Restore Controlfile</span><br><span class="line">*.db_file_name_convert=&#x27;/u01/app/oracle/oradata/orcl&#x27;,&#x27;/u01/app/oracle/oradata/orcl&#x27;</span><br><span class="line">*.db_name=&#x27;orcl&#x27;</span><br><span class="line">*.DB_UNIQUE_NAME=&#x27;dg2&#x27;</span><br><span class="line">*.diagnostic_dest=&#x27;/u01/app/oracle&#x27;</span><br><span class="line">*.dispatchers=&#x27;(PROTOCOL=TCP) (SERVICE=orclXDB)&#x27;</span><br><span class="line">*.FAL_CLIENT=&#x27;dg2&#x27;</span><br><span class="line">*.FAL_SERVER=&#x27;orcl&#x27;</span><br><span class="line">*.local_listener=&#x27;LOCAL_L1&#x27;</span><br><span class="line">*.LOG_ARCHIVE_CONFIG=&#x27;DG_CONFIG=(orcl,dg1,dg2)&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_1=&#x27;location=/u01/app/oracle/arch VALID_FOR=(ALL_LOGFILES,ALL_ROLES) DB_UNIQUE_NAME=dg2&#x27;</span><br><span class="line">*.log_archive_dest_3=&#x27;service=orcl lgwr async valid_for=(online_logfiles,primary_role) db_unique_name=orcl&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_STATE_1=&#x27;ENABLE&#x27;</span><br><span class="line">*.LOG_ARCHIVE_DEST_STATE_3=&#x27;ENABLE&#x27;</span><br><span class="line">*.log_file_name_convert=&#x27;/u01/app/oracle/oradata/orcl&#x27;,&#x27;/u01/app/oracle/oradata/orcl&#x27;</span><br><span class="line">*.STANDBY_FILE_MANAGEMENT=&#x27;AUTO&#x27;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -388,7 +336,7 @@ archive3 –&gt; orcl
         <p><span>Title:</span><a href="/2020/04/04/Oracle-DG-Multiple-Nodes/">Oracle-DG-Multiple-Nodes</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2020-04-04, 10:54:53</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p><span>Updated:</span>2023-04-07, 13:44:11</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2020/04/04/Oracle-DG-Multiple-Nodes/" title="Oracle-DG-Multiple-Nodes">http://yoursite.com/2020/04/04/Oracle-DG-Multiple-Nodes/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2020/04/04/Oracle-DG-Multiple-Nodes/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>

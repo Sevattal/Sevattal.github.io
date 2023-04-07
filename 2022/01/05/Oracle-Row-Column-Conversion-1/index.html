@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://yoursite.com/2022/01/05/Oracle-Row-Column-Conversion-1/11.png">
 <meta property="og:image" content="http://yoursite.com/2022/01/05/Oracle-Row-Column-Conversion-1/12.png">
 <meta property="article:published_time" content="2022-01-05T02:19:40.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:43.553Z">
+<meta property="article:modified_time" content="2023-04-07T06:24:18.582Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Oracle">
 <meta name="twitter:card" content="summary">
@@ -320,126 +320,51 @@
 </code></pre>
 <p>pivot ( sum ( planqty ) for plantype in ( ‘in’, ‘out’ ) )    –有聚合函数<br>unpivot.：unpivot (planqty for plantype in (inqty, outqty))</p>
 <p><strong>创建 RC_CON_1 测试表格</strong></p>
-<pre><code>CREATE TABLE RC_CON_1
-(
-  PLANDATE         VARCHAR2 (40 BYTE),
-  PLANTYPE         VARCHAR2 (40 BYTE),
-  PLANQTY          VARCHAR2 (40 BYTE)
-);
-INSERT INTO RC_CON_1 values (&#39;2021-11-22&#39;,&#39;IN&#39;, 1);
-INSERT INTO RC_CON_1 values (&#39;2021-12-22&#39;,&#39;OUT&#39;,100);
-COMMIT;
-</code></pre>
-<h3 id="1-1-行转列：pivot"><a href="#1-1-行转列：pivot" class="headerlink" title="1.1 行转列：pivot"></a>1.1 行转列：pivot</h3><p><strong>pivot ( sum ( planqty ) for plantype in ( ‘in’, ‘out’ ) )  –in、out数量转为列</strong></p>
-<pre><code>SELECT * FROM
- (SELECT PLANDATE
-        ,PLANTYPE
-        ,PLANQTY
-    FROM RC_CON_1)
-PIVOT (SUM (PLANQTY) FOR PLANTYPE IN (&#39;IN&#39; INQTY, &#39;OUT&#39; OUTQTY));
-</code></pre>
-<p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/1.png"></p>
-<h3 id="1-2-行转列：case-when-或-decode-（更繁琐）"><a href="#1-2-行转列：case-when-或-decode-（更繁琐）" class="headerlink" title="1.2 行转列：case when 或 decode （更繁琐）"></a>1.2 行转列：case when 或 decode （更繁琐）</h3><pre><code>SELECT PLANDATE
-      ,CASE WHEN PLANTYPE = &#39;IN&#39; THEN PLANQTY END INQTY
-      ,CASE WHEN PLANTYPE = &#39;OUT&#39; THEN PLANQTY END OUTQTY
-  FROM RC_CON_1
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE RC_CON_1</span><br><span class="line">(</span><br><span class="line">  PLANDATE         VARCHAR2 (40 BYTE),</span><br><span class="line">  PLANTYPE         VARCHAR2 (40 BYTE),</span><br><span class="line">  PLANQTY          VARCHAR2 (40 BYTE)</span><br><span class="line">);</span><br><span class="line">INSERT INTO RC_CON_1 values (&#x27;2021-11-22&#x27;,&#x27;IN&#x27;, 1);</span><br><span class="line">INSERT INTO RC_CON_1 values (&#x27;2021-12-22&#x27;,&#x27;OUT&#x27;,100);</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
 
-SELECT PLANDATE
-      ,DECODE (PLANTYPE,&#39;IN&#39;,PLANQTY) INQTY
-      ,DECODE (PLANTYPE,&#39;OUT&#39;,PLANQTY) OUTQTY
-  FROM RC_CON_1
-</code></pre>
-<h2 id="2-列转行：unpivot"><a href="#2-列转行：unpivot" class="headerlink" title="2. 列转行：unpivot"></a>2. 列转行：unpivot</h2><pre><code>unpivot (planqty for plantype in (inqty, outqty))
-</code></pre>
+<h3 id="1-1-行转列：pivot"><a href="#1-1-行转列：pivot" class="headerlink" title="1.1 行转列：pivot"></a>1.1 行转列：pivot</h3><p><strong>pivot ( sum ( planqty ) for plantype in ( ‘in’, ‘out’ ) )  –in、out数量转为列</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM</span><br><span class="line"> (SELECT PLANDATE</span><br><span class="line">        ,PLANTYPE</span><br><span class="line">        ,PLANQTY</span><br><span class="line">    FROM RC_CON_1)</span><br><span class="line">PIVOT (SUM (PLANQTY) FOR PLANTYPE IN (&#x27;IN&#x27; INQTY, &#x27;OUT&#x27; OUTQTY));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/1.png"></p>
+<h3 id="1-2-行转列：case-when-或-decode-（更繁琐）"><a href="#1-2-行转列：case-when-或-decode-（更繁琐）" class="headerlink" title="1.2 行转列：case when 或 decode （更繁琐）"></a>1.2 行转列：case when 或 decode （更繁琐）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT PLANDATE</span><br><span class="line">      ,CASE WHEN PLANTYPE = &#x27;IN&#x27; THEN PLANQTY END INQTY</span><br><span class="line">      ,CASE WHEN PLANTYPE = &#x27;OUT&#x27; THEN PLANQTY END OUTQTY</span><br><span class="line">  FROM RC_CON_1</span><br><span class="line"></span><br><span class="line">SELECT PLANDATE</span><br><span class="line">      ,DECODE (PLANTYPE,&#x27;IN&#x27;,PLANQTY) INQTY</span><br><span class="line">      ,DECODE (PLANTYPE,&#x27;OUT&#x27;,PLANQTY) OUTQTY</span><br><span class="line">  FROM RC_CON_1</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-列转行：unpivot"><a href="#2-列转行：unpivot" class="headerlink" title="2. 列转行：unpivot"></a>2. 列转行：unpivot</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unpivot (planqty for plantype in (inqty, outqty))</span><br></pre></td></tr></table></figure>
+
 <p><strong>创建 RC_CON_2 测试表格</strong></p>
-<pre><code>CREATE TABLE RC_CON_2 (
-plandate varchar2(20), 
-inqty number, 
-outqty number
-); 
-INSERT INTO  RC_CON_2 values (&#39;20180911&#39;, 10, 20);
-INSERT INTO  RC_CON_2 values (&#39;20180912&#39;, 4, 8);
-INSERT INTO  RC_CON_2 values (&#39;20180913&#39;, 3, 6);
-COMMIT;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE RC_CON_2 (</span><br><span class="line">plandate varchar2(20), </span><br><span class="line">inqty number, </span><br><span class="line">outqty number</span><br><span class="line">); </span><br><span class="line">INSERT INTO  RC_CON_2 values (&#x27;20180911&#x27;, 10, 20);</span><br><span class="line">INSERT INTO  RC_CON_2 values (&#x27;20180912&#x27;, 4, 8);</span><br><span class="line">INSERT INTO  RC_CON_2 values (&#x27;20180913&#x27;, 3, 6);</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/2.png"></p>
-<h3 id="2-1-unpivot-列转行"><a href="#2-1-unpivot-列转行" class="headerlink" title="2.1 unpivot 列转行"></a>2.1 unpivot 列转行</h3><pre><code>SELECT   PLANDATE 
-        ,PLANTYPE
-        ,PLANQTY 
-    FROM RC_CON_2 
-UNPIVOT (PLANQTY FOR PLANTYPE IN (INQTY, OUTQTY));
-</code></pre>
+<h3 id="2-1-unpivot-列转行"><a href="#2-1-unpivot-列转行" class="headerlink" title="2.1 unpivot 列转行"></a>2.1 unpivot 列转行</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT   PLANDATE </span><br><span class="line">        ,PLANTYPE</span><br><span class="line">        ,PLANQTY </span><br><span class="line">    FROM RC_CON_2 </span><br><span class="line">UNPIVOT (PLANQTY FOR PLANTYPE IN (INQTY, OUTQTY));</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/3.png"></p>
 <h2 id="3-多行转字符串"><a href="#3-多行转字符串" class="headerlink" title="3. 多行转字符串"></a>3. 多行转字符串</h2><pre><code>listagg 或 row_number + lead
 </code></pre>
 <p><strong>创建 RC_CON_3 测试表</strong></p>
-<pre><code>CREATE TABLE RC_CON_3(
-    id number,
-    name varchar2(20)
-); 
-insert into RC_CON_3 values(1,&#39;a&#39;);  
-insert into RC_CON_3 values(1,&#39;b&#39;);  
-insert into RC_CON_3 values(1,&#39;c&#39;);  
-insert into RC_CON_3 values(2,&#39;d&#39;);  
-insert into RC_CON_3 values(2,&#39;e&#39;); 
-COMMIT;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE RC_CON_3(</span><br><span class="line">    id number,</span><br><span class="line">    name varchar2(20)</span><br><span class="line">); </span><br><span class="line">insert into RC_CON_3 values(1,&#x27;a&#x27;);  </span><br><span class="line">insert into RC_CON_3 values(1,&#x27;b&#x27;);  </span><br><span class="line">insert into RC_CON_3 values(1,&#x27;c&#x27;);  </span><br><span class="line">insert into RC_CON_3 values(2,&#x27;d&#x27;);  </span><br><span class="line">insert into RC_CON_3 values(2,&#x27;e&#x27;); </span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/4.png"></p>
 <h3 id="3-1-listagg"><a href="#3-1-listagg" class="headerlink" title="3.1 listagg"></a>3.1 listagg</h3><p>a. 行转列 ，默认逗号隔开；并按ID分组合并name</p>
-<pre><code>SELECT ID
-      ,LISTAGG(NAME) NAME 
-  FROM RC_CON_3 
- GROUP BY ID;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT ID</span><br><span class="line">      ,LISTAGG(NAME) NAME </span><br><span class="line">  FROM RC_CON_3 </span><br><span class="line"> GROUP BY ID;</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/5.png"></p>
 <p><label style="color:red"><strong>注：11gr2和12C上已经摒弃了wm_concat 函数，该方法替换成了 listagg 函数</strong></label></p>
 <p>b. 把结果里使用分号 “|” 隔开</p>
-<pre><code> SELECT ID
-      ,LISTAGG(NAME,&#39;|&#39;) NAME 
-  FROM RC_CON_3 
- GROUP BY ID;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT ID</span><br><span class="line">     ,LISTAGG(NAME,&#x27;|&#x27;) NAME </span><br><span class="line"> FROM RC_CON_3 </span><br><span class="line">GROUP BY ID;</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/6.png"></p>
 <p>c. 扩展：用于快速复制输入所有栏位名</p>
-<pre><code>SELECT 
-     &#39;CREATE OR REPLACE VIEW AS SELECT &#39;|| TO_CHAR (LISTAGG(COLUMN_NAME,&#39;,&#39;)) || &#39; FROM RC_CON_3&#39; SQLSTR   
- FROM USER_TAB_COLUMNS 
-WHERE TABLE_NAME LIKE UPPER (&#39;%RC_CON_3%&#39;);
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">     &#x27;CREATE OR REPLACE VIEW AS SELECT &#x27;|| TO_CHAR (LISTAGG(COLUMN_NAME,&#x27;,&#x27;)) || &#x27; FROM RC_CON_3&#x27; SQLSTR   </span><br><span class="line"> FROM USER_TAB_COLUMNS </span><br><span class="line">WHERE TABLE_NAME LIKE UPPER (&#x27;%RC_CON_3%&#x27;);</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/7.png"></p>
-<h3 id="3-2-row-number-lead"><a href="#3-2-row-number-lead" class="headerlink" title="3.2 row_number + lead"></a>3.2 row_number + lead</h3><pre><code>SELECT ID, NAME_CHAR
-  FROM (SELECT ID,
-               ROW_NUMBER() OVER(PARTITION BY ID ORDER BY NAME) AS RN,
-               NAME || LEAD(&#39;,&#39; || NAME, 1) OVER(PARTITION BY ID ORDER BY NAME) ||
-                       LEAD(&#39;,&#39; || NAME, 2) OVER(PARTITION BY ID ORDER BY NAME) ||
-                       LEAD(&#39;,&#39; || NAME, 3) OVER(PARTITION BY ID ORDER BY NAME) AS NAME_CHAR
-          FROM RC_CON_3)
-WHERE RN = 1
-ORDER BY 1; 
-</code></pre>
+<h3 id="3-2-row-number-lead"><a href="#3-2-row-number-lead" class="headerlink" title="3.2 row_number + lead"></a>3.2 row_number + lead</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT ID, NAME_CHAR</span><br><span class="line">  FROM (SELECT ID,</span><br><span class="line">               ROW_NUMBER() OVER(PARTITION BY ID ORDER BY NAME) AS RN,</span><br><span class="line">               NAME || LEAD(&#x27;,&#x27; || NAME, 1) OVER(PARTITION BY ID ORDER BY NAME) ||</span><br><span class="line">                       LEAD(&#x27;,&#x27; || NAME, 2) OVER(PARTITION BY ID ORDER BY NAME) ||</span><br><span class="line">                       LEAD(&#x27;,&#x27; || NAME, 3) OVER(PARTITION BY ID ORDER BY NAME) AS NAME_CHAR</span><br><span class="line">          FROM RC_CON_3)</span><br><span class="line">WHERE RN = 1</span><br><span class="line">ORDER BY 1; </span><br></pre></td></tr></table></figure>
+
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/8.png"></p>
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/9.png"></p>
-<h3 id="3-3-sys-connect-by-path"><a href="#3-3-sys-connect-by-path" class="headerlink" title="3.3 sys_connect_by_path"></a>3.3 sys_connect_by_path</h3><pre><code>SELECT  T.ID
-       ,SUBSTR(SYS_CONNECT_BY_PATH(T.NAME, &#39;,&#39;), 2) STR
-  FROM (
-        SELECT ID
-              ,NAME
-              ,ROW_NUMBER() OVER(PARTITION BY ID ORDER BY NAME) RN
-        FROM RC_CON_3
-        ) T
-WHERE CONNECT_BY_ISLEAF = 1
-START WITH RN = 1
-CONNECT BY RN = PRIOR RN + 1 AND ID = PRIOR ID;
-</code></pre>
+<h3 id="3-3-sys-connect-by-path"><a href="#3-3-sys-connect-by-path" class="headerlink" title="3.3 sys_connect_by_path"></a>3.3 sys_connect_by_path</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SELECT  T.ID</span><br><span class="line">       ,SUBSTR(SYS_CONNECT_BY_PATH(T.NAME, &#x27;,&#x27;), 2) STR</span><br><span class="line">  FROM (</span><br><span class="line">        SELECT ID</span><br><span class="line">              ,NAME</span><br><span class="line">              ,ROW_NUMBER() OVER(PARTITION BY ID ORDER BY NAME) RN</span><br><span class="line">        FROM RC_CON_3</span><br><span class="line">        ) T</span><br><span class="line">WHERE CONNECT_BY_ISLEAF = 1</span><br><span class="line">START WITH RN = 1</span><br><span class="line">CONNECT BY RN = PRIOR RN + 1 AND ID = PRIOR ID;</span><br></pre></td></tr></table></figure>
+
 <h2 id="4-字符串转多列：regexp-substr-或-substr-instr，拆分字符串"><a href="#4-字符串转多列：regexp-substr-或-substr-instr，拆分字符串" class="headerlink" title="4.字符串转多列：regexp_substr 或 substr + instr，拆分字符串"></a>4.字符串转多列：regexp_substr 或 substr + instr，拆分字符串</h2><p><strong>创建 RC_CON_4 测试表</strong></p>
-<pre><code>create table RC_CON_4 (
-id number, 
-name varchar2 (20)
-);   
-insert into RC_CON_4  values (1, &#39;a,b,c&#39;);   
-insert into RC_CON_4  values (2, &#39;d,e&#39;); 
-COMMIT;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create table RC_CON_4 (</span><br><span class="line">id number, </span><br><span class="line">name varchar2 (20)</span><br><span class="line">);   </span><br><span class="line">insert into RC_CON_4  values (1, &#x27;a,b,c&#x27;);   </span><br><span class="line">insert into RC_CON_4  values (2, &#x27;d,e&#x27;); </span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/10.png"></p>
 <h3 id="4-1-regexp-substr"><a href="#4-1-regexp-substr" class="headerlink" title="4.1 regexp_substr"></a>4.1 regexp_substr</h3><pre><code>function REGEXP_SUBSTR(String, pattern, position, occurrence, modifier)
 __srcstr     ：需要进行正则处理的字符串
@@ -447,87 +372,34 @@ __pattern    ：进行匹配的正则表达式
 __position   ：起始位置，从第几个字符开始正则表达式匹配（默认为1）
 __occurrence ：标识第几个匹配组，默认为1
 __modifier   ：模式（&#39;i&#39;不区分大小写进行检索；&#39;c&#39;区分大小写进行检索。默认为&#39;c&#39;。）
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT ID</span><br><span class="line">      ,NAME</span><br><span class="line">      ,RTRIM(REGEXP_SUBSTR(NAME || &#x27;,&#x27;, &#x27;.*?&#x27; || &#x27;,&#x27;, 1, 1), &#x27;,&#x27;) N1</span><br><span class="line">      ,RTRIM(REGEXP_SUBSTR(NAME || &#x27;,&#x27;, &#x27;.*?&#x27; || &#x27;,&#x27;, 1, 2), &#x27;,&#x27;) N2</span><br><span class="line">      ,RTRIM(REGEXP_SUBSTR(NAME || &#x27;,&#x27;, &#x27;.*?&#x27; || &#x27;,&#x27;, 1, 3), &#x27;,&#x27;) N3</span><br><span class="line">  FROM RC_CON_4</span><br><span class="line">ORDER BY 1;</span><br></pre></td></tr></table></figure>
 
-SELECT ID
-      ,NAME
-      ,RTRIM(REGEXP_SUBSTR(NAME || &#39;,&#39;, &#39;.*?&#39; || &#39;,&#39;, 1, 1), &#39;,&#39;) N1
-      ,RTRIM(REGEXP_SUBSTR(NAME || &#39;,&#39;, &#39;.*?&#39; || &#39;,&#39;, 1, 2), &#39;,&#39;) N2
-      ,RTRIM(REGEXP_SUBSTR(NAME || &#39;,&#39;, &#39;.*?&#39; || &#39;,&#39;, 1, 3), &#39;,&#39;) N3
-  FROM RC_CON_4
-ORDER BY 1;
-</code></pre>
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/11.png"></p>
-<h3 id="4-2-substr-instr"><a href="#4-2-substr-instr" class="headerlink" title="4.2 substr + instr"></a>4.2 substr + instr</h3><pre><code>SELECT ID
-      ,NAME
-      ,SUBSTR(NAME, 1, INSTR(NAME || &#39;,&#39;, &#39;,&#39;, 1, 1) - 1) N1
-      ,SUBSTR(NAME,
-              INSTR(NAME || &#39;,&#39;, &#39;,&#39;, 1, 1) + 1,
-              INSTR(NAME || &#39;,&#39;, &#39;,&#39;, 1, 2) - INSTR(NAME || &#39;,&#39;, &#39;,&#39;, 1, 1) - 1) N2
-      ,SUBSTR(NAME,
-              INSTR(NAME || &#39;,&#39;, &#39;,&#39;, 1, 2) + 1,
-              INSTR(NAME || &#39;,&#39;, &#39;,&#39;, 1, 3) - INSTR(NAME || &#39;,&#39;, &#39;,&#39;, 1, 2) - 1) N3
-  FROM RC_CON_4
-ORDER BY 1;
-</code></pre>
-<h2 id="5-字符串转多行"><a href="#5-字符串转多行" class="headerlink" title="5.字符串转多行"></a>5.字符串转多行</h2><h3 id="5-1-SEQUENCE-series"><a href="#5-1-SEQUENCE-series" class="headerlink" title="5.1 SEQUENCE series"></a>5.1 SEQUENCE series</h3><p>这类方法主要是要产生一个连续的整数列，产生连续整数列的方法有很多，主要有：CONNECT BY,ROWNUM+all_objects,CUBE等。</p>
+<h3 id="4-2-substr-instr"><a href="#4-2-substr-instr" class="headerlink" title="4.2 substr + instr"></a>4.2 substr + instr</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SELECT ID</span><br><span class="line">      ,NAME</span><br><span class="line">      ,SUBSTR(NAME, 1, INSTR(NAME || &#x27;,&#x27;, &#x27;,&#x27;, 1, 1) - 1) N1</span><br><span class="line">      ,SUBSTR(NAME,</span><br><span class="line">              INSTR(NAME || &#x27;,&#x27;, &#x27;,&#x27;, 1, 1) + 1,</span><br><span class="line">              INSTR(NAME || &#x27;,&#x27;, &#x27;,&#x27;, 1, 2) - INSTR(NAME || &#x27;,&#x27;, &#x27;,&#x27;, 1, 1) - 1) N2</span><br><span class="line">      ,SUBSTR(NAME,</span><br><span class="line">              INSTR(NAME || &#x27;,&#x27;, &#x27;,&#x27;, 1, 2) + 1,</span><br><span class="line">              INSTR(NAME || &#x27;,&#x27;, &#x27;,&#x27;, 1, 3) - INSTR(NAME || &#x27;,&#x27;, &#x27;,&#x27;, 1, 2) - 1) N3</span><br><span class="line">  FROM RC_CON_4</span><br><span class="line">ORDER BY 1;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-字符串转多行"><a href="#5-字符串转多行" class="headerlink" title="5.字符串转多行"></a>5.字符串转多行</h2><h3 id="5-1-SEQUENCE-series"><a href="#5-1-SEQUENCE-series" class="headerlink" title="5.1 SEQUENCE series"></a>5.1 SEQUENCE series</h3><p>这类方法主要是要产生一个连续的整数列，产生连续整数列的方法有很多，主要有：CONNECT BY,ROWNUM + all_objects,CUBE 等。</p>
 <p>以下案例操作使用 RC_CON_4 测试表</p>
 <p><strong>–LEVEL产生连续整数列</strong></p>
-<pre><code>SELECT T.ID,
-       C.LEVEL_NUM,
-       SUBSTR(T.NAME1,
-              INSTR(T.NAME1, &#39;,&#39;, 1, C.LEVEL_NUM) + 1,
-              INSTR(T.NAME1, &#39;,&#39;, 1, C.LEVEL_NUM + 1) -
-              (INSTR(T.NAME1, &#39;,&#39;, 1, C.LEVEL_NUM) + 1)) NAME
-  FROM (SELECT ID,
-               &#39;,&#39; || NAME || &#39;,&#39; AS NAME1,
-               LENGTH(NAME || &#39;,&#39;) - NVL(LENGTH(REPLACE(NAME, &#39;,&#39;)), 0) AS CNT
-          FROM RC_CON_4) T,
-       (SELECT LEVEL LEVEL_NUM FROM DUAL CONNECT BY LEVEL &lt;= 5) C
-WHERE C.LEVEL_NUM &lt;= T.CNT
-ORDER BY 1, 2;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">SELECT T.ID,</span><br><span class="line">       C.LEVEL_NUM,</span><br><span class="line">       SUBSTR(T.NAME1,</span><br><span class="line">              INSTR(T.NAME1, &#x27;,&#x27;, 1, C.LEVEL_NUM) + 1,</span><br><span class="line">              INSTR(T.NAME1, &#x27;,&#x27;, 1, C.LEVEL_NUM + 1) -</span><br><span class="line">              (INSTR(T.NAME1, &#x27;,&#x27;, 1, C.LEVEL_NUM) + 1)) NAME</span><br><span class="line">  FROM (SELECT ID,</span><br><span class="line">               &#x27;,&#x27; || NAME || &#x27;,&#x27; AS NAME1,</span><br><span class="line">               LENGTH(NAME || &#x27;,&#x27;) - NVL(LENGTH(REPLACE(NAME, &#x27;,&#x27;)), 0) AS CNT</span><br><span class="line">          FROM RC_CON_4) T,</span><br><span class="line">       (SELECT LEVEL LEVEL_NUM FROM DUAL CONNECT BY LEVEL &lt;= 5) C</span><br><span class="line">WHERE C.LEVEL_NUM &lt;= T.CNT</span><br><span class="line">ORDER BY 1, 2;</span><br></pre></td></tr></table></figure>
+
 <p><strong>–ROWNUM产生连续整数列</strong></p>
-<pre><code>SELECT T.ID,
-       C.RN,
-       SUBSTR(T.NAME1,
-              INSTR(T.NAME1, &#39;,&#39;, 1, C.RN) + 1,
-              INSTR(T.NAME1, &#39;,&#39;, 1, C.RN + 1) -
-              (INSTR(T.NAME1, &#39;,&#39;, 1, C.RN) + 1)) NAME
-  FROM (SELECT ID,
-               &#39;,&#39; || NAME || &#39;,&#39; AS NAME1,
-               LENGTH(NAME || &#39;,&#39;) - NVL(LENGTH(REPLACE(NAME, &#39;,&#39;)), 0) AS CNT
-          FROM RC_CON_4) T,
-       (SELECT ROWNUM RN FROM DUAL CONNECT BY ROWNUM &lt;= 5) C
-WHERE C.RN &lt;= T.CNT
-ORDER BY 1, 2;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">SELECT T.ID,</span><br><span class="line">       C.RN,</span><br><span class="line">       SUBSTR(T.NAME1,</span><br><span class="line">              INSTR(T.NAME1, &#x27;,&#x27;, 1, C.RN) + 1,</span><br><span class="line">              INSTR(T.NAME1, &#x27;,&#x27;, 1, C.RN + 1) -</span><br><span class="line">              (INSTR(T.NAME1, &#x27;,&#x27;, 1, C.RN) + 1)) NAME</span><br><span class="line">  FROM (SELECT ID,</span><br><span class="line">               &#x27;,&#x27; || NAME || &#x27;,&#x27; AS NAME1,</span><br><span class="line">               LENGTH(NAME || &#x27;,&#x27;) - NVL(LENGTH(REPLACE(NAME, &#x27;,&#x27;)), 0) AS CNT</span><br><span class="line">          FROM RC_CON_4) T,</span><br><span class="line">       (SELECT ROWNUM RN FROM DUAL CONNECT BY ROWNUM &lt;= 5) C</span><br><span class="line">WHERE C.RN &lt;= T.CNT</span><br><span class="line">ORDER BY 1, 2;</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2022/01/05/Oracle-Row-Column-Conversion-1/12.png"></p>
 <h3 id="5-2-Hierarchical-DBMS-RANDOM"><a href="#5-2-Hierarchical-DBMS-RANDOM" class="headerlink" title="5.2 Hierarchical + DBMS_RANDOM"></a>5.2 Hierarchical + DBMS_RANDOM</h3><pre><code>trim([leading/trailing/both][匹配字符串或数值][from][需要被处理的字符串或数值])
-
-SELECT ID,
-       LEVEL AS LEVEL_NUM,
-       RTRIM (REGEXP_SUBSTR(NAME || &#39;,&#39;, &#39;.*?&#39; || &#39;,&#39;, 1, LEVEL), &#39;,&#39;) AS NAME
-  FROM RC_CON_4
-CONNECT BY ID = PRIOR ID
-       AND PRIOR DBMS_RANDOM.VALUE IS NOT NULL
-       AND LEVEL &lt;= LENGTH (REGEXP_REPLACE (NAME || &#39;,&#39;, &#39;[^&#39; || &#39;,&#39; || &#39;]&#39;, NULL))
-ORDER BY 1, 2;
 </code></pre>
-<h3 id="5-3-Hierarchical-CONNECT-BY-ROOT"><a href="#5-3-Hierarchical-CONNECT-BY-ROOT" class="headerlink" title="5.3 Hierarchical + CONNECT_BY_ROOT"></a>5.3 Hierarchical + CONNECT_BY_ROOT</h3><pre><code>with t as
- (select &#39;i;am;a;test;mine&#39; as str from dual)
-select level,
-  str,
-  regexp_substr(t.str, &#39;[^;]+&#39;, 1, level) str_single
-  from t
-connect by level &lt;= length(t.str) - length(replace(t.str, &#39;;&#39;, &#39;&#39;)) + 1;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT ID,</span><br><span class="line">       LEVEL AS LEVEL_NUM,</span><br><span class="line">       RTRIM (REGEXP_SUBSTR(NAME || &#x27;,&#x27;, &#x27;.*?&#x27; || &#x27;,&#x27;, 1, LEVEL), &#x27;,&#x27;) AS NAME</span><br><span class="line">  FROM RC_CON_4</span><br><span class="line">CONNECT BY ID = PRIOR ID</span><br><span class="line">       AND PRIOR DBMS_RANDOM.VALUE IS NOT NULL</span><br><span class="line">       AND LEVEL &lt;= LENGTH (REGEXP_REPLACE (NAME || &#x27;,&#x27;, &#x27;[^&#x27; || &#x27;,&#x27; || &#x27;]&#x27;, NULL))</span><br><span class="line">ORDER BY 1, 2;</span><br></pre></td></tr></table></figure>
 
-SELECT id,
-  REGEXP_SUBSTR(name,&#39;^[^,]*&#39;,1,1)  first_one,
-    REGEXP_SUBSTR(name,&#39;^[^,]*&#39;,1,3) lll,
-  REGEXP_SUBSTR(name, &#39;([[:alpha:]]+)$&#39;)   last_one
-FROM RC_CON_4
-ORDER BY 1;
-</code></pre>
+<h3 id="5-3-Hierarchical-CONNECT-BY-ROOT"><a href="#5-3-Hierarchical-CONNECT-BY-ROOT" class="headerlink" title="5.3 Hierarchical + CONNECT_BY_ROOT"></a>5.3 Hierarchical + CONNECT_BY_ROOT</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">with t as</span><br><span class="line"> (select &#x27;i;am;a;test;mine&#x27; as str from dual)</span><br><span class="line">select level,</span><br><span class="line">  str,</span><br><span class="line">  regexp_substr(t.str, &#x27;[^;]+&#x27;, 1, level) str_single</span><br><span class="line">  from t</span><br><span class="line">connect by level &lt;= length(t.str) - length(replace(t.str, &#x27;;&#x27;, &#x27;&#x27;)) + 1;</span><br><span class="line"></span><br><span class="line">SELECT id,</span><br><span class="line">  REGEXP_SUBSTR(name,&#x27;^[^,]*&#x27;,1,1)  first_one,</span><br><span class="line">    REGEXP_SUBSTR(name,&#x27;^[^,]*&#x27;,1,3) lll,</span><br><span class="line">  REGEXP_SUBSTR(name, &#x27;([[:alpha:]]+)$&#x27;)   last_one</span><br><span class="line">FROM RC_CON_4</span><br><span class="line">ORDER BY 1;</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他实现"><a href="#其他实现" class="headerlink" title="其他实现"></a>其他实现</h2><h3 id="1-案例"><a href="#1-案例" class="headerlink" title="1. 案例"></a>1. 案例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将多行数据转换成指定列数，多出来的数据自动换到下一行</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试数据</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE RC_E_1</span><br><span class="line">(</span><br><span class="line">  ID         VARCHAR2 (40 BYTE)</span><br><span class="line">);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;01301&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;09156&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;04155&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;04158&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;08112&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;05102&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;08153&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;03156&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;09112&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;09108&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;08159&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;15151&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;08158&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;08110&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;03159&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;08152&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;02101&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;10151&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;13101&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;09111&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;13154&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;04151&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;08157&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;09159&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;08109&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;06152&#x27;);</span><br><span class="line">INSERT INTO RC_E_1 (ID) VALUES (&#x27;09158&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>生成每行 8 列，多出来的数据自动换到下一行</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">SELECT * </span><br><span class="line">FROM (</span><br><span class="line"></span><br><span class="line">  -- ceil 函数为取整函数</span><br><span class="line">  -- ceil(n/8) 则是将 序号 除以 8 取整，将组分成来，每组为 8 个</span><br><span class="line">  -- mod 为取余函数</span><br><span class="line">  -- mod(n-1,8) 则是取余，将 ceil 分好的组，分别排序，获得列名</span><br><span class="line"></span><br><span class="line">  SELECT ceil(n/8) AS r, mod(n-1,8) AS c, ID FROM (</span><br><span class="line"></span><br><span class="line">  	-- ROW_NUMBER() OVER (ORDER BY COLUMN_NAME) </span><br><span class="line">  	-- 把 ID 进行升序，然后获得排序的序号</span><br><span class="line"></span><br><span class="line">    SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS n FROM (</span><br><span class="line">      SELECT DISTINCT ID  FROM RC_E_1</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">-- 这一段是行转列，c1,c2,c3,c4 ... 都是列名</span><br><span class="line">-- 都是 mod 分配好的列</span><br><span class="line">-- 由于 ceil 出来的 r 没有将他列出来，则多个相同的 r 会变成一行</span><br><span class="line"></span><br><span class="line">PIVOT(</span><br><span class="line">  MAX(ID) FOR c IN (</span><br><span class="line">    &#x27;0&#x27; as c1,</span><br><span class="line">    &#x27;1&#x27; as c2,</span><br><span class="line">    &#x27;2&#x27; as c3,</span><br><span class="line">    &#x27;3&#x27; as c4,</span><br><span class="line">    &#x27;4&#x27; AS C5,</span><br><span class="line">    &#x27;5&#x27; AS C6,</span><br><span class="line">    &#x27;6&#x27; AS C7,</span><br><span class="line">    &#x27;7&#x27; AS C8</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -539,7 +411,7 @@ ORDER BY 1;
         <p><span>Title:</span><a href="/2022/01/05/Oracle-Row-Column-Conversion-1/">Oracle-Row-Column-Conversion-1</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2022-01-05, 10:19:40</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p><span>Updated:</span>2023-04-07, 14:24:18</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2022/01/05/Oracle-Row-Column-Conversion-1/" title="Oracle-Row-Column-Conversion-1">http://yoursite.com/2022/01/05/Oracle-Row-Column-Conversion-1/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2022/01/05/Oracle-Row-Column-Conversion-1/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -575,7 +447,7 @@ ORDER BY 1;
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle%E8%A1%8C%E5%88%97%E8%BD%AC%E6%8D%A2%E6%80%BB%E6%B1%87"><span class="toc-number">1.</span> <span class="toc-text">Oracle行列转换总汇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%A1%8C%E8%BD%AC%E5%88%97%EF%BC%9Apivot-%E3%80%81case-when-%E6%88%96-decode"><span class="toc-number">1.1.</span> <span class="toc-text">1.行转列：pivot 、case when 或 decode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%A1%8C%E8%BD%AC%E5%88%97%EF%BC%9Apivot"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 行转列：pivot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%A1%8C%E8%BD%AC%E5%88%97%EF%BC%9Acase-when-%E6%88%96-decode-%EF%BC%88%E6%9B%B4%E7%B9%81%E7%90%90%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 行转列：case when 或 decode （更繁琐）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%88%97%E8%BD%AC%E8%A1%8C%EF%BC%9Aunpivot"><span class="toc-number">1.2.</span> <span class="toc-text">2. 列转行：unpivot</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-unpivot-%E5%88%97%E8%BD%AC%E8%A1%8C"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 unpivot 列转行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%A4%9A%E8%A1%8C%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.</span> <span class="toc-text">3. 多行转字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-listagg"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 listagg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-row-number-lead"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 row_number + lead</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-sys-connect-by-path"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 sys_connect_by_path</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%A4%9A%E5%88%97%EF%BC%9Aregexp-substr-%E6%88%96-substr-instr%EF%BC%8C%E6%8B%86%E5%88%86%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.4.</span> <span class="toc-text">4.字符串转多列：regexp_substr 或 substr + instr，拆分字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-regexp-substr"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 regexp_substr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-substr-instr"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 substr + instr</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%A4%9A%E8%A1%8C"><span class="toc-number">1.5.</span> <span class="toc-text">5.字符串转多行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-SEQUENCE-series"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 SEQUENCE series</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Hierarchical-DBMS-RANDOM"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 Hierarchical + DBMS_RANDOM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-Hierarchical-CONNECT-BY-ROOT"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 Hierarchical + CONNECT_BY_ROOT</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle%E8%A1%8C%E5%88%97%E8%BD%AC%E6%8D%A2%E6%80%BB%E6%B1%87"><span class="toc-number">1.</span> <span class="toc-text">Oracle行列转换总汇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%A1%8C%E8%BD%AC%E5%88%97%EF%BC%9Apivot-%E3%80%81case-when-%E6%88%96-decode"><span class="toc-number">1.1.</span> <span class="toc-text">1.行转列：pivot 、case when 或 decode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%A1%8C%E8%BD%AC%E5%88%97%EF%BC%9Apivot"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 行转列：pivot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%A1%8C%E8%BD%AC%E5%88%97%EF%BC%9Acase-when-%E6%88%96-decode-%EF%BC%88%E6%9B%B4%E7%B9%81%E7%90%90%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 行转列：case when 或 decode （更繁琐）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%88%97%E8%BD%AC%E8%A1%8C%EF%BC%9Aunpivot"><span class="toc-number">1.2.</span> <span class="toc-text">2. 列转行：unpivot</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-unpivot-%E5%88%97%E8%BD%AC%E8%A1%8C"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 unpivot 列转行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%A4%9A%E8%A1%8C%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.</span> <span class="toc-text">3. 多行转字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-listagg"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 listagg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-row-number-lead"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 row_number + lead</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-sys-connect-by-path"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 sys_connect_by_path</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%A4%9A%E5%88%97%EF%BC%9Aregexp-substr-%E6%88%96-substr-instr%EF%BC%8C%E6%8B%86%E5%88%86%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.4.</span> <span class="toc-text">4.字符串转多列：regexp_substr 或 substr + instr，拆分字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-regexp-substr"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 regexp_substr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-substr-instr"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 substr + instr</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%A4%9A%E8%A1%8C"><span class="toc-number">1.5.</span> <span class="toc-text">5.字符串转多行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-SEQUENCE-series"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 SEQUENCE series</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Hierarchical-DBMS-RANDOM"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 Hierarchical + DBMS_RANDOM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-Hierarchical-CONNECT-BY-ROOT"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 Hierarchical + CONNECT_BY_ROOT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.6.</span> <span class="toc-text">其他实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A1%88%E4%BE%8B"><span class="toc-number">1.6.1.</span> <span class="toc-text">1. 案例</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>

@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="Oracle 定时清理DG Archivelog脚本部署路径为：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;bin脚本生成的日志路径：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;log">
+<meta name="description" content="Oracle 定时清理 DG Archivelog脚本部署路径为：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;bin 脚本生成的日志路径：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;log">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Oracle-Clean-Archivelog">
 <meta property="og:url" content="http://yoursite.com/2021/02/15/Oracle-Clean-Archivelog/index.html">
 <meta property="og:site_name" content="Sevattal">
-<meta property="og:description" content="Oracle 定时清理DG Archivelog脚本部署路径为：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;bin脚本生成的日志路径：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;log">
+<meta property="og:description" content="Oracle 定时清理 DG Archivelog脚本部署路径为：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;bin 脚本生成的日志路径：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;log">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-15T12:49:25.000Z">
-<meta property="article:modified_time" content="2022-11-18T01:11:43.289Z">
+<meta property="article:modified_time" content="2023-04-07T05:41:29.891Z">
 <meta property="article:author" content="Sevattal">
 <meta property="article:tag" content="Oracle">
 <meta name="twitter:card" content="summary">
@@ -299,82 +299,14 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="Oracle-定时清理DG-Archivelog"><a href="#Oracle-定时清理DG-Archivelog" class="headerlink" title="Oracle 定时清理DG Archivelog"></a>Oracle 定时清理DG Archivelog</h1><p>脚本部署路径为：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;bin<br>脚本生成的日志路径：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;log</p>
+        <h1 id="Oracle-定时清理-DG-Archivelog"><a href="#Oracle-定时清理-DG-Archivelog" class="headerlink" title="Oracle 定时清理 DG Archivelog"></a>Oracle 定时清理 DG Archivelog</h1><p>脚本部署路径为：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;bin</p>
+<p>脚本生成的日志路径：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;log</p>
 <span id="more"></span>
 
-<pre><code>#!/bin/sh
-#########################################################################
-#         This shell is for primary and standby database                #
-#         to rm applied archivelog that before some day ago.            #
-#                                                                       #
-#       You can define &quot;some day&quot; in variables $&#123;day_before&#125;            #
-#            This shell can be put in crontab for auto run              #
-#                                                                       #
-#            2008-01-18   writen by www.oracleblog.cn                   #
-#########################################################################
-## load profile file
-## 填写oracle环境变量的路径
-. /home/oracle/.bash_profile
-## Path Define
-## 填写脚本的路径
-main_path=/home/oracle/del_appl_arc
-bin_path=$&#123;main_path&#125;/bin
-log_path=$&#123;main_path&#125;/log
-arc_path=/u01/app/oracle/arch
-cd $&#123;bin_path&#125;
-## Initial script
-touch app_arc_name.sh
-chmod +x app_arc_name.sh
-## rm applied archivelog that before $&#123;day_before&#125; day ago
-## 填写删除那几天前的归档日志
-day_before=1
-## Db info
-## 填写操作的用户账号密码
-dbuser=system
-dbpwd=oracle
-## 若是备库修改成主库的tnsname，主库和备库都是一样的
-dbsid=primary
-########## Main shell start here ##########
-## load exisit archlog list to db
-sqlplus $&#123;dbuser&#125;/$&#123;dbpwd&#125;@$&#123;dbsid&#125;&lt;&lt;EOF &gt;/dev/null
-drop table $&#123;dbuser&#125;.arc_log_list;
-CREATE TABLE $&#123;dbuser&#125;.arc_log_list (arc_name VARCHAR2(2000));
-exit;
-EOF
-## 这一步你ls到的信息一定要与你实际的情况相互匹配
-ls -l $&#123;arc_path&#125;|awk &#39;&#123;print $9&#125;&#39; |grep arc &gt;arc_log_list.tmp
-echo &quot;load data&quot;&gt;&gt;arc_log.ctl
-echo &quot;infile &#39;arc_log_list.tmp&#39;&quot;&gt;&gt;arc_log.ctl
-echo &quot;replace into table arc_log_list&quot;&gt;&gt;arc_log.ctl
-echo &quot;fields terminated by X&#39;09&#39;&quot;&gt;&gt;arc_log.ctl
-echo &quot;(arc_name)&quot;&gt;&gt;arc_log.ctl
-sqlldr $&#123;dbuser&#125;/$&#123;dbpwd&#125;@$&#123;dbsid&#125; control=arc_log.ctl log=sqlldr_run.log bad=sqlldr_badfile.bad
-### Create shell for rm applied archive that before some day ago
-sqlplus -s &quot;/ as sysdba&quot;&lt;&lt;EOF&gt;/dev/null
-set feedback off
-set pages 0
-set head off
-set timing off
-set echo off
-spool app_arc_name.tmp
-select &#39;rm -f &#39;||&#39;$&#123;arc_path&#125;/&#39;||arc_name from $&#123;dbuser&#125;.arc_log_list 
-intersect
-select &#39;rm -f &#39;||name from v\$archived_log 
-where DEST_ID=1 and name like &#39;%.arc&#39; 
-and SEQUENCE#&lt;(select max(SEQUENCE#) from v\$archived_log where applied=&#39;YES&#39;)
-and COMPLETION_TIME&lt;=sysdate-$&#123;day_before&#125;;
-spool
-exit
-EOF
-## Exec the shell in background mode
-cat app_arc_name.tmp |grep -v spooling&gt;app_arc_name.sh
-./app_arc_name.sh
-chmod -x app_arc_name.sh
-mv app_arc_name.sh rm_appl_arc_`date +&quot;%Y%m%d%H%M&quot;`.log
-mv rm_appl_arc*.log $&#123;log_path&#125;
-rm app_arc_name.tmp arc_log.ctl sqlldr_run.log arc_log_list.tmp
-</code></pre>
-<p>完成脚本后，你可以把脚本放入crontab中定期运行，以达到自动删除n天以前且已经applied的归档日志。注意crontab的部署把primary和standby的时间错开，如果同时进行，会对arc_log_list表有争用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">#########################################################################</span><br><span class="line">#         This shell is for primary and standby database                #</span><br><span class="line">#         to rm applied archivelog that before some day ago.            #</span><br><span class="line">#                                                                       #</span><br><span class="line">#       You can define &quot;some day&quot; in variables $&#123;day_before&#125;            #</span><br><span class="line">#            This shell can be put in crontab for auto run              #</span><br><span class="line">#                                                                       #</span><br><span class="line">#            2008-01-18   writen by www.oracleblog.cn                   #</span><br><span class="line">#########################################################################</span><br><span class="line">## load profile file</span><br><span class="line">## 填写oracle环境变量的路径</span><br><span class="line">. /home/oracle/.bash_profile</span><br><span class="line">## Path Define</span><br><span class="line">## 填写脚本的路径</span><br><span class="line">main_path=/home/oracle/del_appl_arc</span><br><span class="line">bin_path=$&#123;main_path&#125;/bin</span><br><span class="line">log_path=$&#123;main_path&#125;/log</span><br><span class="line">arc_path=/u01/app/oracle/arch</span><br><span class="line">cd $&#123;bin_path&#125;</span><br><span class="line">## Initial script</span><br><span class="line">touch app_arc_name.sh</span><br><span class="line">chmod +x app_arc_name.sh</span><br><span class="line">## rm applied archivelog that before $&#123;day_before&#125; day ago</span><br><span class="line">## 填写删除那几天前的归档日志</span><br><span class="line">day_before=1</span><br><span class="line">## Db info</span><br><span class="line">## 填写操作的用户账号密码</span><br><span class="line">dbuser=system</span><br><span class="line">dbpwd=oracle</span><br><span class="line">## 若是备库修改成主库的tnsname，主库和备库都是一样的</span><br><span class="line">dbsid=primary</span><br><span class="line">########## Main shell start here ##########</span><br><span class="line">## load exisit archlog list to db</span><br><span class="line">sqlplus $&#123;dbuser&#125;/$&#123;dbpwd&#125;@$&#123;dbsid&#125;&lt;&lt;EOF &gt;/dev/null</span><br><span class="line">drop table $&#123;dbuser&#125;.arc_log_list;</span><br><span class="line">CREATE TABLE $&#123;dbuser&#125;.arc_log_list (arc_name VARCHAR2(2000));</span><br><span class="line">exit;</span><br><span class="line">EOF</span><br><span class="line">## 这一步你ls到的信息一定要与你实际的情况相互匹配</span><br><span class="line">ls -l $&#123;arc_path&#125;|awk &#x27;&#123;print $9&#125;&#x27; |grep arc &gt;arc_log_list.tmp</span><br><span class="line">echo &quot;load data&quot;&gt;&gt;arc_log.ctl</span><br><span class="line">echo &quot;infile &#x27;arc_log_list.tmp&#x27;&quot;&gt;&gt;arc_log.ctl</span><br><span class="line">echo &quot;replace into table arc_log_list&quot;&gt;&gt;arc_log.ctl</span><br><span class="line">echo &quot;fields terminated by X&#x27;09&#x27;&quot;&gt;&gt;arc_log.ctl</span><br><span class="line">echo &quot;(arc_name)&quot;&gt;&gt;arc_log.ctl</span><br><span class="line">sqlldr $&#123;dbuser&#125;/$&#123;dbpwd&#125;@$&#123;dbsid&#125; control=arc_log.ctl log=sqlldr_run.log bad=sqlldr_badfile.bad</span><br><span class="line">### Create shell for rm applied archive that before some day ago</span><br><span class="line">sqlplus -s &quot;/ as sysdba&quot;&lt;&lt;EOF&gt;/dev/null</span><br><span class="line">set feedback off</span><br><span class="line">set pages 0</span><br><span class="line">set head off</span><br><span class="line">set timing off</span><br><span class="line">set echo off</span><br><span class="line">spool app_arc_name.tmp</span><br><span class="line">select &#x27;rm -f &#x27;||&#x27;$&#123;arc_path&#125;/&#x27;||arc_name from $&#123;dbuser&#125;.arc_log_list </span><br><span class="line">intersect</span><br><span class="line">select &#x27;rm -f &#x27;||name from v\$archived_log </span><br><span class="line">where DEST_ID=1 and name like &#x27;%.arc&#x27; </span><br><span class="line">and SEQUENCE#&lt;(select max(SEQUENCE#) from v\$archived_log where applied=&#x27;YES&#x27;)</span><br><span class="line">and COMPLETION_TIME&lt;=sysdate-$&#123;day_before&#125;;</span><br><span class="line">spool</span><br><span class="line">exit</span><br><span class="line">EOF</span><br><span class="line">## Exec the shell in background mode</span><br><span class="line">cat app_arc_name.tmp |grep -v spooling&gt;app_arc_name.sh</span><br><span class="line">./app_arc_name.sh</span><br><span class="line">chmod -x app_arc_name.sh</span><br><span class="line">mv app_arc_name.sh rm_appl_arc_`date +&quot;%Y%m%d%H%M&quot;`.log</span><br><span class="line">mv rm_appl_arc*.log $&#123;log_path&#125;</span><br><span class="line">rm app_arc_name.tmp arc_log.ctl sqlldr_run.log arc_log_list.tmp</span><br></pre></td></tr></table></figure>
+
+<p>完成脚本后，你可以把脚本放入 crontab 中定期运行，以达到自动删除 n 天以前且已经 applied 的归档日志。</p>
+<p>注意 crontab 的部署把 primary 和 standby 的时间错开，如果同时进行，会对 arc_log_list 表有争用。</p>
 
       
     </div>
@@ -386,7 +318,7 @@ rm app_arc_name.tmp arc_log.ctl sqlldr_run.log arc_log_list.tmp
         <p><span>Title:</span><a href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage"></a></p>
         <p><span>Created:</span>2021-02-15, 20:49:25</p>
-        <p><span>Updated:</span>2022-11-18, 09:11:43</p>
+        <p><span>Updated:</span>2023-04-07, 13:41:29</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2021/02/15/Oracle-Clean-Archivelog/" title="Oracle-Clean-Archivelog">http://yoursite.com/2021/02/15/Oracle-Clean-Archivelog/</a>
             <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/02/15/Oracle-Clean-Archivelog/　　By " title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -422,7 +354,7 @@ rm app_arc_name.tmp arc_log.ctl sqlldr_run.log arc_log_list.tmp
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle-%E5%AE%9A%E6%97%B6%E6%B8%85%E7%90%86DG-Archivelog"><span class="toc-number">1.</span> <span class="toc-text">Oracle 定时清理DG Archivelog</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle-%E5%AE%9A%E6%97%B6%E6%B8%85%E7%90%86-DG-Archivelog"><span class="toc-number">1.</span> <span class="toc-text">Oracle 定时清理 DG Archivelog</span></a></li></ol>
         
     </div>
     <style>
