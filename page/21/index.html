@@ -257,6 +257,81 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-SpringCloud-Alibaba-Seata-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/11/SpringCloud-Alibaba-Seata-1/" class="article-date">
+      <time datetime="2021-05-11T02:46:41.000Z" itemprop="datePublished">2021-05-11</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/11/SpringCloud-Alibaba-Seata-1/">SpringCloud-Alibaba-Seata-1</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="构建微服务架构-SpringCloud-Alibaba-Seata-篇"><a href="#构建微服务架构-SpringCloud-Alibaba-Seata-篇" class="headerlink" title="构建微服务架构(SpringCloud Alibaba Seata 篇)"></a>构建微服务架构(SpringCloud Alibaba Seata 篇)</h1><p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
+<h2 id="分布式事务问题由来"><a href="#分布式事务问题由来" class="headerlink" title="分布式事务问题由来"></a>分布式事务问题由来</h2><p><strong>分布式前</strong></p>
+<pre><code>单机单库没这个问题
+从1:1 -&gt; 1:N -&gt; N:N
+</code></pre>
+<p>单体应用被拆分成微服务应用，原来的三个模块被拆分成三个独立的应用,分别使用三个独立的数据源，业务操作需要调用三三 个服务来完成。此时每个服务内部的数据一致性由本地事务来保证， 但是全局的数据一致性问题没法保证。</p>
+<p><img src="/2021/05/11/SpringCloud-Alibaba-Seata-1/1.png"></p>
+<p>一句话：一次业务操作需要跨多个数据源或需要跨多个系统进行远程调用，就会产生分布式事务问题。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2021/05/11/SpringCloud-Alibaba-Seata-1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-SpringCloud-Alibaba-Sentinel-1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -964,79 +1039,9 @@ Kafka
 
 
   
-    <article id="post-SpringCloud-OpenFeign-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/05/06/SpringCloud-OpenFeign-1/" class="article-date">
-      <time datetime="2021-05-06T06:01:39.000Z" itemprop="datePublished">2021-05-06</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/06/SpringCloud-OpenFeign-1/">SpringCloud-OpenFeign-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="构建微服务架构-OpenFeign篇"><a href="#构建微服务架构-OpenFeign篇" class="headerlink" title="构建微服务架构(OpenFeign篇)"></a>构建微服务架构(OpenFeign篇)</h1><p>该篇文档，前置环境条件为：构建微服务架构(eureka篇)<br>该篇文档，前置代码下载：<a href="/download/springcloud_project_eureka.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_openfeign.zip">下载</a></p>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a><br>GitHub地址：<a target="_blank" rel="noopener" href="https://github.com/spring-cloud/spring-cloud-openfeign">https://github.com/spring-cloud/spring-cloud-openfeign</a><br>SpringCloud地址：<a target="_blank" rel="noopener" href="https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/#spring-cloud-openfeign">https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/#spring-cloud-openfeign</a></p>
-<h2 id="OpenFeign-是什么"><a href="#OpenFeign-是什么" class="headerlink" title="OpenFeign 是什么"></a>OpenFeign 是什么</h2><p>Feign 是一个声明式 WebService 客户端。使用 Feign 能让编写 Web Service 客户端更加简单。它的使用方法是定义一个服务接口然后在上面添加注解。Feign也支持可拔插式的编码器和解码器。Spring Cloud 对 Feign 进行了封装，使其支持了 Spring MVC 标准注解和 HttpMessageConverters。Feign 可以与 Eureka 和 Ribbon 组合使用以支持负载均衡。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenFeign/" rel="tag">OpenFeign</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2021/05/06/SpringCloud-OpenFeign-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/20/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/22/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/20/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/22/">Next &amp;raquo;</a>
     </nav>
   
 </div>
@@ -1045,7 +1050,7 @@ Kafka
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2023 Sevattal
+                2016-2024 Sevattal
             </div>
             <!--<div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>

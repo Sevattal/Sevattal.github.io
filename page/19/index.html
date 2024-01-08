@@ -257,6 +257,91 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-SpringBoot2-BASE-4" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/20/SpringBoot2-BASE-4/" class="article-date">
+      <time datetime="2021-05-20T08:21:52.000Z" itemprop="datePublished">2021-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/20/SpringBoot2-BASE-4/">SpringBoot2-BASE-4</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="SpringBoot2-基础篇-4"><a href="#SpringBoot2-基础篇-4" class="headerlink" title="SpringBoot2 基础篇 4"></a>SpringBoot2 基础篇 4</h1><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/113667634">https://blog.csdn.net/u011863024/article/details/113667634</a></p>
+<h2 id="1-错误处理-SpringBoot默认错误处理机制"><a href="#1-错误处理-SpringBoot默认错误处理机制" class="headerlink" title="1. 错误处理-SpringBoot默认错误处理机制"></a>1. 错误处理-SpringBoot默认错误处理机制</h2><p>官方文档：<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/2.4.2/reference/htmlsingle/#boot-features-error-handling">https://docs.spring.io/spring-boot/docs/2.4.2/reference/htmlsingle/#boot-features-error-handling</a></p>
+<p><strong>默认规则：</strong></p>
+<pre><code>1. 默认情况下，Spring Boot提供/error处理所有错误的映射
+2. 机器客户端，它将生成JSON响应，其中包含错误，HTTP状态和异常消息的详细信息。对于浏览器客户端，响应一个“ whitelabel”错误视图，以HTML格式呈现相同的数据
+
+&#123;
+  &quot;timestamp&quot;: &quot;2020-11-22T05:53:28.416+00:00&quot;,
+  &quot;status&quot;: 404,
+  &quot;error&quot;: &quot;Not Found&quot;,
+  &quot;message&quot;: &quot;No message available&quot;,
+  &quot;path&quot;: &quot;/asadada&quot;
+&#125;
+
+3. 要对其进行自定义，添加View解析为error
+4. 要完全替换默认行为，可以实现 ErrorController并注册该类型的Bean定义，或添加ErrorAttributes类型的组件以使用现有机制但替换其内容。
+5. /templates/error/下的4xx，5xx页面会被自动解析
+</code></pre>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2021/05/20/SpringBoot2-BASE-4/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-SpringBoot2-BASE-3" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -985,82 +1070,9 @@ Jigsaw的Java模块化
 
 
   
-    <article id="post-Spring-BASE-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/05/16/Spring-BASE-1/" class="article-date">
-      <time datetime="2021-05-16T05:46:42.000Z" itemprop="datePublished">2021-05-16</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/16/Spring-BASE-1/">Spring-BASE-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Spring-框架基础1"><a href="#Spring-框架基础1" class="headerlink" title="Spring 框架基础1"></a>Spring 框架基础1</h1><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
-<h2 id="一、什么是Spring？"><a href="#一、什么是Spring？" class="headerlink" title="一、什么是Spring？"></a>一、什么是Spring？</h2><h3 id="1、什么是spring-（面试题）"><a href="#1、什么是spring-（面试题）" class="headerlink" title="1、什么是spring?（面试题）"></a>1、什么是spring?（面试题）</h3><p>Spring是一个开源的Java EE开发框架。Spring框架的核心功能可以应用在任何Java应用程序中，但对Java EE平台上的Web应用程序有更好的扩展性。Spring框架的目标是使得Java EE应用程序的开发更加简捷，通过使用POJO为基础的编程模型促进良好的编程风格。</p>
-<p><img src="/2021/05/16/Spring-BASE-1/1.png"></p>
-<p><strong>注：POJO和JavaBean的区别</strong></p>
-<p>（1）POJO 和JavaBean是我们常见的两个关键字，一般容易混淆，POJO全称是Plain Ordinary Java Object &#x2F; Pure Old Java Object，中文可以翻译成：普通Java类，具有一部分getter&#x2F;setter方法的那种类就可以称作POJO，但是JavaBean则比 POJO复杂很多， Java Bean 是可复用的组件，对 Java Bean 并没有严格的规范，理论上讲，任何一个 Java 类都可以是一个 Bean 。但通常情况下，由于 Java Bean 是被容器所创建（如 Tomcat) 的，所以 Java Bean 应具有一个无参的构造器。</p>
-<p>（2）通常 Java Bean 还要实现 Serializable 接口用于实现 Bean 的持久性。 Java Bean 是不能被跨进程访问的。JavaBean是一种组件技术，就好像你做了一个扳子，而这个扳子会在很多地方被拿去用，这个扳子也提供多种功能(你可以拿这个扳子扳、锤、撬等等)，而这个扳子就是一个组件。一般在web应用程序中建立一个数据库的映射对象时，我们只能称它为POJO。POJO(Plain Old Java Object)这个名字用来强调它是一个普通java对象，而不是一个特殊的对象，其主要用来指代那些没有遵从特定的Java对象模型、约定或框架（如EJB）的Java对象。理想地讲，一个POJO是一个不受任何限制的Java对象（除了Java语言规范）。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2021/05/16/Spring-BASE-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/18/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/20/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/18/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/20/">Next &amp;raquo;</a>
     </nav>
   
 </div>
@@ -1069,7 +1081,7 @@ Jigsaw的Java模块化
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2023 Sevattal
+                2016-2024 Sevattal
             </div>
             <!--<div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
