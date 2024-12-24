@@ -257,6 +257,135 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Docker-Volume" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/02/11/Docker-Volume/" class="article-date">
+      <time datetime="2021-02-11T03:57:09.000Z" itemprop="datePublished">2021-02-11</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/11/Docker-Volume/">Docker-Volume</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Docker-存储卷详解"><a href="#Docker-存储卷详解" class="headerlink" title="Docker 存储卷详解"></a>Docker 存储卷详解</h1><p>转发：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/along21/p/10237219.html">https://www.cnblogs.com/along21/p/10237219.html</a></p>
+<h2 id="1、存储卷介绍"><a href="#1、存储卷介绍" class="headerlink" title="1、存储卷介绍"></a>1、存储卷介绍</h2><h3 id="1-1-背景"><a href="#1-1-背景" class="headerlink" title="1.1 背景"></a>1.1 背景</h3><p>（1）docker 的 AFUS 分层文件系统<br>    docker镜像由多个只读层叠加面成，启动容器时，docker会加载只读镜像层并在镜像栈顶部加一个读写层；<br>    如果运行中的容器修改了现有的一个已经存在的文件，那该文件将会从读写层下面的只读层复制到读写层，该文件版本仍然存在，只是已经被读写层中该文件的副本所隐藏，此即“写时复制(COW)”机制。<br></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2021/02/11/Docker-Volume/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Docker-PortMapping" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/02/11/Docker-PortMapping/" class="article-date">
+      <time datetime="2021-02-11T03:44:36.000Z" itemprop="datePublished">2021-02-11</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/11/Docker-PortMapping/">Docker-PortMapping</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Docker-给一存在的容器添加端口映射"><a href="#Docker-给一存在的容器添加端口映射" class="headerlink" title="Docker 给一存在的容器添加端口映射"></a>Docker 给一存在的容器添加端口映射</h1><p>转发：<a target="_blank" rel="noopener" href="https://blog.csdn.net/lypeng_/article/details/98176138">https://blog.csdn.net/lypeng_/article/details/98176138</a><br>在docker运行容器时需要指定映射端口，那如果刚开始没有考虑的那么周全，后期遇到需要添加的端口时该怎么办呢。<br>网上常见的方法有两种：<br>1.配置防火墙转发端口。<br>2.把docker容器打包成镜像，然后以该镜像为基础新建一个容器。<br>3.更改docker容器的配置文件</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2021/02/11/Docker-PortMapping/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Docker-Command1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -775,142 +904,6 @@ ifconfig		查看网卡的HWaddr
       
         <p class="article-more-link">
           <a href="/2021/01/17/UsbEAmHostsEditor/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Postgres-Command" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/01/02/Postgres-Command/" class="article-date">
-      <time datetime="2021-01-02T03:35:52.000Z" itemprop="datePublished">2021-01-02</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/02/Postgres-Command/">Postgres-Command</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Postgresql常用命令"><a href="#Postgresql常用命令" class="headerlink" title="Postgresql常用命令"></a>Postgresql常用命令</h1><p>对于Postgresql数据库，下面是自己整理的Postgresql的常用命令</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Database/">Database</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Postgres/" rel="tag">Postgres</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2021/01/02/Postgres-Command/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Mysql-Storage-Engine" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/01/02/Mysql-Storage-Engine/" class="article-date">
-      <time datetime="2021-01-02T03:25:19.000Z" itemprop="datePublished">2021-01-02</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/02/Mysql-Storage-Engine/">Mysql-Storage-Engine</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Mysql-中四种存储引擎的区别和选择"><a href="#Mysql-中四种存储引擎的区别和选择" class="headerlink" title="Mysql 中四种存储引擎的区别和选择"></a>Mysql 中四种存储引擎的区别和选择</h1><p>前言<br>数据库存储引擎是数据库底层软件组织，数据库管理系统（DBMS）使用数据引擎进行创建、查询、更新和删除数据。不同的存储引擎提供不同的存储机制、索引技巧、锁定水平等功能，使用不同的存储引擎，还可以 获得特定的功能。现在许多不同的数据库管理系统都支持多种不同的数据引擎。MySQL的核心就是存储引擎。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Database/">Database</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2021/01/02/Mysql-Storage-Engine/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

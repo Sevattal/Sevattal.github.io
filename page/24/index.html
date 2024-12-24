@@ -257,6 +257,148 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Mysql-Procedure-HTML-Report" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/03/06/Mysql-Procedure-HTML-Report/" class="article-date">
+      <time datetime="2021-03-06T10:34:58.000Z" itemprop="datePublished">2021-03-06</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/06/Mysql-Procedure-HTML-Report/">Mysql-Procedure-HTML-Report</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Mysql-存储过程拼接多个HTML报告表格案例"><a href="#Mysql-存储过程拼接多个HTML报告表格案例" class="headerlink" title="Mysql 存储过程拼接多个HTML报告表格案例"></a>Mysql 存储过程拼接多个HTML报告表格案例</h1><p>该篇文章不多做介绍，是按照前几篇存储过程拼接HTML的一个总结案例，也是记录第一次将存储过程写的这么长，并没有什么具体的学习意义。</p>
+<h2 id="可以做的优化有："><a href="#可以做的优化有：" class="headerlink" title="可以做的优化有："></a>可以做的优化有：</h2><pre><code>1、将该存储过程各个报告模板的代码块写成单独的函数方便后期维护。
+2、存储过程的变量字段进行调整长度。
+3、减少On循环嵌套
+</code></pre>
+<p><label style="color: red"><strong>注：若有更好的方法，请告知我</strong></label></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Procedure/" rel="tag">Procedure</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2021/03/06/Mysql-Procedure-HTML-Report/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-K8S-Dashboard" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/03/06/K8S-Dashboard/" class="article-date">
+      <time datetime="2021-03-06T10:33:59.000Z" itemprop="datePublished">2021-03-06</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/06/K8S-Dashboard/">K8S-Dashboard</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="部署dashboard"><a href="#部署dashboard" class="headerlink" title="部署dashboard"></a>部署dashboard</h1><p>官网：<a target="_blank" rel="noopener" href="https://github.com/kubernetes/dashboard">https://github.com/kubernetes/dashboard</a></p>
+<p>注：1.8版本的dashboard，默认是可以跳过验证的。跳过登录是不科学的，因为我们在配置dashboard的rbac权限时，绑定的角色是system:admin，这个是集群管理员的角色，权限很大，如果任何人都可跳过登录直接使用,那你就等着背锅。所以这边用了1.10.0版本，并配置证书。dashboard当前已经出到了 2.2.0版本。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2021/03/06/K8S-Dashboard/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-K8S-Coredns-1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -790,140 +932,6 @@
       
         <p class="article-more-link">
           <a href="/2021/02/18/K8S-Binary-Install/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Oracle-Clean-Archivelog" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/02/15/Oracle-Clean-Archivelog/" class="article-date">
-      <time datetime="2021-02-15T12:49:25.000Z" itemprop="datePublished">2021-02-15</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/15/Oracle-Clean-Archivelog/">Oracle-Clean-Archivelog</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Oracle-定时清理-DG-Archivelog"><a href="#Oracle-定时清理-DG-Archivelog" class="headerlink" title="Oracle 定时清理 DG Archivelog"></a>Oracle 定时清理 DG Archivelog</h1><p>脚本部署路径为：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;bin</p>
-<p>脚本生成的日志路径：&#x2F;home&#x2F;oracle&#x2F;del_appl_arc&#x2F;log</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Database/">Database</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2021/02/15/Oracle-Clean-Archivelog/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker-Harbor" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/02/15/Docker-Harbor/" class="article-date">
-      <time datetime="2021-02-15T12:07:42.000Z" itemprop="datePublished">2021-02-15</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/15/Docker-Harbor/">Docker-Harbor</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Harbor私有镜像仓库搭建"><a href="#Harbor私有镜像仓库搭建" class="headerlink" title="Harbor私有镜像仓库搭建"></a>Harbor私有镜像仓库搭建</h1><p>harbor官方github地址：<a target="_blank" rel="noopener" href="https://github.com/goharbor/harbor">https://github.com/goharbor/harbor</a></p>
-<p>我这边已经下载离线包：harbor-offline-installer-v2.0.6.tgz</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Docker/">Docker</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2021/02/15/Docker-Harbor/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

@@ -257,6 +257,160 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Netty-BASE-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/20/Netty-BASE-1/" class="article-date">
+      <time datetime="2021-05-20T11:25:18.000Z" itemprop="datePublished">2021-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/20/Netty-BASE-1/">Netty-BASE-1</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Netty-基础-1"><a href="#Netty-基础-1" class="headerlink" title="Netty 基础 1"></a>Netty 基础 1</h1><p>转载：<a target="_blank" rel="noopener" href="https://youthlql.gitee.io/">https://youthlql.gitee.io/</a></p>
+<h2 id="Netty简介"><a href="#Netty简介" class="headerlink" title="Netty简介"></a>Netty简介</h2><h3 id="Netty-的介绍"><a href="#Netty-的介绍" class="headerlink" title="Netty 的介绍"></a>Netty 的介绍</h3><ol>
+<li>Netty 是由 JBOSS 提供的一个 Java 开源框架，现为 Github 上的独立项目。</li>
+<li>Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。</li>
+<li>Netty 主要针对在 TCP 协议下，面向 Client 端的高并发应用，或者 Peer-to-Peer 场景下的大量数据持续传输的应用。</li>
+<li>Netty 本质是一个 NIO 框架，适用于服务器通讯相关的多种应用场景。</li>
+<li>要透彻理解 Netty，需要先学习 NIO，这样我们才能阅读 Netty 的源码。</li>
+</ol>
+<p>相对简单的一个体系图</p>
+<p><img src="/2021/05/20/Netty-BASE-1/1.png"></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2021/05/20/Netty-BASE-1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-SpringBoot2-BASE-8" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/20/SpringBoot2-BASE-8/" class="article-date">
+      <time datetime="2021-05-20T09:31:55.000Z" itemprop="datePublished">2021-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/20/SpringBoot2-BASE-8/">SpringBoot2-BASE-8</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="SpringBoot2-基础篇-8"><a href="#SpringBoot2-基础篇-8" class="headerlink" title="SpringBoot2 基础篇 8"></a>SpringBoot2 基础篇 8</h1><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/113667634">https://blog.csdn.net/u011863024/article/details/113667634</a></p>
+<h2 id="1-高级特性-Profile环境切换"><a href="#1-高级特性-Profile环境切换" class="headerlink" title="1. 高级特性-Profile环境切换"></a>1. 高级特性-Profile环境切换</h2><p>为了方便多环境适配，Spring Boot简化了profile功能。</p>
+<pre><code>默认配置文件application.yaml任何时候都会加载。
+指定环境配置文件application-&#123;env&#125;.yaml，env通常替代为test，
+激活指定环境
+    配置文件激活：spring.profiles.active=prod
+    命令行激活：java -jar xxx.jar --spring.profiles.active=prod --person.name=haha（修改配置文件的任意值，命令行优先）
+默认配置与环境配置同时生效
+同名配置项，profile配置优先
+</code></pre>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2021/05/20/SpringBoot2-BASE-8/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-SpringBoot2-BASE-7" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -852,207 +1006,6 @@ Jigsaw的Java模块化
       
         <p class="article-more-link">
           <a href="/2021/05/16/Spring-BASE-7/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Spring-BASE-6" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/05/16/Spring-BASE-6/" class="article-date">
-      <time datetime="2021-05-16T05:47:43.000Z" itemprop="datePublished">2021-05-16</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/16/Spring-BASE-6/">Spring-BASE-6</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Spring-框架基础6"><a href="#Spring-框架基础6" class="headerlink" title="Spring 框架基础6"></a>Spring 框架基础6</h1><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
-<h2 id="一、什么是事务？"><a href="#一、什么是事务？" class="headerlink" title="一、什么是事务？"></a>一、什么是事务？</h2><h3 id="1、事务的定义"><a href="#1、事务的定义" class="headerlink" title="1、事务的定义"></a>1、事务的定义</h3><p>（1）事务是数据库操作最基本单元，逻辑上一组操作，要么都成功，如果有一个失败所有操作都失败。<br>（2）案例分析</p>
-<p><img src="/2021/05/16/Spring-BASE-6/1.png"></p>
-<p>如上述例子，Micah给Maruko转账，只有在转账成功的情况下，Micah的账户余额才会减少，Maruko的账户余额增加，不存在Micah账户的余额减少了，而Maruko的账户余额却不变。要么转账成功，2边余额都改变；要么转账失败，2边余额都保持不变。</p>
-<h3 id="2、事务的四大特性"><a href="#2、事务的四大特性" class="headerlink" title="2、事务的四大特性"></a>2、事务的四大特性</h3><p><strong>原子性（Atomicity）：</strong>事务是一个原子操作，由一系列动作组成。事务的原子性确保动作要么全部完成，要么完全不起作用。<br><strong>一致性（Consistency）：</strong>一旦事务完成（不管成功还是失败），系统必须确保它所建模的业务处于一致的状态，而不会是部分完成部分失败。在现实中的数据不应该被破坏。<br><strong>隔离性（Isolation）：</strong>可能有许多事务会同时处理相同的数据，因此每个事务都应该与其他事务隔离开来，防止数据损坏。<br><strong>持久性（Durability）：</strong>一旦事务完成，无论发生什么系统错误，它的结果都不应该受到影响，这样就能从任何系统崩溃中恢复过来。通常情况下，事务的结果被写到持久化存储器中。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2021/05/16/Spring-BASE-6/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Spring-BASE-5" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/05/16/Spring-BASE-5/" class="article-date">
-      <time datetime="2021-05-16T05:47:40.000Z" itemprop="datePublished">2021-05-16</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/16/Spring-BASE-5/">Spring-BASE-5</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Spring-框架基础5"><a href="#Spring-框架基础5" class="headerlink" title="Spring 框架基础5"></a>Spring 框架基础5</h1><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_35843514/article/details/114287046?spm=1001.2014.3001.5501</a></p>
-<h2 id="一、Spring-JDBC概述"><a href="#一、Spring-JDBC概述" class="headerlink" title="一、Spring JDBC概述"></a>一、Spring JDBC概述</h2><h3 id="1、什么是JDBC-Template？"><a href="#1、什么是JDBC-Template？" class="headerlink" title="1、什么是JDBC Template？"></a>1、什么是JDBC Template？</h3><p>之前我们采用的是手动封装JdbcTemplate，其好处是通过(sql语句+参数)模板化了编程。而真正的JdbcTemplate类，是Spring框架为我们写好的。它是 Spring 框架中提供的一个对象，是对原始 Jdbc API 对象的简单封装。除了JdbcTemplate，Spring 框架还为我们提供了很多的操作模板类。</p>
-<p>操作关系型数据的：JdbcTemplate和HibernateTemplate。<br>操作 nosql 数据库的：RedisTemplate。<br>操作消息队列的：JmsTemplate。</p>
-<h3 id="2、Spring-JDBC-能做什么？"><a href="#2、Spring-JDBC-能做什么？" class="headerlink" title="2、Spring JDBC 能做什么？"></a>2、Spring JDBC 能做什么？</h3><table>
-<thead>
-<tr>
-<th align="left">操作项目</th>
-<th align="left">Spring帮你做的</th>
-<th align="left">你需要做的</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">定义连接参数</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">打开连接</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">指定SQL语句</td>
-<td align="left"></td>
-<td align="left">✔</td>
-</tr>
-<tr>
-<td align="left">声明参数并提供参数值</td>
-<td align="left"></td>
-<td align="left">✔</td>
-</tr>
-<tr>
-<td align="left">准备并运行该语句</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">设置循环以遍历结果（如果有）</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">进行每次迭代的工作</td>
-<td align="left"></td>
-<td align="left">✔</td>
-</tr>
-<tr>
-<td align="left">处理任何异常</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">处理交易</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">关闭连接，语句和结果集</td>
-<td align="left">✔</td>
-<td align="left"></td>
-</tr>
-</tbody></table>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2021/05/16/Spring-BASE-5/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

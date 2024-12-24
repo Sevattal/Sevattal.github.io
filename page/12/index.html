@@ -257,6 +257,154 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Oracle-Enter-Line-Feed-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/03/19/Oracle-Enter-Line-Feed-1/" class="article-date">
+      <time datetime="2022-03-19T10:18:48.000Z" itemprop="datePublished">2022-03-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/19/Oracle-Enter-Line-Feed-1/">Oracle-Enter-Line-Feed-1</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Oracle-回车、换行符"><a href="#Oracle-回车、换行符" class="headerlink" title="Oracle 回车、换行符"></a>Oracle 回车、换行符</h1><p>转载：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/alsf/p/7955895.html">https://www.cnblogs.com/alsf/p/7955895.html</a></p>
+<h2 id="回车换行符"><a href="#回车换行符" class="headerlink" title="回车换行符"></a>回车换行符</h2><pre><code>制表符 chr(9)
+换行符 chr(10)
+回车符 chr(13)
+</code></pre>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2022/03/19/Oracle-Enter-Line-Feed-1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Oracle-Flashback-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/03/19/Oracle-Flashback-1/" class="article-date">
+      <time datetime="2022-03-19T09:21:38.000Z" itemprop="datePublished">2022-03-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/19/Oracle-Flashback-1/">Oracle-Flashback-1</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Oracle-闪回技术-标准版-Oracle-数据库不支持闪回"><a href="#Oracle-闪回技术-标准版-Oracle-数据库不支持闪回" class="headerlink" title="Oracle 闪回技术(标准版 Oracle 数据库不支持闪回)"></a>Oracle 闪回技术(标准版 Oracle 数据库不支持闪回)</h1><h2 id="为什么使用闪回技术？"><a href="#为什么使用闪回技术？" class="headerlink" title="为什么使用闪回技术？"></a>为什么使用闪回技术？</h2><p>为了使数据库能够从任何逻辑错误中迅速恢复，Oracle 推出了闪回技术。采用该技术，可以对行级和事物级的数据变化进行恢复，减少了数据恢复的时间，而且操作简单。通过 SQL 语句就可以实现数据的恢复，大大提高了数据库恢复的效率。闪回技术是数据库恢复技术历史上一次重大的进步，从根本上改变了数据恢复。</p>
+<h2 id="闪回技术包括以下各项"><a href="#闪回技术包括以下各项" class="headerlink" title="闪回技术包括以下各项"></a>闪回技术包括以下各项</h2><pre><code>闪回查询：（FLASHBACK QUERY）：查询过去某个时间点或某个 SCN 值时表中的数据信息
+闪回版本查询（FLASHBACK Version query）：查询过去某个时间段或某个 SCN 段内表中数据变化的情况。
+闪回事物查询（FLASHBACK Transaction Query）: 查看某个事物或所有事物在过去一段时间对数据进行的修改。
+闪回数据库（FLASHBACK Database）:将数据库恢复到过去某个时间点或某个 SCN 值时的状态
+闪回删除（FLASHBACK drop）：将已经删除的表及其关联的对象恢复到删除前的状态。
+闪回表（FLASHBACK table）:将表恢复到过去的某个时间点或某个 SCN 值时的状态。
+</code></pre>
+<p>SCN 是当 Oracle 数据库更新后，有 DBMS 自动维护而累积递增的一个数字。可以通过查询数据字典V $DATABASE 中的 CURRENT_SCN 获得当前的 SCN 号。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Database/">Database</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FlashBack/" rel="tag">FlashBack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2022/03/19/Oracle-Flashback-1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Oracle-DML-Performance-1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -806,153 +954,6 @@ connect by prior org_id = parent_id;
       
         <p class="article-more-link">
           <a href="/2022/02/21/Oracle-Date-Case-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Git-Gogs-Window-Install-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/01/19/Git-Gogs-Window-Install-1/" class="article-date">
-      <time datetime="2022-01-19T07:33:22.000Z" itemprop="datePublished">2022-01-19</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/01/19/Git-Gogs-Window-Install-1/">Git-Gogs-Window-Install-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Gogs-Window-安装"><a href="#Gogs-Window-安装" class="headerlink" title="Gogs Window 安装"></a>Gogs Window 安装</h1><p>官网：<a target="_blank" rel="noopener" href="https://gogs.io/">https://gogs.io/</a></p>
-<p>NSSM 软件：<a target="_blank" rel="noopener" href="http://www.nssm.cc/">http://www.nssm.cc/</a></p>
-<p><a href="/download/nssm-2.24-101-g897c7ad.zip">NSSM 下载</a></p>
-<h2 id="Gogs-安装"><a href="#Gogs-安装" class="headerlink" title="Gogs 安装"></a>Gogs 安装</h2><h3 id="1、gogs-安装前需要安装的软件"><a href="#1、gogs-安装前需要安装的软件" class="headerlink" title="1、gogs 安装前需要安装的软件"></a>1、gogs 安装前需要安装的软件</h3><p><strong>必要软件</strong></p>
-<pre><code>GIT
-</code></pre>
-<p><strong>不是必要软件，因为在 Window 中可以用 SQLite 替代无需安装</strong></p>
-<pre><code>MYSQL, PostgreSQL, TiDB
-</code></pre>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Git/">Git</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2022/01/19/Git-Gogs-Window-Install-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Hexo-Blog-Change-PC-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/01/14/Hexo-Blog-Change-PC-1/" class="article-date">
-      <time datetime="2022-01-14T05:47:05.000Z" itemprop="datePublished">2022-01-14</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/01/14/Hexo-Blog-Change-PC-1/">Hexo-Blog-Change-PC-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="Hexo-更换电脑重新部署"><a href="#Hexo-更换电脑重新部署" class="headerlink" title="Hexo 更换电脑重新部署"></a>Hexo 更换电脑重新部署</h1><h2 id="拷贝原博客文件"><a href="#拷贝原博客文件" class="headerlink" title="拷贝原博客文件"></a>拷贝原博客文件</h2><pre><code>必须拷贝文件：
-├──_config.yml
-├── theme
-├── scaffolds #文章模板
-├── package.json #说明使用哪些包
-├── .gitignore #限定在提交的时候哪些文件可以忽略
-└── source
-</code></pre>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Blog/">Blog</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2022/01/14/Hexo-Blog-Change-PC-1/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

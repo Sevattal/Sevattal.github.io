@@ -257,6 +257,152 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-JAVA-Spring-AOP-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/12/JAVA-Spring-AOP-1/" class="article-date">
+      <time datetime="2021-05-12T06:27:59.000Z" itemprop="datePublished">2021-05-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/12/JAVA-Spring-AOP-1/">JAVA-Spring-AOP-1</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="AOP面向切面编程"><a href="#AOP面向切面编程" class="headerlink" title="AOP面向切面编程"></a>AOP面向切面编程</h1><h2 id="1-AOP"><a href="#1-AOP" class="headerlink" title="1. AOP"></a>1. AOP</h2><pre><code>• AOP (Aspect Orient Programming) 面向切面编程是从动态角度考虑程序的运行过程
+• AOP底层，就是采用动态代理模式实现的，采用了两种代理，JDK的动态代理和CGLib的动态代理
+• 实际上AOP就是动态代理的一种规范化，因为动态代理种类繁多，掌握较难，所以就规范了一套统一的方式，这就是AOP
+• AOP把动态代理的实现步骤，方式都定义好了，让开发人员用一种统一的方式，去用动态代理。
+</code></pre>
+<h3 id="1-1-动态代理实现方式"><a href="#1-1-动态代理实现方式" class="headerlink" title="1.1 动态代理实现方式"></a>1.1 动态代理实现方式</h3><p><strong>JDK:</strong><br>    • jdk动态代理，要求jdk中有Proxy，Method，InvocationHandler创建代理对象<br>    • jdk代理要求目标类必须实现接口</p>
+<p><strong>CGLib：</strong><br>    • 第三方的工具库，创建代理对象，原理是继承，通过继承目标类创建子类，子类就是代理对象<br>    • CGLib要求目标类不能是final的 方法也不能是final的</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2021/05/12/JAVA-Spring-AOP-1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-JAVA-Spring" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/12/JAVA-Spring/" class="article-date">
+      <time datetime="2021-05-12T06:27:50.000Z" itemprop="datePublished">2021-05-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/12/JAVA-Spring/">JAVA-Spring</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Spring框架"><a href="#Spring框架" class="headerlink" title="Spring框架"></a>Spring框架</h1><p><img src="/2021/05/12/JAVA-Spring/1.png"></p>
+<h2 id="1-了解Spring"><a href="#1-了解Spring" class="headerlink" title="1. 了解Spring"></a>1. 了解Spring</h2><h3 id="1-1-spring是什么？"><a href="#1-1-spring是什么？" class="headerlink" title="1.1 spring是什么？"></a>1.1 spring是什么？</h3><pre><code>• Spring官网：https://spring.io/
+• 容器框架
+• Spring 是分层的javaee/javase应用，轻量级开源框架，以IOC(控制反转)和AOP(面向切面编程)为内核
+</code></pre>
+<h4 id="1-怎么使用spring"><a href="#1-怎么使用spring" class="headerlink" title="1. 怎么使用spring"></a>1. 怎么使用spring</h4><pre><code>• spring也是一个容器，里面存放java对象
+• 让容器完成对象的创建，对象之间关系的管理(属性赋值)
+• 我们在程序中从容器中获取要使用的对象
+</code></pre>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2021/05/12/JAVA-Spring/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-JAVA-SpringMVC-1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -882,156 +1028,6 @@
       
         <p class="article-more-link">
           <a href="/2021/05/08/SpringCloud-Sleuth-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-SpringCloud-Stream-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/05/08/SpringCloud-Stream-1/" class="article-date">
-      <time datetime="2021-05-08T05:37:53.000Z" itemprop="datePublished">2021-05-08</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/08/SpringCloud-Stream-1/">SpringCloud-Stream-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="构建微服务架构-Stream-消息驱动-篇"><a href="#构建微服务架构-Stream-消息驱动-篇" class="headerlink" title="构建微服务架构(Stream 消息驱动 篇)"></a>构建微服务架构(Stream 消息驱动 篇)</h1><p>该篇文档，前置代码下载：<a href="/download/springcloud_project_bus.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_stream.zip">下载</a></p>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
-<h2 id="Stream-为什么被引入"><a href="#Stream-为什么被引入" class="headerlink" title="Stream 为什么被引入"></a>Stream 为什么被引入</h2><p><strong>常见 MQ(消息中间件)：</strong></p>
-<pre><code>ActiveMQ
-RabbitMQ
-RocketMQ
-Kafka
-</code></pre>
-<p>有没有一种新的技术诞生，让我们不再关注具体MQ的细节，我们只需要用一种适配绑定的方式，自动的给我们在各种MQ内切换。（类似于Hibernate）</p>
-<p><strong>Cloud Stream 是什么？</strong></p>
-<p>屏蔽底层消息中间件的差异，降低切换成本，统一消息的编程模型。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Stream/" rel="tag">Stream</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2021/05/08/SpringCloud-Stream-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-SpringCloud-Bus-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/05/08/SpringCloud-Bus-1/" class="article-date">
-      <time datetime="2021-05-08T05:37:31.000Z" itemprop="datePublished">2021-05-08</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/08/SpringCloud-Bus-1/">SpringCloud-Bus-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="构建微服务架构-Bus-消息总线-篇"><a href="#构建微服务架构-Bus-消息总线-篇" class="headerlink" title="构建微服务架构(Bus 消息总线 篇)"></a>构建微服务架构(Bus 消息总线 篇)</h1><p>该篇文档，前置代码下载：<a href="/download/springcloud_project_config.zip">下载</a><br>该篇文档，全部完成后的代码下载：<a href="/download/springcloud_project_bus.zip">下载</a></p>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011863024/article/details/114298270">https://blog.csdn.net/u011863024/article/details/114298270</a></p>
-<h2 id="Bus消息总线是什么"><a href="#Bus消息总线是什么" class="headerlink" title="Bus消息总线是什么"></a>Bus消息总线是什么</h2><h3 id="一言以蔽之，分布式自动刷新配置功能。"><a href="#一言以蔽之，分布式自动刷新配置功能。" class="headerlink" title="一言以蔽之，分布式自动刷新配置功能。"></a>一言以蔽之，分布式自动刷新配置功能。</h3><p>Spring Cloud Bus配合Spring Cloud Config使用可以实现配置的动态刷新。</p>
-<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Spring Cloud Bus 配合Spring Cloud Config 使用可以实现配置的动态刷新。</p>
-<p><img src="/2021/05/08/SpringCloud-Bus-1/1.png"></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bus/" rel="tag">Bus</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2021/05/08/SpringCloud-Bus-1/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
